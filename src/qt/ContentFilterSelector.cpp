@@ -144,6 +144,14 @@ void ContentFilterSelector::mouseMoveEvent(QMouseEvent* event)
         {
             break;
         }
+        case SD_OUTSIDE:
+        {
+            break;
+        }
+        case SD_CENTER:
+        {
+            break;
+        }
         case SD_BOTTOMRIGHT:
         {
             int dimx = event->pos().x()+FRAME_WIDTH*2+CORNER_MARK_DIM;
@@ -172,7 +180,7 @@ void ContentFilterSelector::mouseReleaseEvent(QMouseEvent* event)
     offset = QPoint();
     m_moveFilter = false;
     m_resizeFilter = false;
-   contentFilterChanged();
+    contentFilterChanged();
 }
 
 void ContentFilterSelector::paintEvent(QPaintEvent* event)
