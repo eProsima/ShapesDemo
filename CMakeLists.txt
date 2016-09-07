@@ -152,7 +152,7 @@ set( SHAPESDEMO_SOURCES
     src/qt/subscribedialog.cpp 
     src/shapesdemo/ShapesDemo.cpp
     src/shapesdemo/ShapeTopicDataType.cpp
-    src/utils/md5.cpp
+#   src/utils/md5.cpp
     src/main.cpp 
     src/shapesdemo/ShapePublisher.cpp
     src/qt/UpdateThread.cpp 
