@@ -25,7 +25,7 @@ Upon running the application, you will be greeted by the main window, where you 
 ### Publish
 
 
-![Publish Window](/docs/PublisherWindow.png)
+![Publish Window](/docs/PublisherScreen.png)
 
 
 ### Subscribe
