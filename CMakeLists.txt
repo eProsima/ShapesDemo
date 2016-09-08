@@ -75,19 +75,6 @@ if(MSVC OR MSVC_IDE)
 endif()
 
 ###############################################################################
-# eProsima build options
-###############################################################################
-
-###############################################################################
-# Internal debug messages
-###############################################################################
-
-option(INTERNAL_DEBUG "Activate developer debug messages" OFF)
-if(EPROSIMA_BUILD AND NOT EPROSIMA_INSTALLER_MINION)
-	set(INTERNAL_DEBUG ON)
-endif()
-
-###############################################################################
 # Load CMake modules
 ###############################################################################
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/modules)
@@ -126,7 +113,7 @@ set(CMAKE_BUILD_TYPE Release CACHE STRING "Build Type")
 
 
 include(${PROJECT_SOURCE_DIR}/cmake/dev/eprosima_libraries.cmake)
-option(THIRDPARTY "Activate the build of thirdparties" ON)
+option(THIRDPARTY "Activate the build of thirdparties" OFF)
 find_eprosima_package(fastcdr)
 find_eprosima_package(fastrtps)
 
@@ -168,8 +155,10 @@ set( SHAPESDEMO_SOURCES
     forms/ui/moc_UpdateThread.cpp
     )
 
-set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
-set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+if(THIRDPARTY)
+    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
+    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+endif()
 
 add_executable(ShapesDemo ${SHAPESDEMO_SOURCES})
 target_include_directories(ShapesDemo PRIVATE include forms/ui ${Boost_INCLUDE_DIR})
@@ -180,6 +169,7 @@ target_link_libraries(ShapesDemo fastrtps fastcdr ${Boost_LIBRARIES} Qt5::Widget
 ###############################################################################
 
 if(NOT WIN32)
+    if(THIRDPARTY)
             # Install includes
             install(DIRECTORY ${PROJECT_BINARY_DIR}/external/install/${INCLUDE_INSTALL_DIR}/
                 DESTINATION ${INCLUDE_INSTALL_DIR}
@@ -200,6 +190,7 @@ if(NOT WIN32)
                 COMPONENT licenses
                 OPTIONAL
                 )
+    endif()
     install(TARGETS ShapesDemo
         RUNTIME DESTINATION ${BIN_INSTALL_DIR}
         COMPONENT ShapesDemo_bin
