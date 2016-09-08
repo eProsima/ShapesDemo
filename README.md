@@ -6,15 +6,15 @@ It can be used to demonstrate the capabilities of eProsima Fast RTPS or as an in
 
 ## Building from sources
 
-You will need Qt5 and eProsima Fast RTPS 1.3.0+ to build the Shapes Demo. The default configuration downloads and compiles the latest version of eProsima Fast RTPS from Github.
+You will need Qt5 and eProsima Fast RTPS 1.3.0+ to build the Shapes Demo. The default configuration assumes you have eProsima Fast RTPS installed in your system: 
 
     $ mkdir build; cd build;
     $ cmake ../
     $ make
 
-If you already have eProsima Fast RTPS installed in your system, you can skip building it as a dependency by specifying 
+If you do not have eProsima Fast RTPS installed in your system, you can build it as a dependency by specifying 
 
-    $ cmake ../ -DTHIRDPARTY=OFF
+    $ cmake ../ -DTHIRDPARTY=ON
 
 Note: To build and run the application on Windows, you need to set the *CMAKE_PREFIX_PATH* environmental variable to the Qt folder for the Visual Studio version you are compiling against (C:\Qt\5.7\msvc2015_64 for example). You will also need to add the /bin/ folder to the path (C:\Qt\5.7\msvc2015_64\bin for example).
 
