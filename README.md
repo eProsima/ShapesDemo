@@ -51,3 +51,33 @@ This menu provides the options present in the Publish Windows plus the following
 
 * Time Based Filter: This value can be used to specify the minimum amount of time (in milliseconds) that the subscriber wants between updates. 
 * Content Based Filter: This filter draws a rectangle in the shapes window. Only the instances that are included in this rectangle are accepted. The rest of them are ignored. The user can dynamically resize and move this content filter. 
+
+## Miscellaneous Options and Windows
+
+### Other Options
+
+Under the Options->Preferences tab you will find the following menu:
+
+![Other options](/docs/options.png)
+
+You can modify the following settings:
+
+* Domain ID: You can select different Domain Ids. Shapes Demo instances using different Domain Ids cannot not communicate. To modify the Domain ID the user needs to stop the participant (thus removing all existing Publishers and Subscribers) and start a new one with the new Domain Id.
+* Update interval: This value changes the publication period for all the Publishers. 
+* Length:  This  scrollbar allows you to change how much the Shape moves between two write calls. 
+
+### Endpoints and Output tab
+
+The bottom section of the main screen shows the following table.
+
+![Endpoints](/docs/endpoints.png)
+
+You can use this table to remove endpoints. To methods are available:
+
+* Right click an endpoint -> Remove
+* Select endpoint by left clicking it -> Press delete key on the keyboard
+
+The other available tab in this section shows an output log:
+
+![Output](/docs/log.png)
+
