@@ -132,7 +132,7 @@ find_eprosima_package(fastrtps)
 
 
 ###############################################################################
-# Compile library.
+# Compile 
 ###############################################################################
 include(${PROJECT_SOURCE_DIR}/cmake/dev/set_sources.cmake)
 
@@ -166,8 +166,42 @@ set( SHAPESDEMO_SOURCES
     forms/ui/moc_publishdialog.cpp
     forms/ui/moc_subscribedialog.cpp
     forms/ui/moc_UpdateThread.cpp
-
     )
+
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
+set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+
 add_executable(ShapesDemo ${SHAPESDEMO_SOURCES})
 target_include_directories(ShapesDemo PRIVATE include forms/ui ${Boost_INCLUDE_DIR})
 target_link_libraries(ShapesDemo fastrtps fastcdr ${Boost_LIBRARIES} Qt5::Widgets Qt5::Core Qt5::Gui)
+
+###############################################################################
+# Install
+###############################################################################
+
+if(NOT WIN32)
+            # Install includes
+            install(DIRECTORY ${PROJECT_BINARY_DIR}/external/install/${INCLUDE_INSTALL_DIR}/
+                DESTINATION ${INCLUDE_INSTALL_DIR}
+                COMPONENT headers
+                OPTIONAL
+                )
+
+            # Install libraries
+            install(DIRECTORY ${PROJECT_BINARY_DIR}/external/install/${LIB_INSTALL_DIR}/
+                DESTINATION ${LIB_INSTALL_DIR}
+                USE_SOURCE_PERMISSIONS
+                COMPONENT libraries
+                )
+
+            # Install licenses
+            install(DIRECTORY ${PROJECT_BINARY_DIR}/external/install/licenses/
+                DESTINATION ${LICENSE_INSTALL_DIR}
+                COMPONENT licenses
+                OPTIONAL
+                )
+    install(TARGETS ShapesDemo
+        RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+        COMPONENT ShapesDemo_bin
+        )
+endif()
