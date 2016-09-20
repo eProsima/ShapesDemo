@@ -110,13 +110,23 @@ endif()
 
 set(CMAKE_BUILD_TYPE Release CACHE STRING "Build Type")
 
+###############################################################################
+# eProsima build options
+###############################################################################
+option(EPROSIMA_BUILD "Activate internal building" OFF)
 
-
+###############################################################################
+# Load external eProsima projects.
+###############################################################################
 include(${PROJECT_SOURCE_DIR}/cmake/dev/eprosima_libraries.cmake)
 option(THIRDPARTY "Activate the build of thirdparties" OFF)
-find_eprosima_package(fastcdr)
-find_eprosima_package(fastrtps)
 
+if(EPROSIMA_BUILD)
+    set(THIRDPARTY ON)
+endif()
+
+find_eprosima_package(fastcdr)
+find_eprosima_package(fastrtps USE_BOOST)
 
 ###############################################################################
 # Compile 
