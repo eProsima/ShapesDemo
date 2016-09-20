@@ -26,7 +26,7 @@ DrawArea::DrawArea(QWidget *parent)
       firstA(10),
       lastA(240)
 {
-    this->setStyleSheet("QWidget#areaDraw{background-color: rgb(255, 255, 255);background-repeat:none;background-image: url(:/eProsimaLogo.png);background-position:center;}");
+    this->setStyleSheet("QWidget#areaDraw{background-color: rgb(255, 255, 255);background-repeat:none;background-image: url(eProsimaLogo.png);background-position:center;}");
     setVisible(true);
     m_brush.setStyle(Qt::SolidPattern);
 
@@ -69,7 +69,7 @@ void DrawArea::addContentFilter(ShapeSubscriber *ssub)
 void DrawArea::timerEvent(QTimerEvent* e)
 {
     Q_UNUSED(e);
-    this->setStyleSheet("QWidget#areaDraw{background-color: rgb(255, 255, 255);background-repeat:none;background-image: url(:/eProsimaLogo.png);background-position:center;}");
+    this->setStyleSheet("QWidget#areaDraw{background-color: rgb(255, 255, 255);background-repeat:none;background-image: url(eProsimaLogo.png);background-position:center;}");
     repaint();
 }
 

@@ -173,12 +173,10 @@ endif()
 add_executable(ShapesDemo ${SHAPESDEMO_SOURCES})
 target_include_directories(ShapesDemo PRIVATE include forms/ui ${Boost_INCLUDE_DIR})
 target_link_libraries(ShapesDemo fastrtps fastcdr ${Boost_LIBRARIES} Qt5::Widgets Qt5::Core Qt5::Gui)
-
+file(INSTALL ${PROJECT_SOURCE_DIR}/images/eProsimaLogo.png DESTINATION ${CMAKE_BINARY_DIR})
 ###############################################################################
 # Install
 ###############################################################################
-
-if(NOT WIN32)
     if(THIRDPARTY)
             # Install includes
             install(DIRECTORY ${PROJECT_BINARY_DIR}/external/install/${INCLUDE_INSTALL_DIR}/
@@ -201,8 +199,8 @@ if(NOT WIN32)
                 OPTIONAL
                 )
     endif()
+    install(FILES ${PROJECT_SOURCE_DIR}/images/eProsimaLogo.png DESTINATION ${BIN_INSTALL_DIR})
     install(TARGETS ShapesDemo
         RUNTIME DESTINATION ${BIN_INSTALL_DIR}
         COMPONENT ShapesDemo_bin
         )
-endif()
