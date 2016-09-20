@@ -377,7 +377,7 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_actionUser_Manual_triggered()
 {
     //QDesktopServices::openUrl(QUrl("file:///C:/Program Files/eProsima/FastRTPS/doc/pdf/FastRTPS_ShapesDemo_User_Manual.pdf"));
-    QDesktopServices::openUrl(QUrl("http://git.sambaserver.eprosima.com/rtps/shapesdemo/README.md"));
+    QDesktopServices::openUrl(QUrl("http://git.sambaserver.eprosima.com/rtps/shapesdemo/source/README.md"));
     QDesktopServices::openUrl(QUrl("http://eprosima-fast-rtps.readthedocs.io/en/latest/geninfo.html"));
     //QString str(QDir::currentPath());
      //str.append("/FASTRTPSGEN_User_Manual.pdf");
@@ -387,7 +387,7 @@ void MainWindow::on_actionUser_Manual_triggered()
 void MainWindow::on_actionInteroperability_Troubleshooting_triggered()
 {
     //QDesktopServices::openUrl(QUrl("file:///C:/Program Files/eProsima/FastRTPS/doc/pdf/FastRTPS_ShapesDemo_Interoperability_Troubleshooting.pdf"));
-     QDesktopServices::openUrl(QUrl("http://git.sambaserver.eprosima.com/rtps/shapesdemo/TROUBLESHOOTING.md"));
+     QDesktopServices::openUrl(QUrl("http://git.sambaserver.eprosima.com/rtps/shapesdemo/source/TROUBLESHOOTING.md"));
 
     //QString str(QDir::currentPath());
 
