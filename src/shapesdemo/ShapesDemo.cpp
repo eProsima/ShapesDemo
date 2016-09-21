@@ -54,10 +54,10 @@ Participant* ShapesDemo::getParticipant()
 
 bool ShapesDemo::init()
 {
-    cout << "Initializing ShapesDemo "<< m_isInitialized <<endl;
+    //cout << "Initializing ShapesDemo "<< m_isInitialized <<endl;
     if(!m_isInitialized)
     {
-        cout <<"Creating new Participant"<<endl;
+        //cout <<"Creating new Participant"<<endl;
         ParticipantAttributes pparam;
         pparam.rtps.setName("fastrtpsParticipant");
         pparam.rtps.builtin.domainId = m_options.m_domainId;
@@ -100,7 +100,7 @@ void ShapesDemo::stop()
         }
         m_subscribers.clear();
         Domain::removeParticipant(mp_participant);
-        cout << "All Stoped, removing"<<endl;
+        //cout << "All Stoped, removing"<<endl;
         mp_participant = nullptr;
         m_isInitialized = false;
     }
@@ -202,7 +202,7 @@ ShapesDemoOptions ShapesDemo::getOptions()
 
 void ShapesDemo::removePublisher(ShapePublisher* SP)
 {
-    cout << "REMOVING PUBLISHER"<<endl;
+    //cout << "REMOVING PUBLISHER"<<endl;
     for(std::vector<ShapePublisher*>::iterator it = this->m_publishers.begin();
         it!=this->m_publishers.end();++it)
     {
@@ -218,7 +218,7 @@ void ShapesDemo::removePublisher(ShapePublisher* SP)
 
 void ShapesDemo::removeSubscriber(ShapeSubscriber* SS)
 {
-    cout << "REMOVING SUBSCRIBER"<<endl;
+    //cout << "REMOVING SUBSCRIBER"<<endl;
     for(std::vector<ShapeSubscriber*>::iterator it = this->m_subscribers.begin();
         it!=this->m_subscribers.end();++it)
     {

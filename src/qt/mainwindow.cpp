@@ -5,15 +5,15 @@
  * FASTRTPS_LIBRARY_LICENSE file included in this distribution.
  *
  *************************************************************************/
-#include "eprosimashapesdemo/qt/mainwindow.h"
-#include "eprosimashapesdemo/qt/publishdialog.h"
-#include "eprosimashapesdemo/qt/subscribedialog.h"
-#include "eprosimashapesdemo/qt/optionsdialog.h"
+#include <eprosimashapesdemo/qt/mainwindow.h>
+#include <eprosimashapesdemo/qt/publishdialog.h>
+#include <eprosimashapesdemo/qt/subscribedialog.h>
+#include <eprosimashapesdemo/qt/optionsdialog.h>
 #include "ui_mainwindow.h"
-#include "eprosimashapesdemo/qt/UpdateThread.h"
+#include <eprosimashapesdemo/qt/UpdateThread.h>
 
-#include "eprosimashapesdemo/shapesdemo/ShapePublisher.h"
-#include "eprosimashapesdemo/shapesdemo/ShapeSubscriber.h"
+#include <eprosimashapesdemo/shapesdemo/ShapePublisher.h>
+#include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
 
 #include <QStandardItemModel>
 #include <QKeyEvent>
@@ -301,7 +301,7 @@ void MainWindow::on_tableEndpoint_customContextMenuRequested(const QPoint &pos)
 
 void MainWindow::on_actionDelete_Enpoint_triggered()
 {
-    cout << "DELETE ENDPOINT" <<endl;
+    //cout << "DELETE ENDPOINT" <<endl;
     removeRow(m_tableRow);
 }
 
@@ -337,7 +337,7 @@ void MainWindow::removeRow(int row)
             break;
         }
     }
-    cout << "FINISH REMOVE ROW"<<endl;
+    //cout << "FINISH REMOVE ROW"<<endl;
 }
 
 void MainWindow::on_tableEndpoint_clicked(const QModelIndex &index)

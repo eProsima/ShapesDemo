@@ -174,7 +174,11 @@ if(THIRDPARTY)
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
 
-add_executable(${PROJECT_NAME} ${SHAPESDEMO_SOURCES})
+if(WIN32)
+    add_executable(${PROJECT_NAME} WIN32 ${SHAPESDEMO_SOURCES})
+else()
+    add_executable(${PROJECT_NAME} ${SHAPESDEMO_SOURCES})
+endif()
 target_include_directories(${PROJECT_NAME} PRIVATE include forms/ui ${Boost_INCLUDE_DIR})
 target_link_libraries(${PROJECT_NAME} fastrtps fastcdr ${Boost_LIBRARIES} Qt5::Widgets Qt5::Core Qt5::Gui)
 

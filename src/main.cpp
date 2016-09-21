@@ -1,20 +1,25 @@
-#include "eprosimashapesdemo/qt/mainwindow.h"
-#include "fastrtps/log/Log.h"
-#include "fastrtps/utils/eClock.h"
+#include <eprosimashapesdemo/qt/mainwindow.h>
+#include <fastrtps/log/Log.h>
+#include <fastrtps/utils/eClock.h>
 #include <QApplication>
-//#include <stdafx.h>
-#include "eprosimashapesdemo/utils/md5.h"
-#include "fastrtps/Domain.h"
+#include <eprosimashapesdemo/utils/md5.h>
+#include <fastrtps/Domain.h>
 
+#ifdef WIN32
+int CALLBACK WinMain(
+    _In_ HINSTANCE /*hInstance*/,
+    _In_ HINSTANCE /*hPrevInstance*/,
+    _In_ LPSTR     /*lpCmdLine*/,
+    _In_ int       /*nCmdShow*/
+)
+{
+    int argc = 0;
+    QApplication a(argc, NULL);
+#else
 int main(int argc, char *argv[])
 {
-    //RTPSLog::setVerbosity(EPROSIMA_DEBUGINFO_VERB_LEVEL);
-//    Log::logFileName("log.txt");
-//    Log::setVerbosity(VERB_WARNING);
-//    Log::setCategoryVerbosity(RTPS_EDP,VERB_INFO);
-//    Log::setCategoryVerbosity(RTPS_PDP,VERB_INFO);
-//    Log::setVerbosity(VERB_INFO);
     QApplication a(argc, argv);
+#endif
     MainWindow w;
     w.show();
 
