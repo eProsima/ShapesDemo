@@ -67,6 +67,7 @@ void ShapeHistory::addShapeExclusive(Shape &sh, std::list<Shape> &list)
 {
     if(sh.m_strength > list.front().m_strength || list.front().m_hasOwner == false)
     {
+        list.pop_front();
         addShape(sh,list);
     }
     else if(sh.m_strength== list.front().m_strength && sh.m_writerGuid == list.front().m_writerGuid )
