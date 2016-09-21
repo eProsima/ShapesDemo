@@ -28,7 +28,7 @@ else()
         )
 endif()
 
-project("shapesdemo")
+project("ShapesDemo")
 set(PROJECT_NAME_STYLED "ShapesDemo")
 set(PROJECT_NAME_LARGE "Shapes Demo")
 string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
