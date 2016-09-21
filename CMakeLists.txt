@@ -136,10 +136,11 @@ include(${PROJECT_SOURCE_DIR}/cmake/dev/set_sources.cmake)
 # Find requirements
 find_package(Boost REQUIRED COMPONENTS thread system chrono regex)
 find_package(fastrtps REQUIRED)
+
+set(CMAKE_AUTORCC ON)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
-add_compile_options(--std=c++0x)
 
 message(STATUS "Configuring ShapesDemo...")
 set( SHAPESDEMO_SOURCES
@@ -163,6 +164,8 @@ set( SHAPESDEMO_SOURCES
     forms/ui/moc_publishdialog.cpp
     forms/ui/moc_subscribedialog.cpp
     forms/ui/moc_UpdateThread.cpp
+    images/eprosimalogo.qrc
+    images/eprosima_icon.rc
     )
 
 if(THIRDPARTY)
@@ -170,37 +173,38 @@ if(THIRDPARTY)
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
 
-add_executable(ShapesDemo ${SHAPESDEMO_SOURCES})
-target_include_directories(ShapesDemo PRIVATE include forms/ui ${Boost_INCLUDE_DIR})
-target_link_libraries(ShapesDemo fastrtps fastcdr ${Boost_LIBRARIES} Qt5::Widgets Qt5::Core Qt5::Gui)
-file(INSTALL ${PROJECT_SOURCE_DIR}/images/eProsimaLogo.png DESTINATION ${CMAKE_BINARY_DIR})
+add_executable(${PROJECT_NAME} ${SHAPESDEMO_SOURCES})
+target_include_directories(${PROJECT_NAME} PRIVATE include forms/ui ${Boost_INCLUDE_DIR})
+target_link_libraries(${PROJECT_NAME} fastrtps fastcdr ${Boost_LIBRARIES} Qt5::Widgets Qt5::Core Qt5::Gui)
+
 ###############################################################################
 # Install
 ###############################################################################
-    if(THIRDPARTY)
-            # Install includes
-            install(DIRECTORY ${PROJECT_BINARY_DIR}/external/install/${INCLUDE_INSTALL_DIR}/
-                DESTINATION ${INCLUDE_INSTALL_DIR}
-                COMPONENT headers
-                OPTIONAL
-                )
-
-            # Install libraries
-            install(DIRECTORY ${PROJECT_BINARY_DIR}/external/install/${LIB_INSTALL_DIR}/
-                DESTINATION ${LIB_INSTALL_DIR}
-                USE_SOURCE_PERMISSIONS
-                COMPONENT libraries
-                )
-
-            # Install licenses
-            install(DIRECTORY ${PROJECT_BINARY_DIR}/external/install/licenses/
-                DESTINATION ${LICENSE_INSTALL_DIR}
-                COMPONENT licenses
-                OPTIONAL
-                )
+if(THIRDPARTY)
+    if(NOT WIN32)
+        # Install libraries
+        install(DIRECTORY ${PROJECT_BINARY_DIR}/external/install/${LIB_INSTALL_DIR}/
+            DESTINATION ${LIB_INSTALL_DIR}
+            USE_SOURCE_PERMISSIONS
+            COMPONENT libraries
+            )
     endif()
-    install(FILES ${PROJECT_SOURCE_DIR}/images/eProsimaLogo.png DESTINATION ${BIN_INSTALL_DIR})
-    install(TARGETS ShapesDemo
-        RUNTIME DESTINATION ${BIN_INSTALL_DIR}
-        COMPONENT ShapesDemo_bin
+
+    # Install licenses
+    install(DIRECTORY ${PROJECT_BINARY_DIR}/external/install/licenses/
+        DESTINATION ${LICENSE_INSTALL_DIR}
+        COMPONENT licenses
+        OPTIONAL
         )
+endif()
+
+install(TARGETS ${PROJECT_NAME}
+    RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+    LIBRARY DESTINATION ${BIN_INSTALL_DIR}
+    ARCHIVE DESTINATION ${BIN_INSTALL_DIR}
+    COMPONENT binaries
+    )
+
+# Install dependecies
+include(${PROJECT_SOURCE_DIR}/cmake/dev/install_prerequisites.cmake)
+install_prerequisites(${PROJECT_NAME})
