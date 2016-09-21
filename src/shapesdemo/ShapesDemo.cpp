@@ -10,16 +10,16 @@
 #include <sstream>
 #include <ctime>
 
-#include "eprosimashapesdemo/shapesdemo/ShapesDemo.h"
-#include "eprosimashapesdemo/shapesdemo/ShapePublisher.h"
-#include "eprosimashapesdemo/shapesdemo/ShapeSubscriber.h"
-#include "eprosimashapesdemo/shapesdemo/Shape.h"
-#include "eprosimashapesdemo/qt/mainwindow.h"
+#include <eprosimashapesdemo/shapesdemo/ShapesDemo.h>
+#include <eprosimashapesdemo/shapesdemo/ShapePublisher.h>
+#include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
+#include <eprosimashapesdemo/shapesdemo/ShapeInfo.h>
+#include <eprosimashapesdemo/qt/mainwindow.h>
 
-#include "fastrtps/attributes/ParticipantAttributes.h"
-#include "fastrtps/Domain.h"
-#include "fastrtps/publisher/Publisher.h"
-#include "fastrtps/subscriber/Subscriber.h"
+#include <fastrtps/attributes/ParticipantAttributes.h>
+#include <fastrtps/Domain.h>
+#include <fastrtps/publisher/Publisher.h>
+#include <fastrtps/subscriber/Subscriber.h>
 
 ShapesDemo::ShapesDemo(MainWindow *mw):
     mp_participant(nullptr),
@@ -145,25 +145,25 @@ void ShapesDemo::moveShape(Shape* sh)
     if(sh->m_changeDir)
         getNewDirection(sh);
     //Apply movement
-    int nx = sh->m_x + m_options.m_movementSpeed*sh->m_dirX;
-    int ny = sh->m_y + m_options.m_movementSpeed*sh->m_dirY;
+    int nx = sh->m_shape.x() + m_options.m_movementSpeed*sh->m_dirX;
+    int ny = sh->m_shape.y() + m_options.m_movementSpeed*sh->m_dirY;
     //Check if the movement is correct
-    bool cond1 = nx+(int)sh->m_size/2 > (int)maxX;
-    bool cond2 = nx-(int)sh->m_size/2 < (int)minX;
-    bool cond3 = ny+(int)sh->m_size/2 > (int)maxY;
-    bool cond4 = ny-(int)sh->m_size/2 < (int)minY;
+    bool cond1 = nx+(int)sh->m_shape.shapesize() /2 > (int)maxX;
+    bool cond2 = nx-(int)sh->m_shape.shapesize() /2 < (int)minX;
+    bool cond3 = ny+(int)sh->m_shape.shapesize() /2 > (int)maxY;
+    bool cond4 = ny-(int)sh->m_shape.shapesize() /2 < (int)minY;
     while(cond1 || cond2 || cond3 || cond4)
     {
         getNewDirection(sh);
-        nx = sh->m_x + m_options.m_movementSpeed*sh->m_dirX;
-        ny = sh->m_y + m_options.m_movementSpeed*sh->m_dirY;
-        cond1 = nx+(int)sh->m_size/2 > (int)maxX;
-        cond2 = nx-(int)sh->m_size/2 < (int)minX;
-        cond3 = ny+(int)sh->m_size/2 > (int)maxY;
-        cond4 = ny-(int)sh->m_size/2 < (int)minY;
+        nx = sh->m_shape.x() + m_options.m_movementSpeed*sh->m_dirX;
+        ny = sh->m_shape.y() + m_options.m_movementSpeed*sh->m_dirY;
+        cond1 = nx+(int)sh->m_shape.shapesize() /2 > (int)maxX;
+        cond2 = nx-(int)sh->m_shape.shapesize() /2 < (int)minX;
+        cond3 = ny+(int)sh->m_shape.shapesize() /2 > (int)maxY;
+        cond4 = ny-(int)sh->m_shape.shapesize() /2 < (int)minY;
     }
-    sh->m_x = nx;
-    sh->m_y = ny;
+    sh->m_shape.x(nx);
+    sh->m_shape.y(ny);
 }
 
 void ShapesDemo::getNewDirection(Shape* sh)

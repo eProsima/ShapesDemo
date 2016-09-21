@@ -11,13 +11,13 @@
  *
  */
 
-#include "eprosimashapesdemo/shapesdemo/ShapeSubscriber.h"
-#include "eprosimashapesdemo/qt/ContentFilterSelector.h"
-#include "fastrtps/utils/TimeConversion.h"
+#include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
+#include <eprosimashapesdemo/qt/ContentFilterSelector.h>
+#include <fastrtps/utils/TimeConversion.h>
 
-#include "fastrtps/subscriber/Subscriber.h"
-#include "fastrtps/subscriber/SampleInfo.h"
-#include "fastrtps/Domain.h"
+#include <fastrtps/subscriber/Subscriber.h>
+#include <fastrtps/subscriber/SampleInfo.h>
+#include <fastrtps/Domain.h>
 
 ShapeSubscriber::ShapeSubscriber(Participant* par):
     mp_sub(nullptr),
@@ -48,13 +48,13 @@ bool ShapeSubscriber::initSubscriber()
 
 
 
-void ShapeSubscriber::onNewDataMessage(Subscriber *sub)
+void ShapeSubscriber::onNewDataMessage(Subscriber* /*sub*/)
 {
     // cout << "New DATA Message "<<endl;
     Shape shape;
     shape.m_type = this->m_shapeType;
     SampleInfo_t info;
-    while(mp_sub->takeNextData((void*)&shape,&info))
+    while(mp_sub->takeNextData((void*)&shape.m_shape,&info))
     {
         // shape.m_x += 5;
         //cout << "Shape of type: "<< shape.m_type << "RECEIVED"<<endl;
@@ -86,7 +86,7 @@ void ShapeSubscriber::onNewDataMessage(Subscriber *sub)
 
 
 
-void ShapeSubscriber::onSubscriptionMatched(Subscriber *sub, MatchingInfo& info)
+void ShapeSubscriber::onSubscriptionMatched(Subscriber* /*sub*/, MatchingInfo& info)
 {
     if(info.status ==MATCHED_MATCHING)
     {

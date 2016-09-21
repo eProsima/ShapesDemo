@@ -8,7 +8,7 @@
 #ifndef SHAPEHISTORY_H
 #define SHAPEHISTORY_H
 
-#include "eprosimashapesdemo/shapesdemo/Shape.h"
+#include "ShapeInfo.h"
 #include <vector>
 #include <list>
 #include <cstdint>
@@ -25,10 +25,10 @@ public:
 
     }
    ~ShapeFilter(){}
-    uint32_t m_maxX;
-    uint32_t m_minX;
-    uint32_t m_maxY;
-    uint32_t m_minY;
+    int32_t m_maxX;
+    int32_t m_minX;
+    int32_t m_maxY;
+    int32_t m_minY;
     Duration_t m_minimumSeparation;
     bool m_useContentFilter;
     bool m_useTimeFilter;
@@ -54,8 +54,8 @@ private:
     void addShape(Shape& sh,std::list<Shape>& list);
     void addShapeExclusive(Shape& sh,std::list<Shape>& list);
 public:
-    void dispose(SD_COLOR& color);
-    void unregister(SD_COLOR& color);
+    void dispose(const SD_COLOR color);
+    void unregister(const SD_COLOR color);
     void adjustContentFilter(ShapeFilter& filter);
     void removedOwner(GUID_t& guid);
 

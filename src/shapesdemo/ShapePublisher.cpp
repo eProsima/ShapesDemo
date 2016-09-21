@@ -31,9 +31,7 @@ ShapePublisher::~ShapePublisher()
 	// TODO Auto-generated destructor stub
     if(isInitialized)
     {
-//        mp_pub->dispose((void*)&this->m_shape.m_mainShape);
-//        mp_pub->unregister((void*)&this->m_shape.m_mainShape);
-        mp_pub->dispose_and_unregister((void*)&this->m_shape);
+        mp_pub->dispose_and_unregister((void*)&this->m_shape.m_shape);
         Domain::removePublisher(mp_pub);
     }
 }
@@ -53,7 +51,7 @@ void ShapePublisher::write()
 {
     if(mp_pub !=nullptr)
     {
-        mp_pub->write((void*)&this->m_shape);
+        mp_pub->write((void*)&this->m_shape.m_shape);
         //cout << "Trying to lock ShapePub: "<<std::flush;
         m_mutex.lock();
      //   cout << " OK "<<std::flush;
@@ -64,7 +62,7 @@ void ShapePublisher::write()
     }
 }
 
-void ShapePublisher::onPublicationMatched(Publisher *pub, MatchingInfo& info)
+void ShapePublisher::onPublicationMatched(Publisher* /*pub*/, MatchingInfo& info)
 {
     if(info.status == MATCHED_MATCHING)
         cout << "Publisher  in topic " << m_attributes.topic.getTopicName() << " MATCHES Sub: "<< info.remoteEndpointGuid << "*****************************"<<endl;

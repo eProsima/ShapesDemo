@@ -6,14 +6,13 @@
  *
  *************************************************************************/
 
-#include "eprosimashapesdemo/qt/DrawArea.h"
+#include <eprosimashapesdemo/qt/DrawArea.h>
 
-#include "eprosimashapesdemo/qt/ContentFilterSelector.h"
-#include "eprosimashapesdemo/shapesdemo/ShapesDemo.h"
-#include "eprosimashapesdemo/shapesdemo/Shape.h"
+#include <eprosimashapesdemo/qt/ContentFilterSelector.h>
+#include <eprosimashapesdemo/shapesdemo/ShapesDemo.h>
 
-#include "eprosimashapesdemo/shapesdemo/ShapePublisher.h"
-#include "eprosimashapesdemo/shapesdemo/ShapeSubscriber.h"
+#include <eprosimashapesdemo/shapesdemo/ShapePublisher.h>
+#include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
 
 #include <QPainter>
 #include <QStyleOption>
@@ -132,7 +131,7 @@ void DrawArea::paintShape(QPainter* painter, Shape &shape, uint8_t alpha, bool i
     else
         m_pen.setStyle(Qt::SolidLine);
     painter->setPen(m_pen);
-    QColor auxc = SD_COLOR2QColor(shape.m_color);
+    QColor auxc = SD_COLOR2QColor(getColor(shape.m_shape.color().at(0), shape.m_shape.color().at(2)));
     auxc.setAlpha(alpha);
     m_brush.setColor(auxc);
     m_brush.setStyle(Qt::SolidPattern);
@@ -141,19 +140,19 @@ void DrawArea::paintShape(QPainter* painter, Shape &shape, uint8_t alpha, bool i
     {
     case SQUARE:
     {
-        QRect rect(shape.m_x-shape.m_size/2,
-                   shape.m_y-shape.m_size/2,
-                   shape.m_size,
-                   shape.m_size);
+        QRect rect(shape.m_shape.x() - shape.m_shape.shapesize() / 2,
+                   shape.m_shape.y() - shape.m_shape.shapesize() / 2,
+                   shape.m_shape.shapesize(),
+                   shape.m_shape.shapesize());
         painter->drawRect(rect);
         break;
     }
     case TRIANGLE:
     {
         uint32_t x,y,s;
-        x = shape.m_x;
-        y = shape.m_y;
-        s = shape.m_size;
+        x = shape.m_shape.x();
+        y = shape.m_shape.y();
+        s = shape.m_shape.shapesize();
         //double h = 0.5*sqrt(3*pow((double)s,2));
         QPoint points[3] = {
             QPoint(x-s/2, y+s/2),
@@ -165,10 +164,10 @@ void DrawArea::paintShape(QPainter* painter, Shape &shape, uint8_t alpha, bool i
     }
     case CIRCLE:
     {
-        QRect rect(shape.m_x-shape.m_size/2,
-                   shape.m_y-shape.m_size/2,
-                   shape.m_size,
-                   shape.m_size);
+        QRect rect(shape.m_shape.x() - shape.m_shape.shapesize() / 2,
+            shape.m_shape.y() - shape.m_shape.shapesize() / 2,
+            shape.m_shape.shapesize(),
+            shape.m_shape.shapesize());
         painter->drawEllipse(rect);
         break;
     }

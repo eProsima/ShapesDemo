@@ -5,6 +5,8 @@
 #define MAX_DRAW_AREA_Y 265
 #define INITIAL_INTERVAL_MS 75
 
+#include <qstring.h>
+
 /**
  * @brief The SD_COLOR enum, the different colors.
  */
@@ -35,7 +37,7 @@ enum TYPESHAPE{
  * @brief getShapeQStr, get the type fo shape as a string.
  * @return QString.
  */
-inline QString getShapeQStr(const TYPESHAPE& shape)
+inline QString getShapeQStr(const TYPESHAPE shape)
 {
     switch(shape)
     {
@@ -46,7 +48,7 @@ inline QString getShapeQStr(const TYPESHAPE& shape)
     return "Square"; //Default to square if something unexpected happens
 }
 
-inline std::string getColorStr(const SD_COLOR& color)
+inline std::string getColorStr(const SD_COLOR color)
 {
     switch(color)
     {
@@ -64,7 +66,7 @@ inline std::string getColorStr(const SD_COLOR& color)
     return "BLACK";
 }
 
-inline SD_COLOR getColor(const unsigned char ch1,const unsigned char ch3)
+inline SD_COLOR getColor(const unsigned char ch1, const unsigned char ch3)
 {
     switch(ch1)
     {

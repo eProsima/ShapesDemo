@@ -14,7 +14,7 @@
 #ifndef SHAPESDEMO_H_
 #define SHAPESDEMO_H_
 
-#include "eprosimashapesdemo/shapesdemo/ShapeTopicDataType.h"
+#include "eprosimashapesdemo/shapesdemo/ShapePubSubTypes.h"
 #include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
 #include <QMutex>
 #include <vector>
@@ -154,7 +154,7 @@ private:
     void moveShape(Shape* sh);
     void getNewDirection(Shape* sh);
 
-    ShapeTopicDataType m_shapeTopicDataType;
+    ShapeTypePubSubType m_shapeTopicDataType;
     ShapesDemoOptions m_options;
     MainWindow* m_mainWindow;
     QMutex m_mutex;

@@ -174,8 +174,8 @@ void MainWindow::addPublisherToTable(ShapePublisher* spub)
 {
     QList<QStandardItem*> items;
     items.append(new QStandardItem(getShapeQStr(spub->m_shape.m_type)));
-    items.append(new QStandardItem(QString(getColorStr(spub->m_shape.m_color).c_str())));
-    items.append(new QStandardItem(QString("%1").arg(spub->m_shape.m_size)));
+    items.append(new QStandardItem(QString(spub->m_shape.m_shape.color().c_str())));
+    items.append(new QStandardItem(QString("%1").arg(spub->m_shape.m_shape.shapesize())));
     items.append(new QStandardItem("Pub"));
     if(spub->m_attributes.qos.m_reliability.kind == RELIABLE_RELIABILITY_QOS)
         items.append(new QStandardItem("True"));
@@ -222,7 +222,7 @@ void MainWindow::addPublisherToTable(ShapePublisher* spub)
     sdend.pub = spub;
     sdend.pos = m_pubsub->rowCount()-1;
     this->m_pubsub_pointers.push_back(sdend);
-    addMessageToOutput(QString("Publisher created in topic: %2 %1").arg(spub->m_attributes.topic.topicName.c_str()).arg(getColorStr(spub->m_shape.m_color).c_str()),false);
+    addMessageToOutput(QString("Publisher created in topic: %2 %1").arg(spub->m_attributes.topic.topicName.c_str()).arg(spub->m_shape.m_shape.color().c_str()),false);
 
 }
 

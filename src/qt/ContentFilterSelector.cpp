@@ -183,7 +183,7 @@ void ContentFilterSelector::mouseReleaseEvent(QMouseEvent* event)
     contentFilterChanged();
 }
 
-void ContentFilterSelector::paintEvent(QPaintEvent* event)
+void ContentFilterSelector::paintEvent(QPaintEvent* /*event*/)
 {
     QPainter painter(this);
     QRect dim = this->geometry();

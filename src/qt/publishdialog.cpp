@@ -5,11 +5,11 @@
  * FASTRTPS_LIBRARY_LICENSE file included in this distribution.
  *
  *************************************************************************/
-#include "eprosimashapesdemo/qt/publishdialog.h"
+#include <eprosimashapesdemo/qt/publishdialog.h>
 #include "ui_publishdialog.h"
-#include "eprosimashapesdemo/shapesdemo/Shape.h"
-#include "eprosimashapesdemo/shapesdemo/ShapesDemo.h"
-#include "eprosimashapesdemo/shapesdemo/ShapePublisher.h"
+#include <eprosimashapesdemo/shapesdemo/ShapeInfo.h>
+#include <eprosimashapesdemo/shapesdemo/ShapesDemo.h>
+#include <eprosimashapesdemo/shapesdemo/ShapePublisher.h>
 
 #include "fastrtps/utils/TimeConversion.h"
 
@@ -143,10 +143,10 @@ void PublishDialog::setShapeAttributes(ShapePublisher* SP)
     else if(this->ui->combo_Color->currentText() == QString("BLACK"))
         SP->m_shape.define(SD_BLACK);
     //SIZE:
-    SP->m_shape.m_size = this->ui->spin_Size->value();
+    SP->m_shape.m_shape.shapesize(this->ui->spin_Size->value());
     //POSITION IS RANDOM:
-    SP->m_shape.m_x = this->mp_sd->getRandomX(SP->m_shape.m_size);
-    SP->m_shape.m_y = this->mp_sd->getRandomY(SP->m_shape.m_size);
+    SP->m_shape.m_shape.x(this->mp_sd->getRandomX(SP->m_shape.m_shape.shapesize()));
+    SP->m_shape.m_shape.y(this->mp_sd->getRandomY(SP->m_shape.m_shape.shapesize()));
 
 }
 

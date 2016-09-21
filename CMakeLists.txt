@@ -148,8 +148,9 @@ set( SHAPESDEMO_SOURCES
     src/qt/mainwindow.cpp 
     src/qt/publishdialog.cpp 
     src/qt/subscribedialog.cpp 
+    src/shapesdemo/Shape.cxx
     src/shapesdemo/ShapesDemo.cpp
-    src/shapesdemo/ShapeTopicDataType.cpp
+    src/shapesdemo/ShapePubSubTypes.cxx
 #   src/utils/md5.cpp
     src/main.cpp 
     src/shapesdemo/ShapePublisher.cpp

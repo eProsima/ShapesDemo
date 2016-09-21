@@ -14,12 +14,13 @@
 #ifndef SHAPEPUBLISHER_H_
 #define SHAPEPUBLISHER_H_
 
-#include "eprosimashapesdemo/shapesdemo/Shape.h"
-#include <QMutex>
-#include "fastrtps/attributes/PublisherAttributes.h"
-#include "fastrtps/publisher/PublisherListener.h"
+#include "ShapeInfo.h"
 
-#include "fastrtps/fastrtps_fwd.h"
+#include <QMutex>
+#include <fastrtps/attributes/PublisherAttributes.h>
+#include <fastrtps/publisher/PublisherListener.h>
+
+#include <fastrtps/fastrtps_fwd.h>
 
 using namespace eprosima::fastrtps;
 
