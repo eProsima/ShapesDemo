@@ -43,6 +43,7 @@ inline QString getShapeQStr(const TYPESHAPE& shape)
     case CIRCLE: return "Circle";
     case TRIANGLE: return "Triangle";
     }
+    return "Square"; //Default to square if something unexpected happens
 }
 
 inline std::string getColorStr(const SD_COLOR& color)

@@ -44,8 +44,8 @@ private slots:
 protected:
     void run(void);
 private:
-    QTimer* m_timer;
     MainWindow* m_mainW;
+    QTimer* m_timer;
     uint32_t m_interval;
     uint32_t m_threadNumber;
     bool m_hasIntervalChanged;
