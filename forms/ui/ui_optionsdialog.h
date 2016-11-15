@@ -150,7 +150,7 @@ public:
         spin_updateInterval->setSpecialValueText(QString());
         spin_updateInterval->setSuffix(QString());
         label_2->setText(QApplication::translate("OptionsDialog", "Update interval (ms):", 0));
-        label_3->setText(QApplication::translate("OptionsDialog", "Length:", 0));
+        label_3->setText(QApplication::translate("OptionsDialog", "Speed:", 0));
     } // retranslateUi
 
 };
