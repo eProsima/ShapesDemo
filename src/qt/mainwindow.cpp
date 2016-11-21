@@ -377,8 +377,8 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_actionUser_Manual_triggered()
 {
     //QDesktopServices::openUrl(QUrl("file:///C:/Program Files/eProsima/FastRTPS/doc/pdf/FastRTPS_ShapesDemo_User_Manual.pdf"));
-    QDesktopServices::openUrl(QUrl("http://git.sambaserver.eprosima.com/rtps/shapesdemo/source/README.md"));
-    QDesktopServices::openUrl(QUrl("http://eprosima-fast-rtps.readthedocs.io/en/latest/geninfo.html"));
+    //QDesktopServices::openUrl(QUrl("http://git.sambaserver.eprosima.com/rtps/shapesdemo/source/README.md"));
+    QDesktopServices::openUrl(QUrl("http://eprosima-shapes-demo.readthedocs.io/en/latest/"));
     //QString str(QDir::currentPath());
      //str.append("/FASTRTPSGEN_User_Manual.pdf");
     //QDesktopServices::openUrl(QUrl(str, QUrl::TolerantMode));
