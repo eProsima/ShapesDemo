@@ -50,17 +50,14 @@ public:
     QGridLayout *gridLayout;
     QSpacerItem *verticalSpacer_3;
     QSpacerItem *horizontalSpacer_2;
-    QPushButton *bt_subscribe;
-    QSpacerItem *verticalSpacer_2;
     QFrame *frameDraw;
     QHBoxLayout *horizontalLayout;
     QFrame *frameDraw2;
     QVBoxLayout *verticalLayout_5;
     DrawArea *areaDraw;
     ContentFilterSelector *widget_contentFilter;
+    QPushButton *bt_subscribe;
     QPushButton *bt_publish;
-    QSpacerItem *verticalSpacer_4;
-    QSpacerItem *verticalSpacer;
     QTabWidget *tabWidget;
     QWidget *tab_endpoints;
     QVBoxLayout *verticalLayout_2;
@@ -79,7 +76,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(465, 650);
+        MainWindow->resize(374, 501);
         actionPreferences = new QAction(MainWindow);
         actionPreferences->setObjectName(QStringLiteral("actionPreferences"));
         actionStart = new QAction(MainWindow);
@@ -109,33 +106,19 @@ public:
         gridLayout->setVerticalSpacing(4);
         verticalSpacer_3 = new QSpacerItem(20, 10, QSizePolicy::Minimum, QSizePolicy::Preferred);
 
-        gridLayout->addItem(verticalSpacer_3, 6, 0, 1, 3);
+        gridLayout->addItem(verticalSpacer_3, 5, 0, 1, 3);
 
         horizontalSpacer_2 = new QSpacerItem(10, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-        gridLayout->addItem(horizontalSpacer_2, 0, 1, 6, 1);
-
-        bt_subscribe = new QPushButton(centralWidget);
-        bt_subscribe->setObjectName(QStringLiteral("bt_subscribe"));
-        QSizePolicy sizePolicy(QSizePolicy::Maximum, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(bt_subscribe->sizePolicy().hasHeightForWidth());
-        bt_subscribe->setSizePolicy(sizePolicy);
-
-        gridLayout->addWidget(bt_subscribe, 3, 0, 2, 1);
-
-        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        gridLayout->addItem(verticalSpacer_2, 5, 0, 1, 1);
+        gridLayout->addItem(horizontalSpacer_2, 0, 1, 5, 1);
 
         frameDraw = new QFrame(centralWidget);
         frameDraw->setObjectName(QStringLiteral("frameDraw"));
-        QSizePolicy sizePolicy1(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(frameDraw->sizePolicy().hasHeightForWidth());
-        frameDraw->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(frameDraw->sizePolicy().hasHeightForWidth());
+        frameDraw->setSizePolicy(sizePolicy);
         frameDraw->setMinimumSize(QSize(265, 287));
         frameDraw->setLayoutDirection(Qt::LeftToRight);
         frameDraw->setStyleSheet(QStringLiteral(""));
@@ -147,11 +130,11 @@ public:
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         frameDraw2 = new QFrame(frameDraw);
         frameDraw2->setObjectName(QStringLiteral("frameDraw2"));
-        QSizePolicy sizePolicy2(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(frameDraw2->sizePolicy().hasHeightForWidth());
-        frameDraw2->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(frameDraw2->sizePolicy().hasHeightForWidth());
+        frameDraw2->setSizePolicy(sizePolicy1);
         frameDraw2->setMinimumSize(QSize(237, 267));
         frameDraw2->setMaximumSize(QSize(237, 267));
         frameDraw2->setStyleSheet(QStringLiteral("QFrame#frameDraw2{border: 1px inset black;}"));
@@ -165,8 +148,8 @@ public:
         verticalLayout_5->setContentsMargins(0, 0, 0, 0);
         areaDraw = new DrawArea(frameDraw2);
         areaDraw->setObjectName(QStringLiteral("areaDraw"));
-        sizePolicy2.setHeightForWidth(areaDraw->sizePolicy().hasHeightForWidth());
-        areaDraw->setSizePolicy(sizePolicy2);
+        sizePolicy1.setHeightForWidth(areaDraw->sizePolicy().hasHeightForWidth());
+        areaDraw->setSizePolicy(sizePolicy1);
         areaDraw->setMinimumSize(QSize(235, 265));
         areaDraw->setMaximumSize(QSize(235, 265));
         areaDraw->setContextMenuPolicy(Qt::NoContextMenu);
@@ -183,22 +166,24 @@ public:
         horizontalLayout->addWidget(frameDraw2);
 
 
-        gridLayout->addWidget(frameDraw, 0, 2, 6, 1);
+        gridLayout->addWidget(frameDraw, 0, 2, 5, 1);
+
+        bt_subscribe = new QPushButton(centralWidget);
+        bt_subscribe->setObjectName(QStringLiteral("bt_subscribe"));
+        QSizePolicy sizePolicy2(QSizePolicy::Maximum, QSizePolicy::Ignored);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(bt_subscribe->sizePolicy().hasHeightForWidth());
+        bt_subscribe->setSizePolicy(sizePolicy2);
+
+        gridLayout->addWidget(bt_subscribe, 3, 0, 1, 1);
 
         bt_publish = new QPushButton(centralWidget);
         bt_publish->setObjectName(QStringLiteral("bt_publish"));
-        sizePolicy.setHeightForWidth(bt_publish->sizePolicy().hasHeightForWidth());
-        bt_publish->setSizePolicy(sizePolicy);
+        sizePolicy2.setHeightForWidth(bt_publish->sizePolicy().hasHeightForWidth());
+        bt_publish->setSizePolicy(sizePolicy2);
 
         gridLayout->addWidget(bt_publish, 1, 0, 1, 1);
-
-        verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        gridLayout->addItem(verticalSpacer_4, 0, 0, 1, 1);
-
-        verticalSpacer = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-        gridLayout->addItem(verticalSpacer, 2, 0, 1, 1);
 
 
         verticalLayout->addLayout(gridLayout);
@@ -214,6 +199,11 @@ public:
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
         tableEndpoint = new QTableView(tab_endpoints);
         tableEndpoint->setObjectName(QStringLiteral("tableEndpoint"));
+        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Ignored);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(tableEndpoint->sizePolicy().hasHeightForWidth());
+        tableEndpoint->setSizePolicy(sizePolicy3);
         QFont font;
         font.setPointSize(9);
         tableEndpoint->setFont(font);
@@ -252,7 +242,7 @@ public:
         MainWindow->setStatusBar(statusBar);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 465, 21));
+        menuBar->setGeometry(QRect(0, 0, 374, 21));
         menuOptions = new QMenu(menuBar);
         menuOptions->setObjectName(QStringLiteral("menuOptions"));
         menuControl = new QMenu(menuBar);
