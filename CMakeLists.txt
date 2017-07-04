@@ -1,4 +1,4 @@
-# Copyright 2016 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+# Copyright 2017 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -124,8 +124,6 @@ find_eprosima_package(fastrtps OPTION TINYXML2_FROM_SOURCE)
 ###############################################################################
 # Compile 
 ###############################################################################
-include(${PROJECT_SOURCE_DIR}/cmake/dev/set_sources.cmake)
-
 # Find requirements
 find_package(fastrtps REQUIRED)
 
