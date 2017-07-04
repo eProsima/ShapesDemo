@@ -40,8 +40,11 @@ ShapeTypePubSubType::~ShapeTypePubSubType() {
 bool ShapeTypePubSubType::serialize(void *data, SerializedPayload_t *payload) {
 	ShapeType *p_type = (ShapeType*) data;
 	eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size); // Object that manages the raw buffer.
-	eprosima::fastcdr::Cdr ser(fastbuffer); 	// Object that serializes the data.
+    eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
+            eprosima::fastcdr::Cdr::DDS_CDR);
     payload->encapsulation = ser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
+    // Serialize encapsulation
+    ser.serialize_encapsulation();
 	p_type->serialize(ser); 	// Serialize the object:
     payload->length = (uint32_t)ser.getSerializedDataLength(); 	//Get the serialized length
 	return true;
@@ -50,7 +53,11 @@ bool ShapeTypePubSubType::serialize(void *data, SerializedPayload_t *payload) {
 bool ShapeTypePubSubType::deserialize(SerializedPayload_t* payload, void* data) {
 	ShapeType* p_type = (ShapeType*) data; 	//Convert DATA to pointer of your type
 	eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length); 	// Object that manages the raw buffer.
-	eprosima::fastcdr::Cdr deser(fastbuffer, payload->encapsulation == CDR_BE ? eprosima::fastcdr::Cdr::BIG_ENDIANNESS : eprosima::fastcdr::Cdr::LITTLE_ENDIANNESS); 	// Object that deserializes the data.
+    eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
+            eprosima::fastcdr::Cdr::DDS_CDR); // Object that deserializes the data.
+    // Deserialize encapsulation.
+    deser.read_encapsulation();
+    payload->encapsulation = deser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
 	p_type->deserialize(deser);	//Deserialize the object:
 	return true;
 }

@@ -80,13 +80,6 @@ endif()
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/modules)
 
 ###############################################################################
-# Check libraries
-###############################################################################
-include(${PROJECT_SOURCE_DIR}/cmake/dev/boost_libraries.cmake)
-set(BOOST_LIBRARIES_DEFAULT thread system date_time chrono regex atomic)
-check_boost(${BOOST_LIBRARIES_DEFAULT})
-
-###############################################################################
 # Load external eProsima projects.
 ###############################################################################
 ###
@@ -126,7 +119,7 @@ if(EPROSIMA_BUILD)
 endif()
 
 find_eprosima_package(fastcdr)
-find_eprosima_package(fastrtps USE_BOOST)
+find_eprosima_package(fastrtps OPTION TINYXML2_FROM_SOURCE)
 
 ###############################################################################
 # Compile 

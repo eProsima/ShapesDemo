@@ -52,22 +52,16 @@ void ShapePublisher::write()
     if(mp_pub !=nullptr)
     {
         mp_pub->write((void*)&this->m_shape.m_shape);
-        //cout << "Trying to lock ShapePub: "<<std::flush;
         m_mutex.lock();
-     //   cout << " OK "<<std::flush;
         hasWritten = true;
         m_mutex.unlock();
-
-       // cout << " UNLOCKED ShapePub"<<endl;
     }
 }
 
 void ShapePublisher::onPublicationMatched(Publisher* /*pub*/, MatchingInfo& info)
 {
     if(info.status == MATCHED_MATCHING)
-        cout << "Publisher  in topic " << m_attributes.topic.getTopicName() << " MATCHES Sub: "<< info.remoteEndpointGuid << "*****************************"<<endl;
+        std::cout << "Publisher  in topic " << m_attributes.topic.getTopicName() << " MATCHES Sub: " << info.remoteEndpointGuid << "*****************************" << std::endl;
     else if(info.status == REMOVED_MATCHING)
-        cout << "Publisher  in topic " << m_attributes.topic.getTopicName() << " REMOVES Sub: " << info.remoteEndpointGuid << "*****************************"<<endl;
+        std::cout << "Publisher  in topic " << m_attributes.topic.getTopicName() << " REMOVES Sub: " << info.remoteEndpointGuid << "*****************************" << std::endl;
 }
-
-

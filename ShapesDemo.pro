@@ -62,9 +62,9 @@ INCLUDEPATH += $$PWD/thirdparty/eprosima-common-code
 
 
 
-unix: LIBS += -lboost_thread -lboost_system -lboost_date_time
-#win32:INCLUDEPATH += $(LIB_BOOST_PATH)/
-win32:LIBS += -L$(LIB_BOOST_PATH)/lib/i86Win32VS2010/
+# unix: LIBS +=
+# win32:INCLUDEPATH += $(LIB_BOOST_PATH)/
+# win32:LIBS +=
 
 
 HEADERS += \
