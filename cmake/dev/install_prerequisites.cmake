@@ -1,5 +1,5 @@
 macro(install_prerequisites target)
-    if(EPROSIMA_BUILD)
+    if(THIRDPARTY)
         file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/install_prerequisites_for_${target}.cmake
             "message(STATUS \"Getting prerequisites for target \${TARGET_FILE}\")\n"
             "set(CMAKE_PREFIX_PATH \"${CMAKE_PREFIX_PATH}\" \"${BOOST_LIBRARYDIR}\" \"${PROJECT_BINARY_DIR}/external/install/${BIN_INSTALL_DIR}\")\n"
