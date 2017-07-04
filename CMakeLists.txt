@@ -127,7 +127,6 @@ find_eprosima_package(fastrtps OPTION TINYXML2_FROM_SOURCE)
 include(${PROJECT_SOURCE_DIR}/cmake/dev/set_sources.cmake)
 
 # Find requirements
-find_package(Boost REQUIRED COMPONENTS thread system chrono regex)
 find_package(fastrtps REQUIRED)
 
 set(CMAKE_AUTORCC ON)
@@ -172,8 +171,8 @@ if(WIN32)
 else()
     add_executable(${PROJECT_NAME} ${SHAPESDEMO_SOURCES})
 endif()
-target_include_directories(${PROJECT_NAME} PRIVATE include forms/ui ${Boost_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} fastrtps fastcdr ${Boost_LIBRARIES} Qt5::Widgets Qt5::Core Qt5::Gui)
+target_include_directories(${PROJECT_NAME} PRIVATE include forms/ui)
+target_link_libraries(${PROJECT_NAME} fastrtps fastcdr Qt5::Widgets Qt5::Core Qt5::Gui)
 
 ###############################################################################
 # Install
