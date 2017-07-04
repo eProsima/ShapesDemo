@@ -6,13 +6,13 @@ It can be used to demonstrate the capabilities of eProsima Fast RTPS or as an in
 
 ## Building from sources
 
-You will need Qt5 and eProsima Fast RTPS 1.3.0+ to build the Shapes Demo. The default configuration assumes you have eProsima Fast RTPS installed in your system: 
+You will need Qt5, eProsima Fast CDR and eProsima Fast RTPS to build the Shapes Demo. The default configuration assumes you have eProsima libraries installed in your system: 
 
     $ mkdir build; cd build;
     $ cmake ../
     $ make
 
-If you do not have eProsima Fast RTPS installed in your system, you can build it as a dependency by specifying 
+If you do not have eProsima libraries installed in your system, you can build it as a dependency by specifying 
 
     $ cmake ../ -DTHIRDPARTY=ON
 
