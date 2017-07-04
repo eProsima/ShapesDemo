@@ -369,7 +369,7 @@ void MainWindow::on_actionAbout_triggered()
     msgBox.setWindowTitle("About");
     msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setTextFormat(Qt::RichText);   //this is what makes the links clickable
-    msgBox.setText(QString("<p><strong>eProsima Shapes Demo 1.0.0</strong></p><p>Copyright (C) eProsima 2015</p> <p><a href=http://www.eProsima.com>http:://www.eProsima.com</a></p>"));
+    msgBox.setText(QString("<p><strong>eProsima Shapes Demo 1.3.1</strong></p><p>Copyright (C) eProsima 2016</p> <p><a href=http://www.eProsima.com>http:://www.eProsima.com</a></p>"));
     msgBox.exec();
 
 }
@@ -377,8 +377,8 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_actionUser_Manual_triggered()
 {
     //QDesktopServices::openUrl(QUrl("file:///C:/Program Files/eProsima/FastRTPS/doc/pdf/FastRTPS_ShapesDemo_User_Manual.pdf"));
-    QDesktopServices::openUrl(QUrl("http://git.sambaserver.eprosima.com/rtps/shapesdemo/source/README.md"));
-    QDesktopServices::openUrl(QUrl("http://eprosima-fast-rtps.readthedocs.io/en/latest/geninfo.html"));
+    //QDesktopServices::openUrl(QUrl("http://git.sambaserver.eprosima.com/rtps/shapesdemo/source/README.md"));
+    QDesktopServices::openUrl(QUrl("http://eprosima-shapes-demo.readthedocs.io/en/latest/"));
     //QString str(QDir::currentPath());
      //str.append("/FASTRTPSGEN_User_Manual.pdf");
     //QDesktopServices::openUrl(QUrl(str, QUrl::TolerantMode));
@@ -387,7 +387,7 @@ void MainWindow::on_actionUser_Manual_triggered()
 void MainWindow::on_actionInteroperability_Troubleshooting_triggered()
 {
     //QDesktopServices::openUrl(QUrl("file:///C:/Program Files/eProsima/FastRTPS/doc/pdf/FastRTPS_ShapesDemo_Interoperability_Troubleshooting.pdf"));
-     QDesktopServices::openUrl(QUrl("http://git.sambaserver.eprosima.com/rtps/shapesdemo/source/TROUBLESHOOTING.md"));
+     QDesktopServices::openUrl(QUrl("http://eprosima-shapes-demo.readthedocs.io/en/latest/troubleshooting.html"));
 
     //QString str(QDir::currentPath());
 

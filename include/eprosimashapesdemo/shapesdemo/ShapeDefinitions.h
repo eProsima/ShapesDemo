@@ -58,7 +58,7 @@ inline std::string getColorStr(const SD_COLOR color)
     case SD_GREEN: return "GREEN";break;
     case SD_YELLOW: return "YELLOW";break;
     case SD_CYAN: return "CYAN";break;
-    case SD_MAGENTA: return "MAGNETA";break;
+    case SD_MAGENTA: return "MAGENTA";break;
     case SD_ORANGE: return "ORANGE";break;
     case SD_GRAY: return "GRAY"; break;
     case SD_BLACK: return "BLACK"; break;

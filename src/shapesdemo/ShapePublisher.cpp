@@ -38,6 +38,9 @@ ShapePublisher::~ShapePublisher()
 
 bool ShapePublisher::initPublisher()
 {
+    m_attributes.times.heartbeatPeriod.seconds = 0;
+    m_attributes.times.heartbeatPeriod.fraction = 4294967 * 500;
+
     mp_pub = Domain::createPublisher(mp_participant,m_attributes,(PublisherListener*)this);
     if(mp_pub !=nullptr)
     {

@@ -31,53 +31,71 @@ class Ui_OptionsDialog
 public:
     QVBoxLayout *verticalLayout;
     QGridLayout *gridLayout;
-    QLabel *label;
     QSpinBox *spin_domainId;
-    QSpacerItem *verticalSpacer;
-    QPushButton *pushButton_start;
     QPushButton *pushButton_stop;
-    QLabel *label_4;
-    QSpinBox *spin_updateInterval;
-    QSlider *horizontalSlider_speed;
-    QLabel *label_2;
+    QPushButton *pushButton_start;
+    QLabel *label;
+    QSpacerItem *verticalSpacer;
     QLabel *label_3;
+    QSpinBox *spin_updateInterval;
+    QLabel *label_2;
+    QLabel *label_4;
+    QSlider *horizontalSlider_speed;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *OptionsDialog)
     {
         if (OptionsDialog->objectName().isEmpty())
             OptionsDialog->setObjectName(QStringLiteral("OptionsDialog"));
-        OptionsDialog->resize(400, 196);
+        OptionsDialog->resize(400, 161);
         verticalLayout = new QVBoxLayout(OptionsDialog);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        label = new QLabel(OptionsDialog);
-        label->setObjectName(QStringLiteral("label"));
-
-        gridLayout->addWidget(label, 0, 0, 1, 1);
-
         spin_domainId = new QSpinBox(OptionsDialog);
         spin_domainId->setObjectName(QStringLiteral("spin_domainId"));
         spin_domainId->setValue(80);
 
-        gridLayout->addWidget(spin_domainId, 0, 2, 1, 1);
-
-        verticalSpacer = new QSpacerItem(20, 10, QSizePolicy::Minimum, QSizePolicy::Minimum);
-
-        gridLayout->addItem(verticalSpacer, 1, 0, 1, 3);
-
-        pushButton_start = new QPushButton(OptionsDialog);
-        pushButton_start->setObjectName(QStringLiteral("pushButton_start"));
-        pushButton_start->setFocusPolicy(Qt::TabFocus);
-
-        gridLayout->addWidget(pushButton_start, 0, 3, 1, 1);
+        gridLayout->addWidget(spin_domainId, 0, 1, 1, 1);
 
         pushButton_stop = new QPushButton(OptionsDialog);
         pushButton_stop->setObjectName(QStringLiteral("pushButton_stop"));
         pushButton_stop->setFocusPolicy(Qt::TabFocus);
 
-        gridLayout->addWidget(pushButton_stop, 0, 4, 1, 1);
+        gridLayout->addWidget(pushButton_stop, 0, 3, 1, 1);
+
+        pushButton_start = new QPushButton(OptionsDialog);
+        pushButton_start->setObjectName(QStringLiteral("pushButton_start"));
+        pushButton_start->setFocusPolicy(Qt::TabFocus);
+
+        gridLayout->addWidget(pushButton_start, 0, 2, 1, 1);
+
+        label = new QLabel(OptionsDialog);
+        label->setObjectName(QStringLiteral("label"));
+
+        gridLayout->addWidget(label, 0, 0, 1, 1);
+
+        verticalSpacer = new QSpacerItem(20, 10, QSizePolicy::Minimum, QSizePolicy::Minimum);
+
+        gridLayout->addItem(verticalSpacer, 1, 0, 1, 3);
+
+        label_3 = new QLabel(OptionsDialog);
+        label_3->setObjectName(QStringLiteral("label_3"));
+
+        gridLayout->addWidget(label_3, 5, 0, 1, 1);
+
+        spin_updateInterval = new QSpinBox(OptionsDialog);
+        spin_updateInterval->setObjectName(QStringLiteral("spin_updateInterval"));
+        spin_updateInterval->setMinimum(50);
+        spin_updateInterval->setMaximum(10000);
+        spin_updateInterval->setValue(75);
+
+        gridLayout->addWidget(spin_updateInterval, 4, 2, 1, 1);
+
+        label_2 = new QLabel(OptionsDialog);
+        label_2->setObjectName(QStringLiteral("label_2"));
+
+        gridLayout->addWidget(label_2, 4, 0, 1, 1);
 
         label_4 = new QLabel(OptionsDialog);
         label_4->setObjectName(QStringLiteral("label_4"));
@@ -86,15 +104,7 @@ public:
         font.setWeight(75);
         label_4->setFont(font);
 
-        gridLayout->addWidget(label_4, 2, 0, 1, 3);
-
-        spin_updateInterval = new QSpinBox(OptionsDialog);
-        spin_updateInterval->setObjectName(QStringLiteral("spin_updateInterval"));
-        spin_updateInterval->setMinimum(50);
-        spin_updateInterval->setMaximum(10000);
-        spin_updateInterval->setValue(75);
-
-        gridLayout->addWidget(spin_updateInterval, 3, 3, 1, 2);
+        gridLayout->addWidget(label_4, 2, 0, 1, 2);
 
         horizontalSlider_speed = new QSlider(OptionsDialog);
         horizontalSlider_speed->setObjectName(QStringLiteral("horizontalSlider_speed"));
@@ -103,17 +113,7 @@ public:
         horizontalSlider_speed->setValue(5);
         horizontalSlider_speed->setOrientation(Qt::Horizontal);
 
-        gridLayout->addWidget(horizontalSlider_speed, 4, 3, 1, 2);
-
-        label_2 = new QLabel(OptionsDialog);
-        label_2->setObjectName(QStringLiteral("label_2"));
-
-        gridLayout->addWidget(label_2, 3, 0, 1, 3);
-
-        label_3 = new QLabel(OptionsDialog);
-        label_3->setObjectName(QStringLiteral("label_3"));
-
-        gridLayout->addWidget(label_3, 4, 0, 1, 3);
+        gridLayout->addWidget(horizontalSlider_speed, 5, 1, 1, 3);
 
 
         verticalLayout->addLayout(gridLayout);
@@ -125,11 +125,6 @@ public:
 
         verticalLayout->addWidget(buttonBox);
 
-        QWidget::setTabOrder(spin_domainId, pushButton_start);
-        QWidget::setTabOrder(pushButton_start, pushButton_stop);
-        QWidget::setTabOrder(pushButton_stop, spin_updateInterval);
-        QWidget::setTabOrder(spin_updateInterval, horizontalSlider_speed);
-        QWidget::setTabOrder(horizontalSlider_speed, buttonBox);
 
         retranslateUi(OptionsDialog);
         QObject::connect(buttonBox, SIGNAL(accepted()), OptionsDialog, SLOT(accept()));
@@ -141,16 +136,16 @@ public:
     void retranslateUi(QDialog *OptionsDialog)
     {
         OptionsDialog->setWindowTitle(QApplication::translate("OptionsDialog", "Options", 0));
-        label->setText(QApplication::translate("OptionsDialog", "Domain ID:", 0));
         spin_domainId->setSpecialValueText(QString());
         spin_domainId->setSuffix(QString());
-        pushButton_start->setText(QApplication::translate("OptionsDialog", "Start", 0));
         pushButton_stop->setText(QApplication::translate("OptionsDialog", "Stop", 0));
-        label_4->setText(QApplication::translate("OptionsDialog", "Shape Movements:", 0));
+        pushButton_start->setText(QApplication::translate("OptionsDialog", "Start", 0));
+        label->setText(QApplication::translate("OptionsDialog", "Domain ID:", 0));
+        label_3->setText(QApplication::translate("OptionsDialog", "Speed:", 0));
         spin_updateInterval->setSpecialValueText(QString());
         spin_updateInterval->setSuffix(QString());
         label_2->setText(QApplication::translate("OptionsDialog", "Update interval (ms):", 0));
-        label_3->setText(QApplication::translate("OptionsDialog", "Length:", 0));
+        label_4->setText(QApplication::translate("OptionsDialog", "Shape Movements:", 0));
     } // retranslateUi
 
 };
