@@ -1,6 +1,10 @@
 [submodule "thirdparty/Fast-RTPS"]
 	path = thirdparty/fastrtps
 	url = http://github.com/eProsima/Fast-RTPS
+    branch = master
+    shallow = true
 [submodule "thirdparty/Fast-CDR"]
 	path = thirdparty/fastcdr
 	url = http://github.com/eProsima/Fast-CDR
+    branch = master
+    shallow = true
