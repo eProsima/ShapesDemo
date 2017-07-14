@@ -70,6 +70,10 @@ macro(find_eprosima_package package)
                 "BINARY_DIR \"${${package}ExternalDir}/build\"\n"
                 ")\n")
 
+            if(NOT "$ENV{CMAKE_MAKEFLAGS}" STREQUAL "")
+                set(ENV{MAKEFLAGS} "$ENV{CMAKE_MAKEFLAGS}")
+            endif()
+
             execute_process(COMMAND ${CMAKE_COMMAND}
                 -G ${CMAKE_GENERATOR}
                 ${BUILD_OPTION}
