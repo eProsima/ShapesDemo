@@ -74,9 +74,6 @@ void SubscribeDialog::on_buttonBox_accepted()
     SSub->m_attributes.topic.historyQos.kind = KEEP_LAST_HISTORY_QOS;
     SSub->m_attributes.topic.historyQos.depth = this->ui->spin_HistoryQos->value();
     SSub->m_shapeHistory.m_history_depth = this->ui->spin_HistoryQos->value();
-    SSub->m_attributes.topic.resourceLimitsQos.max_instances = 20;
-    SSub->m_attributes.topic.resourceLimitsQos.max_samples_per_instance = this->ui->spin_HistoryQos->value();
-    SSub->m_attributes.topic.resourceLimitsQos.max_samples = this->ui->spin_HistoryQos->value()*20;
 
     //SSub->m_attributes.qos.m_durabilityService.hasChanged = true;
     //SSub->m_attributes.qos.m_timeBasedFilter.hasChanged = true;
