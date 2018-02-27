@@ -132,12 +132,13 @@ void DrawArea::paintShape(QPainter* painter, Shape &shape, uint8_t alpha, bool i
 {
     painter->save();
     m_pen.setColor(SD_QT_BLACK);
-    if(isHistory)
-        m_pen.setStyle(Qt::DotLine);
-    else
-        m_pen.setStyle(Qt::SolidLine);
+    m_pen.setStyle(isHistory ? Qt::DotLine : Qt::SolidLine);
     painter->setPen(m_pen);
-    QColor auxc = SD_COLOR2QColor(getColor(shape.m_shape.color().at(0), shape.m_shape.color().at(2)));
+    QColor auxc = SD_QT_BLACK;
+    if(shape.m_shape.color().size() >= 3)
+    {
+        auxc = SD_COLOR2QColor(getColor(shape.m_shape.color().at(0), shape.m_shape.color().at(2)));
+    }
     auxc.setAlpha(alpha);
     m_brush.setColor(auxc);
     m_brush.setStyle(Qt::SolidPattern);
