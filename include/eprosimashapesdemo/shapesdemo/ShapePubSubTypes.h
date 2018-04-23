@@ -39,10 +39,10 @@ public:
 
 	ShapeTypePubSubType();
 	virtual ~ShapeTypePubSubType();
-	bool serialize(void *data, SerializedPayload_t *payload);
-	bool deserialize(SerializedPayload_t *payload, void *data);
+    bool serialize(void *data, rtps::SerializedPayload_t *payload);
+    bool deserialize(rtps::SerializedPayload_t *payload, void *data);
         std::function<uint32_t()> getSerializedSizeProvider(void* data);
-	bool getKey(void *data, InstanceHandle_t *ihandle);
+    bool getKey(void *data, rtps::InstanceHandle_t *ihandle);
 	void* createData();
 	void deleteData(void * data);
 	MD5 m_md5;

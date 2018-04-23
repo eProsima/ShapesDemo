@@ -37,7 +37,7 @@ ShapeTypePubSubType::~ShapeTypePubSubType() {
         free(m_keyBuffer);
 }
 
-bool ShapeTypePubSubType::serialize(void *data, SerializedPayload_t *payload) {
+bool ShapeTypePubSubType::serialize(void *data, rtps::SerializedPayload_t *payload) {
     ShapeType *p_type = (ShapeType*) data;
     eprosima::fastcdr::FastBuffer fastbuffer((char*) payload->data, payload->max_size); // Object that manages the raw buffer.
     eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
@@ -59,7 +59,7 @@ bool ShapeTypePubSubType::serialize(void *data, SerializedPayload_t *payload) {
     return true;
 }
 
-bool ShapeTypePubSubType::deserialize(SerializedPayload_t* payload, void* data) {
+bool ShapeTypePubSubType::deserialize(rtps::SerializedPayload_t* payload, void* data) {
     ShapeType* p_type = (ShapeType*) data; 	//Convert DATA to pointer of your type
     eprosima::fastcdr::FastBuffer fastbuffer((char*)payload->data, payload->length); 	// Object that manages the raw buffer.
     eprosima::fastcdr::Cdr deser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN,
@@ -92,7 +92,7 @@ void ShapeTypePubSubType::deleteData(void* data) {
     delete((ShapeType*)data);
 }
 
-bool ShapeTypePubSubType::getKey(void *data, InstanceHandle_t* handle) {
+bool ShapeTypePubSubType::getKey(void *data, rtps::InstanceHandle_t* handle) {
     if(!m_isGetKeyDefined)
         return false;
     ShapeType* p_type = (ShapeType*) data;
