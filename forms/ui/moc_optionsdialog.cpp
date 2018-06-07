@@ -19,7 +19,6 @@
 
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
-QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_OptionsDialog_t {
     QByteArrayData data[15];
     char stringdata0[398];
@@ -130,7 +129,7 @@ void OptionsDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
     }
 }
 
-QT_INIT_METAOBJECT const QMetaObject OptionsDialog::staticMetaObject = {
+const QMetaObject OptionsDialog::staticMetaObject = {
     { &QDialog::staticMetaObject, qt_meta_stringdata_OptionsDialog.data,
       qt_meta_data_OptionsDialog,  qt_static_metacall, nullptr, nullptr}
 };
