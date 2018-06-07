@@ -74,7 +74,6 @@ HEADERS += \
     include/eprosimashapesdemo/qt/subscribedialog.h \
     include/eprosimashapesdemo/shapesdemo/Shape.h \
     include/eprosimashapesdemo/shapesdemo/ShapesDemo.h \
-    include/eprosimashapesdemo/shapesdemo/ShapeTopicDataType.h \
     include/eprosimashapesdemo/utils/md5.h \
     include/eprosimashapesdemo/shapesdemo/ShapePublisher.h \
     include/eprosimashapesdemo/qt/UpdateThread.h \
@@ -91,7 +90,6 @@ SOURCES += \
     src/qt/publishdialog.cpp \
     src/qt/subscribedialog.cpp \
     src/shapesdemo/ShapesDemo.cpp \
-    src/shapesdemo/ShapeTopicDataType.cpp \
     src/utils/md5.cpp \
     src/main.cpp \
     src/shapesdemo/ShapePublisher.cpp \

@@ -43,11 +43,21 @@ using namespace eprosima::fastrtps;
 class ShapesDemoOptions
 {
 public:
+    bool m_udpTransport;
+    bool m_tcpServer;
+    uint32_t m_listenPort;
+    uint32_t m_serverPort;
+    std::string m_serverIp;
     uint32_t m_updateIntervalMs;
     uint32_t m_movementSpeed;
     uint32_t m_domainId;
     ShapesDemoOptions()
     {
+        m_udpTransport = true;
+        m_tcpServer = true;
+        m_listenPort = 5100;
+        m_serverPort = 5100;
+        m_serverIp = "127.0.0.1";
         m_updateIntervalMs = INITIAL_INTERVAL_MS;
         m_movementSpeed = 7;
         m_domainId = 0;

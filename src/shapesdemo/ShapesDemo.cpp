@@ -22,6 +22,7 @@
 #include <eprosimashapesdemo/shapesdemo/ShapeInfo.h>
 #include <eprosimashapesdemo/qt/mainwindow.h>
 
+#include <fastrtps/transport/TCPv4TransportDescriptor.h>
 #include <fastrtps/attributes/ParticipantAttributes.h>
 #include <fastrtps/Domain.h>
 #include <fastrtps/publisher/Publisher.h>
@@ -67,6 +68,74 @@ bool ShapesDemo::init()
         ParticipantAttributes pparam;
         pparam.rtps.setName("fastrtpsParticipant");
         pparam.rtps.builtin.domainId = m_options.m_domainId;
+
+        if (m_options.m_udpTransport)
+        {
+            pparam.rtps.useBuiltinTransports = true;
+        }
+        else
+        {
+            pparam.rtps.useBuiltinTransports = false;
+
+            std::shared_ptr<TCPv4TransportDescriptor> descriptor = std::make_shared<TCPv4TransportDescriptor>();
+
+            //descriptor->set_WAN_address("127.0.0.1");
+
+            if (m_options.m_tcpServer)
+            {
+                descriptor->set_metadata_logical_port(7401);
+                descriptor->add_listener_port(m_options.m_listenPort);
+
+                Locator_t initial_peer_locator;
+                initial_peer_locator.kind = LOCATOR_KIND_TCPv4;
+                initial_peer_locator.set_IP4_address("127.0.0.1");
+                initial_peer_locator.set_port(m_options.m_listenPort);
+                initial_peer_locator.set_logical_port(7400);
+                pparam.rtps.builtin.initialPeersList.push_back(initial_peer_locator); // Publisher doesn't need initial_peer
+
+                Locator_t unicast_locator;
+                unicast_locator.kind = LOCATOR_KIND_TCPv4;
+                unicast_locator.set_IP4_address("127.0.0.1");
+                unicast_locator.set_port(m_options.m_listenPort);
+                unicast_locator.set_logical_port(7410);
+                pparam.rtps.defaultUnicastLocatorList.push_back(unicast_locator); // Publisher's data channel
+
+                Locator_t meta_locator;
+                meta_locator.kind = LOCATOR_KIND_TCPv4;
+                meta_locator.set_IP4_address("127.0.0.1");
+                meta_locator.set_port(m_options.m_listenPort);
+                meta_locator.set_logical_port(descriptor->metadata_logical_port);
+                pparam.rtps.builtin.metatrafficUnicastLocatorList.push_back(meta_locator);  // Publisher's meta channel
+            }
+            else
+            {
+                descriptor->set_metadata_logical_port(7403);
+
+                Locator_t initial_peer_locator;
+                initial_peer_locator.kind = LOCATOR_KIND_TCPv4;
+                initial_peer_locator.set_IP4_address(m_options.m_serverIp);
+                initial_peer_locator.set_port(m_options.m_serverPort);
+                initial_peer_locator.set_logical_port(7401);
+                pparam.rtps.builtin.initialPeersList.push_back(initial_peer_locator); // Publisher's meta channel
+
+                Locator_t unicast_locator;
+                unicast_locator.kind = LOCATOR_KIND_TCPv4;
+                unicast_locator.set_IP4_address("127.0.0.1");
+                unicast_locator.set_port(m_options.m_serverPort);
+                unicast_locator.set_logical_port(7411);
+                pparam.rtps.defaultUnicastLocatorList.push_back(unicast_locator);
+
+                Locator_t meta_locator;
+                meta_locator.kind = LOCATOR_KIND_TCPv4;
+                meta_locator.set_IP4_address("127.0.0.1");
+                meta_locator.set_port(m_options.m_serverPort);
+                meta_locator.set_logical_port(descriptor->metadata_logical_port);
+                pparam.rtps.builtin.metatrafficUnicastLocatorList.push_back(meta_locator); // Subscriber's meta channel
+            }
+
+            pparam.rtps.userTransports.push_back(descriptor);
+        }
+
         /*pparam.rtps.builtin.leaseDuration.seconds = 100;
         pparam.rtps.builtin.leaseDuration_announcementperiod.seconds = 50;
         pparam.rtps.defaultSendPort = 10042;
