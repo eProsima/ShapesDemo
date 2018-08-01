@@ -90,14 +90,14 @@ bool ShapesDemo::init()
                 initial_peer_locator.kind = LOCATOR_KIND_TCPv4;
                 initial_peer_locator.set_IP4_address("127.0.0.1");
                 initial_peer_locator.set_port(m_options.m_listenPort);
-                initial_peer_locator.set_logical_port(7400);
+                //initial_peer_locator.set_logical_port(7400);
                 pparam.rtps.builtin.initialPeersList.push_back(initial_peer_locator); // Publisher doesn't need initial_peer
 
                 Locator_t unicast_locator;
                 unicast_locator.kind = LOCATOR_KIND_TCPv4;
                 unicast_locator.set_IP4_address("127.0.0.1");
                 unicast_locator.set_port(m_options.m_listenPort);
-                unicast_locator.set_logical_port(7410);
+                //unicast_locator.set_logical_port(7410);
                 pparam.rtps.defaultUnicastLocatorList.push_back(unicast_locator); // Publisher's data channel
 
                 Locator_t meta_locator;
@@ -115,14 +115,14 @@ bool ShapesDemo::init()
                 initial_peer_locator.kind = LOCATOR_KIND_TCPv4;
                 initial_peer_locator.set_IP4_address(m_options.m_serverIp);
                 initial_peer_locator.set_port(m_options.m_serverPort);
-                initial_peer_locator.set_logical_port(7401);
+                //initial_peer_locator.set_logical_port(7401);
                 pparam.rtps.builtin.initialPeersList.push_back(initial_peer_locator); // Publisher's meta channel
 
                 Locator_t unicast_locator;
                 unicast_locator.kind = LOCATOR_KIND_TCPv4;
                 unicast_locator.set_IP4_address("127.0.0.1");
                 unicast_locator.set_port(m_options.m_serverPort);
-                unicast_locator.set_logical_port(7411);
+                //unicast_locator.set_logical_port(7411);
                 pparam.rtps.defaultUnicastLocatorList.push_back(unicast_locator);
 
                 Locator_t meta_locator;
