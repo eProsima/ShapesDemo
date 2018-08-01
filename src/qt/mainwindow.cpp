@@ -376,7 +376,7 @@ void MainWindow::on_actionAbout_triggered()
     msgBox.setWindowTitle("About");
     msgBox.setStandardButtons(QMessageBox::Ok);
     msgBox.setTextFormat(Qt::RichText);   //this is what makes the links clickable
-    msgBox.setText(QString("<p><strong>eProsima Shapes Demo 1.5.0</strong></p><p>Copyright (C) eProsima 2017</p> <p><a href=http://www.eProsima.com>http:://www.eProsima.com</a></p>"));
+    msgBox.setText(QString("<p><strong>eProsima Shapes Demo 1.6.0</strong></p><p>Copyright (C) eProsima 2018</p> <p><a href=http://www.eProsima.com>http:://www.eProsima.com</a></p>"));
     msgBox.exec();
 
 }
