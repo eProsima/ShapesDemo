@@ -45,7 +45,7 @@ There are multiple parameters that the user can define in this menu:
 
 The Subscribe Window allows you to read and represent existing shapes on the network.
 
-![Subscriber Window](/docs/SubscriberWindow.png)
+![Subscriber Window](/docs/SubscriberScreen.png)
 
 This menu provides the options present in the Publish Windows plus the following additions:
 
