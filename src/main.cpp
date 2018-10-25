@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <asio.hpp>
 #include <eprosimashapesdemo/qt/mainwindow.h>
 #include <fastrtps/log/Log.h>
 #include <fastrtps/utils/eClock.h>
