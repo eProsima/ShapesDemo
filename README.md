@@ -8,9 +8,17 @@ It can be used to demonstrate the capabilities of eProsima Fast RTPS or as an in
 
 You will need Qt5, eProsima Fast CDR and eProsima Fast RTPS to build the Shapes Demo. The default configuration assumes you have eProsima libraries installed in your system: 
 
+#### Linux
+
     $ mkdir build; cd build;
     $ cmake ../
     $ make
+
+#### Windows
+
+    mkdir build; cd build;
+    cmake -G "Visual Studio 14 2015 Win64" ..
+    cmake --build .
 
 If you do not have eProsima libraries installed in your system, you can build it as a dependency by specifying 
 

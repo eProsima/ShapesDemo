@@ -81,6 +81,7 @@ bool ShapesDemo::init()
 
             std::shared_ptr<TCPv4TransportDescriptor> descriptor = std::make_shared<TCPv4TransportDescriptor>();
             descriptor->wait_for_tcp_negotiation = false;
+            descriptor->maxInitialPeersRange = 20;
 
             if (m_options.m_tcpServer)
             {
