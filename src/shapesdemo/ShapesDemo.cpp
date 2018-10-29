@@ -99,13 +99,9 @@ bool ShapesDemo::init()
             pparam.rtps.userTransports.push_back(descriptor);
         }
 
-        /*pparam.rtps.builtin.leaseDuration.seconds = 100;
-        pparam.rtps.builtin.leaseDuration_announcementperiod.seconds = 50;
-        pparam.rtps.defaultSendPort = 10042;
-        pparam.rtps.sendSocketBufferSize = 65536;
-        pparam.rtps.listenSocketBufferSize = 2*65536;
-        pparam.rtps.use_IP6_to_send = false;
-        pparam.rtps.use_IP4_to_send = true;*/
+        pparam.rtps.builtin.leaseDuration.seconds = 100;
+        pparam.rtps.builtin.leaseDuration_announcementperiod.seconds = 5;
+
         mp_participant = Domain::createParticipant(pparam);
         if(mp_participant!=nullptr)
         {
