@@ -97,6 +97,7 @@ bool ShapesDemo::init()
             }
 
             pparam.rtps.userTransports.push_back(descriptor);
+            pparam.rtps.builtin.leaseDuration_announcementperiod.seconds = 5;
         }
 
         mp_participant = Domain::createParticipant(pparam);
