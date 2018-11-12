@@ -17,6 +17,11 @@
 ###############################################################################
 cmake_minimum_required(VERSION 2.8.12)
 
+set(IS_TOP_LEVEL TRUE)
+if(PROJECT_SOURCE_DIR)
+    set(IS_TOP_LEVEL FALSE)
+endif()
+
 # Set CMAKE_BUILD_TYPE to Release by default.
 if(DEFINED CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING
@@ -62,7 +67,7 @@ endif()
 ###############################################################################
 # Test system configuration
 ###############################################################################
-include(${PROJECT_SOURCE_DIR}/cmake/dev/check_configuration.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/common/check_configuration.cmake)
 check_stdcxx()
 check_compile_feature()
 check_endianness()
@@ -111,22 +116,19 @@ option(EPROSIMA_BUILD "Activate internal building" OFF)
 ###############################################################################
 # Load external eProsima projects.
 ###############################################################################
-include(${PROJECT_SOURCE_DIR}/cmake/dev/eprosima_libraries.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/common/eprosima_libraries.cmake)
 option(THIRDPARTY "Activate the build of thirdparties" OFF)
 
 if(EPROSIMA_BUILD)
     set(THIRDPARTY ON)
 endif()
 
-find_eprosima_package(fastcdr)
-find_eprosima_package(fastrtps OPTION TINYXML2_FROM_SOURCE)
+eprosima_find_package(fastcdr)
+eprosima_find_package(fastrtps OPTION TINYXML2_FROM_SOURCE)
 
 ###############################################################################
 # Compile 
 ###############################################################################
-# Find requirements
-find_package(fastrtps REQUIRED)
-
 set(CMAKE_AUTORCC ON)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)

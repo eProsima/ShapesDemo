@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/*! 
+/*!
  * @file ShapePubSubTypes.cpp
  * This header file contains the implementation of the serialization functions.
  *
@@ -92,14 +92,14 @@ void ShapeTypePubSubType::deleteData(void* data) {
     delete((ShapeType*)data);
 }
 
-bool ShapeTypePubSubType::getKey(void *data, rtps::InstanceHandle_t* handle) {
+bool ShapeTypePubSubType::getKey(void *data, rtps::InstanceHandle_t* handle, bool force_md5) {
     if(!m_isGetKeyDefined)
         return false;
     ShapeType* p_type = (ShapeType*) data;
     eprosima::fastcdr::FastBuffer fastbuffer((char*)m_keyBuffer,ShapeType::getKeyMaxCdrSerializedSize()); 	// Object that manages the raw buffer.
     eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::BIG_ENDIANNESS); 	// Object that serializes the data.
     p_type->serializeKey(ser);
-    if(ShapeType::getKeyMaxCdrSerializedSize()>16)	{
+    if(force_md5 || ShapeType::getKeyMaxCdrSerializedSize()>16)	{
         m_md5.init();
         m_md5.update(m_keyBuffer,(unsigned int)ser.getSerializedDataLength());
         m_md5.finalize();
@@ -114,4 +114,3 @@ bool ShapeTypePubSubType::getKey(void *data, rtps::InstanceHandle_t* handle) {
     }
     return true;
 }
-

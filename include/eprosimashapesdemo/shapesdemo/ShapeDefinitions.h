@@ -11,7 +11,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
- 
+
 #ifndef SHAPEDEFINITIONS_H
 #define SHAPEDEFINITIONS_H
 
@@ -89,12 +89,14 @@ inline SD_COLOR getColor(const unsigned char ch1, const unsigned char ch3)
     {
         if(ch3 == 'U'){  return SD_BLUE; break;}
         if(ch3 == 'A'){  return SD_BLACK; break;}
+        return SD_BLACK;
     }
     case 'R': return SD_RED; break;
     case 'G':
     {
         if(ch3 == 'E') {return SD_GREEN; break;}
         if(ch3 == 'A') {return SD_GRAY; break;}
+        return SD_BLACK;
     }
     case 'Y': return SD_YELLOW; break;
     case 'C': return SD_CYAN; break;
