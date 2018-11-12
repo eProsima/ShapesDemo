@@ -8,9 +8,17 @@ It can be used to demonstrate the capabilities of eProsima Fast RTPS or as an in
 
 You will need Qt5, eProsima Fast CDR and eProsima Fast RTPS to build the Shapes Demo. The default configuration assumes you have eProsima libraries installed in your system: 
 
+#### Linux
+
     $ mkdir build; cd build;
     $ cmake ../
     $ make
+
+#### Windows
+
+    mkdir build; cd build;
+    cmake -G "Visual Studio 14 2015 Win64" ..
+    cmake --build .
 
 If you do not have eProsima libraries installed in your system, you can build it as a dependency by specifying 
 
@@ -45,7 +53,7 @@ There are multiple parameters that the user can define in this menu:
 
 The Subscribe Window allows you to read and represent existing shapes on the network.
 
-![Subscriber Window](/docs/SubscriberWindow.png)
+![Subscriber Window](/docs/SubscriberScreen.png)
 
 This menu provides the options present in the Publish Windows plus the following additions:
 
@@ -61,6 +69,12 @@ Under the Options->Preferences tab you will find the following menu:
 ![Other options](/docs/options.png)
 
 You can modify the following settings:
+
+* Transport: You can select between UDP protocol, TCP Server or TCP Client.
+With UDP Protocol the applicacion will work sending multicast packets to communicate with other apps. 
+TCP Protocol needs a minimal configuration to create the connection between the machines.
+If the applicacion is going to run as a server, it only needs to set the listening port where it is going to accept connections.
+If the applicacion is going to run as a client it needs to know the IP address of the server and the port where it is listening for connections.
 
 * Domain ID: You can select different Domain Ids. Shapes Demo instances using different Domain Ids cannot not communicate. To modify the Domain ID the user needs to stop the participant (thus removing all existing Publishers and Subscribers) and start a new one with the new Domain Id.
 * Update interval: This value changes the publication period for all the Publishers. 

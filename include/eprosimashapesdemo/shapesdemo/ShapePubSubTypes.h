@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/*! 
+/*!
  * @file ShapePubSubTypes.h
  * This header file contains the declaration of the serialization functions.
  *
@@ -42,7 +42,7 @@ public:
     bool serialize(void *data, rtps::SerializedPayload_t *payload);
     bool deserialize(rtps::SerializedPayload_t *payload, void *data);
         std::function<uint32_t()> getSerializedSizeProvider(void* data);
-    bool getKey(void *data, rtps::InstanceHandle_t *ihandle);
+    bool getKey(void *data, rtps::InstanceHandle_t *ihandle, bool force_md5 = false);
 	void* createData();
 	void deleteData(void * data);
 	MD5 m_md5;

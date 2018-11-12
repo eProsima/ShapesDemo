@@ -21,6 +21,7 @@ namespace Ui {
 class OptionsDialog;
 }
 
+class ShapesDemoOptions;
 class ShapesDemo;
 class MainWindow;
 
@@ -35,6 +36,9 @@ public:
 private slots:
     void on_OptionsDialog_accepted();
 
+    void on_pushButton_udp_clicked();
+    void on_pushButton_tcp_client_clicked();
+    void on_pushButton_tcp_server_clicked();
 
     void on_pushButton_start_clicked();
 
@@ -42,12 +46,25 @@ private slots:
 
     void on_spin_domainId_valueChanged(int arg1);
 
+    void on_spin_server_port_valueChanged(int arg1);
+
+    void on_spin_listen_port_valueChanged(int arg1);
+
+    void on_lineEdit_server_ip_textChanged(const QString& arg1);
+
+    void on_spin_updateInterval_valueChanged(int arg1);
+
+    void on_horizontalSlider_speed_valueChanged(int arg1);
 private:
+    ShapesDemoOptions* m_options;
     Ui::OptionsDialog *ui;
     ShapesDemo* mp_sd;
     MainWindow* mp_mw;
+    bool mb_started;
 
     void setEnableState();
+
+    void UpdateTransportControls();
 };
 
 #endif // OPTIONSDIALOG_H

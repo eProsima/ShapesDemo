@@ -21,23 +21,30 @@ OptionsDialog::OptionsDialog(MainWindow *mw, ShapesDemo* psd, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::OptionsDialog),
     mp_sd(psd),
-    mp_mw(mw)
+    mp_mw(mw),
+    mb_started(true)
 {
     ui->setupUi(this);
-    ShapesDemoOptions opt = this->mp_sd->getOptions();
-    this->ui->spin_domainId->setValue(opt.m_domainId);
-    if(mp_sd->isInitialized())
+    m_options = new ShapesDemoOptions(this->mp_sd->getOptions());
+    this->ui->spin_domainId->setValue(m_options->m_domainId);
+    if (mp_sd->isInitialized())
+    {
         this->ui->spin_domainId->setEnabled(false);
-    this->ui->spin_updateInterval->setValue(opt.m_updateIntervalMs);
-    this->ui->horizontalSlider_speed->setValue(opt.m_movementSpeed);
-
+    }
+    this->ui->spin_updateInterval->setValue(m_options->m_updateIntervalMs);
+    this->ui->horizontalSlider_speed->setValue(m_options->m_movementSpeed);
+    this->ui->spin_server_port->setValue(m_options->m_serverPort);
+    this->ui->spin_listen_port->setValue(m_options->m_listenPort);
+    this->ui->lineEdit_server_ip->setText(QString::fromStdString(m_options->m_serverIp));
     setEnableState();
+    UpdateTransportControls();
     setAttribute ( Qt::WA_DeleteOnClose, true );
 
 }
 
 OptionsDialog::~OptionsDialog()
 {
+    delete m_options;
     delete ui;
 }
 
@@ -45,44 +52,105 @@ void OptionsDialog::setEnableState()
 {
     if(this->mp_sd->isInitialized())
     {
-        this->ui->pushButton_start->setEnabled(false);
-        this->ui->spin_domainId->setEnabled(false);
-        this->ui->pushButton_stop->setEnabled(true);
+        mb_started = false;
     }
     else
     {
-        this->ui->pushButton_start->setEnabled(true);
-        this->ui->spin_domainId->setEnabled(true);
-        this->ui->pushButton_stop->setEnabled(false);
+        mb_started = true;
     }
+
+    UpdateTransportControls();
+
+    this->ui->pushButton_start->setEnabled(mb_started);
+    this->ui->spin_domainId->setEnabled(mb_started);
+    this->ui->pushButton_stop->setEnabled(!mb_started);
 }
 
 void OptionsDialog::on_OptionsDialog_accepted()
 {
-    ShapesDemoOptions opt;
-    opt.m_domainId = this->ui->spin_domainId->value();
-    opt.m_movementSpeed = this->ui->horizontalSlider_speed->value();
-    opt.m_updateIntervalMs = this->ui->spin_updateInterval->value();
-    mp_sd->setOptions(opt);
+}
+
+void OptionsDialog::on_pushButton_udp_clicked()
+{
+    m_options->m_udpTransport = true;
+    mp_sd->setOptions(*m_options);
+
+    UpdateTransportControls();
+}
+
+void OptionsDialog::on_pushButton_tcp_client_clicked()
+{
+    m_options->m_tcpServer = false;
+    m_options->m_udpTransport = false;
+    mp_sd->setOptions(*m_options);
+
+    UpdateTransportControls();
+}
+
+void OptionsDialog::on_pushButton_tcp_server_clicked()
+{
+    m_options->m_tcpServer = true;
+    m_options->m_udpTransport = false;
+    mp_sd->setOptions(*m_options);
+
+    UpdateTransportControls();
 }
 
 void OptionsDialog::on_pushButton_start_clicked()
 {
     this->mp_mw->on_actionStart_triggered();
-   setEnableState();
+    setEnableState();
 }
 
 void OptionsDialog::on_pushButton_stop_clicked()
 {
     this->mp_mw->on_actionStop_triggered();
-   setEnableState();
+    setEnableState();
+}
+
+void OptionsDialog::on_spin_updateInterval_valueChanged(int arg1)
+{
+    m_options->m_updateIntervalMs = arg1;
+    mp_sd->setOptions(*m_options);
+}
+
+void OptionsDialog::on_horizontalSlider_speed_valueChanged(int arg1)
+{
+    m_options->m_movementSpeed = arg1;
+    mp_sd->setOptions(*m_options);
 }
 
 void OptionsDialog::on_spin_domainId_valueChanged(int arg1)
 {
-    ShapesDemoOptions opt;
-    opt.m_domainId = arg1;
-    opt.m_movementSpeed = this->ui->horizontalSlider_speed->value();
-    opt.m_updateIntervalMs = this->ui->spin_updateInterval->value();
-    mp_sd->setOptions(opt);
+    m_options->m_domainId = arg1;
+    mp_sd->setOptions(*m_options);
+}
+
+void OptionsDialog::on_spin_server_port_valueChanged(int arg1)
+{
+    m_options->m_serverPort = arg1;
+    mp_sd->setOptions(*m_options);
+}
+
+void OptionsDialog::on_spin_listen_port_valueChanged(int arg1)
+{
+    m_options->m_listenPort = arg1;
+    mp_sd->setOptions(*m_options);
+}
+
+void OptionsDialog::on_lineEdit_server_ip_textChanged(const QString& arg1)
+{
+    m_options->m_serverIp = arg1.toStdString();
+    mp_sd->setOptions(*m_options);
+}
+
+void OptionsDialog::UpdateTransportControls()
+{
+    this->ui->pushButton_tcp_client->setEnabled(mb_started && (m_options->m_udpTransport || m_options->m_tcpServer));
+    this->ui->spin_server_port->setEnabled(mb_started && !m_options->m_udpTransport && !m_options->m_tcpServer);
+    this->ui->lineEdit_server_ip->setEnabled(mb_started && !m_options->m_udpTransport && !m_options->m_tcpServer);
+
+    this->ui->pushButton_tcp_server->setEnabled(mb_started && (m_options->m_udpTransport || !m_options->m_tcpServer));
+    this->ui->spin_listen_port->setEnabled(mb_started && !m_options->m_udpTransport && m_options->m_tcpServer);
+    this->ui->pushButton_udp->setEnabled(mb_started && !m_options->m_udpTransport);
 }

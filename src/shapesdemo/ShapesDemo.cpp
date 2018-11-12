@@ -22,10 +22,13 @@
 #include <eprosimashapesdemo/shapesdemo/ShapeInfo.h>
 #include <eprosimashapesdemo/qt/mainwindow.h>
 
+#include <fastrtps/transport/TCPv4TransportDescriptor.h>
 #include <fastrtps/attributes/ParticipantAttributes.h>
 #include <fastrtps/Domain.h>
 #include <fastrtps/publisher/Publisher.h>
 #include <fastrtps/subscriber/Subscriber.h>
+#include <fastrtps/subscriber/Subscriber.h>
+#include <fastrtps/utils/IPLocator.h>
 
 ShapesDemo::ShapesDemo(MainWindow *mw):
     mp_participant(nullptr),
@@ -67,13 +70,36 @@ bool ShapesDemo::init()
         ParticipantAttributes pparam;
         pparam.rtps.setName("fastrtpsParticipant");
         pparam.rtps.builtin.domainId = m_options.m_domainId;
-        /*pparam.rtps.builtin.leaseDuration.seconds = 100;
-        pparam.rtps.builtin.leaseDuration_announcementperiod.seconds = 50;
-        pparam.rtps.defaultSendPort = 10042;
-        pparam.rtps.sendSocketBufferSize = 65536;
-        pparam.rtps.listenSocketBufferSize = 2*65536;
-        pparam.rtps.use_IP6_to_send = false;
-        pparam.rtps.use_IP4_to_send = true;*/
+
+        if (m_options.m_udpTransport)
+        {
+            pparam.rtps.useBuiltinTransports = true;
+        }
+        else
+        {
+            pparam.rtps.useBuiltinTransports = false;
+
+            std::shared_ptr<TCPv4TransportDescriptor> descriptor = std::make_shared<TCPv4TransportDescriptor>();
+            descriptor->wait_for_tcp_negotiation = false;
+            descriptor->maxInitialPeersRange = 20;
+
+            if (m_options.m_tcpServer)
+            {
+                descriptor->add_listener_port(m_options.m_listenPort);
+            }
+            else
+            {
+                Locator_t initial_peer_locator;
+                initial_peer_locator.kind = LOCATOR_KIND_TCPv4;
+                IPLocator::setIPv4(initial_peer_locator, m_options.m_serverIp);
+                initial_peer_locator.port = m_options.m_serverPort;
+                pparam.rtps.builtin.initialPeersList.push_back(initial_peer_locator); // Publisher's meta channel
+            }
+
+            pparam.rtps.userTransports.push_back(descriptor);
+            pparam.rtps.builtin.leaseDuration_announcementperiod.seconds = 5;
+        }
+
         mp_participant = Domain::createParticipant(pparam);
         if(mp_participant!=nullptr)
         {
