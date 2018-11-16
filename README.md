@@ -4,6 +4,14 @@ The Shapes Demo is an application that Publishes and Subscribes to shapes of dif
 
 It can be used to demonstrate the capabilities of eProsima Fast RTPS or as an interoperability demonstrator with other implementations of the RTPS protocol.
 
+## Download the sources
+
+To download the sources from the repository, clone it from your terminal.
+
+    $ git clone --recursive https://github.com/eProsima/ShapesDemo
+
+If you have already installed eProsima Fast CDR and eProsima Fast RTPS, you can omit the *--recursive* option.
+
 ## Building from sources
 
 You will need Qt5, eProsima Fast CDR and eProsima Fast RTPS to build the Shapes Demo. The default configuration assumes you have eProsima libraries installed in your system: 
