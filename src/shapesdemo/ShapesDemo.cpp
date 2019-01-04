@@ -92,6 +92,8 @@ bool ShapesDemo::init()
                 Locator_t initial_peer_locator;
                 initial_peer_locator.kind = LOCATOR_KIND_TCPv4;
                 IPLocator::setIPv4(initial_peer_locator, m_options.m_serverIp);
+				if (!m_options.m_WANIp.empty())
+					IPLocator::setWan(initial_peer_locator, m_options.m_WANIp);
                 initial_peer_locator.port = m_options.m_serverPort;
                 pparam.rtps.builtin.initialPeersList.push_back(initial_peer_locator); // Publisher's meta channel
             }

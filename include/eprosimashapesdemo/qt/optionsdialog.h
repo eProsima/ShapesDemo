@@ -52,6 +52,8 @@ private slots:
 
     void on_lineEdit_server_ip_textChanged(const QString& arg1);
 
+	void on_lineEdit_wam_ip_textChanged(const QString& arg1);
+
     void on_spin_updateInterval_valueChanged(int arg1);
 
     void on_horizontalSlider_speed_valueChanged(int arg1);

@@ -36,6 +36,8 @@ OptionsDialog::OptionsDialog(MainWindow *mw, ShapesDemo* psd, QWidget *parent) :
     this->ui->spin_server_port->setValue(m_options->m_serverPort);
     this->ui->spin_listen_port->setValue(m_options->m_listenPort);
     this->ui->lineEdit_server_ip->setText(QString::fromStdString(m_options->m_serverIp));
+	this->ui->lineEdit_wam_ip->setText(QString::fromStdString(m_options->m_WANIp));
+
     setEnableState();
     UpdateTransportControls();
     setAttribute ( Qt::WA_DeleteOnClose, true );
@@ -144,12 +146,19 @@ void OptionsDialog::on_lineEdit_server_ip_textChanged(const QString& arg1)
     mp_sd->setOptions(*m_options);
 }
 
+void OptionsDialog::on_lineEdit_wam_ip_textChanged(const QString& arg)
+{
+	m_options->m_WANIp = arg.toStdString();
+	mp_sd->setOptions(*m_options);
+}
+
 void OptionsDialog::UpdateTransportControls()
 {
     this->ui->pushButton_tcp_client->setEnabled(mb_started && (m_options->m_udpTransport || m_options->m_tcpServer));
     this->ui->spin_server_port->setEnabled(mb_started && !m_options->m_udpTransport && !m_options->m_tcpServer);
     this->ui->lineEdit_server_ip->setEnabled(mb_started && !m_options->m_udpTransport && !m_options->m_tcpServer);
-
+	this->ui->lineEdit_wam_ip->setEnabled(mb_started && !m_options->m_udpTransport && !m_options->m_tcpServer);
+	
     this->ui->pushButton_tcp_server->setEnabled(mb_started && (m_options->m_udpTransport || !m_options->m_tcpServer));
     this->ui->spin_listen_port->setEnabled(mb_started && !m_options->m_udpTransport && m_options->m_tcpServer);
     this->ui->pushButton_udp->setEnabled(mb_started && !m_options->m_udpTransport);
