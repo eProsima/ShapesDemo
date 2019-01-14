@@ -48,7 +48,6 @@ public:
     uint32_t m_listenPort;
     uint32_t m_serverPort;
     std::string m_serverIp;
-	std::string m_WANIp;
     uint32_t m_updateIntervalMs;
     uint32_t m_movementSpeed;
     uint32_t m_domainId;
@@ -59,7 +58,6 @@ public:
         m_listenPort = 5100;
         m_serverPort = 5100;
         m_serverIp = "127.0.0.1";
-		m_WANIp = "";	// An empty string means not to use WAN, the actual format should be the same as in m_serverIp
         m_updateIntervalMs = INITIAL_INTERVAL_MS;
         m_movementSpeed = 7;
         m_domainId = 0;
