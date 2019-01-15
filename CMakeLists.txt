@@ -17,8 +17,6 @@
 ###############################################################################
 cmake_minimum_required(VERSION 2.8.12)
 
-SET(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "C:/Qt/5.12.0/msvc2017_64/lib/cmake") # ADDED NEW Qt5 location
-
 set(IS_TOP_LEVEL TRUE)
 if(PROJECT_SOURCE_DIR)
     set(IS_TOP_LEVEL FALSE)

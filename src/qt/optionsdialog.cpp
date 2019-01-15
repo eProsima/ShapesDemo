@@ -90,6 +90,17 @@ void OptionsDialog::on_pushButton_tcp_client_clicked()
 void OptionsDialog::on_pushButton_tcp_server_clicked()
 {
     m_options->m_tcpServer = true;
+    m_options->m_tcpWAN = false;
+    m_options->m_udpTransport = false;
+    mp_sd->setOptions(*m_options);
+
+    UpdateTransportControls();
+}
+
+void OptionsDialog::on_pushButton_tcp_server_2_clicked()
+{
+    m_options->m_tcpServer = true;
+    m_options->m_tcpWAN = true;
     m_options->m_udpTransport = false;
     mp_sd->setOptions(*m_options);
 
@@ -147,13 +158,13 @@ void OptionsDialog::on_lineEdit_server_ip_textChanged(const QString& arg1)
 void OptionsDialog::UpdateTransportControls()
 {
     this->ui->pushButton_tcp_client->setEnabled(mb_started && (m_options->m_udpTransport || m_options->m_tcpServer));
+    this->ui->pushButton_udp->setEnabled(mb_started && !m_options->m_udpTransport);
+    this->ui->pushButton_tcp_server->setEnabled(mb_started && !(!m_options->m_udpTransport && m_options->m_tcpServer && !m_options->m_tcpWAN));
+    this->ui->pushButton_tcp_server_2->setEnabled(mb_started && !(!m_options->m_udpTransport && m_options->m_tcpServer && m_options->m_tcpWAN));
+    this->ui->spin_listen_port->setEnabled(mb_started && !m_options->m_udpTransport && m_options->m_tcpServer);
     this->ui->spin_server_port->setEnabled(mb_started && !m_options->m_udpTransport && !m_options->m_tcpServer);
 
     // lineEdit_server_ip meaning depends on TCP config.
-    this->ui->label_6->setText(m_options->m_tcpServer ? QApplication::translate("OptionsDialog", "WAN IP:", nullptr) : QApplication::translate("OptionsDialog", "Server IP:", nullptr));
-    this->ui->lineEdit_server_ip->setEnabled(mb_started && !m_options->m_udpTransport);
-
-    this->ui->pushButton_tcp_server->setEnabled(mb_started && (m_options->m_udpTransport || !m_options->m_tcpServer));
-    this->ui->spin_listen_port->setEnabled(mb_started && !m_options->m_udpTransport && m_options->m_tcpServer);
-    this->ui->pushButton_udp->setEnabled(mb_started && !m_options->m_udpTransport);
+    this->ui->label_6->setText(m_options->m_tcpServer && m_options->m_tcpWAN ? QApplication::translate("OptionsDialog", "WAN IP:", nullptr) : QApplication::translate("OptionsDialog", "Server IP:", nullptr));
+    this->ui->lineEdit_server_ip->setEnabled(mb_started && !m_options->m_udpTransport && !(m_options->m_tcpServer && !m_options->m_tcpWAN));
 }

@@ -39,6 +39,7 @@ private slots:
     void on_pushButton_udp_clicked();
     void on_pushButton_tcp_client_clicked();
     void on_pushButton_tcp_server_clicked();
+    void on_pushButton_tcp_server_2_clicked();
 
     void on_pushButton_start_clicked();
 

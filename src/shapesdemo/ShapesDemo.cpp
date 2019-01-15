@@ -85,7 +85,9 @@ bool ShapesDemo::init()
 
             if (m_options.m_tcpServer)
             {
-                descriptor->set_WAN_address(m_options.m_serverIp);
+                if (m_options.m_tcpWAN)
+                    descriptor->set_WAN_address(m_options.m_serverIp);
+
                 descriptor->add_listener_port(m_options.m_listenPort);
             }
             else
