@@ -28,33 +28,33 @@ class Ui_OptionsDialog
 public:
     QGridLayout *gridLayout;
     QLabel *label_5;
-    QPushButton *pushButton_udp;
-    QPushButton *pushButton_tcp_server;
-    QLabel *label_8;
-    QSpinBox *spin_listen_port;
-    QPushButton *pushButton_tcp_server_2;
-    QLabel *label_6;
     QLineEdit *lineEdit_server_ip;
-    QPushButton *pushButton_tcp_client;
-    QLabel *label_7;
-    QSpinBox *spin_server_port;
-    QLabel *label;
+    QPushButton *pushButton_tcp_server_2;
+    QLabel *label_2;
+    QLabel *label_3;
+    QSpacerItem *verticalSpacer;
+    QPushButton *pushButton_tcp_server;
+    QSpinBox *spin_listen_port;
+    QPushButton *pushButton_stop;
+    QPushButton *pushButton_udp;
     QSpinBox *spin_domainId;
     QPushButton *pushButton_start;
-    QPushButton *pushButton_stop;
-    QSpacerItem *verticalSpacer;
-    QLabel *label_4;
-    QLabel *label_2;
-    QSpinBox *spin_updateInterval;
-    QLabel *label_3;
     QSlider *horizontalSlider_speed;
+    QSpinBox *spin_server_port;
+    QLabel *label_6;
+    QPushButton *pushButton_tcp_client;
+    QLabel *label;
+    QLabel *label_7;
+    QLabel *label_8;
+    QSpinBox *spin_updateInterval;
+    QLabel *label_4;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *OptionsDialog)
     {
         if (OptionsDialog->objectName().isEmpty())
             OptionsDialog->setObjectName(QString::fromUtf8("OptionsDialog"));
-        OptionsDialog->resize(452, 326);
+        OptionsDialog->resize(459, 326);
         gridLayout = new QGridLayout(OptionsDialog);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         label_5 = new QLabel(OptionsDialog);
@@ -62,31 +62,10 @@ public:
 
         gridLayout->addWidget(label_5, 0, 0, 1, 1);
 
-        pushButton_udp = new QPushButton(OptionsDialog);
-        pushButton_udp->setObjectName(QString::fromUtf8("pushButton_udp"));
-        pushButton_udp->setEnabled(true);
-        pushButton_udp->setFocusPolicy(Qt::TabFocus);
+        lineEdit_server_ip = new QLineEdit(OptionsDialog);
+        lineEdit_server_ip->setObjectName(QString::fromUtf8("lineEdit_server_ip"));
 
-        gridLayout->addWidget(pushButton_udp, 0, 2, 1, 1);
-
-        pushButton_tcp_server = new QPushButton(OptionsDialog);
-        pushButton_tcp_server->setObjectName(QString::fromUtf8("pushButton_tcp_server"));
-        pushButton_tcp_server->setEnabled(true);
-        pushButton_tcp_server->setFocusPolicy(Qt::TabFocus);
-
-        gridLayout->addWidget(pushButton_tcp_server, 1, 2, 1, 1);
-
-        label_8 = new QLabel(OptionsDialog);
-        label_8->setObjectName(QString::fromUtf8("label_8"));
-
-        gridLayout->addWidget(label_8, 1, 3, 1, 1);
-
-        spin_listen_port = new QSpinBox(OptionsDialog);
-        spin_listen_port->setObjectName(QString::fromUtf8("spin_listen_port"));
-        spin_listen_port->setMaximum(65535);
-        spin_listen_port->setValue(80);
-
-        gridLayout->addWidget(spin_listen_port, 1, 4, 1, 1);
+        gridLayout->addWidget(lineEdit_server_ip, 2, 4, 1, 1);
 
         pushButton_tcp_server_2 = new QPushButton(OptionsDialog);
         pushButton_tcp_server_2->setObjectName(QString::fromUtf8("pushButton_tcp_server_2"));
@@ -95,39 +74,46 @@ public:
 
         gridLayout->addWidget(pushButton_tcp_server_2, 2, 2, 1, 1);
 
-        label_6 = new QLabel(OptionsDialog);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
+        label_2 = new QLabel(OptionsDialog);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
 
-        gridLayout->addWidget(label_6, 2, 3, 1, 1);
+        gridLayout->addWidget(label_2, 7, 0, 1, 2);
 
-        lineEdit_server_ip = new QLineEdit(OptionsDialog);
-        lineEdit_server_ip->setObjectName(QString::fromUtf8("lineEdit_server_ip"));
+        label_3 = new QLabel(OptionsDialog);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
 
-        gridLayout->addWidget(lineEdit_server_ip, 2, 4, 1, 1);
+        gridLayout->addWidget(label_3, 8, 0, 1, 1);
 
-        pushButton_tcp_client = new QPushButton(OptionsDialog);
-        pushButton_tcp_client->setObjectName(QString::fromUtf8("pushButton_tcp_client"));
-        pushButton_tcp_client->setEnabled(true);
-        pushButton_tcp_client->setFocusPolicy(Qt::TabFocus);
+        verticalSpacer = new QSpacerItem(20, 13, QSizePolicy::Minimum, QSizePolicy::Minimum);
 
-        gridLayout->addWidget(pushButton_tcp_client, 3, 2, 1, 1);
+        gridLayout->addItem(verticalSpacer, 5, 0, 1, 1);
 
-        label_7 = new QLabel(OptionsDialog);
-        label_7->setObjectName(QString::fromUtf8("label_7"));
+        pushButton_tcp_server = new QPushButton(OptionsDialog);
+        pushButton_tcp_server->setObjectName(QString::fromUtf8("pushButton_tcp_server"));
+        pushButton_tcp_server->setEnabled(true);
+        pushButton_tcp_server->setFocusPolicy(Qt::TabFocus);
 
-        gridLayout->addWidget(label_7, 3, 3, 1, 1);
+        gridLayout->addWidget(pushButton_tcp_server, 1, 2, 1, 1);
 
-        spin_server_port = new QSpinBox(OptionsDialog);
-        spin_server_port->setObjectName(QString::fromUtf8("spin_server_port"));
-        spin_server_port->setMaximum(65535);
-        spin_server_port->setValue(80);
+        spin_listen_port = new QSpinBox(OptionsDialog);
+        spin_listen_port->setObjectName(QString::fromUtf8("spin_listen_port"));
+        spin_listen_port->setMaximum(65535);
+        spin_listen_port->setValue(80);
 
-        gridLayout->addWidget(spin_server_port, 3, 4, 1, 1);
+        gridLayout->addWidget(spin_listen_port, 1, 4, 1, 1);
 
-        label = new QLabel(OptionsDialog);
-        label->setObjectName(QString::fromUtf8("label"));
+        pushButton_stop = new QPushButton(OptionsDialog);
+        pushButton_stop->setObjectName(QString::fromUtf8("pushButton_stop"));
+        pushButton_stop->setFocusPolicy(Qt::TabFocus);
 
-        gridLayout->addWidget(label, 4, 0, 1, 1);
+        gridLayout->addWidget(pushButton_stop, 4, 4, 1, 1);
+
+        pushButton_udp = new QPushButton(OptionsDialog);
+        pushButton_udp->setObjectName(QString::fromUtf8("pushButton_udp"));
+        pushButton_udp->setEnabled(true);
+        pushButton_udp->setFocusPolicy(Qt::TabFocus);
+
+        gridLayout->addWidget(pushButton_udp, 0, 2, 1, 1);
 
         spin_domainId = new QSpinBox(OptionsDialog);
         spin_domainId->setObjectName(QString::fromUtf8("spin_domainId"));
@@ -141,15 +127,56 @@ public:
 
         gridLayout->addWidget(pushButton_start, 4, 3, 1, 1);
 
-        pushButton_stop = new QPushButton(OptionsDialog);
-        pushButton_stop->setObjectName(QString::fromUtf8("pushButton_stop"));
-        pushButton_stop->setFocusPolicy(Qt::TabFocus);
+        horizontalSlider_speed = new QSlider(OptionsDialog);
+        horizontalSlider_speed->setObjectName(QString::fromUtf8("horizontalSlider_speed"));
+        horizontalSlider_speed->setMinimum(0);
+        horizontalSlider_speed->setMaximum(25);
+        horizontalSlider_speed->setValue(5);
+        horizontalSlider_speed->setOrientation(Qt::Horizontal);
 
-        gridLayout->addWidget(pushButton_stop, 4, 4, 1, 1);
+        gridLayout->addWidget(horizontalSlider_speed, 8, 2, 1, 3);
 
-        verticalSpacer = new QSpacerItem(20, 13, QSizePolicy::Minimum, QSizePolicy::Minimum);
+        spin_server_port = new QSpinBox(OptionsDialog);
+        spin_server_port->setObjectName(QString::fromUtf8("spin_server_port"));
+        spin_server_port->setMaximum(65535);
+        spin_server_port->setValue(80);
 
-        gridLayout->addItem(verticalSpacer, 5, 0, 1, 1);
+        gridLayout->addWidget(spin_server_port, 3, 4, 1, 1);
+
+        label_6 = new QLabel(OptionsDialog);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+
+        gridLayout->addWidget(label_6, 2, 3, 1, 1);
+
+        pushButton_tcp_client = new QPushButton(OptionsDialog);
+        pushButton_tcp_client->setObjectName(QString::fromUtf8("pushButton_tcp_client"));
+        pushButton_tcp_client->setEnabled(true);
+        pushButton_tcp_client->setFocusPolicy(Qt::TabFocus);
+
+        gridLayout->addWidget(pushButton_tcp_client, 3, 2, 1, 1);
+
+        label = new QLabel(OptionsDialog);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        gridLayout->addWidget(label, 4, 0, 1, 1);
+
+        label_7 = new QLabel(OptionsDialog);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
+
+        gridLayout->addWidget(label_7, 3, 3, 1, 1);
+
+        label_8 = new QLabel(OptionsDialog);
+        label_8->setObjectName(QString::fromUtf8("label_8"));
+
+        gridLayout->addWidget(label_8, 1, 3, 1, 1);
+
+        spin_updateInterval = new QSpinBox(OptionsDialog);
+        spin_updateInterval->setObjectName(QString::fromUtf8("spin_updateInterval"));
+        spin_updateInterval->setMinimum(50);
+        spin_updateInterval->setMaximum(10000);
+        spin_updateInterval->setValue(75);
+
+        gridLayout->addWidget(spin_updateInterval, 7, 3, 1, 1);
 
         label_4 = new QLabel(OptionsDialog);
         label_4->setObjectName(QString::fromUtf8("label_4"));
@@ -160,39 +187,12 @@ public:
 
         gridLayout->addWidget(label_4, 6, 0, 1, 2);
 
-        label_2 = new QLabel(OptionsDialog);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-
-        gridLayout->addWidget(label_2, 7, 0, 1, 2);
-
-        spin_updateInterval = new QSpinBox(OptionsDialog);
-        spin_updateInterval->setObjectName(QString::fromUtf8("spin_updateInterval"));
-        spin_updateInterval->setMinimum(50);
-        spin_updateInterval->setMaximum(10000);
-        spin_updateInterval->setValue(75);
-
-        gridLayout->addWidget(spin_updateInterval, 7, 3, 1, 1);
-
-        label_3 = new QLabel(OptionsDialog);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-
-        gridLayout->addWidget(label_3, 8, 0, 1, 1);
-
-        horizontalSlider_speed = new QSlider(OptionsDialog);
-        horizontalSlider_speed->setObjectName(QString::fromUtf8("horizontalSlider_speed"));
-        horizontalSlider_speed->setMinimum(0);
-        horizontalSlider_speed->setMaximum(25);
-        horizontalSlider_speed->setValue(5);
-        horizontalSlider_speed->setOrientation(Qt::Horizontal);
-
-        gridLayout->addWidget(horizontalSlider_speed, 8, 2, 1, 1);
-
         buttonBox = new QDialogButtonBox(OptionsDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
-        gridLayout->addWidget(buttonBox, 9, 0, 1, 3);
+        gridLayout->addWidget(buttonBox, 9, 3, 1, 2);
 
         QWidget::setTabOrder(pushButton_udp, pushButton_tcp_server);
         QWidget::setTabOrder(pushButton_tcp_server, pushButton_tcp_server_2);
@@ -217,27 +217,27 @@ public:
     {
         OptionsDialog->setWindowTitle(QApplication::translate("OptionsDialog", "Options", nullptr));
         label_5->setText(QApplication::translate("OptionsDialog", "Transport:", nullptr));
-        pushButton_udp->setText(QApplication::translate("OptionsDialog", "UDP", nullptr));
+        pushButton_tcp_server_2->setText(QApplication::translate("OptionsDialog", "TCP WAN Server", nullptr));
+        label_2->setText(QApplication::translate("OptionsDialog", "Update interval (ms):", nullptr));
+        label_3->setText(QApplication::translate("OptionsDialog", "Speed:", nullptr));
         pushButton_tcp_server->setText(QApplication::translate("OptionsDialog", "TCP LAN Server", nullptr));
-        label_8->setText(QApplication::translate("OptionsDialog", "Listen Port:", nullptr));
         spin_listen_port->setSpecialValueText(QString());
         spin_listen_port->setSuffix(QString());
-        pushButton_tcp_server_2->setText(QApplication::translate("OptionsDialog", "TCP WAN Server", nullptr));
-        label_6->setText(QApplication::translate("OptionsDialog", "Server IP:", nullptr));
-        pushButton_tcp_client->setText(QApplication::translate("OptionsDialog", "TCP Client", nullptr));
-        label_7->setText(QApplication::translate("OptionsDialog", "Server Port:", nullptr));
-        spin_server_port->setSpecialValueText(QString());
-        spin_server_port->setSuffix(QString());
-        label->setText(QApplication::translate("OptionsDialog", "Domain ID:", nullptr));
+        pushButton_stop->setText(QApplication::translate("OptionsDialog", "Stop", nullptr));
+        pushButton_udp->setText(QApplication::translate("OptionsDialog", "UDP", nullptr));
         spin_domainId->setSpecialValueText(QString());
         spin_domainId->setSuffix(QString());
         pushButton_start->setText(QApplication::translate("OptionsDialog", "Start", nullptr));
-        pushButton_stop->setText(QApplication::translate("OptionsDialog", "Stop", nullptr));
-        label_4->setText(QApplication::translate("OptionsDialog", "Shape Movements:", nullptr));
-        label_2->setText(QApplication::translate("OptionsDialog", "Update interval (ms):", nullptr));
+        spin_server_port->setSpecialValueText(QString());
+        spin_server_port->setSuffix(QString());
+        label_6->setText(QApplication::translate("OptionsDialog", "Server IP:", nullptr));
+        pushButton_tcp_client->setText(QApplication::translate("OptionsDialog", "TCP Client", nullptr));
+        label->setText(QApplication::translate("OptionsDialog", "Domain ID:", nullptr));
+        label_7->setText(QApplication::translate("OptionsDialog", "Server Port:", nullptr));
+        label_8->setText(QApplication::translate("OptionsDialog", "Listen Port:", nullptr));
         spin_updateInterval->setSpecialValueText(QString());
         spin_updateInterval->setSuffix(QString());
-        label_3->setText(QApplication::translate("OptionsDialog", "Speed:", nullptr));
+        label_4->setText(QApplication::translate("OptionsDialog", "Shape Movements:", nullptr));
     } // retranslateUi
 
 };
