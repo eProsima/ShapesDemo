@@ -157,6 +157,8 @@ void OptionsDialog::on_lineEdit_server_ip_textChanged(const QString& arg1)
 
 void OptionsDialog::UpdateTransportControls()
 {
+	// Enable or disable controls
+
     this->ui->pushButton_tcp_client->setEnabled(mb_started && (m_options->m_udpTransport || m_options->m_tcpServer));
     this->ui->pushButton_udp->setEnabled(mb_started && !m_options->m_udpTransport);
     this->ui->pushButton_tcp_server->setEnabled(mb_started && !(!m_options->m_udpTransport && m_options->m_tcpServer && !m_options->m_tcpWAN));
@@ -164,6 +166,19 @@ void OptionsDialog::UpdateTransportControls()
     this->ui->spin_listen_port->setEnabled(mb_started && !m_options->m_udpTransport && m_options->m_tcpServer);
     this->ui->spin_server_port->setEnabled(mb_started && !m_options->m_udpTransport && !m_options->m_tcpServer);
 
+	// Make the current selection appear bold
+
+	QFont font, fontn;
+	font.setBold(false);
+	fontn.setBold(true);
+	fontn.setWeight(75);
+
+	this->ui->pushButton_tcp_client->setFont(!mb_started && !m_options->m_udpTransport && !m_options->m_tcpServer ? fontn : font);
+	this->ui->pushButton_udp->setFont(!mb_started && m_options->m_udpTransport ? fontn : font);
+	this->ui->pushButton_tcp_server->setFont(!mb_started && !m_options->m_udpTransport && m_options->m_tcpServer && !m_options->m_tcpWAN ? fontn : font);
+	this->ui->pushButton_tcp_server_2->setFont(!mb_started && !m_options->m_udpTransport && m_options->m_tcpServer && m_options->m_tcpWAN ? fontn : font);
+
+	
     // lineEdit_server_ip meaning depends on TCP config.
     this->ui->label_6->setText(m_options->m_tcpServer && m_options->m_tcpWAN ? QApplication::translate("OptionsDialog", "WAN IP:", nullptr) : QApplication::translate("OptionsDialog", "Server IP:", nullptr));
     this->ui->lineEdit_server_ip->setEnabled(mb_started && !m_options->m_udpTransport && !(m_options->m_tcpServer && !m_options->m_tcpWAN));
