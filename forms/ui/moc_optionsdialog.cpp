@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_OptionsDialog_t {
     QByteArrayData data[16];
-    char stringdata0[433];
+    char stringdata0[435];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,23 +37,23 @@ QT_MOC_LITERAL(2, 40, 0), // ""
 QT_MOC_LITERAL(3, 41, 25), // "on_pushButton_udp_clicked"
 QT_MOC_LITERAL(4, 67, 32), // "on_pushButton_tcp_client_clicked"
 QT_MOC_LITERAL(5, 100, 32), // "on_pushButton_tcp_server_clicked"
-QT_MOC_LITERAL(6, 133, 34), // "on_pushButton_tcp_server_2_cl..."
-QT_MOC_LITERAL(7, 168, 27), // "on_pushButton_start_clicked"
-QT_MOC_LITERAL(8, 196, 26), // "on_pushButton_stop_clicked"
-QT_MOC_LITERAL(9, 223, 29), // "on_spin_domainId_valueChanged"
-QT_MOC_LITERAL(10, 253, 4), // "arg1"
-QT_MOC_LITERAL(11, 258, 32), // "on_spin_server_port_valueChanged"
-QT_MOC_LITERAL(12, 291, 32), // "on_spin_listen_port_valueChanged"
-QT_MOC_LITERAL(13, 324, 33), // "on_lineEdit_server_ip_textCha..."
-QT_MOC_LITERAL(14, 358, 35), // "on_spin_updateInterval_valueC..."
-QT_MOC_LITERAL(15, 394, 38) // "on_horizontalSlider_speed_val..."
+QT_MOC_LITERAL(6, 133, 36), // "on_pushButton_tcp_WAN_server_..."
+QT_MOC_LITERAL(7, 170, 27), // "on_pushButton_start_clicked"
+QT_MOC_LITERAL(8, 198, 26), // "on_pushButton_stop_clicked"
+QT_MOC_LITERAL(9, 225, 29), // "on_spin_domainId_valueChanged"
+QT_MOC_LITERAL(10, 255, 4), // "arg1"
+QT_MOC_LITERAL(11, 260, 32), // "on_spin_server_port_valueChanged"
+QT_MOC_LITERAL(12, 293, 32), // "on_spin_listen_port_valueChanged"
+QT_MOC_LITERAL(13, 326, 33), // "on_lineEdit_server_ip_textCha..."
+QT_MOC_LITERAL(14, 360, 35), // "on_spin_updateInterval_valueC..."
+QT_MOC_LITERAL(15, 396, 38) // "on_horizontalSlider_speed_val..."
 
     },
     "OptionsDialog\0on_OptionsDialog_accepted\0"
     "\0on_pushButton_udp_clicked\0"
     "on_pushButton_tcp_client_clicked\0"
     "on_pushButton_tcp_server_clicked\0"
-    "on_pushButton_tcp_server_2_clicked\0"
+    "on_pushButton_tcp_WAN_server_clicked\0"
     "on_pushButton_start_clicked\0"
     "on_pushButton_stop_clicked\0"
     "on_spin_domainId_valueChanged\0arg1\0"
@@ -121,7 +121,7 @@ void OptionsDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 1: _t->on_pushButton_udp_clicked(); break;
         case 2: _t->on_pushButton_tcp_client_clicked(); break;
         case 3: _t->on_pushButton_tcp_server_clicked(); break;
-        case 4: _t->on_pushButton_tcp_server_2_clicked(); break;
+        case 4: _t->on_pushButton_tcp_WAN_server_clicked(); break;
         case 5: _t->on_pushButton_start_clicked(); break;
         case 6: _t->on_pushButton_stop_clicked(); break;
         case 7: _t->on_spin_domainId_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;

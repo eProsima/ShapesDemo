@@ -29,7 +29,7 @@ public:
     QGridLayout *gridLayout;
     QLabel *label_5;
     QLineEdit *lineEdit_server_ip;
-    QPushButton *pushButton_tcp_server_2;
+    QPushButton *pushButton_tcp_WAN_server;
     QLabel *label_2;
     QLabel *label_3;
     QSpacerItem *verticalSpacer;
@@ -67,12 +67,12 @@ public:
 
         gridLayout->addWidget(lineEdit_server_ip, 2, 4, 1, 1);
 
-        pushButton_tcp_server_2 = new QPushButton(OptionsDialog);
-        pushButton_tcp_server_2->setObjectName(QString::fromUtf8("pushButton_tcp_server_2"));
-        pushButton_tcp_server_2->setEnabled(true);
-        pushButton_tcp_server_2->setFocusPolicy(Qt::TabFocus);
+        pushButton_tcp_WAN_server = new QPushButton(OptionsDialog);
+        pushButton_tcp_WAN_server->setObjectName(QString::fromUtf8("pushButton_tcp_WAN_server"));
+        pushButton_tcp_WAN_server->setEnabled(true);
+        pushButton_tcp_WAN_server->setFocusPolicy(Qt::TabFocus);
 
-        gridLayout->addWidget(pushButton_tcp_server_2, 2, 2, 1, 1);
+        gridLayout->addWidget(pushButton_tcp_WAN_server, 2, 2, 1, 1);
 
         label_2 = new QLabel(OptionsDialog);
         label_2->setObjectName(QString::fromUtf8("label_2"));
@@ -195,8 +195,8 @@ public:
         gridLayout->addWidget(buttonBox, 9, 3, 1, 2);
 
         QWidget::setTabOrder(pushButton_udp, pushButton_tcp_server);
-        QWidget::setTabOrder(pushButton_tcp_server, pushButton_tcp_server_2);
-        QWidget::setTabOrder(pushButton_tcp_server_2, pushButton_tcp_client);
+        QWidget::setTabOrder(pushButton_tcp_server, pushButton_tcp_WAN_server);
+        QWidget::setTabOrder(pushButton_tcp_WAN_server, pushButton_tcp_client);
         QWidget::setTabOrder(pushButton_tcp_client, spin_listen_port);
         QWidget::setTabOrder(spin_listen_port, lineEdit_server_ip);
         QWidget::setTabOrder(lineEdit_server_ip, spin_server_port);
@@ -217,7 +217,7 @@ public:
     {
         OptionsDialog->setWindowTitle(QApplication::translate("OptionsDialog", "Options", nullptr));
         label_5->setText(QApplication::translate("OptionsDialog", "Transport:", nullptr));
-        pushButton_tcp_server_2->setText(QApplication::translate("OptionsDialog", "TCP WAN Server", nullptr));
+        pushButton_tcp_WAN_server->setText(QApplication::translate("OptionsDialog", "TCP WAN Server", nullptr));
         label_2->setText(QApplication::translate("OptionsDialog", "Update interval (ms):", nullptr));
         label_3->setText(QApplication::translate("OptionsDialog", "Speed:", nullptr));
         pushButton_tcp_server->setText(QApplication::translate("OptionsDialog", "TCP LAN Server", nullptr));

@@ -97,7 +97,7 @@ void OptionsDialog::on_pushButton_tcp_server_clicked()
     UpdateTransportControls();
 }
 
-void OptionsDialog::on_pushButton_tcp_server_2_clicked()
+void OptionsDialog::on_pushButton_tcp_WAN_server_clicked()
 {
     m_options->m_tcpServer = true;
     m_options->m_tcpWAN = true;
@@ -162,7 +162,7 @@ void OptionsDialog::UpdateTransportControls()
     this->ui->pushButton_tcp_client->setEnabled(mb_started && (m_options->m_udpTransport || m_options->m_tcpServer));
     this->ui->pushButton_udp->setEnabled(mb_started && !m_options->m_udpTransport);
     this->ui->pushButton_tcp_server->setEnabled(mb_started && !(!m_options->m_udpTransport && m_options->m_tcpServer && !m_options->m_tcpWAN));
-    this->ui->pushButton_tcp_server_2->setEnabled(mb_started && !(!m_options->m_udpTransport && m_options->m_tcpServer && m_options->m_tcpWAN));
+	this->ui->pushButton_tcp_WAN_server->setEnabled(mb_started && !(!m_options->m_udpTransport && m_options->m_tcpServer && m_options->m_tcpWAN));
     this->ui->spin_listen_port->setEnabled(mb_started && !m_options->m_udpTransport && m_options->m_tcpServer);
     this->ui->spin_server_port->setEnabled(mb_started && !m_options->m_udpTransport && !m_options->m_tcpServer);
 
@@ -176,7 +176,7 @@ void OptionsDialog::UpdateTransportControls()
 	this->ui->pushButton_tcp_client->setFont(!mb_started && !m_options->m_udpTransport && !m_options->m_tcpServer ? fontn : font);
 	this->ui->pushButton_udp->setFont(!mb_started && m_options->m_udpTransport ? fontn : font);
 	this->ui->pushButton_tcp_server->setFont(!mb_started && !m_options->m_udpTransport && m_options->m_tcpServer && !m_options->m_tcpWAN ? fontn : font);
-	this->ui->pushButton_tcp_server_2->setFont(!mb_started && !m_options->m_udpTransport && m_options->m_tcpServer && m_options->m_tcpWAN ? fontn : font);
+	this->ui->pushButton_tcp_WAN_server->setFont(!mb_started && !m_options->m_udpTransport && m_options->m_tcpServer && m_options->m_tcpWAN ? fontn : font);
 
 	
     // lineEdit_server_ip meaning depends on TCP config.
