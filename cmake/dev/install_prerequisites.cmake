@@ -16,7 +16,7 @@ macro(install_prerequisites target)
     if(THIRDPARTY)
         file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/install_prerequisites_for_${target}.cmake
             "message(STATUS \"Getting prerequisites for target \${TARGET_FILE}\")\n"
-            "set(CMAKE_PREFIX_PATH \"${CMAKE_PREFIX_PATH}\" \"${BOOST_LIBRARYDIR}\" \"${PROJECT_BINARY_DIR}/external/install/${BIN_INSTALL_DIR}\")\n"
+            "set(CMAKE_PREFIX_PATH \"${CMAKE_PREFIX_PATH}\")\n"
             "include(GetPrerequisites)\n"
             "if(NOT \"\${TARGET_FILE}\" STREQUAL \"\")\n"
             "file(READ \${CMAKE_CURRENT_SOURCE_DIR}/cmake_install.cmake FILE_READED)\n"
@@ -34,7 +34,9 @@ macro(install_prerequisites target)
             "endif()\n"
             "foreach(DEPENDENCY_FILE \${DEPENDENT_LIBRARIES})\n"
             "gp_resolve_item(\"\${TARGET_FILE}\" \"\${DEPENDENCY_FILE}\" \"\" \"\" resolved_file_)\n"
+            "if(NOT \"\${DEPENDENCY_FILE}\" STREQUAL \"\${resolved_file_}\")\n"
             "file(APPEND \${CMAKE_CURRENT_SOURCE_DIR}/cmake_install.cmake \"file(INSTALL DESTINATION \\\"\\\${CMAKE_INSTALL_PREFIX}/bin\\\" TYPE EXECUTABLE FILES \\\"\${resolved_file_}\\\")\\n\")\n"
+            "endif()\n"
             "endforeach()\n"
             "file(APPEND \${CMAKE_CURRENT_SOURCE_DIR}/cmake_install.cmake \"endif()\\n\")\n"
             "file(APPEND \${CMAKE_CURRENT_SOURCE_DIR}/cmake_install.cmake \"endif()\\n\")\n"
