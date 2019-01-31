@@ -83,12 +83,12 @@ bool ShapesDemo::init()
             descriptor->wait_for_tcp_negotiation = false;
             descriptor->maxInitialPeersRange = 20;
 
-			if (m_options.m_tcpServer)
-			{
-				if (m_options.m_tcpWAN)
-				{
-					descriptor->set_WAN_address(m_options.m_serverIp);
-				}
+            if (m_options.m_tcpServer)
+            {
+                if (m_options.m_tcpWAN)
+                {
+                    descriptor->set_WAN_address(m_options.m_serverIp);
+                }
 
                 descriptor->add_listener_port(m_options.m_listenPort);
             }
