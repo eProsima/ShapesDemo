@@ -78,11 +78,13 @@ Under the Options->Preferences tab you will find the following menu:
 
 You can modify the following settings:
 
-* Transport: You can select between UDP protocol, TCP Server or TCP Client.
+* Transport: You can select between UDP protocol, TCP LAN Server, TCP WAN Server or TCP Client.
 With UDP Protocol the applicacion will work sending multicast packets to communicate with other apps. 
-TCP Protocol needs a minimal configuration to create the connection between the machines.
-If the applicacion is going to run as a server, it only needs to set the listening port where it is going to accept connections.
-If the applicacion is going to run as a client it needs to know the IP address of the server and the port where it is listening for connections.
+TCP protocol needs a minimal configuration to create the connection between the machines:
+
+	- If the applicacion is going to run as a LAN server, it only needs to set the listening port where it is going to accept connections (note that firewall must be configured to allow inbound traffic).
+	- If the applicacion is going to run as a WAN server, it needs to set the listening port where it is going to accept connections and the server WAN address (note that firewall must be configured to allow inbound traffic and router must relay listening port traffic to server machine).
+	- If the applicacion is going to run as a client it needs to know the IP address of the server (or its WAN address if both instances don't share network) and the port where server is listening for connections.
 
 * Domain ID: You can select different Domain Ids. Shapes Demo instances using different Domain Ids cannot not communicate. To modify the Domain ID the user needs to stop the participant (thus removing all existing Publishers and Subscribers) and start a new one with the new Domain Id.
 * Update interval: This value changes the publication period for all the Publishers. 

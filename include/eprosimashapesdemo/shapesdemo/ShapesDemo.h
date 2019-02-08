@@ -45,6 +45,7 @@ class ShapesDemoOptions
 public:
     bool m_udpTransport;
     bool m_tcpServer;
+    bool m_tcpWAN;
     uint32_t m_listenPort;
     uint32_t m_serverPort;
     std::string m_serverIp;
@@ -55,6 +56,7 @@ public:
     {
         m_udpTransport = true;
         m_tcpServer = true;
+        m_tcpWAN = false;
         m_listenPort = 5100;
         m_serverPort = 5100;
         m_serverIp = "127.0.0.1";
@@ -66,6 +68,7 @@ public:
     {
 
     }
+
 };
 
 class ShapePublisher;
