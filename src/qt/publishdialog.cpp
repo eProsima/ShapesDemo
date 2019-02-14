@@ -68,8 +68,14 @@ void PublishDialog::on_button_OkCancel_accepted()
     SP->m_attributes.topic.historyQos.depth = this->ui->spin_HistoryQos->value();
 
     //Reliability
-    if(this->ui->checkBox_reliable->isChecked())
+    if (this->ui->checkBox_reliable->isChecked())
+    {
         SP->m_attributes.qos.m_reliability.kind = RELIABLE_RELIABILITY_QOS;
+    }
+    else
+    {
+        SP->m_attributes.qos.m_reliability.kind = BEST_EFFORT_RELIABILITY_QOS;
+    }
 
     //LIVELINESS:
    // cout << "LIVELINESS "<<this->ui->comboBox_liveliness->currentIndex()<<endl;
