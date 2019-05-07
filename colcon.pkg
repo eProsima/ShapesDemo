@@ -1,0 +1,5 @@
+{
+    "name": "ShapesDemo",
+    "type": "cmake",
+    "dependencies" : ["fastrtps", "fastcdr"]
+}
