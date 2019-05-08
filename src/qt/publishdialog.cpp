@@ -61,7 +61,7 @@ void PublishDialog::on_button_OkCancel_accepted()
         SP->m_attributes.topic.topicName = "Circle";
     }
     SP->m_attributes.topic.topicDataType = "ShapeType";
-    SP->m_attributes.topic.topicKind = WITH_KEY;
+    SP->m_attributes.topic.topicKind = rtps::WITH_KEY;
 
     //History:
     SP->m_attributes.topic.historyQos.kind = KEEP_LAST_HISTORY_QOS;
@@ -92,8 +92,9 @@ void PublishDialog::on_button_OkCancel_accepted()
         QString value = this->ui->lineEdit_leaseDuration->text();
         if(value.toDouble()>0)
         {
-            SP->m_attributes.qos.m_liveliness.lease_duration = TimeConv::MilliSeconds2Time_t(value.toDouble());
-            SP->m_attributes.qos.m_liveliness.announcement_period = TimeConv::MilliSeconds2Time_t(value.toDouble()/2);
+            SP->m_attributes.qos.m_liveliness.lease_duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+            SP->m_attributes.qos.m_liveliness.announcement_period =
+                rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()/2).to_duration_t();
         }
    }
    //DURABILITY

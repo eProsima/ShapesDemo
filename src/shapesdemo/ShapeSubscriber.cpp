@@ -64,11 +64,11 @@ void ShapeSubscriber::onNewDataMessage(Subscriber* sub)
     {
         // shape.m_x += 5;
         //cout << "Shape of type: "<< shape.m_type << "RECEIVED"<<endl;
-        shape.m_time = info.sourceTimestamp;
+        shape.m_time = info.sourceTimestamp.to_duration_t();
         shape.m_writerGuid = info.sample_identity.writer_guid();
         shape.m_strength = info.ownershipStrength;
         QMutexLocker locck(&this->m_mutex);
-        if(info.sampleKind == ALIVE)
+        if(info.sampleKind == rtps::ALIVE)
         {
             hasReceived = true;
             m_shapeHistory.addToHistory(shape);
@@ -78,7 +78,7 @@ void ShapeSubscriber::onNewDataMessage(Subscriber* sub)
             //cout << "NOT ALIVE DATA"<<endl;
             //GET THE COLOR:
             SD_COLOR color = getColorFromInstanceHandle(info.iHandle);
-            if(info.sampleKind == NOT_ALIVE_DISPOSED)
+            if(info.sampleKind == rtps::NOT_ALIVE_DISPOSED)
             {
                 m_shapeHistory.dispose(color);
             }
@@ -92,13 +92,13 @@ void ShapeSubscriber::onNewDataMessage(Subscriber* sub)
 
 
 
-void ShapeSubscriber::onSubscriptionMatched(Subscriber* /*sub*/, MatchingInfo& info)
+void ShapeSubscriber::onSubscriptionMatched(Subscriber* /*sub*/, rtps::MatchingInfo& info)
 {
-    if(info.status ==MATCHED_MATCHING)
+    if(info.status == rtps::MATCHED_MATCHING)
     {
         //cout << "Subscriber in topic " << m_attributes.topic.getTopicName() << " MATCHES Pub: " << info.remoteEndpointGuid <<"*****************************"<<endl;
         bool found = false;
-        for(std::vector<GUID_t>::iterator it = m_remoteWriters.begin();
+        for(std::vector<rtps::GUID_t>::iterator it = m_remoteWriters.begin();
             it!=m_remoteWriters.end();++it)
         {
             if(*it==info.remoteEndpointGuid)
@@ -113,7 +113,7 @@ void ShapeSubscriber::onSubscriptionMatched(Subscriber* /*sub*/, MatchingInfo& i
         }
 
     }
-    else if(info.status == REMOVED_MATCHING)
+    else if(info.status == rtps::REMOVED_MATCHING)
     {
         //cout << "Subscriber in topic " << m_attributes.topic.getTopicName() << " REMOVES Pub: " << info.remoteEndpointGuid <<"*****************************"<<endl;
         m_mutex.lock();
@@ -130,4 +130,3 @@ void ShapeSubscriber::adjustContentFilter(ShapeFilter &filter)
 }
 
 //void ShapeSubscriber::removeSamplesFromWriter(GUID_t)
-

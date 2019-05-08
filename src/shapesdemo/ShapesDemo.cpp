@@ -30,6 +30,8 @@
 #include <fastrtps/subscriber/Subscriber.h>
 #include <fastrtps/utils/IPLocator.h>
 
+using namespace eprosima::fastrtps::rtps;
+
 ShapesDemo::ShapesDemo(MainWindow *mw):
     mp_participant(nullptr),
     m_isInitialized(false),

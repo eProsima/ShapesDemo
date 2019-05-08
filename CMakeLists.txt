@@ -127,26 +127,26 @@ eprosima_find_package(fastcdr)
 eprosima_find_package(fastrtps OPTION TINYXML2_FROM_SOURCE)
 
 ###############################################################################
-# Compile 
+# Compile
 ###############################################################################
 set(CMAKE_AUTORCC ON)
-find_package(Qt5Core REQUIRED)
+find_package(Qt5Core 5.12 REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
 message(STATUS "Configuring ShapesDemo...")
 set( SHAPESDEMO_SOURCES
-    src/qt/DrawArea.cpp 
-    src/qt/mainwindow.cpp 
-    src/qt/publishdialog.cpp 
-    src/qt/subscribedialog.cpp 
+    src/qt/DrawArea.cpp
+    src/qt/mainwindow.cpp
+    src/qt/publishdialog.cpp
+    src/qt/subscribedialog.cpp
     src/shapesdemo/Shape.cxx
     src/shapesdemo/ShapesDemo.cpp
     src/shapesdemo/ShapePubSubTypes.cxx
 #   src/utils/md5.cpp
-    src/main.cpp 
+    src/main.cpp
     src/shapesdemo/ShapePublisher.cpp
-    src/qt/UpdateThread.cpp 
+    src/qt/UpdateThread.cpp
     src/shapesdemo/ShapeSubscriber.cpp
     src/qt/optionsdialog.cpp
     src/qt/ContentFilterSelector.cpp

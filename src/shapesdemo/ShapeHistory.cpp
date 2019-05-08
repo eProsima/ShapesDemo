@@ -15,6 +15,8 @@
 #include <eprosimashapesdemo/shapesdemo/ShapeHistory.h>
 #include <fastrtps/utils/TimeConversion.h>
 
+using namespace eprosima::fastrtps::rtps;
+
 inline bool compareGUID(GUID_t& g1, GUID_t& g2)
 {
     for(uint8_t i =0;i<16;++i)

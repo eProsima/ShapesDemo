@@ -52,14 +52,14 @@ public:
 	bool initSubscriber();
 
     void onNewDataMessage(Subscriber* sub);
-    void onSubscriptionMatched(Subscriber* sub,MatchingInfo& info);
+    void onSubscriptionMatched(Subscriber* sub, rtps::MatchingInfo& info);
     void adjustContentFilter(ShapeFilter& m_filter);
     void assignContentFilterPointer(ContentFilterSelector* p){mp_contentFilter = p;}
 	bool hasReceived;
 
     QMutex m_mutex;
 
-    std::vector<GUID_t> m_remoteWriters;
+    std::vector<rtps::GUID_t> m_remoteWriters;
     ShapeHistory m_shapeHistory;
     TYPESHAPE m_shapeType;
     ContentFilterSelector* mp_contentFilter;

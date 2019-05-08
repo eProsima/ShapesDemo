@@ -6,14 +6,11 @@
 
 RTPSVERSION = 1.3.0
 
+!versionAtLeast(QT_VERSION, 5.12.0):error("Use at least Qt version 5.12")
+
 QT  += core
-#QT  -= gui
 QT += gui
-
-
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+QT += widgets
 
 unix:QMAKE_CXXFLAGS_DEBUG += -c -Wall -D__LITTLE_ENDIAN__ -m64 -fpic -g -std=c++0x -D__DEBUG
 unix:QMAKE_CXXFLAGS_RELEASE += -c -Wall -D__LITTLE_ENDIAN__ -m64 -fpic -O2 -std=c++0x
@@ -124,3 +121,17 @@ RESOURCES += \
     images/eprosimalogo.qrc
 
 RC_FILE = images/eprosima_icon.rc
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../Fast-RTPS/allocation-qos-release/build/install/lib/release/ -lfastrtps
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../Fast-RTPS/allocation-qos-release/build/install/lib/debug/ -lfastrtps
+else:unix: LIBS += -L$$PWD/../../Fast-RTPS/allocation-qos-release/build/install/lib/ -lfastrtps
+
+INCLUDEPATH += $$PWD/../../Fast-RTPS/allocation-qos-release/build/install/include
+DEPENDPATH += $$PWD/../../Fast-RTPS/allocation-qos-release/build/install/include
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../Fast-RTPS/allocation-qos-release/build/install/lib/release/ -lfastcdr
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../Fast-RTPS/allocation-qos-release/build/install/lib/debug/ -lfastcdr
+else:unix: LIBS += -L$$PWD/../../Fast-RTPS/allocation-qos-release/build/install/lib/ -lfastcdr
+
+INCLUDEPATH += $$PWD/../../Fast-RTPS/allocation-qos-release/build/install/include
+DEPENDPATH += $$PWD/../../Fast-RTPS/allocation-qos-release/build/install/include

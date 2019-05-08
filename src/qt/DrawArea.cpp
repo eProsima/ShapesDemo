@@ -102,7 +102,7 @@ void DrawArea::drawShapes(QPainter* painter)
                 {
                     size_t total = vit->size();
                     int index = 0;
-                    if(vit->begin()->m_writerGuid != c_Guid_Unknown)
+                    if(vit->begin()->m_writerGuid != rtps::c_Guid_Unknown)
                     {
                         for(std::list<Shape>::reverse_iterator sit = vit->rbegin();
                             sit!=vit->rend();++sit)
