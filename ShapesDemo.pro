@@ -121,17 +121,3 @@ RESOURCES += \
     images/eprosimalogo.qrc
 
 RC_FILE = images/eprosima_icon.rc
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../Fast-RTPS/allocation-qos-release/build/install/lib/release/ -lfastrtps
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../Fast-RTPS/allocation-qos-release/build/install/lib/debug/ -lfastrtps
-else:unix: LIBS += -L$$PWD/../../Fast-RTPS/allocation-qos-release/build/install/lib/ -lfastrtps
-
-INCLUDEPATH += $$PWD/../../Fast-RTPS/allocation-qos-release/build/install/include
-DEPENDPATH += $$PWD/../../Fast-RTPS/allocation-qos-release/build/install/include
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../Fast-RTPS/allocation-qos-release/build/install/lib/release/ -lfastcdr
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../Fast-RTPS/allocation-qos-release/build/install/lib/debug/ -lfastcdr
-else:unix: LIBS += -L$$PWD/../../Fast-RTPS/allocation-qos-release/build/install/lib/ -lfastcdr
-
-INCLUDEPATH += $$PWD/../../Fast-RTPS/allocation-qos-release/build/install/include
-DEPENDPATH += $$PWD/../../Fast-RTPS/allocation-qos-release/build/install/include
