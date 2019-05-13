@@ -17,6 +17,10 @@
 ###############################################################################
 cmake_minimum_required(VERSION 2.8.12)
 
+
+file(READ version.pri SHAPESVERSION)
+
+
 set(IS_TOP_LEVEL TRUE)
 if(PROJECT_SOURCE_DIR)
     set(IS_TOP_LEVEL FALSE)
@@ -171,6 +175,8 @@ if(WIN32)
 else()
     add_executable(${PROJECT_NAME} ${SHAPESDEMO_SOURCES})
 endif()
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE -D${SHAPESVERSION})
 target_include_directories(${PROJECT_NAME} PRIVATE include forms/ui)
 target_link_libraries(${PROJECT_NAME} fastrtps fastcdr Qt5::Widgets Qt5::Core Qt5::Gui)
 

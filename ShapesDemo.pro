@@ -4,11 +4,16 @@
 #
 #-------------------------------------------------
 
-RTPSVERSION = 1.3.0
+RTPSVERSION = 1.8.0
+VERSION = $$RTPSVERION
+
+include(version.pri)
+
+DEFINES += SHAPESVERSION=\"\\\"$${SHAPESVERSION}\\\"\"
 
 !versionAtLeast(QT_VERSION, 5.12.0):error("Use at least Qt version 5.12")
 
-QT  += core
+QT += core
 QT += gui
 QT += widgets
 
