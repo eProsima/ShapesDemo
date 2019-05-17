@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.5.1
+** Created by: Qt User Interface Compiler version 5.9.5
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -272,22 +272,22 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Shapes Demo", 0));
-        actionPreferences->setText(QApplication::translate("MainWindow", "Preferences", 0));
-        actionStart->setText(QApplication::translate("MainWindow", "Start", 0));
-        actionStop->setText(QApplication::translate("MainWindow", "Stop (delete all)", 0));
-        actionExit->setText(QApplication::translate("MainWindow", "Exit", 0));
-        actionDelete_Enpoint->setText(QApplication::translate("MainWindow", "Delete Enpoint", 0));
-        actionAbout->setText(QApplication::translate("MainWindow", "About", 0));
-        actionUser_Manual->setText(QApplication::translate("MainWindow", "User Manual", 0));
-        actionInteroperability_Troubleshooting->setText(QApplication::translate("MainWindow", "Interoperability Troubleshooting", 0));
-        bt_subscribe->setText(QApplication::translate("MainWindow", "Subscribe", 0));
-        bt_publish->setText(QApplication::translate("MainWindow", "Publish", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tab_endpoints), QApplication::translate("MainWindow", "Endpoints", 0));
-        tabWidget->setTabText(tabWidget->indexOf(tabOutput), QApplication::translate("MainWindow", "Output", 0));
-        menuOptions->setTitle(QApplication::translate("MainWindow", "Options", 0));
-        menuControl->setTitle(QApplication::translate("MainWindow", "Control", 0));
-        menuHelp->setTitle(QApplication::translate("MainWindow", "Help", 0));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Shapes Demo", Q_NULLPTR));
+        actionPreferences->setText(QApplication::translate("MainWindow", "Preferences", Q_NULLPTR));
+        actionStart->setText(QApplication::translate("MainWindow", "Start", Q_NULLPTR));
+        actionStop->setText(QApplication::translate("MainWindow", "Stop (delete all)", Q_NULLPTR));
+        actionExit->setText(QApplication::translate("MainWindow", "Exit", Q_NULLPTR));
+        actionDelete_Enpoint->setText(QApplication::translate("MainWindow", "Delete Enpoint", Q_NULLPTR));
+        actionAbout->setText(QApplication::translate("MainWindow", "About", Q_NULLPTR));
+        actionUser_Manual->setText(QApplication::translate("MainWindow", "User Manual", Q_NULLPTR));
+        actionInteroperability_Troubleshooting->setText(QApplication::translate("MainWindow", "Interoperability Troubleshooting", Q_NULLPTR));
+        bt_subscribe->setText(QApplication::translate("MainWindow", "Subscribe", Q_NULLPTR));
+        bt_publish->setText(QApplication::translate("MainWindow", "Publish", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tab_endpoints), QApplication::translate("MainWindow", "Endpoints", Q_NULLPTR));
+        tabWidget->setTabText(tabWidget->indexOf(tabOutput), QApplication::translate("MainWindow", "Output", Q_NULLPTR));
+        menuOptions->setTitle(QApplication::translate("MainWindow", "Options", Q_NULLPTR));
+        menuControl->setTitle(QApplication::translate("MainWindow", "Control", Q_NULLPTR));
+        menuHelp->setTitle(QApplication::translate("MainWindow", "Help", Q_NULLPTR));
     } // retranslateUi
 
 };

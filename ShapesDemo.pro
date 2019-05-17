@@ -11,14 +11,12 @@ include(version.pri)
 
 DEFINES += SHAPESVERSION=\"\\\"$${SHAPESVERSION}\\\"\"
 
-!versionAtLeast(QT_VERSION, 5.12.0):error("Use at least Qt version 5.12")
-
 QT += core
 QT += gui
 QT += widgets
 
-unix:QMAKE_CXXFLAGS_DEBUG += -c -Wall -D__LITTLE_ENDIAN__ -m64 -fpic -g -std=c++0x -D__DEBUG
-unix:QMAKE_CXXFLAGS_RELEASE += -c -Wall -D__LITTLE_ENDIAN__ -m64 -fpic -O2 -std=c++0x
+unix:QMAKE_CXXFLAGS_DEBUG += -c -Wall -D__LITTLE_ENDIAN__ -m64 -fpic -g -std=c++11 -D__DEBUG
+unix:QMAKE_CXXFLAGS_RELEASE += -c -Wall -D__LITTLE_ENDIAN__ -m64 -fpic -O2 -std=c++11
 
 win32:QMAKE_CXXFLAGS_DEBUG += -D_MBCS -D__DEBUG -DBOOST_ALL_DYN_LINK -D__LITTLE_ENDIAN__ -D_WIN32
 win32:QMAKE_CXXFLAGS_RELEASE += -D_MBCS -DBOOST_ALL_DYN_LINK -D__LITTLE_ENDIAN__ -D_WIN32
@@ -99,7 +97,9 @@ SOURCES += \
     src/shapesdemo/ShapeSubscriber.cpp \
     src/qt/optionsdialog.cpp \
     src/qt/ContentFilterSelector.cpp \
-    src/shapesdemo/ShapeHistory.cpp
+    src/shapesdemo/ShapeHistory.cpp \
+    src/shapesdemo/Shape.cxx \
+    src/shapesdemo/ShapePubSubTypes.cxx
 
 
 

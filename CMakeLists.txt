@@ -134,7 +134,7 @@ eprosima_find_package(fastrtps OPTION TINYXML2_FROM_SOURCE)
 # Compile
 ###############################################################################
 set(CMAKE_AUTORCC ON)
-find_package(Qt5Core 5.12 REQUIRED)
+find_package(Qt5Core 5.9 REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
