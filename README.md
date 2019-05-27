@@ -14,7 +14,7 @@ If you have already installed eProsima Fast CDR and eProsima Fast RTPS, you can 
 
 ## Building from sources
 
-You will need Qt5, eProsima Fast CDR and eProsima Fast RTPS to build the Shapes Demo. The default configuration assumes you have eProsima libraries installed in your system: 
+You will need Qt5, eProsima Fast CDR and eProsima Fast RTPS to build the Shapes Demo. The default configuration assumes you have eProsima libraries installed in your system:
 
 #### Linux
 
@@ -28,7 +28,7 @@ You will need Qt5, eProsima Fast CDR and eProsima Fast RTPS to build the Shapes 
     cmake -G "Visual Studio 14 2015 Win64" ..
     cmake --build .
 
-If you do not have eProsima libraries installed in your system, you can build it as a dependency by specifying 
+If you do not have eProsima libraries installed in your system, you can build it as a dependency by specifying
 
     $ cmake ../ -DTHIRDPARTY=ON
 
@@ -48,14 +48,19 @@ The Publish Window allows you to generate a new Shape and corresponding RTPS Top
 
 There are multiple parameters that the user can define in this menu:
 
-* Shape: Defines the topic where the publication is going to occur. Three different shapes can be published: Square, Circle and Triangle. 
+* Shape: Defines the topic where the publication is going to occur. Three different shapes can be published: Square, Circle and Triangle.
 * Color: Defines the color of the Shape. This parameter will be used as key; that is, a way to distinguish between multiple instances of the same shape.
 * Size: Allows you to control how big the shape is. The size can vary between 1 and 99.
-* Partition: You can select different partitions to differentiate groups of publishers and subscribers. You can select between four partitions (A, B, C and D). Additionally you can select the “*” partition, that will be matched against all other partitions. You should note, however, that using the “wildcard (*)” partition is not the same as not using any partition. A publisher that uses the wildcard partition will not be matched with a subscriber that uses no partitions. 
+* Partition: You can select different partitions to differentiate groups of publishers and subscribers. You can select between four partitions (A, B, C and D). Additionally you can select the “*” partition, that will be matched against all other partitions. You should note, however, that using the “wildcard (*)” partition is not the same as not using any partition. A publisher that uses the wildcard partition will not be matched with a subscriber that uses no partitions.
 * Reliable: You can select to disable the Reliable check-box to use a Best-Effort Publisher.
-* History and Durability: The History of the Publishers is set to KEEP_LAST by default. You can select the number of samples that the Publisher is going to save. You can also select whether this History is going to be VOLATILE or TRANSIENT_LOCAL. The latter will send the last stored values to subscribers joining after the Publisher has been created. 
+* History and Durability: The History of the Publishers is set to KEEP_LAST by default. You can select the number of samples that the Publisher is going to save. You can also select whether this History is going to be VOLATILE or TRANSIENT_LOCAL. The latter will send the last stored values to subscribers joining after the Publisher has been created.
 * Liveliness: You can select the Liveliness Qos for the Publisher between three different values: AUTOMATIC, MANUAL_BY_PARTICIPANT and MANUAL_BY_TOPIC. You can also set the Lease Duration for the Publisher.
-* Ownership: The Ownership Qos determines whether the instance (color) of the Topic (Shape) is owned by a single Publisher. If the selected ownership is EXCLUSIVE the Publisher will use the Ownership strength value as the strength of its publication. Only the publisher with the highest strength can publish in the same Topic with the same Key. 
+* Ownership: The Ownership Qos determines whether the instance (color) of the Topic (Shape) is owned by a single Publisher. If the selected ownership is EXCLUSIVE the Publisher will use the Ownership strength value as the strength of its publication. Only the publisher with the highest strength can publish in the same Topic with the same Key.
+* Deadline: The Deadline Qos determines the maximum expected amount of time between samples.
+* Lifespan: The Lifespan Qos determines the duration while the sample is still valid.
+* Disable Positive ACKs: If enabled, doesn't expects for positive ACKs from the subscriber, considering delivered sent samples after the indicated duration if no negative ACKNACK was received.
+
+Take into acoount that Disabling positive ACKs and modify Lifespan will not have any visual effect.
 
 ### Subscribe
 
@@ -65,8 +70,10 @@ The Subscribe Window allows you to read and represent existing shapes on the net
 
 This menu provides the options present in the Publish Windows plus the following additions:
 
-* Time Based Filter: This value can be used to specify the minimum amount of time (in milliseconds) that the subscriber wants between updates. 
-* Content Based Filter: This filter draws a rectangle in the shapes window. Only the instances that are included in this rectangle are accepted. The rest of them are ignored. The user can dynamically resize and move this content filter. 
+* Time Based Filter: This value can be used to specify the minimum amount of time (in milliseconds) that the subscriber wants between updates.
+* Content Based Filter: This filter draws a rectangle in the shapes window. Only the instances that are included in this rectangle are accepted. The rest of them are ignored. The user can dynamically resize and move this content filter.
+
+Take into acoount that Disabling positive ACKs and modify Lifespan will not have any visual effect.
 
 ## Miscellaneous Options and Windows
 
@@ -79,16 +86,16 @@ Under the Options->Preferences tab you will find the following menu:
 You can modify the following settings:
 
 * Transport: You can select between UDP protocol, TCP LAN Server, TCP WAN Server or TCP Client.
-With UDP Protocol the applicacion will work sending multicast packets to communicate with other apps. 
+With UDP Protocol the applicacion will work sending multicast packets to communicate with other apps.
 TCP protocol needs a minimal configuration to create the connection between the machines:
 
-	- If the applicacion is going to run as a LAN server, it only needs to set the listening port where it is going to accept connections (note that firewall must be configured to allow inbound traffic).
-	- If the applicacion is going to run as a WAN server, it needs to set the listening port where it is going to accept connections and the server WAN address (note that firewall must be configured to allow inbound traffic and router must relay listening port traffic to server machine).
-	- If the applicacion is going to run as a client it needs to know the IP address of the server (or its WAN address if both instances don't share network) and the port where server is listening for connections.
+    - If the applicacion is going to run as a LAN server, it only needs to set the listening port where it is going to accept connections (note that firewall must be configured to allow inbound traffic).
+    - If the applicacion is going to run as a WAN server, it needs to set the listening port where it is going to accept connections and the server WAN address (note that firewall must be configured to allow inbound traffic and router must relay listening port traffic to server machine).
+    - If the applicacion is going to run as a client it needs to know the IP address of the server (or its WAN address if both instances don't share network) and the port where server is listening for connections.
 
 * Domain ID: You can select different Domain Ids. Shapes Demo instances using different Domain Ids cannot not communicate. To modify the Domain ID the user needs to stop the participant (thus removing all existing Publishers and Subscribers) and start a new one with the new Domain Id.
-* Update interval: This value changes the publication period for all the Publishers. 
-* Length:  This  scrollbar allows you to change how much the Shape moves between two write calls. 
+* Update interval: This value changes the publication period for all the Publishers.
+* Length:  This  scrollbar allows you to change how much the Shape moves between two write calls.
 
 ### Endpoints and Output tab
 
