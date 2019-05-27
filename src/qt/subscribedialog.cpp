@@ -23,11 +23,13 @@
 #include <QIntValidator>
 #include <QMessageBox>
 
+#include <eprosimashapesdemo/qt/mainwindow.h>
 
 SubscribeDialog::SubscribeDialog(ShapesDemo* psd,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SubscribeDialog),
-    mp_sd(psd)
+    mp_sd(psd),
+    mp_parent((MainWindow*)parent)
 {
     ui->setupUi(this);
 
@@ -47,7 +49,7 @@ SubscribeDialog::~SubscribeDialog()
 
 void SubscribeDialog::on_buttonBox_accepted()
 {
-    ShapeSubscriber* SSub = new ShapeSubscriber(this->mp_sd->getParticipant());
+    ShapeSubscriber* SSub = new ShapeSubscriber((MainWindow*)mp_parent, this->mp_sd->getParticipant());
 
 
     //SHAPE/TOPIC:
@@ -101,6 +103,34 @@ void SubscribeDialog::on_buttonBox_accepted()
         break;
     }
     }
+    // Deadline
+    if(this->ui->lineEdit_Dead->text()=="INF")
+    {
+        SSub->m_attributes.qos.m_deadline.period = c_TimeInfinite;
+    }
+    else
+    {
+        QString value = this->ui->lineEdit_Dead->text();
+        if(value.toDouble()>0)
+        {
+            SSub->m_attributes.qos.m_deadline.period = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+        }
+    }
+    // Lifespan
+    if(this->ui->lineEdit_Life->text()=="INF")
+    {
+        SSub->m_attributes.qos.m_lifespan.duration = c_TimeInfinite;
+    }
+    else
+    {
+        QString value = this->ui->lineEdit_Life->text();
+        if(value.toDouble()>0)
+        {
+            SSub->m_attributes.qos.m_lifespan.duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+        }
+    }
+    // Disable Positive ACKs
+    SSub->m_attributes.qos.m_disablePositiveACKs.enabled = this->ui->checkBox_ACK->isChecked();
     //PARTITIONS:
     if(this->ui->checkBox_Asterisk->isChecked())
         SSub->m_attributes.qos.m_partition.push_back("*");

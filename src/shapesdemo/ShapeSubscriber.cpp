@@ -25,12 +25,15 @@
 #include <fastrtps/subscriber/SampleInfo.h>
 #include <fastrtps/Domain.h>
 
-ShapeSubscriber::ShapeSubscriber(Participant* par):
+#include <eprosimashapesdemo/qt/mainwindow.h>
+
+ShapeSubscriber::ShapeSubscriber(MainWindow* win, Participant* par):
     mp_sub(nullptr),
     mp_participant(par),
     hasReceived(false),
     m_mutex(QMutex::Recursive),
-    mp_contentFilter(nullptr)
+    mp_contentFilter(nullptr),
+    m_mainWindow(win)
 {
     // TODO Auto-generated constructor stub
 
@@ -127,6 +130,14 @@ void ShapeSubscriber::adjustContentFilter(ShapeFilter &filter)
     m_mutex.lock();
     m_shapeHistory.adjustContentFilter(filter);
     m_mutex.unlock();
+}
+
+void ShapeSubscriber::on_requested_deadline_missed(
+        Subscriber*,
+        const RequestedDeadlineMissedStatus&)
+{
+    //std::cout << "Requested eadline missed" << std::endl;
+    m_mainWindow->addMessageToOutput(QString("Requested deadline missed"));
 }
 
 //void ShapeSubscriber::removeSamplesFromWriter(GUID_t)

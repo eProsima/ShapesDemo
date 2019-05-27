@@ -179,12 +179,6 @@ set( SHAPESDEMO_SOURCES
     src/qt/optionsdialog.cpp
     src/qt/ContentFilterSelector.cpp
     src/shapesdemo/ShapeHistory.cpp
-#   forms/ui/moc_DrawArea.cpp
-#   forms/ui/moc_mainwindow.cpp
-#   forms/ui/moc_optionsdialog.cpp
-#   forms/ui/moc_publishdialog.cpp
-#   forms/ui/moc_subscribedialog.cpp
-#   forms/ui/moc_UpdateThread.cpp
     images/eprosimalogo.qrc
     images/eprosima_icon.rc
     )

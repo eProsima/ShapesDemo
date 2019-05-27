@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>449</width>
-    <height>403</height>
+    <height>484</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,36 +25,6 @@
      <property name="sizeConstraint">
       <enum>QLayout::SetMaximumSize</enum>
      </property>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="font">
-        <font>
-         <pointsize>13</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Shape</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::AutoText</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="label">
-       <property name="font">
-        <font>
-         <pointsize>13</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Color</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::AutoText</enum>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="2">
       <widget class="QLabel" name="label_7">
        <property name="font">
@@ -85,6 +55,49 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Color</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="5">
+      <widget class="QCheckBox" name="checkBox_C">
+       <property name="text">
+        <string>C</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="3">
+      <widget class="QCheckBox" name="checkBox_A">
+       <property name="text">
+        <string>A</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
+      <widget class="QCheckBox" name="checkBox_B">
+       <property name="text">
+        <string>B</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="6">
+      <widget class="QCheckBox" name="checkBox_D">
+       <property name="text">
+        <string>D</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0">
       <widget class="QComboBox" name="combo_Shape">
        <item>
@@ -102,6 +115,41 @@
          <string>Circle</string>
         </property>
        </item>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QCheckBox" name="checkBox_Asterisk">
+       <property name="text">
+        <string>*</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QSpinBox" name="spin_Size">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="value">
+        <number>30</number>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Shape</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
       </widget>
      </item>
      <item row="1" column="1">
@@ -144,54 +192,6 @@
          <string>MAGENTA</string>
         </property>
        </item>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QSpinBox" name="spin_Size">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="value">
-        <number>30</number>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3">
-      <widget class="QCheckBox" name="checkBox_A">
-       <property name="text">
-        <string>A</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="4">
-      <widget class="QCheckBox" name="checkBox_B">
-       <property name="text">
-        <string>B</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="5">
-      <widget class="QCheckBox" name="checkBox_C">
-       <property name="text">
-        <string>C</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="6">
-      <widget class="QCheckBox" name="checkBox_D">
-       <property name="text">
-        <string>D</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="5">
-      <widget class="QCheckBox" name="checkBox_Asterisk">
-       <property name="text">
-        <string>*</string>
-       </property>
       </widget>
      </item>
     </layout>
@@ -237,46 +237,47 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_5">
-     <item row="3" column="1">
-      <widget class="QLabel" name="label_11">
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_10">
        <property name="font">
         <font>
          <pointsize>13</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Kind:</string>
+        <string>History:</string>
        </property>
        <property name="textFormat">
         <enum>Qt::AutoText</enum>
        </property>
       </widget>
      </item>
-     <item row="0" column="3">
-      <widget class="QCheckBox" name="checkBox_reliable">
+     <item row="11" column="1">
+      <widget class="QCheckBox" name="checkBox_contentBasedFilter">
        <property name="font">
         <font>
          <pointsize>13</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Reliable</string>
+        <string>Content Based</string>
        </property>
        <property name="checked">
         <bool>false</bool>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QSpinBox" name="spin_HistoryQos">
-       <property name="minimum">
-        <number>1</number>
+     <item row="5" column="1">
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <pointsize>13</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
        </property>
-       <property name="maximum">
-        <number>200</number>
-       </property>
-       <property name="value">
-        <number>6</number>
+       <property name="text">
+        <string>Deadline</string>
        </property>
       </widget>
      </item>
@@ -297,30 +298,23 @@
        </item>
       </widget>
      </item>
-     <item row="4" column="2">
-      <widget class="QSpinBox" name="spin_ownershipStrength">
-       <property name="enabled">
+     <item row="0" column="3">
+      <widget class="QCheckBox" name="checkBox_reliable">
+       <property name="font">
+        <font>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Reliable</string>
+       </property>
+       <property name="checked">
         <bool>false</bool>
-       </property>
-       <property name="minimum">
-        <number>0</number>
-       </property>
-       <property name="maximum">
-        <number>50</number>
-       </property>
-       <property name="value">
-        <number>0</number>
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
-      <widget class="QLabel" name="label_18">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
+     <item row="6" column="1">
+      <widget class="QLabel" name="label_5">
        <property name="font">
         <font>
          <pointsize>13</pointsize>
@@ -329,10 +323,29 @@
         </font>
        </property>
        <property name="text">
-        <string>Filters</string>
+        <string>Lifespan</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLabel" name="label_12">
+       <property name="font">
+        <font>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Ownership Strength:</string>
        </property>
        <property name="textFormat">
         <enum>Qt::AutoText</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="3">
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>ms</string>
        </property>
       </widget>
      </item>
@@ -359,18 +372,78 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
-      <widget class="QLabel" name="label_12">
+     <item row="5" column="3">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>ms</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="2">
+      <widget class="QLineEdit" name="lineEdit_Dead">
+       <property name="text">
+        <string>INF</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QSpinBox" name="spin_HistoryQos">
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>200</number>
+       </property>
+       <property name="value">
+        <number>6</number>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QLabel" name="label_18">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>13</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Filters</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="label_11">
        <property name="font">
         <font>
          <pointsize>13</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>Ownership Strength:</string>
+        <string>Kind:</string>
        </property>
        <property name="textFormat">
         <enum>Qt::AutoText</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="2">
+      <widget class="QLineEdit" name="lineEdit_TimeBasedFilter">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>0</string>
        </property>
       </widget>
      </item>
@@ -389,46 +462,6 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
-      <widget class="QCheckBox" name="checkBox_contentBasedFilter">
-       <property name="font">
-        <font>
-         <pointsize>13</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Content Based</string>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLabel" name="label_10">
-       <property name="font">
-        <font>
-         <pointsize>13</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>History:</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::AutoText</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="2">
-      <widget class="QLineEdit" name="lineEdit_TimeBasedFilter">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="text">
-        <string>0</string>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="2" colspan="2">
       <widget class="QComboBox" name="comboBox_ownership">
        <item>
@@ -443,7 +476,7 @@
        </item>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="10" column="1">
       <widget class="QCheckBox" name="checkBox_timeBasedFilter">
        <property name="font">
         <font>
@@ -452,6 +485,43 @@
        </property>
        <property name="text">
         <string>Time Based (ms):</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="2">
+      <widget class="QSpinBox" name="spin_ownershipStrength">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>50</number>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QCheckBox" name="checkBox_ACK">
+       <property name="font">
+        <font>
+         <pointsize>13</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Disable Positive ACKs</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="2">
+      <widget class="QLineEdit" name="lineEdit_Life">
+       <property name="text">
+        <string>INF</string>
        </property>
       </widget>
      </item>
