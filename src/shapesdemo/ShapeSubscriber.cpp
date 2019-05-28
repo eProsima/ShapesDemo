@@ -63,7 +63,7 @@ void ShapeSubscriber::onNewDataMessage(Subscriber* sub)
     Shape shape;
     shape.m_type = this->m_shapeType;
     SampleInfo_t info;
-    while(sub->readNextData((void*)&shape.m_shape,&info))
+    while(sub->takeNextData((void*)&shape.m_shape,&info))
     {
         // shape.m_x += 5;
         //cout << "Shape of type: "<< shape.m_type << "RECEIVED"<<endl;
