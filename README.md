@@ -56,11 +56,11 @@ There are multiple parameters that the user can define in this menu:
 * History and Durability: The History of the Publishers is set to KEEP_LAST by default. You can select the number of samples that the Publisher is going to save. You can also select whether this History is going to be VOLATILE or TRANSIENT_LOCAL. The latter will send the last stored values to subscribers joining after the Publisher has been created.
 * Liveliness: You can select the Liveliness Qos for the Publisher between three different values: AUTOMATIC, MANUAL_BY_PARTICIPANT and MANUAL_BY_TOPIC. You can also set the Lease Duration for the Publisher.
 * Ownership: The Ownership Qos determines whether the instance (color) of the Topic (Shape) is owned by a single Publisher. If the selected ownership is EXCLUSIVE the Publisher will use the Ownership strength value as the strength of its publication. Only the publisher with the highest strength can publish in the same Topic with the same Key.
-* Deadline: The Deadline Qos determines the maximum expected amount of time between samples.
-* Lifespan: The Lifespan Qos determines the duration while the sample is still valid.
-* Disable Positive ACKs: If enabled, doesn't expects for positive ACKs from the subscriber, considering delivered sent samples after the indicated duration if no negative ACKNACK was received.
+* Deadline: The Deadline Qos determines the maximum expected amount of time between samples. When the deadline is missed the application will be notified and a message printed on the console.
+* Lifespan: The Lifespan Qos determines the duration while the sample is still valid. When a sample's lifespan expires, it will be removed from publisher and subscriber histories.
+* Disable Positive ACKs: If enabled, writers don't expect positive ACKNACK messages from the subscriber, considering delivered sent samples after the indicated duration if no negative ACKNACK was received.
 
-Take into acoount that Disabling positive ACKs and modify Lifespan will not have any visual effect.
+Note that using that Disable Positive ACKs and Lifespan QoS will not have any visual effect.
 
 ### Subscribe
 
