@@ -252,7 +252,14 @@
        </property>
       </widget>
      </item>
-     <item row="11" column="1">
+     <item row="6" column="2">
+      <widget class="QLineEdit" name="lineEdit_Life">
+       <property name="text">
+        <string>INF</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1">
       <widget class="QCheckBox" name="checkBox_contentBasedFilter">
        <property name="font">
         <font>
@@ -327,6 +334,13 @@
        </property>
       </widget>
      </item>
+     <item row="6" column="3">
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>ms</string>
+       </property>
+      </widget>
+     </item>
      <item row="4" column="1">
       <widget class="QLabel" name="label_12">
        <property name="font">
@@ -339,13 +353,6 @@
        </property>
        <property name="textFormat">
         <enum>Qt::AutoText</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="3">
-      <widget class="QLabel" name="label_13">
-       <property name="text">
-        <string>ms</string>
        </property>
       </widget>
      </item>
@@ -399,7 +406,7 @@
        </property>
       </widget>
      </item>
-     <item row="9" column="1">
+     <item row="8" column="1">
       <widget class="QLabel" name="label_18">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -437,7 +444,7 @@
        </property>
       </widget>
      </item>
-     <item row="10" column="2">
+     <item row="9" column="2">
       <widget class="QLineEdit" name="lineEdit_TimeBasedFilter">
        <property name="enabled">
         <bool>false</bool>
@@ -476,7 +483,7 @@
        </item>
       </widget>
      </item>
-     <item row="10" column="1">
+     <item row="9" column="1">
       <widget class="QCheckBox" name="checkBox_timeBasedFilter">
        <property name="font">
         <font>
@@ -501,27 +508,6 @@
        </property>
        <property name="value">
         <number>0</number>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="1">
-      <widget class="QCheckBox" name="checkBox_ACK">
-       <property name="font">
-        <font>
-         <pointsize>13</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Disable Positive ACKs</string>
-       </property>
-      </widget>
-     </item>
-     <item row="6" column="2">
-      <widget class="QLineEdit" name="lineEdit_Life">
-       <property name="text">
-        <string>INF</string>
        </property>
       </widget>
      </item>

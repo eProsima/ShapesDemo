@@ -331,20 +331,6 @@
         </layout>
        </widget>
       </item>
-      <item row="10" column="0">
-       <widget class="QLabel" name="label_16">
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Disable Positive ACKs</string>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_7">
         <property name="font">
@@ -375,6 +361,48 @@
         </property>
        </widget>
       </item>
+      <item row="7" column="0" colspan="3">
+       <widget class="QFrame" name="frame_4">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QLineEdit" name="lineEdit_Dead">
+         <property name="geometry">
+          <rect>
+           <x>110</x>
+           <y>10</y>
+           <width>291</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>INF</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_19">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>91</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Duration (ms)</string>
+         </property>
+        </widget>
+       </widget>
+      </item>
       <item row="4" column="0" colspan="2">
        <widget class="QLabel" name="label_13">
         <property name="font">
@@ -390,6 +418,48 @@
         <property name="textFormat">
          <enum>Qt::AutoText</enum>
         </property>
+       </widget>
+      </item>
+      <item row="9" column="0" colspan="3">
+       <widget class="QFrame" name="frame_5">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QLineEdit" name="lineEdit_Life">
+         <property name="geometry">
+          <rect>
+           <x>110</x>
+           <y>10</y>
+           <width>291</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>INF</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_18">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>91</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Duration (ms)</string>
+         </property>
+        </widget>
        </widget>
       </item>
       <item row="0" column="2">
@@ -520,145 +590,6 @@
         </layout>
        </widget>
       </item>
-      <item row="11" column="0" colspan="3">
-       <widget class="QFrame" name="frame_6">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>80</height>
-         </size>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <widget class="QCheckBox" name="checkBox_ACK">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>320</width>
-           <height>23</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Disable Positive ACKs</string>
-         </property>
-        </widget>
-        <widget class="QLineEdit" name="lineEdit_ACK">
-         <property name="geometry">
-          <rect>
-           <x>110</x>
-           <y>40</y>
-           <width>291</width>
-           <height>25</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>INF</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_17">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>40</y>
-           <width>91</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Duration (ms)</string>
-         </property>
-        </widget>
-       </widget>
-      </item>
-      <item row="9" column="0" colspan="3">
-       <widget class="QFrame" name="frame_5">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>50</height>
-         </size>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <widget class="QLineEdit" name="lineEdit_Life">
-         <property name="geometry">
-          <rect>
-           <x>110</x>
-           <y>10</y>
-           <width>291</width>
-           <height>25</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>INF</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_18">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>91</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Duration (ms)</string>
-         </property>
-        </widget>
-       </widget>
-      </item>
-      <item row="7" column="0" colspan="3">
-       <widget class="QFrame" name="frame_4">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>50</height>
-         </size>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <widget class="QLineEdit" name="lineEdit_Dead">
-         <property name="geometry">
-          <rect>
-           <x>110</x>
-           <y>10</y>
-           <width>291</width>
-           <height>25</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>INF</string>
-         </property>
-        </widget>
-        <widget class="QLabel" name="label_19">
-         <property name="geometry">
-          <rect>
-           <x>10</x>
-           <y>10</y>
-           <width>91</width>
-           <height>20</height>
-          </rect>
-         </property>
-         <property name="text">
-          <string>Duration (ms)</string>
-         </property>
-        </widget>
-       </widget>
-      </item>
      </layout>
      <zorder>label_6</zorder>
      <zorder>spin_HistoryQos</zorder>
@@ -672,9 +603,7 @@
      <zorder>frame_4</zorder>
      <zorder>label_14</zorder>
      <zorder>frame_5</zorder>
-     <zorder>frame_6</zorder>
      <zorder>label_15</zorder>
-     <zorder>label_16</zorder>
     </widget>
    </item>
   </layout>

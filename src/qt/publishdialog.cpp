@@ -140,16 +140,6 @@ void PublishDialog::on_button_OkCancel_accepted()
             SP->m_attributes.qos.m_lifespan.duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
         }
     }
-    // Disable Positive ACKs
-    SP->m_attributes.qos.m_disablePositiveACKs.enabled = this->ui->checkBox_ACK->isChecked();
-    if (SP->m_attributes.qos.m_disablePositiveACKs.enabled)
-    {
-        QString value = this->ui->lineEdit_ACK->text();
-        if(value.toDouble()>0)
-        {
-            SP->m_attributes.qos.m_disablePositiveACKs.duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
-        }
-    }
     //PARTITIONS:
    if(this->ui->checkBox_Asterisk->isChecked())
        SP->m_attributes.qos.m_partition.push_back("*");

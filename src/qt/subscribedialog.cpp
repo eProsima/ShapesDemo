@@ -129,8 +129,6 @@ void SubscribeDialog::on_buttonBox_accepted()
             SSub->m_attributes.qos.m_lifespan.duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
         }
     }
-    // Disable Positive ACKs
-    SSub->m_attributes.qos.m_disablePositiveACKs.enabled = this->ui->checkBox_ACK->isChecked();
     //PARTITIONS:
     if(this->ui->checkBox_Asterisk->isChecked())
         SSub->m_attributes.qos.m_partition.push_back("*");

@@ -58,9 +58,8 @@ There are multiple parameters that the user can define in this menu:
 * Ownership: The Ownership Qos determines whether the instance (color) of the Topic (Shape) is owned by a single Publisher. If the selected ownership is EXCLUSIVE the Publisher will use the Ownership strength value as the strength of its publication. Only the publisher with the highest strength can publish in the same Topic with the same Key.
 * Deadline: The Deadline Qos determines the maximum expected amount of time between samples. When the deadline is missed the application will be notified and a message printed on the console.
 * Lifespan: The Lifespan Qos determines the duration while the sample is still valid. When a sample's lifespan expires, it will be removed from publisher and subscriber histories.
-* Disable Positive ACKs: If enabled, writers don't expect positive ACKNACK messages from the subscriber, considering delivered sent samples after the indicated duration if no negative ACKNACK was received.
 
-Note that using that Disable Positive ACKs and Lifespan QoS will not have any visual effect.
+Note that using Lifespan QoS will not have any visual effect.
 
 ### Subscribe
 
@@ -72,8 +71,10 @@ This menu provides the options present in the Publish Windows plus the following
 
 * Time Based Filter: This value can be used to specify the minimum amount of time (in milliseconds) that the subscriber wants between updates.
 * Content Based Filter: This filter draws a rectangle in the shapes window. Only the instances that are included in this rectangle are accepted. The rest of them are ignored. The user can dynamically resize and move this content filter.
+* Deadline: The Deadline Qos determines the maximum expected amount of time between samples. When the deadline is missed the application will be notified and a message printed on the console.
+* Lifespan: The Lifespan Qos determines the duration while the sample is still valid. When a sample's lifespan expires, it will be removed from publisher and subscriber histories.
 
-Take into acoount that Disabling positive ACKs and modify Lifespan will not have any visual effect.
+Note that using Lifespan QoS will not have any visual effect.
 
 ## Miscellaneous Options and Windows
 

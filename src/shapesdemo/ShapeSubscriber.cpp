@@ -63,7 +63,7 @@ void ShapeSubscriber::onNewDataMessage(Subscriber* sub)
     Shape shape;
     shape.m_type = this->m_shapeType;
     SampleInfo_t info;
-    while(sub->takeNextData((void*)&shape.m_shape,&info))
+    while(sub->readNextData((void*)&shape.m_shape,&info))
     {
         // shape.m_x += 5;
         //cout << "Shape of type: "<< shape.m_type << "RECEIVED"<<endl;
@@ -136,7 +136,6 @@ void ShapeSubscriber::on_requested_deadline_missed(
         Subscriber*,
         const RequestedDeadlineMissedStatus&)
 {
-    //std::cout << "Requested eadline missed" << std::endl;
     m_mainWindow->addMessageToOutput(QString("Requested deadline missed"));
 }
 

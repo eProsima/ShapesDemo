@@ -81,6 +81,5 @@ void ShapePublisher::on_offered_deadline_missed(
         Publisher*,
         const OfferedDeadlineMissedStatus&)
 {
-    //std::cout << "Offered deadline missed" << std::endl;
     m_mainWindow->addMessageToOutput(QString("Offered deadline missed"));
 }
