@@ -23,6 +23,7 @@ class SubscribeDialog;
 
 class ShapesDemo;
 class ShapeSubscriber;
+class MainWindow;
 
 class SubscribeDialog : public QDialog
 {
@@ -48,6 +49,7 @@ public:
 private:
     Ui::SubscribeDialog *ui;
     ShapesDemo* mp_sd;
+    MainWindow* mp_parent;
 };
 
 #endif // SUBSCRIBEDIALOG_H

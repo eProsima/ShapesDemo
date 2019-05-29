@@ -46,8 +46,8 @@ FORMS    +=   forms/mainwindow.ui \
               forms/optionsdialog.ui
 
 
-UI_DIR = $$_PRO_FILE_PWD_/forms/ui/
-MOC_DIR = $$_PRO_FILE_PWD_/forms/ui/
+#UI_DIR = $$_PRO_FILE_PWD_/forms/ui/
+#MOC_DIR = $$_PRO_FILE_PWD_/forms/ui/
 
 unix: CONFIG(release, debug|release):LIBS += -Lusr/lib/ -lfastrtps
 else:unix: CONFIG(debug, debug|release):LIBS += -Lusr/lib/ -lfastrtpsd

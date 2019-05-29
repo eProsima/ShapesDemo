@@ -20,11 +20,13 @@
 
 #include "fastrtps/utils/TimeConversion.h"
 
+#include <eprosimashapesdemo/qt/mainwindow.h>
 
 PublishDialog::PublishDialog(ShapesDemo* psd,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PublishDialog),
-    mp_sd(psd)
+    mp_sd(psd),
+    mp_parent((MainWindow*)parent)
 {
     setAttribute ( Qt::WA_DeleteOnClose, true );
     ui->setupUi(this);
@@ -39,7 +41,7 @@ PublishDialog::~PublishDialog()
 
 void PublishDialog::on_button_OkCancel_accepted()
 {
-    ShapePublisher* SP = new ShapePublisher(this->mp_sd->getParticipant());
+    ShapePublisher* SP = new ShapePublisher(mp_parent, this->mp_sd->getParticipant());
        //Get the different elements
     //ShapeAttributes
     setShapeAttributes(SP);
@@ -112,6 +114,32 @@ void PublishDialog::on_button_OkCancel_accepted()
    }
    if(SP->m_attributes.qos.m_ownership.kind == EXCLUSIVE_OWNERSHIP_QOS)
        SP->m_attributes.qos.m_ownershipStrength.value = this->ui->spin_ownershipStrength->value();
+    // Deadline
+    if(this->ui->lineEdit_Dead->text()=="INF")
+    {
+        SP->m_attributes.qos.m_deadline.period = c_TimeInfinite;
+    }
+    else
+    {
+        QString value = this->ui->lineEdit_Dead->text();
+        if(value.toDouble()>0)
+        {
+            SP->m_attributes.qos.m_deadline.period = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+        }
+    }
+    // Lifespan
+    if(this->ui->lineEdit_Life->text()=="INF")
+    {
+        SP->m_attributes.qos.m_lifespan.duration = c_TimeInfinite;
+    }
+    else
+    {
+        QString value = this->ui->lineEdit_Life->text();
+        if(value.toDouble()>0)
+        {
+            SP->m_attributes.qos.m_lifespan.duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+        }
+    }
     //PARTITIONS:
    if(this->ui->checkBox_Asterisk->isChecked())
        SP->m_attributes.qos.m_partition.push_back("*");

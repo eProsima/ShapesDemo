@@ -28,6 +28,8 @@
 
 #include <fastrtps/fastrtps_fwd.h>
 
+class MainWindow;
+
 using namespace eprosima::fastrtps;
 
 /**
@@ -35,16 +37,16 @@ using namespace eprosima::fastrtps;
  */
 class ShapePublisher: public PublisherListener {
 public:
-    ShapePublisher(Participant* par);
-	virtual ~ShapePublisher();
-	PublisherAttributes m_attributes;
-	Publisher* mp_pub;
+    ShapePublisher(MainWindow*, Participant* par);
+    virtual ~ShapePublisher();
+    PublisherAttributes m_attributes;
+    Publisher* mp_pub;
     Participant* mp_participant;
     /**
      * @brief Initialize the publisher.
      * @return  True if correct.
      */
-	bool initPublisher();
+    bool initPublisher();
     /**
      * @brief Write the shape.
      */
@@ -54,12 +56,13 @@ public:
      * @param info
      */
     void onPublicationMatched(Publisher* pub, rtps::MatchingInfo& info);
+    void on_offered_deadline_missed(Publisher*, const OfferedDeadlineMissedStatus&) override;
 
     Shape m_shape;
     QMutex m_mutex;
     bool isInitialized;
     bool hasWritten;
-
+    MainWindow* m_mainWindow;
 
 };
 
