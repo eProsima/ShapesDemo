@@ -35,8 +35,6 @@ PublishDialog::~PublishDialog()
     delete ui;
 }
 
-
-
 void PublishDialog::on_button_OkCancel_accepted()
 {
     ShapePublisher* SP = new ShapePublisher(this->mp_sd->getParticipant());
@@ -130,6 +128,21 @@ void PublishDialog::on_button_OkCancel_accepted()
 
 
 
+}
+
+void PublishDialog::on_checkBox_reliable_clicked()
+{
+    if (ui->checkBox_reliable->isChecked())
+    {
+        // Add TRANSIENT_LOCAL item
+        ui->comboBox_durability->addItem("TRANSIENT_LOCAL");
+        ui->comboBox_durability->setCurrentIndex(1);
+    }
+    else
+    {
+        // Remove TRANSIENT_LOCAL item
+        ui->comboBox_durability->removeItem(1);
+    }
 }
 
 void PublishDialog::setShapeAttributes(ShapePublisher* SP)
