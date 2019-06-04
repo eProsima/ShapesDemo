@@ -35,8 +35,6 @@ PublishDialog::~PublishDialog()
     delete ui;
 }
 
-
-
 void PublishDialog::on_button_OkCancel_accepted()
 {
     ShapePublisher* SP = new ShapePublisher(this->mp_sd->getParticipant());
@@ -165,8 +163,20 @@ void PublishDialog::setShapeAttributes(ShapePublisher* SP)
 
 void PublishDialog::on_comboBox_ownership_currentIndexChanged(int index)
 {
-    if(index == 1)
-    {
+    switch (index) {
+    // Case SHARED_OWNERSHIP. Disable ownership strength
+    case 0:
+        this->ui->spin_ownershipStrength->setEnabled(false);
+        break;
+    // Case EXCLUSIVE_OWNERSHIP. Enable ownership strength
+    // and set reliability to reliable
+    case 1:
+        this->ui->spin_ownershipStrength->setEnabled(true);
         this->ui->checkBox_reliable->setChecked(true);
+        break;
+    // Enable ownership strength
+    default:
+        this->ui->spin_ownershipStrength->setEnabled(true);
+        break;
     }
 }
