@@ -46,8 +46,8 @@ public:
     bool m_udpTransport;
     bool m_tcpServer;
     bool m_tcpWAN;
-    uint32_t m_listenPort;
-    uint32_t m_serverPort;
+    uint16_t m_listenPort;
+    uint16_t m_serverPort;
     std::string m_serverIp;
     uint32_t m_updateIntervalMs;
     uint32_t m_movementSpeed;

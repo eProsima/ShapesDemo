@@ -17,6 +17,10 @@
 ###############################################################################
 cmake_minimum_required(VERSION 2.8.12)
 
+
+file(READ version.pri SHAPESVERSION)
+
+
 set(IS_TOP_LEVEL TRUE)
 if(PROJECT_SOURCE_DIR)
     set(IS_TOP_LEVEL FALSE)
@@ -95,15 +99,15 @@ set(INCLUDE_INSTALL_DIR include/ CACHE PATH "Installation directory for C++ Head
 set(LIB_INSTALL_DIR lib/ CACHE PATH "Installation directory for libraries")
 set(DATA_INSTALL_DIR share/ CACHE PATH "Installation directory for data")
 if(WIN32)
-	set(DOC_DIR "doc")
+    set(DOC_DIR "doc")
 else()
-	set(DOC_DIR "${DATA_INSTALL_DIR}/doc")
+    set(DOC_DIR "${DATA_INSTALL_DIR}/doc")
 endif()
 set(DOC_INSTALL_DIR ${DOC_DIR} CACHE PATH "Installation directory for documentation")
 if(WIN32)
-	set(LICENSE_INSTALL_DIR . CACHE PATH "Installation directory for licenses")
+    set(LICENSE_INSTALL_DIR . CACHE PATH "Installation directory for licenses")
 else()
-	set(LICENSE_INSTALL_DIR ${DATA_INSTALL_DIR}/${PROJECT_NAME} CACHE PATH "Installation directory for licenses")
+    set(LICENSE_INSTALL_DIR ${DATA_INSTALL_DIR}/${PROJECT_NAME} CACHE PATH "Installation directory for licenses")
 endif()
 
 set(CMAKE_BUILD_TYPE Release CACHE STRING "Build Type")
@@ -127,36 +131,50 @@ eprosima_find_package(fastcdr)
 eprosima_find_package(fastrtps OPTION TINYXML2_FROM_SOURCE)
 
 ###############################################################################
-# Compile 
+# Compile
 ###############################################################################
-set(CMAKE_AUTORCC ON)
-find_package(Qt5Core REQUIRED)
+find_package(Qt5Core 5.9 REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
+set( MOC_HEADERS
+    include/eprosimashapesdemo/qt/DrawArea.h
+    include/eprosimashapesdemo/qt/UpdateThread.h
+    include/eprosimashapesdemo/qt/mainwindow.h
+    include/eprosimashapesdemo/qt/optionsdialog.h
+    include/eprosimashapesdemo/qt/publishdialog.h
+    include/eprosimashapesdemo/qt/subscribedialog.h
+    )
+
+set( UIS
+    forms/mainwindow.ui
+    forms/optionsdialog.ui
+    forms/publishdialog.ui
+    forms/subscribedialog.ui
+    )
+
+
+QT5_WRAP_UI( UI_HEADERS ${UIS} )
+QT5_WRAP_CPP( MOC_SRCS ${MOC_HEADERS} )
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_AUTOUIC_SEARCH_PATHS forms)
+
 message(STATUS "Configuring ShapesDemo...")
 set( SHAPESDEMO_SOURCES
-    src/qt/DrawArea.cpp 
-    src/qt/mainwindow.cpp 
-    src/qt/publishdialog.cpp 
-    src/qt/subscribedialog.cpp 
+    src/qt/DrawArea.cpp
+    src/qt/mainwindow.cpp
+    src/qt/publishdialog.cpp
+    src/qt/subscribedialog.cpp
     src/shapesdemo/Shape.cxx
     src/shapesdemo/ShapesDemo.cpp
     src/shapesdemo/ShapePubSubTypes.cxx
-#   src/utils/md5.cpp
-    src/main.cpp 
+    src/main.cpp
     src/shapesdemo/ShapePublisher.cpp
-    src/qt/UpdateThread.cpp 
+    src/qt/UpdateThread.cpp
     src/shapesdemo/ShapeSubscriber.cpp
     src/qt/optionsdialog.cpp
     src/qt/ContentFilterSelector.cpp
     src/shapesdemo/ShapeHistory.cpp
-    forms/ui/moc_DrawArea.cpp
-    forms/ui/moc_mainwindow.cpp
-    forms/ui/moc_optionsdialog.cpp
-    forms/ui/moc_publishdialog.cpp
-    forms/ui/moc_subscribedialog.cpp
-    forms/ui/moc_UpdateThread.cpp
     images/eprosimalogo.qrc
     images/eprosima_icon.rc
     )
@@ -167,11 +185,13 @@ if(THIRDPARTY)
 endif()
 
 if(WIN32)
-    add_executable(${PROJECT_NAME} WIN32 ${SHAPESDEMO_SOURCES})
+    add_executable(${PROJECT_NAME} WIN32 ${SHAPESDEMO_SOURCES} ${MOC_SRCS} ${UI_HEADERS})
 else()
-    add_executable(${PROJECT_NAME} ${SHAPESDEMO_SOURCES})
+    add_executable(${PROJECT_NAME} ${SHAPESDEMO_SOURCES} ${MOC_SRCS} ${UI_HEADERS})
 endif()
-target_include_directories(${PROJECT_NAME} PRIVATE include forms/ui)
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE -D${SHAPESVERSION})
+target_include_directories(${PROJECT_NAME} PRIVATE include ${IU_HEADERS})
 target_link_libraries(${PROJECT_NAME} fastrtps fastcdr Qt5::Widgets Qt5::Core Qt5::Gui)
 
 ###############################################################################

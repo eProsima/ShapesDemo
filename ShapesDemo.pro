@@ -4,19 +4,19 @@
 #
 #-------------------------------------------------
 
-RTPSVERSION = 1.3.0
+RTPSVERSION = 1.8.0
+VERSION = $$RTPSVERION
 
-QT  += core
-#QT  -= gui
+include(version.pri)
+
+DEFINES += SHAPESVERSION=\"\\\"$${SHAPESVERSION}\\\"\"
+
+QT += core
 QT += gui
+QT += widgets
 
-
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-
-unix:QMAKE_CXXFLAGS_DEBUG += -c -Wall -D__LITTLE_ENDIAN__ -m64 -fpic -g -std=c++0x -D__DEBUG
-unix:QMAKE_CXXFLAGS_RELEASE += -c -Wall -D__LITTLE_ENDIAN__ -m64 -fpic -O2 -std=c++0x
+unix:QMAKE_CXXFLAGS_DEBUG += -c -Wall -D__LITTLE_ENDIAN__ -m64 -fpic -g -std=c++11 -D__DEBUG
+unix:QMAKE_CXXFLAGS_RELEASE += -c -Wall -D__LITTLE_ENDIAN__ -m64 -fpic -O2 -std=c++11
 
 win32:QMAKE_CXXFLAGS_DEBUG += -D_MBCS -D__DEBUG -DBOOST_ALL_DYN_LINK -D__LITTLE_ENDIAN__ -D_WIN32
 win32:QMAKE_CXXFLAGS_RELEASE += -D_MBCS -DBOOST_ALL_DYN_LINK -D__LITTLE_ENDIAN__ -D_WIN32
@@ -44,10 +44,6 @@ FORMS    +=   forms/mainwindow.ui \
               forms/publishdialog.ui \
               forms/subscribedialog.ui \
               forms/optionsdialog.ui
-
-
-UI_DIR = $$_PRO_FILE_PWD_/forms/ui/
-MOC_DIR = $$_PRO_FILE_PWD_/forms/ui/
 
 unix: CONFIG(release, debug|release):LIBS += -Lusr/lib/ -lfastrtps
 else:unix: CONFIG(debug, debug|release):LIBS += -Lusr/lib/ -lfastrtpsd
@@ -97,7 +93,9 @@ SOURCES += \
     src/shapesdemo/ShapeSubscriber.cpp \
     src/qt/optionsdialog.cpp \
     src/qt/ContentFilterSelector.cpp \
-    src/shapesdemo/ShapeHistory.cpp
+    src/shapesdemo/ShapeHistory.cpp \
+    src/shapesdemo/Shape.cxx \
+    src/shapesdemo/ShapePubSubTypes.cxx
 
 
 

@@ -24,6 +24,7 @@ class PublishDialog;
 
 class ShapesDemo;
 class ShapePublisher;
+class MainWindow;
 
 class PublishDialog : public QDialog
 {
@@ -44,6 +45,7 @@ private:
     ShapesDemo* mp_sd;
 
     void setShapeAttributes(ShapePublisher* SP);
+    MainWindow* mp_parent;
 };
 
 #endif // PUBLISHDIALOG_H

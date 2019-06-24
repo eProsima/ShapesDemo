@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>452</width>
-    <height>444</height>
+    <width>477</width>
+    <height>708</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -213,6 +213,16 @@
      </property>
     </widget>
    </item>
+   <item row="4" column="0">
+    <widget class="QDialogButtonBox" name="button_OkCancel">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="0">
     <widget class="QFrame" name="frame">
      <property name="frameShape">
@@ -222,21 +232,25 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
-      <item row="0" column="1">
-       <widget class="QSpinBox" name="spin_HistoryQos">
-        <property name="minimum">
+      <item row="1" column="1">
+       <widget class="QComboBox" name="comboBox_durability">
+        <property name="currentIndex">
          <number>1</number>
         </property>
-        <property name="maximum">
-         <number>200</number>
-        </property>
-        <property name="value">
-         <number>1</number>
-        </property>
+        <item>
+         <property name="text">
+          <string>VOLATILE</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>TRANSIENT_LOCAL</string>
+         </property>
+        </item>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_7">
+      <item row="8" column="0">
+       <widget class="QLabel" name="label_15">
         <property name="font">
          <font>
           <pointsize>13</pointsize>
@@ -245,10 +259,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Liveliness</string>
-        </property>
-        <property name="textFormat">
-         <enum>Qt::AutoText</enum>
+         <string>Lifespan</string>
         </property>
        </widget>
       </item>
@@ -320,36 +331,76 @@
         </layout>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_10">
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_7">
         <property name="font">
          <font>
           <pointsize>13</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
          </font>
         </property>
         <property name="text">
-         <string>Durability:</string>
+         <string>Liveliness</string>
         </property>
         <property name="textFormat">
          <enum>Qt::AutoText</enum>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="comboBox_durability">
-        <property name="currentIndex">
+      <item row="0" column="1">
+       <widget class="QSpinBox" name="spin_HistoryQos">
+        <property name="minimum">
          <number>1</number>
         </property>
-        <item>
-         <property name="text">
-          <string>VOLATILE</string>
+        <property name="maximum">
+         <number>200</number>
+        </property>
+        <property name="value">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0" colspan="3">
+       <widget class="QFrame" name="frame_4">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QLineEdit" name="lineEdit_Dead">
+         <property name="geometry">
+          <rect>
+           <x>110</x>
+           <y>10</y>
+           <width>291</width>
+           <height>25</height>
+          </rect>
          </property>
-        </item>
-        <item>
          <property name="text">
-          <string>TRANSIENT_LOCAL</string>
+          <string>INF</string>
          </property>
-        </item>
+        </widget>
+        <widget class="QLabel" name="label_19">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>91</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Duration (ms)</string>
+         </property>
+        </widget>
        </widget>
       </item>
       <item row="4" column="0" colspan="2">
@@ -369,6 +420,48 @@
         </property>
        </widget>
       </item>
+      <item row="9" column="0" colspan="3">
+       <widget class="QFrame" name="frame_5">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <widget class="QLineEdit" name="lineEdit_Life">
+         <property name="geometry">
+          <rect>
+           <x>110</x>
+           <y>10</y>
+           <width>291</width>
+           <height>25</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>INF</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_18">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>91</width>
+           <height>20</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Duration (ms)</string>
+         </property>
+        </widget>
+       </widget>
+      </item>
       <item row="0" column="2">
        <widget class="QCheckBox" name="checkBox_reliable">
         <property name="font">
@@ -381,6 +474,20 @@
         </property>
         <property name="checked">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_14">
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Deadline</string>
         </property>
        </widget>
       </item>
@@ -399,7 +506,22 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="0" colspan="3">
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_10">
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Durability:</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::AutoText</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0" colspan="2">
        <widget class="QFrame" name="frame_3">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -478,16 +600,10 @@
      <zorder>comboBox_durability</zorder>
      <zorder>label_13</zorder>
      <zorder>frame_3</zorder>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QDialogButtonBox" name="button_OkCancel">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
+     <zorder>frame_4</zorder>
+     <zorder>label_14</zorder>
+     <zorder>frame_5</zorder>
+     <zorder>label_15</zorder>
     </widget>
    </item>
   </layout>

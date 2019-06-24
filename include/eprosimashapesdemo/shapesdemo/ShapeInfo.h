@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/*! 
+/*!
  * @file Shape.h
  * This header file contains the declaration of the described types in the IDL file.
  *
@@ -34,7 +34,6 @@
 #include "ShapePubSubTypes.h"
 
 using namespace eprosima::fastrtps;
-using namespace eprosima::fastrtps::rtps;
 
 class Shape
 {
@@ -58,7 +57,7 @@ class Shape
         ShapeType m_shape;
         TYPESHAPE m_type;
         Time_t m_time;
-        GUID_t m_writerGuid;
+        rtps::GUID_t m_writerGuid;
         uint32_t m_strength;
         bool m_hasOwner;
         float m_dirX;
@@ -66,7 +65,7 @@ class Shape
         bool m_changeDir;
 };
 
-typedef std::pair<SD_COLOR, InstanceHandle_t> colorPair;
+typedef std::pair<SD_COLOR, rtps::InstanceHandle_t> colorPair;
 
 class ColorInstanceHandle
 {
@@ -119,7 +118,7 @@ public:
 const ColorInstanceHandle c_ShapesHandles;
 
 
-inline SD_COLOR getColorFromInstanceHandle(InstanceHandle_t& iHandle)
+inline SD_COLOR getColorFromInstanceHandle(rtps::InstanceHandle_t& iHandle)
 {
     if(iHandle == c_ShapesHandles.BlueIH.second)
     {
