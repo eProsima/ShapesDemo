@@ -154,9 +154,6 @@ set( UIS
     )
 
 
-#set(CMAKE_AUTORCC ON)
-#set(CMAKE_AUTOMOC ON)
-#set(CMAKE_AUTOUIC ON)
 QT5_WRAP_UI( UI_HEADERS ${UIS} )
 QT5_WRAP_CPP( MOC_SRCS ${MOC_HEADERS} )
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -171,7 +168,6 @@ set( SHAPESDEMO_SOURCES
     src/shapesdemo/Shape.cxx
     src/shapesdemo/ShapesDemo.cpp
     src/shapesdemo/ShapePubSubTypes.cxx
-#   src/utils/md5.cpp
     src/main.cpp
     src/shapesdemo/ShapePublisher.cpp
     src/qt/UpdateThread.cpp
