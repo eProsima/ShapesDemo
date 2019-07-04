@@ -38,11 +38,11 @@ Note: To build and run the application on Windows, you need to set the *CMAKE_PR
 
 For those who want to try a quick demonstration of this application, here is a way to launch it without any compilation.
 
-For that, it is necessary to download **docker** application. In ubuntu open a terminal and type the following command
+For that, it is necessary to download **docker** application. In Ubuntu, open a terminal and type the following command
 
 	$ sudo apt-get install docker.io
 
-Then you have to download the docker image file from https://eprosima.com/index.php/downloads-all
+Then, you have to download the docker image file from https://eprosima.com/index.php/downloads-all
 
 Load the image and run it (first you must allow root to use graphical interface)
 
