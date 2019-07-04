@@ -34,6 +34,24 @@ If you do not have eProsima libraries installed in your system, you can build it
 
 Note: To build and run the application on Windows, you need to set the *CMAKE_PREFIX_PATH* environmental variable to the Qt folder for the Visual Studio version you are compiling against (C:\Qt\5.7\msvc2015_64 for example). You will also need to add the /bin/ folder to the path (C:\Qt\5.7\msvc2015_64\bin for example).
 
+## Quick Demo
+
+For those who want to try a quick demonstration of this application, here is a way to launch it without any compilation.
+
+For that, it is necessary to download **docker** application. In ubuntu open a terminal and type the following command
+
+	$ sudo apt-get install docker.io
+
+Then you have to download the docker image file from https://eprosima.com/index.php/downloads-all
+
+Load the image and run it (first you must allow root to use graphical interface)
+
+	$ xhost local:root
+	$ docker load -i ubuntu-fast-rtps-shapesdemo.tar
+	$ docker run -it --privileged -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix ubuntu-fast-rtps-shapesdemo
+
+You can run as many images as you want and check the communication between them
+
 ## Usage
 
 Upon running the application, you will be greeted by the main window, where you can choose to Publish/Subscribe to shapes and see the current existing shapes on the field.
