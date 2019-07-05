@@ -36,13 +36,13 @@ Note: To build and run the application on Windows, you need to set the *CMAKE_PR
 
 ## Quick Demo
 
-For those who want to try a quick demonstration of this application, here is a way to launch it without any compilation.
+For those who want to try a quick demonstration of this application on Ubuntu, here is a way to launch it without any compilation.
 
-For that, it is necessary to download **docker** application. In Ubuntu, open a terminal and type the following command
+First, download and install **docker** application. Open a terminal and type the following command
 
 	$ sudo apt-get install docker.io
 
-Then, you have to download the docker image file from https://eprosima.com/index.php/downloads-all
+Then, download the docker image file from https://eprosima.com/index.php/downloads-all
 
 Load the image and run it (first you must allow root to use graphical interface)
 
@@ -50,7 +50,7 @@ Load the image and run it (first you must allow root to use graphical interface)
 	$ docker load -i ubuntu-fast-rtps-shapesdemo.tar
 	$ docker run -it --privileged -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix ubuntu-fast-rtps-shapesdemo
 
-You can run as many images as you want and check the communication between them
+You can run as many images as you want and check the communication between them.
 
 ## Usage
 
