@@ -152,10 +152,16 @@ set( UIS
     forms/publishdialog.ui
     forms/subscribedialog.ui
     )
+    
+set( RESOURCES
+    images/eprosimalogo.qrc
+    )
 
 
 QT5_WRAP_UI( UI_HEADERS ${UIS} )
 QT5_WRAP_CPP( MOC_SRCS ${MOC_HEADERS} )
+QT5_ADD_RESOURCES( RSCS ${RESOURCES} )
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS forms)
 
@@ -175,7 +181,6 @@ set( SHAPESDEMO_SOURCES
     src/qt/optionsdialog.cpp
     src/qt/ContentFilterSelector.cpp
     src/shapesdemo/ShapeHistory.cpp
-    images/eprosimalogo.qrc
     images/eprosima_icon.rc
     )
 
@@ -185,9 +190,9 @@ if(THIRDPARTY)
 endif()
 
 if(WIN32)
-    add_executable(${PROJECT_NAME} WIN32 ${SHAPESDEMO_SOURCES} ${MOC_SRCS} ${UI_HEADERS})
+    add_executable(${PROJECT_NAME} WIN32 ${SHAPESDEMO_SOURCES} ${MOC_SRCS} ${UI_HEADERS} ${RSCS} )
 else()
-    add_executable(${PROJECT_NAME} ${SHAPESDEMO_SOURCES} ${MOC_SRCS} ${UI_HEADERS})
+    add_executable(${PROJECT_NAME} ${SHAPESDEMO_SOURCES} ${MOC_SRCS} ${UI_HEADERS} ${RSCS} )
 endif()
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE -D${SHAPESVERSION})
