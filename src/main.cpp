@@ -14,7 +14,6 @@
 
 #include <eprosimashapesdemo/qt/mainwindow.h>
 #include <fastrtps/log/Log.h>
-//#include <fastrtps/utils/eClock.h>
 #include <QApplication>
 #include <eprosimashapesdemo/utils/md5.h>
 #include <fastrtps/Domain.h>
