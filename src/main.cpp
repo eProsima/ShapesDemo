@@ -23,7 +23,7 @@
 int __stdcall WinMain(
     _In_ HINSTANCE   /*hInstance*/,
     _In_ HINSTANCE   /*hPrevInstance*/,
-    _In_ const char* /*lpCmdLine*/,
+    _In_ char* /*lpCmdLine*/,
     _In_ int         /*nCmdShow*/
 )
 {
