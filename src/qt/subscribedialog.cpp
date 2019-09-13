@@ -165,7 +165,7 @@ void SubscribeDialog::on_buttonBox_accepted()
         SSub->m_shapeHistory.m_filter.m_minimumSeparation = SSub->m_attributes.qos.m_timeBasedFilter.minimum_separation;
     }
 
-    //COntent Filter:
+    //Content Filter:
     if(this->ui->checkBox_contentBasedFilter->isChecked())
     {
         SSub->m_shapeHistory.m_filter.m_useContentFilter = true;

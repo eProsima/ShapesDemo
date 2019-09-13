@@ -30,6 +30,8 @@
 #include <QDir>
 #include <QProcess>
 
+#include <iostream>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

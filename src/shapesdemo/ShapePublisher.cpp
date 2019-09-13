@@ -22,13 +22,15 @@
 
 #include <eprosimashapesdemo/qt/mainwindow.h>
 
-ShapePublisher::ShapePublisher(MainWindow* win, Participant* par):
-    mp_pub(nullptr),
-    mp_participant(par),
-    m_mutex(QMutex::Recursive),
-    isInitialized(false),
-    hasWritten(false),
-    m_mainWindow(win)
+ShapePublisher::ShapePublisher(
+        MainWindow* win,
+        Participant* par)
+    : mp_pub(nullptr)
+    , mp_participant(par)
+    , m_mutex(QMutex::Recursive)
+    , isInitialized(false)
+    , hasWritten(false)
+    , m_mainWindow(win)
 {
     // TODO Auto-generated constructor stub
 
@@ -69,7 +71,9 @@ void ShapePublisher::write()
     }
 }
 
-void ShapePublisher::onPublicationMatched(Publisher* /*pub*/, rtps::MatchingInfo& info)
+void ShapePublisher::onPublicationMatched(
+        Publisher* /*pub*/,
+        rtps::MatchingInfo& info)
 {
     if(info.status == rtps::MATCHED_MATCHING)
         std::cout << "Publisher  in topic " << m_attributes.topic.getTopicName() << " MATCHES Sub: " << info.remoteEndpointGuid << "*****************************" << std::endl;
@@ -82,4 +86,11 @@ void ShapePublisher::on_offered_deadline_missed(
         const OfferedDeadlineMissedStatus&)
 {
     m_mainWindow->addMessageToOutput(QString("Offered deadline missed"));
+}
+
+void ShapePublisher::on_liveliness_lost(
+        Publisher*,
+        const LivelinessLostStatus&)
+{
+    m_mainWindow->addMessageToOutput(QString("Lost liveliness"));
 }

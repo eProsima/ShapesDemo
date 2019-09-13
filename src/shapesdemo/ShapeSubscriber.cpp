@@ -139,4 +139,11 @@ void ShapeSubscriber::on_requested_deadline_missed(
     m_mainWindow->addMessageToOutput(QString("Requested deadline missed"));
 }
 
+void ShapeSubscriber::on_liveliness_changed(
+        Subscriber*,
+        const LivelinessChangedStatus&)
+{
+    m_mainWindow->addMessageToOutput(QString("Liveliness changed"));
+}
+
 //void ShapeSubscriber::removeSamplesFromWriter(GUID_t)
