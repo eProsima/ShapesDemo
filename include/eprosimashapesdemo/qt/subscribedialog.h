@@ -30,20 +30,25 @@ class SubscribeDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit SubscribeDialog(ShapesDemo* psd,QWidget *parent = 0);
+    explicit SubscribeDialog(
+            ShapesDemo* psd,
+            QWidget *parent = 0);
+
     ~SubscribeDialog();
 
     private slots:
 
         void on_buttonBox_accepted();
 
-        void on_comboBox_ownership_currentIndexChanged(int index);
+        void on_comboBox_ownership_currentIndexChanged(
+                int index);
 
 
+        void on_checkBox_reliable_toggled(
+                bool checked);
 
-        void on_checkBox_reliable_toggled(bool checked);
-
-        void on_checkBox_timeBasedFilter_clicked(bool checked);
+        void on_checkBox_timeBasedFilter_clicked(
+                bool checked);
 
 
 private:

@@ -203,6 +203,7 @@ void MainWindow::addPublisherToTable(ShapePublisher* spub)
     if(partitions.size()==0)
         partitions.append("-");
     items.append(new QStandardItem(partitions));
+
     //OWNERSHIP:
     if(spub->m_attributes.qos.m_ownership.kind == SHARED_OWNERSHIP_QOS)
         items.append(new QStandardItem("SHARED"));
@@ -212,11 +213,13 @@ void MainWindow::addPublisherToTable(ShapePublisher* spub)
         items.append(new QStandardItem(value));
     }
 
+    //DURABILITY:
     if(spub->m_attributes.qos.m_durability.kind == VOLATILE_DURABILITY_QOS)
         items.append(new QStandardItem("VOLATILE"));
     else
         items.append(new QStandardItem("TRANSIENT"));
 
+    //LIVELINESS:
     if(spub->m_attributes.qos.m_liveliness.kind == AUTOMATIC_LIVELINESS_QOS)
         items.append(new QStandardItem("AUTOMATIC"));
     else if(spub->m_attributes.qos.m_liveliness.kind == MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
@@ -265,18 +268,20 @@ void MainWindow::addSubscriberToTable(ShapeSubscriber* ssub)
     if(partitions.size()==0)
         partitions.append("-");
     items.append(new QStandardItem(partitions));
+
     //OWNERSHIP:
     if(ssub->m_attributes.qos.m_ownership.kind == SHARED_OWNERSHIP_QOS)
         items.append(new QStandardItem("SHARED"));
     else
         items.append(new QStandardItem("EXCLUSIVE"));
 
-
+    //DURABILITY:
     if(ssub->m_attributes.qos.m_durability.kind == VOLATILE_DURABILITY_QOS)
         items.append(new QStandardItem("VOLATILE"));
     else
         items.append(new QStandardItem("TRANSIENT"));
 
+    //LIVELINESS:
     if(ssub->m_attributes.qos.m_liveliness.kind == AUTOMATIC_LIVELINESS_QOS)
         items.append(new QStandardItem("AUTOMATIC"));
     else if(ssub->m_attributes.qos.m_liveliness.kind == MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)

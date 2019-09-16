@@ -6,31 +6,33 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>477</width>
-    <height>708</height>
+    <width>456</width>
+    <height>596</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Publish</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_5">
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>QoS Settings</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::AutoText</enum>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="font">
-        <font>
-         <pointsize>13</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Shape</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::AutoText</enum>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="1">
       <widget class="QLabel" name="label">
        <property name="font">
@@ -194,24 +196,22 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Shape</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
+      </widget>
+     </item>
     </layout>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_5">
-     <property name="font">
-      <font>
-       <pointsize>13</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>QoS Settings</string>
-     </property>
-     <property name="textFormat">
-      <enum>Qt::AutoText</enum>
-     </property>
-    </widget>
    </item>
    <item row="4" column="0">
     <widget class="QDialogButtonBox" name="button_OkCancel">
@@ -272,41 +272,7 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_9">
-           <property name="font">
-            <font>
-             <pointsize>13</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>Kind:</string>
-           </property>
-           <property name="textFormat">
-            <enum>Qt::AutoText</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QComboBox" name="comboBox_liveliness">
-           <item>
-            <property name="text">
-             <string>AUTOMATIC</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>MANUAL_BY_RTPSParticipant</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>MANUAL_BY_TOPIC</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="1" column="0" colspan="2">
+         <item row="3" column="0" colspan="2">
           <widget class="QLabel" name="label_8">
            <property name="font">
             <font>
@@ -321,10 +287,44 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="2">
+         <item row="3" column="2">
           <widget class="QLineEdit" name="lineEdit_leaseDuration">
            <property name="text">
             <string>INF</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QComboBox" name="comboBox_liveliness">
+           <item>
+            <property name="text">
+             <string>AUTOMATIC</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MANUAL_BY_PARTICIPANT</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MANUAL_BY_TOPIC</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_9">
+           <property name="font">
+            <font>
+             <pointsize>13</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Kind:</string>
+           </property>
+           <property name="textFormat">
+            <enum>Qt::AutoText</enum>
            </property>
           </widget>
          </item>
@@ -375,12 +375,12 @@
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <widget class="QLineEdit" name="lineEdit_Dead">
+        <widget class="QLineEdit" name="lineEdit_Deadline">
          <property name="geometry">
           <rect>
-           <x>110</x>
+           <x>130</x>
            <y>10</y>
-           <width>291</width>
+           <width>271</width>
            <height>25</height>
           </rect>
          </property>
@@ -393,12 +393,12 @@
           <rect>
            <x>10</x>
            <y>10</y>
-           <width>91</width>
+           <width>111</width>
            <height>20</height>
           </rect>
          </property>
          <property name="text">
-          <string>Duration (ms)</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Duration (ms):&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </widget>
@@ -434,12 +434,12 @@
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <widget class="QLineEdit" name="lineEdit_Life">
+        <widget class="QLineEdit" name="lineEdit_Lifespan">
          <property name="geometry">
           <rect>
-           <x>110</x>
+           <x>130</x>
            <y>10</y>
-           <width>291</width>
+           <width>271</width>
            <height>25</height>
           </rect>
          </property>
@@ -452,12 +452,12 @@
           <rect>
            <x>10</x>
            <y>10</y>
-           <width>91</width>
+           <width>111</width>
            <height>20</height>
           </rect>
          </property>
          <property name="text">
-          <string>Duration (ms)</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Duration (ms):&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </widget>
@@ -521,7 +521,7 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="0" colspan="2">
+      <item row="5" column="0" colspan="3">
        <widget class="QFrame" name="frame_3">
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -543,20 +543,6 @@
            <property name="textFormat">
             <enum>Qt::AutoText</enum>
            </property>
-          </widget>
-         </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QComboBox" name="comboBox_ownership">
-           <item>
-            <property name="text">
-             <string>SHARED_OWNERSHIP</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>EXCLUSIVE_OWNERSHIP</string>
-            </property>
-           </item>
           </widget>
          </item>
          <item row="2" column="0" colspan="2">
@@ -585,6 +571,20 @@
            <property name="value">
             <number>0</number>
            </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QComboBox" name="comboBox_ownership">
+           <item>
+            <property name="text">
+             <string>SHARED_OWNERSHIP</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>EXCLUSIVE_OWNERSHIP</string>
+            </property>
+           </item>
           </widget>
          </item>
         </layout>

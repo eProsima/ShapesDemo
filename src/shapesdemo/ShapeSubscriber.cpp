@@ -27,43 +27,48 @@
 
 #include <eprosimashapesdemo/qt/mainwindow.h>
 
-ShapeSubscriber::ShapeSubscriber(MainWindow* win, Participant* par):
-    mp_sub(nullptr),
-    mp_participant(par),
-    hasReceived(false),
-    m_mutex(QMutex::Recursive),
-    mp_contentFilter(nullptr),
-    m_mainWindow(win)
+ShapeSubscriber::ShapeSubscriber(
+        MainWindow* win,
+        Participant* par)
+    : mp_sub(nullptr)
+    , mp_participant(par)
+    , hasReceived(false)
+    , m_mutex(QMutex::Recursive)
+    , mp_contentFilter(nullptr)
+    , m_mainWindow(win)
 {
     // TODO Auto-generated constructor stub
 
 }
 
-ShapeSubscriber::~ShapeSubscriber() {
+ShapeSubscriber::~ShapeSubscriber()
+{
     // TODO Auto-generated destructor stub
     Domain::removeSubscriber(mp_sub);
-    if(mp_contentFilter!=nullptr)
+    if (mp_contentFilter!=nullptr)
+    {
         delete(mp_contentFilter);
+    }
 }
 
 bool ShapeSubscriber::initSubscriber()
 {
     mp_sub = Domain::createSubscriber(mp_participant,m_attributes,(SubscriberListener*)this);
-    if(mp_sub !=nullptr)
+    if (mp_sub !=nullptr)
+    {
         return true;
+    }
     return false;
 }
 
-
-
-
-void ShapeSubscriber::onNewDataMessage(Subscriber* sub)
+void ShapeSubscriber::onNewDataMessage(
+        Subscriber* sub)
 {
     // cout << "New DATA Message "<<endl;
     Shape shape;
     shape.m_type = this->m_shapeType;
     SampleInfo_t info;
-    while(sub->takeNextData((void*)&shape.m_shape,&info))
+    while (sub->takeNextData((void*)&shape.m_shape,&info))
     {
         // shape.m_x += 5;
         //cout << "Shape of type: "<< shape.m_type << "RECEIVED"<<endl;
@@ -71,7 +76,7 @@ void ShapeSubscriber::onNewDataMessage(Subscriber* sub)
         shape.m_writerGuid = info.sample_identity.writer_guid();
         shape.m_strength = info.ownershipStrength;
         QMutexLocker locck(&this->m_mutex);
-        if(info.sampleKind == rtps::ALIVE)
+        if (info.sampleKind == rtps::ALIVE)
         {
             hasReceived = true;
             m_shapeHistory.addToHistory(shape);
@@ -81,7 +86,7 @@ void ShapeSubscriber::onNewDataMessage(Subscriber* sub)
             //cout << "NOT ALIVE DATA"<<endl;
             //GET THE COLOR:
             SD_COLOR color = getColorFromInstanceHandle(info.iHandle);
-            if(info.sampleKind == rtps::NOT_ALIVE_DISPOSED)
+            if (info.sampleKind == rtps::NOT_ALIVE_DISPOSED)
             {
                 m_shapeHistory.dispose(color);
             }
@@ -95,37 +100,40 @@ void ShapeSubscriber::onNewDataMessage(Subscriber* sub)
 
 
 
-void ShapeSubscriber::onSubscriptionMatched(Subscriber* /*sub*/, rtps::MatchingInfo& info)
+void ShapeSubscriber::onSubscriptionMatched(
+        Subscriber* /*sub*/,
+        rtps::MatchingInfo& info)
 {
-    if(info.status == rtps::MATCHED_MATCHING)
+    if (info.status == rtps::MATCHED_MATCHING)
     {
-        //cout << "Subscriber in topic " << m_attributes.topic.getTopicName() << " MATCHES Pub: " << info.remoteEndpointGuid <<"*****************************"<<endl;
+        //std::cout << "Subscriber in topic " << m_attributes.topic.getTopicName() << " MATCHES Pub: " << info.remoteEndpointGuid << "*****************************" << std::endl;
         bool found = false;
-        for(std::vector<rtps::GUID_t>::iterator it = m_remoteWriters.begin();
+        for (std::vector<rtps::GUID_t>::iterator it = m_remoteWriters.begin();
             it!=m_remoteWriters.end();++it)
         {
-            if(*it==info.remoteEndpointGuid)
+            if (*it==info.remoteEndpointGuid)
             {
                 found = true;
                 break;
             }
         }
-        if(!found)
+        if (!found)
         {
             m_remoteWriters.push_back(info.remoteEndpointGuid);
         }
 
     }
-    else if(info.status == rtps::REMOVED_MATCHING)
+    else if (info.status == rtps::REMOVED_MATCHING)
     {
-        //cout << "Subscriber in topic " << m_attributes.topic.getTopicName() << " REMOVES Pub: " << info.remoteEndpointGuid <<"*****************************"<<endl;
+        //std::cout << "Subscriber in topic " << m_attributes.topic.getTopicName() << " REMOVES Pub: " << info.remoteEndpointGuid << "*****************************" << std::endl;
         m_mutex.lock();
         m_shapeHistory.removedOwner(info.remoteEndpointGuid);
         m_mutex.unlock();
     }
 }
 
-void ShapeSubscriber::adjustContentFilter(ShapeFilter &filter)
+void ShapeSubscriber::adjustContentFilter(
+        ShapeFilter &filter)
 {
     m_mutex.lock();
     m_shapeHistory.adjustContentFilter(filter);
