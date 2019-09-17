@@ -42,6 +42,8 @@ private slots:
 
     void on_comboBox_ownership_currentIndexChanged(
             int index);
+    void on_comboBox_liveliness_currentIndexChanged(
+            int index);
 
 private:
     Ui::PublishDialog *ui;

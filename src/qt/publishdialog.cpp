@@ -125,7 +125,6 @@ void PublishDialog::on_button_OkCancel_accepted()
    }
 
    //DURABILITY
-   //cout << "Durability INDEX: "<< this->ui->comboBox_durability->currentIndex() << endl;
    switch(this->ui->comboBox_durability->currentIndex())
    {
        case 0: SP->m_attributes.qos.m_durability.kind = VOLATILE_DURABILITY_QOS; break;
@@ -255,5 +254,15 @@ void PublishDialog::on_comboBox_ownership_currentIndexChanged(
     if (index == 1)
     {
         this->ui->checkBox_reliable->setChecked(true);
+    }
+}
+
+void PublishDialog::on_comboBox_liveliness_currentIndexChanged(
+        int index)
+{
+    switch(index)
+    {
+        case 2: this->ui->lineEdit_announcementPeriod->setEnabled(false); break;
+        default: this->ui->lineEdit_announcementPeriod->setEnabled(true); break;
     }
 }
