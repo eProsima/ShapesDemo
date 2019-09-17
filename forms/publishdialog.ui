@@ -210,7 +210,7 @@
       <rect>
        <x>10</x>
        <y>70</y>
-       <width>251</width>
+       <width>221</width>
        <height>19</height>
       </rect>
      </property>
@@ -231,6 +231,12 @@
       <string>INF</string>
      </property>
     </widget>
+    <zorder>label_9</zorder>
+    <zorder>label_8</zorder>
+    <zorder>label_16</zorder>
+    <zorder>lineEdit_leaseDuration</zorder>
+    <zorder>comboBox_liveliness</zorder>
+    <zorder>lineEdit_announcementPeriod</zorder>
    </widget>
    <widget class="QLabel" name="label_7">
     <property name="geometry">
@@ -313,7 +319,7 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>201</width>
+       <width>121</width>
        <height>20</height>
       </rect>
      </property>
@@ -321,6 +327,8 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Duration (ms):&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
+    <zorder>label_19</zorder>
+    <zorder>lineEdit_Deadline</zorder>
    </widget>
    <widget class="QLabel" name="label_13">
     <property name="geometry">
@@ -384,7 +392,7 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>181</width>
+       <width>121</width>
        <height>20</height>
       </rect>
      </property>
@@ -392,6 +400,8 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Duration (ms):&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
+    <zorder>label_18</zorder>
+    <zorder>lineEdit_Lifespan</zorder>
    </widget>
    <widget class="QCheckBox" name="checkBox_reliable">
     <property name="geometry">
@@ -517,7 +527,7 @@
       <rect>
        <x>10</x>
        <y>41</y>
-       <width>231</width>
+       <width>221</width>
        <height>20</height>
       </rect>
      </property>
@@ -572,13 +582,17 @@
       </property>
      </item>
     </widget>
+    <zorder>label_12</zorder>
+    <zorder>label_11</zorder>
+    <zorder>spin_ownershipStrength</zorder>
+    <zorder>comboBox_ownership</zorder>
    </widget>
    <zorder>label_6</zorder>
+   <zorder>label_10</zorder>
    <zorder>spin_HistoryQos</zorder>
    <zorder>checkBox_reliable</zorder>
    <zorder>label_7</zorder>
    <zorder>frame_2</zorder>
-   <zorder>label_10</zorder>
    <zorder>comboBox_durability</zorder>
    <zorder>label_13</zorder>
    <zorder>frame_3</zorder>
