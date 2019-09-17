@@ -82,7 +82,7 @@ void PublishDialog::on_button_OkCancel_accepted()
     }
 
     //LIVELINESS
-   // cout << "LIVELINESS "<<this->ui->comboBox_liveliness->currentIndex()<<endl;
+   QString lease_duration_value;
    if (this->ui->comboBox_liveliness->currentIndex() == 0)
    {
        SP->m_attributes.qos.m_liveliness.kind = AUTOMATIC_LIVELINESS_QOS;
@@ -97,17 +97,31 @@ void PublishDialog::on_button_OkCancel_accepted()
    }
    if (this->ui->lineEdit_leaseDuration->text()=="INF")
    {
-       SP->m_attributes.qos.m_liveliness.lease_duration = c_TimeInfinite;
+      SP->m_attributes.qos.m_liveliness.lease_duration = c_TimeInfinite;
    }
    else
    {
-        QString value = this->ui->lineEdit_leaseDuration->text();
-        if (value.toDouble()>0)
-        {
-            SP->m_attributes.qos.m_liveliness.lease_duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
-            SP->m_attributes.qos.m_liveliness.announcement_period =
-                rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()/2).to_duration_t();
-        }
+       lease_duration_value = this->ui->lineEdit_leaseDuration->text();
+       if (lease_duration_value.toDouble()>0)
+       {
+           SP->m_attributes.qos.m_liveliness.lease_duration = rtps::TimeConv::MilliSeconds2Time_t(lease_duration_value.toDouble()).to_duration_t();
+       }
+   }
+   if (this->ui->lineEdit_announcementPeriod->text()=="INF" && SP->m_attributes.qos.m_liveliness.lease_duration == c_TimeInfinite)
+   {
+       SP->m_attributes.qos.m_liveliness.announcement_period = c_TimeInfinite;
+   }
+   else if (this->ui->lineEdit_announcementPeriod->text()=="INF" && SP->m_attributes.qos.m_liveliness.lease_duration != c_TimeInfinite)
+   {
+       SP->m_attributes.qos.m_liveliness.announcement_period = rtps::TimeConv::MilliSeconds2Time_t(lease_duration_value.toDouble()/2).to_duration_t();
+   }
+   else
+   {
+       QString value = this->ui->lineEdit_announcementPeriod->text();
+       if (value.toDouble()>0)
+       {
+           SP->m_attributes.qos.m_liveliness.announcement_period = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+       }
    }
 
    //DURABILITY

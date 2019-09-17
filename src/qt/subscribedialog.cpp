@@ -93,7 +93,6 @@ void SubscribeDialog::on_buttonBox_accepted()
     }
 
     //LIVELINESS
-    QString lease_duration_value;
     if (this->ui->comboBox_liveliness->currentIndex() == 0)
     {
        SSub->m_attributes.qos.m_liveliness.kind = AUTOMATIC_LIVELINESS_QOS;
@@ -112,26 +111,10 @@ void SubscribeDialog::on_buttonBox_accepted()
     }
     else
     {
-        lease_duration_value = this->ui->lineEdit_leaseDuration->text();
-        if (lease_duration_value.toDouble()>0)
-        {
-            SSub->m_attributes.qos.m_liveliness.lease_duration = rtps::TimeConv::MilliSeconds2Time_t(lease_duration_value.toDouble()).to_duration_t();
-        }
-    }
-    if (this->ui->lineEdit_announcementPeriod->text()=="INF" && SSub->m_attributes.qos.m_liveliness.lease_duration == c_TimeInfinite)
-    {
-        SSub->m_attributes.qos.m_liveliness.announcement_period = c_TimeInfinite;
-    }
-    else if (this->ui->lineEdit_announcementPeriod->text()=="INF" && SSub->m_attributes.qos.m_liveliness.lease_duration != c_TimeInfinite)
-    {
-        SSub->m_attributes.qos.m_liveliness.announcement_period = rtps::TimeConv::MilliSeconds2Time_t(lease_duration_value.toDouble()/2).to_duration_t();
-    }
-    else
-    {
-        QString value = this->ui->lineEdit_announcementPeriod->text();
+        QString value = this->ui->lineEdit_leaseDuration->text();
         if (value.toDouble()>0)
         {
-            SSub->m_attributes.qos.m_liveliness.announcement_period = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+            SSub->m_attributes.qos.m_liveliness.lease_duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
         }
     }
 
