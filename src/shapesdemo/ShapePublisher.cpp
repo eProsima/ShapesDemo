@@ -78,11 +78,11 @@ void ShapePublisher::onPublicationMatched(
 {
     if (info.status == rtps::MATCHED_MATCHING)
     {
-        std::cout << "Publisher in topic " << m_attributes.topic.getTopicName() << " MATCHES Sub: " << info.remoteEndpointGuid << "*****************************" << std::endl;
+        std::cout << "Publisher in topic " << m_attributes.topic.getTopicName() << " MATCHES Sub: " << info.remoteEndpointGuid << std::endl;
     }
     else if (info.status == rtps::REMOVED_MATCHING)
     {
-        std::cout << "Publisher in topic " << m_attributes.topic.getTopicName() << " REMOVES Sub: " << info.remoteEndpointGuid << "*****************************" << std::endl;
+        std::cout << "Publisher in topic " << m_attributes.topic.getTopicName() << " REMOVES Sub: " << info.remoteEndpointGuid << std::endl;
     }
 }
 
@@ -97,5 +97,5 @@ void ShapePublisher::on_liveliness_lost(
         Publisher*,
         const LivelinessLostStatus&)
 {
-    m_mainWindow->addMessageToOutput(QString("Lost liveliness"));
+    m_mainWindow->addMessageToOutput(QString("Publisher lost liveliness"));
 }

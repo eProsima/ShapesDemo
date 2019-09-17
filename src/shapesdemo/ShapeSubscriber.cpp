@@ -64,14 +64,11 @@ bool ShapeSubscriber::initSubscriber()
 void ShapeSubscriber::onNewDataMessage(
         Subscriber* sub)
 {
-    // cout << "New DATA Message "<<endl;
     Shape shape;
     shape.m_type = this->m_shapeType;
     SampleInfo_t info;
     while (sub->takeNextData((void*)&shape.m_shape,&info))
     {
-        // shape.m_x += 5;
-        //cout << "Shape of type: "<< shape.m_type << "RECEIVED"<<endl;
         shape.m_time = info.sourceTimestamp.to_duration_t();
         shape.m_writerGuid = info.sample_identity.writer_guid();
         shape.m_strength = info.ownershipStrength;
@@ -83,8 +80,6 @@ void ShapeSubscriber::onNewDataMessage(
         }
         else
         {
-            //cout << "NOT ALIVE DATA"<<endl;
-            //GET THE COLOR:
             SD_COLOR color = getColorFromInstanceHandle(info.iHandle);
             if (info.sampleKind == rtps::NOT_ALIVE_DISPOSED)
             {
@@ -106,7 +101,6 @@ void ShapeSubscriber::onSubscriptionMatched(
 {
     if (info.status == rtps::MATCHED_MATCHING)
     {
-        //std::cout << "Subscriber in topic " << m_attributes.topic.getTopicName() << " MATCHES Pub: " << info.remoteEndpointGuid << "*****************************" << std::endl;
         bool found = false;
         for (std::vector<rtps::GUID_t>::iterator it = m_remoteWriters.begin();
             it!=m_remoteWriters.end();++it)
@@ -125,7 +119,6 @@ void ShapeSubscriber::onSubscriptionMatched(
     }
     else if (info.status == rtps::REMOVED_MATCHING)
     {
-        //std::cout << "Subscriber in topic " << m_attributes.topic.getTopicName() << " REMOVES Pub: " << info.remoteEndpointGuid << "*****************************" << std::endl;
         m_mutex.lock();
         m_shapeHistory.removedOwner(info.remoteEndpointGuid);
         m_mutex.unlock();
@@ -149,9 +142,17 @@ void ShapeSubscriber::on_requested_deadline_missed(
 
 void ShapeSubscriber::on_liveliness_changed(
         Subscriber*,
-        const LivelinessChangedStatus&)
+        const LivelinessChangedStatus& status)
 {
-    m_mainWindow->addMessageToOutput(QString("Liveliness changed"));
+    if (status.alive_count_change == 1)
+    {
+        m_mainWindow->addMessageToOutput(QString("Liveliness recovered"));
+    }
+    else if (status.not_alive_count_change == 1)
+    {
+        m_mainWindow->addMessageToOutput(QString("Liveliness lost"));
+    }
+
 }
 
 //void ShapeSubscriber::removeSamplesFromWriter(GUID_t)

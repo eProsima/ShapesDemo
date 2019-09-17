@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>464</width>
-    <height>780</height>
+    <width>485</width>
+    <height>760</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -51,8 +51,8 @@
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
     <rect>
-     <x>9</x>
-     <y>746</y>
+     <x>300</x>
+     <y>720</y>
      <width>166</width>
      <height>25</height>
     </rect>
@@ -69,8 +69,8 @@
     <rect>
      <x>20</x>
      <y>110</y>
-     <width>431</width>
-     <height>611</height>
+     <width>451</width>
+     <height>601</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -82,10 +82,10 @@
    <widget class="QSpinBox" name="spin_HistoryQos">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>150</x>
       <y>10</y>
       <width>169</width>
-      <height>26</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="minimum">
@@ -122,7 +122,7 @@
    <widget class="QCheckBox" name="checkBox_reliable">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>350</x>
       <y>10</y>
       <width>88</width>
       <height>26</height>
@@ -164,10 +164,10 @@
    <widget class="QComboBox" name="comboBox_durability">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>150</x>
       <y>40</y>
       <width>171</width>
-      <height>25</height>
+      <height>21</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -202,8 +202,8 @@
      <rect>
       <x>10</x>
       <y>110</y>
-      <width>411</width>
-      <height>71</height>
+      <width>431</width>
+      <height>101</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -215,7 +215,7 @@
     <widget class="QLabel" name="label_14">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>10</y>
        <width>160</width>
        <height>25</height>
@@ -228,10 +228,10 @@
     <widget class="QComboBox" name="comboBox_liveliness">
      <property name="geometry">
       <rect>
-       <x>192</x>
+       <x>230</x>
        <y>10</y>
-       <width>211</width>
-       <height>25</height>
+       <width>191</width>
+       <height>21</height>
       </rect>
      </property>
      <item>
@@ -253,7 +253,7 @@
     <widget class="QLabel" name="label_15">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>40</y>
        <width>160</width>
        <height>25</height>
@@ -266,10 +266,36 @@
     <widget class="QLineEdit" name="lineEdit_leaseDuration">
      <property name="geometry">
       <rect>
-       <x>190</x>
+       <x>230</x>
        <y>40</y>
-       <width>211</width>
-       <height>25</height>
+       <width>191</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>INF</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>201</width>
+       <height>17</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Announcement Period (ms):&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_announcementPeriod">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>70</y>
+       <width>191</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
@@ -281,7 +307,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>190</y>
+      <y>220</y>
       <width>160</width>
       <height>20</height>
      </rect>
@@ -310,8 +336,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>220</y>
-      <width>411</width>
+      <y>250</y>
+      <width>431</width>
       <height>71</height>
      </rect>
     </property>
@@ -348,10 +374,10 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>200</x>
+       <x>220</x>
        <y>40</y>
        <width>201</width>
-       <height>26</height>
+       <height>21</height>
       </rect>
      </property>
      <property name="minimum">
@@ -367,10 +393,10 @@
     <widget class="QComboBox" name="comboBox_ownership">
      <property name="geometry">
       <rect>
-       <x>202</x>
+       <x>220</x>
        <y>10</y>
        <width>201</width>
-       <height>25</height>
+       <height>21</height>
       </rect>
      </property>
      <item>
@@ -410,7 +436,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>390</y>
+      <y>410</y>
       <width>70</width>
       <height>20</height>
      </rect>
@@ -430,7 +456,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>300</y>
+      <y>330</y>
       <width>73</width>
       <height>20</height>
      </rect>
@@ -450,9 +476,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>330</y>
-      <width>411</width>
-      <height>51</height>
+      <y>360</y>
+      <width>431</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -479,8 +505,8 @@
       <rect>
        <x>140</x>
        <y>10</y>
-       <width>261</width>
-       <height>25</height>
+       <width>281</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
@@ -492,9 +518,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>420</y>
-      <width>411</width>
-      <height>51</height>
+      <y>440</y>
+      <width>431</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -508,8 +534,8 @@
       <rect>
        <x>130</x>
        <y>10</y>
-       <width>271</width>
-       <height>25</height>
+       <width>291</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
@@ -534,7 +560,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>480</y>
+      <y>490</y>
       <width>53</width>
       <height>20</height>
      </rect>
@@ -563,9 +589,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>510</y>
-      <width>411</width>
-      <height>80</height>
+      <y>520</y>
+      <width>431</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -621,8 +647,8 @@
       <rect>
        <x>190</x>
        <y>10</y>
-       <width>211</width>
-       <height>25</height>
+       <width>231</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
@@ -816,6 +842,29 @@
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>combo_Shape</tabstop>
+  <tabstop>combo_Color</tabstop>
+  <tabstop>spin_Size</tabstop>
+  <tabstop>checkBox_A</tabstop>
+  <tabstop>checkBox_B</tabstop>
+  <tabstop>checkBox_C</tabstop>
+  <tabstop>checkBox_D</tabstop>
+  <tabstop>checkBox_Asterisk</tabstop>
+  <tabstop>spin_HistoryQos</tabstop>
+  <tabstop>checkBox_reliable</tabstop>
+  <tabstop>comboBox_durability</tabstop>
+  <tabstop>comboBox_liveliness</tabstop>
+  <tabstop>lineEdit_leaseDuration</tabstop>
+  <tabstop>lineEdit_announcementPeriod</tabstop>
+  <tabstop>comboBox_ownership</tabstop>
+  <tabstop>spin_ownershipStrength</tabstop>
+  <tabstop>lineEdit_Deadline</tabstop>
+  <tabstop>lineEdit_Lifespan</tabstop>
+  <tabstop>checkBox_timeBasedFilter</tabstop>
+  <tabstop>lineEdit_TimeBasedFilter</tabstop>
+  <tabstop>checkBox_contentBasedFilter</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

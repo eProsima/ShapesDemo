@@ -60,6 +60,8 @@ public:
     QComboBox* comboBox_liveliness;
     QLabel* label_15; //Lease Duration
     QLineEdit* lineEdit_leaseDuration;
+    QLabel* label_4; //Announcement Period
+    QLineEdit* lineEdit_announcementPeriod;
     QLabel* label_17; //Ownership
     QFrame* frame_3;
     QGridLayout* gridLayout_3;
@@ -259,6 +261,18 @@ public:
 
         lineEdit_leaseDuration = new QLineEdit(frame_2);
         lineEdit_leaseDuration->setObjectName(QStringLiteral("lineEdit_leaseDuration"));
+
+        gridLayout_2->addWidget(lineEdit_leaseDuration, 1, 2, 1, 1);
+
+        label_4 = new QLabel(frame_2);
+        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setFont(font);
+        label_4->setTextFormat(Qt::AutoText);
+
+        gridLayout_2->addWidget(label_4, 0, 0, 1, 1);
+
+        lineEdit_announcementPeriod = new QLineEdit(frame_2);
+        lineEdit_announcementPeriod->setObjectName(QStringLiteral("lineEdit_announcementPeriod"));
 
         gridLayout_2->addWidget(lineEdit_leaseDuration, 1, 2, 1, 1);
 

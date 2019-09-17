@@ -59,6 +59,8 @@ public:
     QComboBox* comboBox_liveliness;
     QLabel* label_8; //Lease Duration
     QLineEdit* lineEdit_leaseDuration;
+    QLabel* label_16; //Announcement Period
+    QLineEdit* lineEdit_announcementPeriod;
     QLabel* label_17; //Ownership
     QFrame* frame_3;
     QGridLayout* gridLayout_3;
@@ -90,7 +92,7 @@ public:
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         gridLayout = new QGridLayout();
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        label_2 = new QLabel(PublishDialog);
+        label = new QLabel(PublishDialog);
         label_2->setObjectName(QStringLiteral("label_2"));
         QFont font;
         font.setPointSize(13);
@@ -255,6 +257,18 @@ public:
         lineEdit_leaseDuration->setObjectName(QStringLiteral("lineEdit_leaseDuration"));
 
         gridLayout_2->addWidget(lineEdit_leaseDuration, 1, 2, 1, 1);
+
+        label_16 = new QLabel(frame_2);
+        label_16->setObjectName(QStringLiteral("label_16"));
+        label_16->setFont(font);
+        label_16->setTextFormat(Qt::AutoText);
+
+        gridLayout_2->addWidget(label_8, 1, 0, 1, 2);
+
+        lineEdit_announcementPeriod = new QLineEdit(frame_2);
+        lineEdit_announcementPeriod->setObjectName(QStringLiteral("lineEdit_announcementPeriod"));
+
+        gridLayout_2->addWidget(lineEdit_announcementPeriod, 1, 2, 1, 1);
 
         outer_girdLayout->addWidget(gridLayout_2, 3, 0, 1, 3);
 

@@ -79,7 +79,7 @@ public:
 
     void on_liveliness_changed(
             Subscriber*,
-            const LivelinessChangedStatus&) override;
+            const LivelinessChangedStatus& status) override;
 
     bool hasReceived;
     QMutex m_mutex;
