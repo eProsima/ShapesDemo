@@ -115,7 +115,6 @@ void ShapeSubscriber::onSubscriptionMatched(
         {
             m_remoteWriters.push_back(info.remoteEndpointGuid);
         }
-
     }
     else if (info.status == rtps::REMOVED_MATCHING)
     {
@@ -144,11 +143,11 @@ void ShapeSubscriber::on_liveliness_changed(
         Subscriber*,
         const LivelinessChangedStatus& status)
 {
-    if (status.alive_count_change == 1)
+    if (status.alive_count_change == 1 || status.not_alive_count_change == -1)
     {
         m_mainWindow->addMessageToOutput(QString("Liveliness recovered"));
     }
-    else if (status.not_alive_count_change == 1)
+    else if (status.not_alive_count_change == 1 || status.alive_count_change == -1)
     {
         m_mainWindow->addMessageToOutput(QString("Liveliness lost"));
     }
