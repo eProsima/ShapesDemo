@@ -31,20 +31,27 @@ class PublishDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PublishDialog(ShapesDemo* psd,QWidget *parent = 0);
+    explicit PublishDialog(
+            ShapesDemo* psd,
+            QWidget *parent = 0);
     ~PublishDialog();
 
 private slots:
 
     void on_button_OkCancel_accepted();
 
-    void on_comboBox_ownership_currentIndexChanged(int index);
+    void on_comboBox_ownership_currentIndexChanged(
+            int index);
+    void on_comboBox_liveliness_currentIndexChanged(
+            int index);
 
 private:
     Ui::PublishDialog *ui;
     ShapesDemo* mp_sd;
 
-    void setShapeAttributes(ShapePublisher* SP);
+    void setShapeAttributes(
+            ShapePublisher* SP);
+
     MainWindow* mp_parent;
 };
 

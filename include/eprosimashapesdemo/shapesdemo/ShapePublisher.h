@@ -37,33 +37,48 @@ using namespace eprosima::fastrtps;
  */
 class ShapePublisher: public PublisherListener {
 public:
-    ShapePublisher(MainWindow*, Participant* par);
+    ShapePublisher(
+            MainWindow*,
+            Participant* par);
+
     virtual ~ShapePublisher();
+
     PublisherAttributes m_attributes;
     Publisher* mp_pub;
     Participant* mp_participant;
+
     /**
      * @brief Initialize the publisher.
      * @return  True if correct.
      */
     bool initPublisher();
+
     /**
      * @brief Write the shape.
      */
     void write();
+
     /**
      * @brief onPublicationMatched
      * @param info
      */
-    void onPublicationMatched(Publisher* pub, rtps::MatchingInfo& info);
-    void on_offered_deadline_missed(Publisher*, const OfferedDeadlineMissedStatus&) override;
+    void onPublicationMatched(
+            Publisher* pub,
+            rtps::MatchingInfo& info);
+
+    void on_offered_deadline_missed(
+            Publisher*,
+            const OfferedDeadlineMissedStatus&) override;
+
+    void on_liveliness_lost(
+            Publisher*,
+            const LivelinessLostStatus&) override;
 
     Shape m_shape;
     QMutex m_mutex;
     bool isInitialized;
     bool hasWritten;
     MainWindow* m_mainWindow;
-
 };
 
 
