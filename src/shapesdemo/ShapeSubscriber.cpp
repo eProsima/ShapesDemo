@@ -38,7 +38,6 @@ ShapeSubscriber::ShapeSubscriber(
     , m_mainWindow(win)
 {
     // TODO Auto-generated constructor stub
-
 }
 
 ShapeSubscriber::~ShapeSubscriber()
@@ -143,15 +142,14 @@ void ShapeSubscriber::on_liveliness_changed(
         Subscriber*,
         const LivelinessChangedStatus& status)
 {
-    if (status.alive_count_change == 1 || status.not_alive_count_change == -1)
+    if (status.alive_count_change == 1)
     {
         m_mainWindow->addMessageToOutput(QString("Liveliness recovered"));
     }
-    else if (status.not_alive_count_change == 1 || status.alive_count_change == -1)
+    else if (status.not_alive_count_change == 1)
     {
         m_mainWindow->addMessageToOutput(QString("Liveliness lost"));
     }
-
 }
 
 //void ShapeSubscriber::removeSamplesFromWriter(GUID_t)

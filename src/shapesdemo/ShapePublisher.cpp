@@ -34,7 +34,6 @@ ShapePublisher::ShapePublisher(
     , m_mainWindow(win)
 {
     // TODO Auto-generated constructor stub
-
 }
 
 ShapePublisher::~ShapePublisher()

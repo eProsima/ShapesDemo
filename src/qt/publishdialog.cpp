@@ -113,7 +113,7 @@ void PublishDialog::on_button_OkCancel_accepted()
    }
    else if (this->ui->lineEdit_announcementPeriod->text()=="INF" && SP->m_attributes.qos.m_liveliness.lease_duration != c_TimeInfinite)
    {
-       SP->m_attributes.qos.m_liveliness.announcement_period = rtps::TimeConv::MilliSeconds2Time_t(lease_duration_value.toDouble()/2).to_duration_t();
+       SP->m_attributes.qos.m_liveliness.announcement_period = rtps::TimeConv::MilliSeconds2Time_t(lease_duration_value.toDouble()*0.1).to_duration_t();
    }
    else
    {
