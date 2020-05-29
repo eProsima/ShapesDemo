@@ -71,7 +71,7 @@ bool ShapesDemo::init()
         //cout <<"Creating new Participant"<<endl;
         ParticipantAttributes pparam;
         pparam.rtps.setName("fastrtpsParticipant");
-        pparam.rtps.builtin.domainId = m_options.m_domainId;
+        pparam.domainId = m_options.m_domainId;
 
         if (m_options.m_udpTransport)
         {
