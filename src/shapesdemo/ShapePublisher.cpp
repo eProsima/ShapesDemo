@@ -41,7 +41,10 @@ ShapePublisher::~ShapePublisher()
     // TODO Auto-generated destructor stub
     if (isInitialized)
     {
-        mp_pub->dispose_and_unregister((void*)&this->m_shape.m_shape);
+        Duration_t wait_time(1, 0);
+        rtps::InstanceHandle_t handle;
+        mp_pub->dispose((void*)&this->m_shape.m_shape, handle);
+        mp_pub->wait_for_all_acked(wait_time);
         Domain::removePublisher(mp_pub);
     }
 }
