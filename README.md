@@ -11,7 +11,7 @@ RTPS-compliant implementations.
 
 ## Installation from sources
 
-For simplicity, the eProsima Shapes Demo installation manual follow the Colcon installation, since eProsima *Fast DDS*
+For simplicity, the eProsima Shapes Demo installation manual follows the Colcon installation, since eProsima *Fast DDS*
 and *Fast CDR* dependencies are downloaded and installed at the same time that eProsima Shapes Demo is built.
 However, the user must assure that **Qt5** is installed, since it is a requirement for eProsima Shapes Demo.
 To install eProsima Shapes Demo using Colcon, please follow the steps below:
