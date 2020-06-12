@@ -125,7 +125,7 @@ There are multiple parameters that the user can define in this menu:
 - **Partition:** The user can select different partitions to differentiate groups of publishers and subscribers.
   The user can select between four partitions (``A``, ``B``, ``C`` and ``D``).
   Additionally the user can select the ``*`` partition, that will be matched against all other partitions.
-  Note that using the wildcard (``\*``) partition is not the same as not using any partition.
+  Note that using the wildcard (``*``) partition is not the same as not using any partition.
   A publisher that uses the wildcard partition will not be matched with a subscriber that do not defines any
   partitions.
 - **Reliable:** The user can select to disable the ``Reliable`` check-box to use a ``Best-Effort`` publisher.
