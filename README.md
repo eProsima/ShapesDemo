@@ -40,7 +40,7 @@ To install eProsima Shapes Demo using Colcon, please follow the steps below:
     eProsima Shapes Demo and its dependencies:
 
         $ mkdir -p ShapesDemo/src && cd ShapesDemo
-        $ wget https://raw.githubusercontent.com/eProsima/ShapesDemo/master/ShapesDemo.repos
+        $ wget https://raw.githubusercontent.com/eProsima/ShapesDemo/master/shapes-demo.repos
         $ vcs import src < shapes-demo.repos
 
 4.  Build the packages:
