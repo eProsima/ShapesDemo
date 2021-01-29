@@ -87,11 +87,11 @@ the need for compilation. To do this, a Docker image will be used.
 
 4.  Load the Docker image:
 
-        $ docker load -i ubuntu-fast-dds-shapesdemo_2.1.0.tar
+        $ docker load -i ubuntu-fast-dds-shapesdemo:2.2.0.tar
 
 5.  Run the Docker image:
 
-        $ docker run -it --privileged -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix ubuntu-fast-dds-shapesdemo:v2.1.0
+        $ docker run -it --privileged -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix ubuntu-fast-dds-shapesdemo:v2.2.0
 
 ### Windows
 
@@ -107,13 +107,13 @@ the *bin* directory.
 This section serves as a guide to the main menus of eProsima Shapes Demo application.
 After the executable is launched, a window similar to the one presented in the following image should be displayed.
 
-![Main Window](/docs/MainWindow.png)
+![Main Window](docs/MainWindow.png)
 
 ### Publish
 
 The Publish Window allows you to generate a new Shape and corresponding Topic on the network.
 
-![Publish Window](/docs/PublisherScreen.png)
+![Publish Window](docs/PublisherScreen.png)
 
 There are multiple parameters that the user can define in this menu:
 
@@ -151,7 +151,7 @@ There are multiple parameters that the user can define in this menu:
 
 The Subscribe Window allows you to read and represent existing shapes on the network.
 
-![Subscriber Window](/docs/SubscriberScreen.png)
+![Subscriber Window](docs/SubscriberScreen.png)
 
 This menu provides the options present in the Publish window plus the following additions:
 
@@ -171,7 +171,7 @@ Note that using Lifespan QoS will not have any visual effect.
 
 Under the Options->Preferences tab you will find the following menu:
 
-![Other options](/docs/options.png)
+![Other options](docs/options.png)
 
 You can modify the following settings:
 
@@ -196,7 +196,7 @@ You can modify the following settings:
 
 A table including all created endpoints is also provided.
 
-![Endpoints](/docs/endpoints.png)
+![Endpoints](docs/endpoints.png)
 
 This table can be used to remove endpoints.
 Two methods are provided:
@@ -206,4 +206,4 @@ Two methods are provided:
 
 The other available tab in this section shows an output log:
 
-![Output](/docs/log.png)
+![Output](docs/log.png)

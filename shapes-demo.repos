@@ -6,13 +6,13 @@ repositories:
     fastcdr:
         type: git
         url: https://github.com/eProsima/Fast-CDR.git
-        version: v1.0.16
+        version: v1.0.19
     fastrtps:
         type: git
         url: https://github.com/eProsima/Fast-RTPS.git
-        version: v2.1.0
+        version: v2.2.0
     shapes-demo:
         type: git
         url: https://github.com/eProsima/ShapesDemo.git
-        version: v2.1.0
+        version: v2.2.0
 
