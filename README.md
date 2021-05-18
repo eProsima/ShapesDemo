@@ -87,11 +87,11 @@ the need for compilation. To do this, a Docker image will be used.
 
 4.  Load the Docker image:
 
-        $ docker load -i ubuntu-fast-dds-shapesdemo:2.3.1.tar
+        $ docker load -i ubuntu-fast-dds-shapesdemo:2.3.2.tar
 
 5.  Run the Docker image:
 
-        $ docker run -it --privileged -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix ubuntu-fast-dds-shapesdemo:v2.3.1
+        $ docker run -it --privileged -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix ubuntu-fast-dds-shapesdemo:v2.3.2
 
 ### Windows
 
