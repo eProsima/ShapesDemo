@@ -20,22 +20,19 @@
 #ifndef SHAPESDEMO_H_
 #define SHAPESDEMO_H_
 
+#include <QMutex>
+
 #include "eprosimashapesdemo/shapesdemo/ShapePubSubTypes.h"
 #include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
-#include <QMutex>
-#include <vector>
 
-namespace eprosima
-{
-namespace fastrtps
-{
-class Participant;
-}
-}
+#include <fastdds/dds/domain/DomainParticipant.hpp>
+#include <fastdds/dds/domain/DomainParticipantFactory.hpp>
+#include <fastdds/dds/publisher/Publisher.hpp>
+#include <fastdds/dds/subscriber/Subscriber.hpp>
+#include <fastdds/dds/topic/TopicDescription.hpp>
+#include <fastdds/dds/topic/TypeSupport.hpp>
 
-using namespace eprosima::fastrtps;
-
-
+using namespace eprosima::fastdds::dds;
 
 /**
  * @brief The ShapesDemoOptions class, used to transmit the options between the options menu and the ShapesDemo class.
@@ -95,10 +92,10 @@ public:
      */
     void stop();
     /**
-     * @brief Get a pointer to the Participant.
-     * @return Participant pointer.
+     * @brief Get a pointer to the DomainParticipant.
+     * @return DomainParticipant pointer.
      */
-    Participant* getParticipant();
+    DomainParticipant* getParticipant();
     /**
      * @brief Add a ShapePublisher to the demo.
      * @param SP Pointer to the ShapePublisher object.
@@ -158,11 +155,15 @@ public:
      */
     bool isInitialized(){return this->m_isInitialized;}
 
+    Topic* getTopic(std::string topic_name);
+
 
 private:
     std::vector<ShapePublisher*> m_publishers;
     std::vector<ShapeSubscriber*> m_subscribers;
-    Participant* mp_participant;
+    eprosima::fastdds::dds::DomainParticipant* mp_participant;
+    eprosima::fastdds::dds::Publisher* mp_publisher;
+    eprosima::fastdds::dds::Subscriber* mp_subscriber;
 
     //std::vector<ShapeType*> m_shapes;
     bool m_isInitialized;
@@ -171,15 +172,16 @@ private:
 
 
     void moveShape(Shape* sh);
+
+    // Modify X axis or Y axis
     void getNewDirection(Shape* sh);
 
     ShapeTypePubSubType m_shapeTopicDataType;
     ShapesDemoOptions m_options;
     MainWindow* m_mainWindow;
     QMutex m_mutex;
-
+    TypeSupport m_type;
+    std::map<std::string, Topic*> m_topics;
 };
-
-
 
 #endif /* SHAPESDEMO_H_ */

@@ -22,22 +22,22 @@
 #include <eprosimashapesdemo/shapesdemo/ShapeInfo.h>
 #include <eprosimashapesdemo/qt/mainwindow.h>
 
-#include <fastrtps/transport/TCPv4TransportDescriptor.h>
-#include <fastrtps/attributes/ParticipantAttributes.h>
-#include <fastrtps/Domain.h>
-#include <fastrtps/publisher/Publisher.h>
-#include <fastrtps/subscriber/Subscriber.h>
-#include <fastrtps/subscriber/Subscriber.h>
+#include <fastdds/dds/domain/qos/DomainParticipantQos.hpp>
+#include <fastdds/rtps/transport/TCPv4TransportDescriptor.h>
+#include <fastdds/rtps/transport/UDPv4TransportDescriptor.h>
 #include <fastrtps/utils/IPLocator.h>
 
+using namespace eprosima::fastdds::dds;
+using namespace eprosima::fastdds::rtps;
 using namespace eprosima::fastrtps::rtps;
 
-ShapesDemo::ShapesDemo(MainWindow *mw):
-    mp_participant(nullptr),
-    m_isInitialized(false),
-    minX(0),minY(0),maxX(0),maxY(0),
-    m_mainWindow(mw),
-    m_mutex(QMutex::Recursive)
+ShapesDemo::ShapesDemo(MainWindow *mw)
+    : mp_participant(nullptr)
+    , m_isInitialized(false)
+    , minX(0),minY(0),maxX(0),maxY(0)
+    , m_mainWindow(mw)
+    , m_mutex(QMutex::Recursive)
+    , m_type(new ShapeTypePubSubType())
 {
     srand (time(nullptr));
     minX = 0;
@@ -51,7 +51,7 @@ ShapesDemo::~ShapesDemo()
     stop();
 }
 
-Participant* ShapesDemo::getParticipant()
+DomainParticipant* ShapesDemo::getParticipant()
 {
     if(m_isInitialized && mp_participant !=nullptr)
         return mp_participant;
@@ -70,18 +70,20 @@ bool ShapesDemo::init()
     {
         //cout <<"Creating new Participant"<<endl;
         ParticipantAttributes pparam;
-        pparam.rtps.setName("fastrtpsParticipant");
-        pparam.domainId = m_options.m_domainId;
+        DomainParticipantQos qos;
+
+        qos.name("Fast-DDS ShapesDemo Participant");
+        qos.transport().use_builtin_transports = false;
 
         if (m_options.m_udpTransport)
         {
-            pparam.rtps.useBuiltinTransports = true;
+            std::shared_ptr<UDPv4TransportDescriptor> descriptor = std::make_shared<UDPv4TransportDescriptor>();
+            qos.transport().user_transports.push_back(descriptor);
         }
         else
         {
-            pparam.rtps.useBuiltinTransports = false;
-
             std::shared_ptr<TCPv4TransportDescriptor> descriptor = std::make_shared<TCPv4TransportDescriptor>();
+
             descriptor->wait_for_tcp_negotiation = false;
             descriptor->maxInitialPeersRange = 20;
 
@@ -100,22 +102,32 @@ bool ShapesDemo::init()
                 initial_peer_locator.kind = LOCATOR_KIND_TCPv4;
                 IPLocator::setIPv4(initial_peer_locator, m_options.m_serverIp);
                 initial_peer_locator.port = m_options.m_serverPort;
-                pparam.rtps.builtin.initialPeersList.push_back(initial_peer_locator); // Publisher's meta channel
+
+                qos.wire_protocol().builtin.initialPeersList.push_back(initial_peer_locator);
             }
 
-            pparam.rtps.userTransports.push_back(descriptor);
-            pparam.rtps.builtin.discovery_config.leaseDuration_announcementperiod.seconds = 5;
+            qos.transport().user_transports.push_back(descriptor);
+            qos.wire_protocol().builtin.discovery_config.leaseDuration_announcementperiod.seconds = 5;
         }
 
-        mp_participant = Domain::createParticipant(pparam);
-        if(mp_participant!=nullptr)
+
+        mp_participant = DomainParticipantFactory::get_instance()->create_participant(
+            m_options.m_domainId,
+            qos);
+
+        if (nullptr == mp_participant)
         {
-            // cout << "RTPSParticipant Created "<< mp_participant->getGuid() << endl;l
-            m_isInitialized = true;
-            Domain::registerType(mp_participant,&m_shapeTopicDataType);
-            return true;
+            return false;
         }
-        return false;
+
+        // If the creation has been correct, register type
+        m_isInitialized = true;
+        m_type.register_type(mp_participant);
+
+        // Create a single publisher and subscriber per Participant
+        mp_publisher = mp_participant->create_publisher(PUBLISHER_QOS_DEFAULT);
+        mp_subscriber = mp_participant->create_subscriber(SUBSCRIBER_QOS_DEFAULT);
+
     }
     return true;
 }
@@ -126,20 +138,31 @@ void ShapesDemo::stop()
     {
         QMutexLocker lock(&m_mutex);
         this->m_mainWindow->quitThreads();
+
+        // Remove all publishers
         for(std::vector<ShapePublisher*>::iterator it = m_publishers.begin();
             it!=m_publishers.end();++it)
         {
             delete(*it);
         }
         m_publishers.clear();
+
+        // Remove all subscribers
         for(std::vector<ShapeSubscriber*>::iterator it = m_subscribers.begin();
             it!=m_subscribers.end();++it)
         {
             delete(*it);
         }
         m_subscribers.clear();
-        Domain::removeParticipant(mp_participant);
-        //cout << "All Stoped, removing"<<endl;
+
+        // Eliminate topics
+        for (auto it : m_topics)
+        {
+            mp_participant->delete_topic(it.second);
+        }
+
+        // Remove Participant
+        DomainParticipantFactory::get_instance()->delete_participant(mp_participant);
         mp_participant = nullptr;
         m_isInitialized = false;
     }
@@ -216,7 +239,6 @@ void ShapesDemo::getNewDirection(Shape* sh)
     sh->m_changeDir = false;
 }
 
-
 void ShapesDemo::writeAll()
 {
     for(std::vector<ShapePublisher*>::iterator it = m_publishers.begin();
@@ -235,7 +257,6 @@ void ShapesDemo::setOptions(ShapesDemoOptions& opt)
 
 ShapesDemoOptions ShapesDemo::getOptions()
 {
-
     return m_options;
 }
 
@@ -245,10 +266,10 @@ void ShapesDemo::removePublisher(ShapePublisher* SP)
     for(std::vector<ShapePublisher*>::iterator it = this->m_publishers.begin();
         it!=this->m_publishers.end();++it)
     {
-        if(SP->mp_pub->getGuid() == (*it)->mp_pub->getGuid())
+        if(SP->mp_datawriter->guid() == (*it)->mp_datawriter->guid())
         {
             m_publishers.erase(it);
-            delete(SP);
+            delete SP;
             break;
         }
     }
@@ -261,11 +282,38 @@ void ShapesDemo::removeSubscriber(ShapeSubscriber* SS)
     for(std::vector<ShapeSubscriber*>::iterator it = this->m_subscribers.begin();
         it!=this->m_subscribers.end();++it)
     {
-        if(SS->mp_sub->getGuid() == (*it)->mp_sub->getGuid())
+        if(SS->mp_datareader->guid() == (*it)->mp_datareader->guid())
         {
             m_subscribers.erase(it);
-            delete(SS);
+            delete SS;
             break;
         }
+    }
+}
+
+Topic* ShapesDemo::getTopic(std::string topic_name)
+{
+    QMutexLocker lock(&m_mutex);
+
+    // Look up if topic already exists
+    auto it = m_topics.find(topic_name);
+
+    if (it != m_topics.end())
+    {
+        // Topic already exists
+        return it->second;
+    }
+    else
+    {
+        // Create new Topic
+        Topic* topic = mp_participant->create_topic(
+            topic_name,         // Topic name
+            "ShapeType",        // Alwaysa same type
+            TOPIC_QOS_DEFAULT); // TODO check if default QoS is correct
+
+        // Add new topic to map
+        m_topics[topic_name] = topic;
+
+        return topic;
     }
 }

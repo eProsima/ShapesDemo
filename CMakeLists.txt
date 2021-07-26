@@ -152,7 +152,7 @@ set( UIS
     forms/publishdialog.ui
     forms/subscribedialog.ui
     )
-    
+
 set( RESOURCES
     images/eprosimalogo.qrc
     )

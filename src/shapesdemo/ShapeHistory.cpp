@@ -193,7 +193,7 @@ void ShapeHistory::adjustContentFilter(ShapeFilter& filter)
     }
 }
 
-void ShapeHistory::removedOwner(GUID_t& guid)
+void ShapeHistory::removedOwner(const GUID_t& guid)
 {
     for(std::vector<std::list<Shape>>::iterator it = m_history.begin();
         it!= m_history.end();++it)

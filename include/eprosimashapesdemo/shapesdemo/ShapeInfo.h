@@ -40,7 +40,7 @@ class Shape
     public:
 
         Shape() : m_strength(0), m_hasOwner(true),
-        m_dirX(0), m_dirY(0), m_changeDir(true) {}
+        m_dirX(0), m_dirY(0), m_changeDir(true), m_max_speed_variance(0.1) {}
 
         virtual ~Shape() {}
 
@@ -63,6 +63,7 @@ class Shape
         float m_dirX;
         float m_dirY;
         bool m_changeDir;
+        float m_max_speed_variance;
 };
 
 typedef std::pair<SD_COLOR, rtps::InstanceHandle_t> colorPair;
