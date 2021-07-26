@@ -43,6 +43,9 @@ PublishDialog::~PublishDialog()
 
 void PublishDialog::on_button_OkCancel_accepted()
 {
+    // Check the participant is created
+    this->mp_sd->init();
+
     // Get Topic if exist or add one
     TopicDescription* topic_desc = this->mp_sd->getTopic(this->ui->combo_Shape->currentText().toUtf8().constData());
     Topic* topic = dynamic_cast<Topic*>(topic_desc);

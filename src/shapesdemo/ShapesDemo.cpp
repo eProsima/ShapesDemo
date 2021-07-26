@@ -65,7 +65,6 @@ DomainParticipant* ShapesDemo::getParticipant()
 
 bool ShapesDemo::init()
 {
-    //cout << "Initializing ShapesDemo "<< m_isInitialized <<endl;
     if(!m_isInitialized)
     {
         //cout <<"Creating new Participant"<<endl;
@@ -110,6 +109,30 @@ bool ShapesDemo::init()
             qos.wire_protocol().builtin.discovery_config.leaseDuration_announcementperiod.seconds = 5;
         }
 
+        // Set the statistics if clicked
+        if (m_options.m_statistics)
+        {
+            qos.properties().properties().emplace_back(
+                "fastdds.statistics",
+                "HISTORY_LATENCY_TOPIC;" \
+                "NETWORK_LATENCY_TOPIC;" \
+                "PUBLICATION_THROUGHPUT_TOPIC;" \
+                "SUBSCRIPTION_THROUGHPUT_TOPIC;" \
+                "RTPS_SENT_TOPIC;" \
+                "RTPS_LOST_TOPIC;" \
+                "HEARTBEAT_COUNT_TOPIC;" \
+                "ACKNACK_COUNT_TOPIC;" \
+                "NACKFRAG_COUNT_TOPIC;" \
+                "GAP_COUNT_TOPIC;" \
+                "DATA_COUNT_TOPIC;" \
+                "RESENT_DATAS_TOPIC;" \
+                "SAMPLE_DATAS_TOPIC;" \
+                "PDP_PACKETS_TOPIC;" \
+                "EDP_PACKETS_TOPIC;" \
+                "DISCOVERY_TOPIC;" \
+                "PHYSICAL_DATA_TOPIC");
+        }
+
 
         mp_participant = DomainParticipantFactory::get_instance()->create_participant(
             m_options.m_domainId,
@@ -123,20 +146,15 @@ bool ShapesDemo::init()
         // If the creation has been correct, register type
         m_isInitialized = true;
         m_type.register_type(mp_participant);
-
-        // Create a single publisher and subscriber per Participant
-        mp_publisher = mp_participant->create_publisher(PUBLISHER_QOS_DEFAULT);
-        mp_subscriber = mp_participant->create_subscriber(SUBSCRIBER_QOS_DEFAULT);
-
     }
     return true;
 }
 
 void ShapesDemo::stop()
 {
+    QMutexLocker lock(&m_mutex);
     if(m_isInitialized)
     {
-        QMutexLocker lock(&m_mutex);
         this->m_mainWindow->quitThreads();
 
         // Remove all publishers
@@ -160,9 +178,15 @@ void ShapesDemo::stop()
         {
             mp_participant->delete_topic(it.second);
         }
+        m_topics.clear();
 
         // Remove Participant
-        DomainParticipantFactory::get_instance()->delete_participant(mp_participant);
+        if (eprosima::fastrtps::types::ReturnCode_t::RETCODE_OK !=
+            DomainParticipantFactory::get_instance()->delete_participant(mp_participant))
+        {
+            std::cerr << "Error deleting Participant" << std::endl;
+            return;
+        }
         mp_participant = nullptr;
         m_isInitialized = false;
     }
@@ -170,14 +194,28 @@ void ShapesDemo::stop()
 
 void ShapesDemo::addPublisher(ShapePublisher* SP)
 {
-    m_publishers.push_back(SP);
-    this->m_mainWindow->addPublisherToTable(SP);
+    if (m_isInitialized)
+    {
+        m_publishers.push_back(SP);
+        this->m_mainWindow->addPublisherToTable(SP);
+    }
+    else
+    {
+        delete SP;
+    }
 }
 
 void ShapesDemo::addSubscriber(ShapeSubscriber* SSub)
 {
-    m_subscribers.push_back(SSub);
-    this->m_mainWindow->addSubscriberToTable(SSub);
+    if (m_isInitialized)
+    {
+        m_subscribers.push_back(SSub);
+        this->m_mainWindow->addSubscriberToTable(SSub);
+    }
+    else
+    {
+        delete SSub;
+    }
 }
 
 uint32_t ShapesDemo::getRandomX(uint32_t size)

@@ -53,12 +53,20 @@ ShapePublisher::~ShapePublisher()
             mp_datawriter->dispose((void*)&this->m_shape.m_shape, handle);
             mp_datawriter->wait_for_acknowledgments(wait_time);
 
-            mp_publisher->delete_datawriter(mp_datawriter);
+            if (ReturnCode_t::RETCODE_OK != mp_publisher->delete_datawriter(mp_datawriter))
+            {
+                std::cerr << "Error deleting datawriter: " << mp_datawriter->guid() << std::endl;
+                return;
+            }
         }
 
         if (mp_participant && mp_publisher)
         {
-            mp_participant->delete_publisher(mp_publisher);
+            if (ReturnCode_t::RETCODE_OK != mp_participant->delete_publisher(mp_publisher))
+            {
+                std::cerr << "Error deleting publisher: " << std::endl;
+                return;
+            }
         }
     }
 }
@@ -71,6 +79,8 @@ bool ShapePublisher::initPublisher()
     m_dw_qos.reliable_writer_qos().times.heartbeatPeriod.nanosec = 500000000;
 
     mp_datawriter = mp_publisher->create_datawriter(mp_topic, m_dw_qos, &listener_);
+
+    isInitialized = true;
 
     return nullptr != mp_datawriter;
 }

@@ -43,6 +43,7 @@ public:
     bool m_udpTransport;
     bool m_tcpServer;
     bool m_tcpWAN;
+    bool m_statistics;
     uint16_t m_listenPort;
     uint16_t m_serverPort;
     std::string m_serverIp;
@@ -54,6 +55,7 @@ public:
         m_udpTransport = true;
         m_tcpServer = true;
         m_tcpWAN = false;
+        m_statistics = false;
         m_listenPort = 5100;
         m_serverPort = 5100;
         m_serverIp = "127.0.0.1";
@@ -162,8 +164,6 @@ private:
     std::vector<ShapePublisher*> m_publishers;
     std::vector<ShapeSubscriber*> m_subscribers;
     eprosima::fastdds::dds::DomainParticipant* mp_participant;
-    eprosima::fastdds::dds::Publisher* mp_publisher;
-    eprosima::fastdds::dds::Subscriber* mp_subscriber;
 
     //std::vector<ShapeType*> m_shapes;
     bool m_isInitialized;

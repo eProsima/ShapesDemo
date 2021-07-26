@@ -36,6 +36,11 @@ OptionsDialog::OptionsDialog(MainWindow *mw, ShapesDemo* psd, QWidget *parent) :
     this->ui->spin_server_port->setValue(m_options->m_serverPort);
     this->ui->spin_listen_port->setValue(m_options->m_listenPort);
     this->ui->lineEdit_server_ip->setText(QString::fromStdString(m_options->m_serverIp));
+
+    // Statistics Button
+    // Show if it is checked or not
+    this->ui->statisticsCheckBox->setChecked(m_options->m_statistics);
+
     setEnableState();
     UpdateTransportControls();
     setAttribute ( Qt::WA_DeleteOnClose, true );
@@ -64,6 +69,7 @@ void OptionsDialog::setEnableState()
     this->ui->pushButton_start->setEnabled(mb_started);
     this->ui->spin_domainId->setEnabled(mb_started);
     this->ui->pushButton_stop->setEnabled(!mb_started);
+    this->ui->statisticsCheckBox->setEnabled(mb_started);
 }
 
 void OptionsDialog::on_OptionsDialog_accepted()
@@ -178,8 +184,14 @@ void OptionsDialog::UpdateTransportControls()
 	this->ui->pushButton_tcp_server->setFont(!mb_started && !m_options->m_udpTransport && m_options->m_tcpServer && !m_options->m_tcpWAN ? fontn : font);
 	this->ui->pushButton_tcp_WAN_server->setFont(!mb_started && !m_options->m_udpTransport && m_options->m_tcpServer && m_options->m_tcpWAN ? fontn : font);
 
-	
+
     // lineEdit_server_ip meaning depends on TCP config.
     this->ui->label_6->setText(m_options->m_tcpServer && m_options->m_tcpWAN ? QApplication::translate("OptionsDialog", "WAN IP:", nullptr) : QApplication::translate("OptionsDialog", "Server IP:", nullptr));
     this->ui->lineEdit_server_ip->setEnabled(mb_started && !m_options->m_udpTransport && !(m_options->m_tcpServer && !m_options->m_tcpWAN));
+}
+
+void OptionsDialog::on_statisticsCheckBox_stateChanged(int arg1)
+{
+    m_options->m_statistics = arg1;
+    mp_sd->setOptions(*m_options);
 }

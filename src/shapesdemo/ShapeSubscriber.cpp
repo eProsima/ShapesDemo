@@ -45,12 +45,20 @@ ShapeSubscriber::~ShapeSubscriber()
 {
     if (mp_participant && mp_subscriber && mp_datareader)
     {
-        mp_subscriber->delete_datareader(mp_datareader);
+        if (ReturnCode_t::RETCODE_OK != mp_subscriber->delete_datareader(mp_datareader))
+        {
+            std::cerr << "Error deleting datareader: " << mp_datareader->guid() << std::endl;
+            return;
+        }
     }
 
     if (mp_participant && mp_subscriber)
     {
-        mp_participant->delete_subscriber(mp_subscriber);
+        if (ReturnCode_t::RETCODE_OK != mp_participant->delete_subscriber(mp_subscriber))
+        {
+            std::cerr << "Error deleting subscriber: " << std::endl;
+            return;
+        }
     }
 
     if (mp_contentFilter!=nullptr)

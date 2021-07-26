@@ -79,11 +79,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->widget_contentFilter->setVisible(false);
 
-    this->m_shapesDemo.init();
-    if(m_shapesDemo.isInitialized())
-    {
-        addMessageToOutput(QString("RTPSParticipant ready in domainId %1").arg(m_shapesDemo.getOptions().m_domainId),true);
-    }
+    // Initialize when a new Endpoint is added
+    // this->m_shapesDemo.init();
+    // if(m_shapesDemo.isInitialized())
+    // {
+    //     addMessageToOutput(QString("RTPSParticipant ready in domainId %1").arg(m_shapesDemo.getOptions().m_domainId),true);
+    // }
 }
 
 MainWindow::~MainWindow()
