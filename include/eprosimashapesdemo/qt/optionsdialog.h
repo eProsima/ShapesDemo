@@ -36,10 +36,6 @@ public:
 private slots:
     void on_OptionsDialog_accepted();
 
-    void on_pushButton_udp_clicked();
-    void on_pushButton_tcp_client_clicked();
-    void on_pushButton_tcp_server_clicked();
-    void on_pushButton_tcp_WAN_server_clicked();
     void on_pushButton_start_clicked();
     void on_pushButton_stop_clicked();
     void on_spin_domainId_valueChanged(int arg1);
@@ -48,7 +44,22 @@ private slots:
     void on_lineEdit_server_ip_textChanged(const QString& arg1);
     void on_spin_updateInterval_valueChanged(int arg1);
     void on_horizontalSlider_speed_valueChanged(int arg1);
+
     void on_statisticsCheckBox_stateChanged(int arg1);
+
+    void on_IntraprocesscheckBox_stateChanged(int arg1);
+
+    void on_DataSharingcheckBox_stateChanged(int arg1);
+
+    void on_SHMcheckBox_stateChanged(int arg1);
+
+    void on_UDPcheckBox_stateChanged(int arg1);
+
+    void on_TCPcheckBox_stateChanged(int arg1);
+
+    void on_TCPcomboBox_currentTextChanged(const QString &arg1);
+
+    void tcp_enable_buttons();
 
 private:
     ShapesDemoOptions* m_options;
@@ -58,8 +69,6 @@ private:
     bool mb_started;
 
     void setEnableState();
-
-    void UpdateTransportControls();
 };
 
 #endif // OPTIONSDIALOG_H

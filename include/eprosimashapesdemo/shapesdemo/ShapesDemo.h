@@ -40,10 +40,13 @@ using namespace eprosima::fastdds::dds;
 class ShapesDemoOptions
 {
 public:
-    bool m_udpTransport;
-    bool m_tcpServer;
-    bool m_tcpWAN;
+    bool m_udp_transport;
+    bool m_tcp_transport;
+    bool m_intraprocess_transport;
+    bool m_datasharing_transport;
+    bool m_shm_transport;
     bool m_statistics;
+    QString m_tcp_type;
     uint16_t m_listenPort;
     uint16_t m_serverPort;
     std::string m_serverIp;
@@ -52,9 +55,11 @@ public:
     uint32_t m_domainId;
     ShapesDemoOptions()
     {
-        m_udpTransport = true;
-        m_tcpServer = true;
-        m_tcpWAN = false;
+        m_udp_transport = true;
+        m_tcp_transport = false;
+        m_intraprocess_transport = true;
+        m_datasharing_transport = true;
+        m_shm_transport = true;
         m_statistics = false;
         m_listenPort = 5100;
         m_serverPort = 5100;
@@ -62,7 +67,24 @@ public:
         m_updateIntervalMs = INITIAL_INTERVAL_MS;
         m_movementSpeed = 7;
         m_domainId = 0;
+        m_tcp_type = QString("TCP LAN Server");
     }
+
+    bool tcp_lan()
+    {
+        return m_tcp_type == QString("TCP LAN Server");
+    }
+
+    bool tcp_wan()
+    {
+        return m_tcp_type == QString("TCP WAN Server");
+    }
+
+    bool tcp_client()
+    {
+        return m_tcp_type == QString("TCP Client");
+    }
+
     ~ShapesDemoOptions()
     {
 
@@ -159,6 +181,10 @@ public:
 
     Topic* getTopic(std::string topic_name);
 
+    bool data_sharing_enable ()
+    {
+        return m_data_sharing_enable;
+    }
 
 private:
     std::vector<ShapePublisher*> m_publishers;
@@ -182,6 +208,7 @@ private:
     QMutex m_mutex;
     TypeSupport m_type;
     std::map<std::string, Topic*> m_topics;
+    bool m_data_sharing_enable;
 };
 
 #endif /* SHAPESDEMO_H_ */

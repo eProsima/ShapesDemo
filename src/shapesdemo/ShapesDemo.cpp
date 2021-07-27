@@ -25,7 +25,10 @@
 #include <fastdds/dds/domain/qos/DomainParticipantQos.hpp>
 #include <fastdds/rtps/transport/TCPv4TransportDescriptor.h>
 #include <fastdds/rtps/transport/UDPv4TransportDescriptor.h>
+#include <fastdds/rtps/transport/shared_mem/SharedMemTransportDescriptor.h>
+#include <fastrtps/config.h> // FASTDDS_STATISTICS availability
 #include <fastrtps/utils/IPLocator.h>
+#include <fastrtps/xmlparser/XMLProfileManager.h>
 
 using namespace eprosima::fastdds::dds;
 using namespace eprosima::fastdds::rtps;
@@ -38,6 +41,7 @@ ShapesDemo::ShapesDemo(MainWindow *mw)
     , m_mainWindow(mw)
     , m_mutex(QMutex::Recursive)
     , m_type(new ShapeTypePubSubType())
+    , m_data_sharing_enable(false)
 {
     srand (time(nullptr));
     minX = 0;
@@ -67,28 +71,50 @@ bool ShapesDemo::init()
 {
     if(!m_isInitialized)
     {
-        //cout <<"Creating new Participant"<<endl;
-        ParticipantAttributes pparam;
+        std::cout <<"Creating new Participant in domain: " << m_options.m_domainId << std::endl;
+
         DomainParticipantQos qos;
 
         qos.name("Fast-DDS ShapesDemo Participant");
         qos.transport().use_builtin_transports = false;
 
-        if (m_options.m_udpTransport)
+        // Intraprocess
+        LibrarySettingsAttributes library_settings;
+        library_settings.intraprocess_delivery = m_options.m_intraprocess_transport ?
+            IntraprocessDeliveryType::INTRAPROCESS_FULL : IntraprocessDeliveryType::INTRAPROCESS_OFF;
+        xmlparser::XMLProfileManager::library_settings(library_settings);
+
+        // Data Sharing
+        m_data_sharing_enable = m_options.m_datasharing_transport;
+
+        // Shared Memory
+        if (m_options.m_shm_transport)
         {
+            // Configure SHM Transport
+            std::shared_ptr<SharedMemTransportDescriptor> shm_transport =
+                std::make_shared<SharedMemTransportDescriptor>();
+            qos.transport().user_transports.push_back(shm_transport);
+        }
+
+        // UDP
+        if (m_options.m_udp_transport)
+        {
+            // Configure UDP Transport
             std::shared_ptr<UDPv4TransportDescriptor> descriptor = std::make_shared<UDPv4TransportDescriptor>();
             qos.transport().user_transports.push_back(descriptor);
         }
-        else
+
+        // TCP
+        if (m_options.m_tcp_transport)
         {
             std::shared_ptr<TCPv4TransportDescriptor> descriptor = std::make_shared<TCPv4TransportDescriptor>();
 
             descriptor->wait_for_tcp_negotiation = false;
             descriptor->maxInitialPeersRange = 20;
 
-            if (m_options.m_tcpServer)
+            if (m_options.tcp_lan() || m_options.tcp_wan())
             {
-                if (m_options.m_tcpWAN)
+                if (m_options.tcp_wan())
                 {
                     descriptor->set_WAN_address(m_options.m_serverIp);
                 }
@@ -131,6 +157,11 @@ bool ShapesDemo::init()
                 "EDP_PACKETS_TOPIC;" \
                 "DISCOVERY_TOPIC;" \
                 "PHYSICAL_DATA_TOPIC");
+
+// In case the Statistics are not compiled, show an error
+#ifndef FASTDDS_STATISTICS
+            std::cerr << "Statistics Module is not available" << std::endl;
+#endif // #ifndef FASTDDS_STATISTICS
         }
 
 
@@ -146,6 +177,8 @@ bool ShapesDemo::init()
         // If the creation has been correct, register type
         m_isInitialized = true;
         m_type.register_type(mp_participant);
+
+        std::cout << "Participant created correctly" << std::endl;
     }
     return true;
 }
@@ -300,6 +333,11 @@ ShapesDemoOptions ShapesDemo::getOptions()
 
 void ShapesDemo::removePublisher(ShapePublisher* SP)
 {
+    if (!SP || !SP->isInitialized)
+    {
+        return;
+    }
+
     //cout << "REMOVING PUBLISHER"<<endl;
     for(std::vector<ShapePublisher*>::iterator it = this->m_publishers.begin();
         it!=this->m_publishers.end();++it)
@@ -308,14 +346,18 @@ void ShapesDemo::removePublisher(ShapePublisher* SP)
         {
             m_publishers.erase(it);
             delete SP;
-            break;
+            return;
         }
     }
-
 }
 
 void ShapesDemo::removeSubscriber(ShapeSubscriber* SS)
 {
+    if (!SS || !SS->mp_datareader) // There is no SS initialized variable
+    {
+        return;
+    }
+
     //cout << "REMOVING SUBSCRIBER"<<endl;
     for(std::vector<ShapeSubscriber*>::iterator it = this->m_subscribers.begin();
         it!=this->m_subscribers.end();++it)
@@ -324,7 +366,7 @@ void ShapesDemo::removeSubscriber(ShapeSubscriber* SS)
         {
             m_subscribers.erase(it);
             delete SS;
-            break;
+            return;
         }
     }
 }

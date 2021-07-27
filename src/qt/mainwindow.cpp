@@ -40,6 +40,8 @@ MainWindow::MainWindow(QWidget *parent) :
     mp_writeThread(NULL),
     m_tableRow(-1)
 {
+    setWindowIcon(QIcon(":images/eprosima_icon.png"));
+
     ui->setupUi(this);
     ui->areaDraw->setShapesDemo(this->getShapesDemo());
 
@@ -149,7 +151,7 @@ void MainWindow::on_actionStart_triggered()
     if(this->m_shapesDemo.init())
     {
         if(m_shapesDemo.isInitialized())
-            addMessageToOutput(QString("RTPSParticipant ready in domainId %1").arg(m_shapesDemo.getOptions().m_domainId),true);
+            addMessageToOutput(QString("Participant ready in domainId %1").arg(m_shapesDemo.getOptions().m_domainId),true);
     }
 }
 
