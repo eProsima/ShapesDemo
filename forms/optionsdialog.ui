@@ -89,6 +89,9 @@
    </item>
    <item row="19" column="1">
     <widget class="QCheckBox" name="statisticsCheckBox">
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Only available when FastDDS is compiled with Statistics Module.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="text">
       <string>Active Statistics</string>
      </property>
