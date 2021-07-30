@@ -61,7 +61,7 @@ ShapeSubscriber::~ShapeSubscriber()
         }
     }
 
-    if (mp_contentFilter!=nullptr)
+    if (mp_contentFilter != nullptr)
     {
         delete(mp_contentFilter);
     }
@@ -121,7 +121,7 @@ void ShapeSubscriber::SubListener::on_subscription_matched(
     {
         bool found = false;
         for (std::vector<rtps::GUID_t>::iterator it = parent_->m_remoteWriters.begin();
-            it!=parent_->m_remoteWriters.end();++it)
+                it != parent_->m_remoteWriters.end(); ++it)
         {
             if (*it == iHandle2GUID(info.last_publication_handle))
             {
@@ -143,7 +143,7 @@ void ShapeSubscriber::SubListener::on_subscription_matched(
 }
 
 void ShapeSubscriber::adjustContentFilter(
-        ShapeFilter &filter)
+        ShapeFilter& filter)
 {
     m_mutex.lock();
     m_shapeHistory.adjustContentFilter(filter);

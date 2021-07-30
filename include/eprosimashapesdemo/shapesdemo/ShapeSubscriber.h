@@ -40,8 +40,10 @@ class MainWindow;
 /**
  * @brief The ShapeSubscriber class, implements a Subscriber to receive shapes.
  */
-class ShapeSubscriber {
+class ShapeSubscriber
+{
 public:
+
     ShapeSubscriber(
             MainWindow* win,
             DomainParticipant* par,
@@ -73,9 +75,10 @@ public:
 
     class SubListener : public eprosima::fastdds::dds::DataReaderListener
     {
-public:
+    public:
 
-        SubListener(ShapeSubscriber* parent)
+        SubListener(
+                ShapeSubscriber* parent)
             : parent_(parent)
         {
         }
@@ -99,11 +102,12 @@ public:
                 DataReader* reader,
                 const eprosima::fastrtps::LivelinessChangedStatus& status) override;
 
-private:
+    private:
 
         ShapeSubscriber* parent_;
 
-    } listener_;
+    }
+    listener_;
 
     std::string getTopicName() const
     {

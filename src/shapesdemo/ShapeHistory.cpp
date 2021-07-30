@@ -17,37 +17,47 @@
 
 using namespace eprosima::fastrtps::rtps;
 
-inline bool compareGUID(GUID_t& g1, GUID_t& g2)
+inline bool compareGUID(
+        GUID_t& g1,
+        GUID_t& g2)
 {
-    for(uint8_t i =0;i<16;++i)
+    for (uint8_t i = 0; i < 16; ++i)
     {
-        if(i<12)
+        if (i < 12)
         {
-            if(g1.guidPrefix.value[i]<g2.guidPrefix.value[i])
+            if (g1.guidPrefix.value[i] < g2.guidPrefix.value[i])
+            {
                 return true;
-            else if(g1.guidPrefix.value[i]>g2.guidPrefix.value[i])
+            }
+            else if (g1.guidPrefix.value[i] > g2.guidPrefix.value[i])
+            {
                 return false;
+            }
         }
         else
         {
-            if(g1.entityId.value[i-12]<g2.entityId.value[i-12])
+            if (g1.entityId.value[i - 12] < g2.entityId.value[i - 12])
+            {
                 return true;
-            else if(g1.entityId.value[i-12]>g2.entityId.value[i-12])
+            }
+            else if (g1.entityId.value[i - 12] > g2.entityId.value[i - 12])
+            {
                 return false;
+            }
         }
     }
     return false;
 }
 
-
-bool ShapeHistory::addToHistory(Shape& sh)
+bool ShapeHistory::addToHistory(
+        Shape& sh)
 {
-    if(passContentFilter(sh))
+    if (passContentFilter(sh))
     {
         std::vector<std::list<Shape>>::iterator it;
-        if(findInstance(sh,&it))
+        if (findInstance(sh, &it))
         {
-            addShapeToList(sh,*it);
+            addShapeToList(sh, *it);
         }
         else
         {
@@ -58,55 +68,66 @@ bool ShapeHistory::addToHistory(Shape& sh)
     return false;
 }
 
-void ShapeHistory::addShapeToList(Shape&sh,std::list<Shape>& list)
+void ShapeHistory::addShapeToList(
+        Shape& sh,
+        std::list<Shape>& list)
 {
-    if(passTimeFilter(sh,list.front()))
+    if (passTimeFilter(sh, list.front()))
     {
-        if(this->m_isExclusiveOwnership)
+        if (this->m_isExclusiveOwnership)
         {
-            addShapeExclusive(sh,list);
+            addShapeExclusive(sh, list);
         }
         else
         {
-            addShape(sh,list);
+            addShape(sh, list);
         }
     }
 }
 
-void ShapeHistory::addShapeExclusive(Shape &sh, std::list<Shape> &list)
+void ShapeHistory::addShapeExclusive(
+        Shape& sh,
+        std::list<Shape>& list)
 {
-    if(sh.m_strength > list.front().m_strength || list.front().m_hasOwner == false)
+    if (sh.m_strength > list.front().m_strength || list.front().m_hasOwner == false)
     {
         list.pop_front();
-        addShape(sh,list);
+        addShape(sh, list);
     }
-    else if(sh.m_strength== list.front().m_strength && sh.m_writerGuid == list.front().m_writerGuid )
+    else if (sh.m_strength == list.front().m_strength && sh.m_writerGuid == list.front().m_writerGuid )
     {
-        addShape(sh,list);
+        addShape(sh, list);
     }
-    else if(sh.m_strength == list.front().m_strength &&
-            compareGUID(sh.m_writerGuid,list.front().m_writerGuid))
+    else if (sh.m_strength == list.front().m_strength &&
+            compareGUID(sh.m_writerGuid, list.front().m_writerGuid))
     {
-        addShape(sh,list);
+        addShape(sh, list);
     }
 }
 
-void ShapeHistory::addShape(Shape&sh,std::list<Shape>& list)
+void ShapeHistory::addShape(
+        Shape& sh,
+        std::list<Shape>& list)
 {
-    if(list.size()+1>this->m_history_depth)
+    if (list.size() + 1 > this->m_history_depth)
+    {
         list.pop_back();
+    }
     list.push_front(sh);
 }
 
-
-bool ShapeHistory::passTimeFilter(Shape& sh_in, Shape& sh_last)
+bool ShapeHistory::passTimeFilter(
+        Shape& sh_in,
+        Shape& sh_last)
 {
-    if(!m_filter.m_useTimeFilter)
+    if (!m_filter.m_useTimeFilter)
+    {
         return true;
+    }
     else
     {
-        if(TimeConv::Time_tAbsDiff2DoubleMillisec(sh_in.m_time,sh_last.m_time)
-                >=TimeConv::Time_t2MilliSecondsDouble(m_filter.m_minimumSeparation))
+        if (TimeConv::Time_tAbsDiff2DoubleMillisec(sh_in.m_time, sh_last.m_time)
+                >= TimeConv::Time_t2MilliSecondsDouble(m_filter.m_minimumSeparation))
         {
             return true;
         }
@@ -114,13 +135,14 @@ bool ShapeHistory::passTimeFilter(Shape& sh_in, Shape& sh_last)
     return false;
 }
 
-
-bool ShapeHistory::findInstance(Shape& sh,std::vector<std::list<Shape>>::iterator* out_it)
+bool ShapeHistory::findInstance(
+        Shape& sh,
+        std::vector<std::list<Shape>>::iterator* out_it)
 {
-    for(std::vector<std::list<Shape>>::iterator it = m_history.begin();
-        it!= m_history.end();++it)
+    for (std::vector<std::list<Shape>>::iterator it = m_history.begin();
+            it != m_history.end(); ++it)
     {
-        if(it->front().m_shape.color() == sh.m_shape.color())
+        if (it->front().m_shape.color() == sh.m_shape.color())
         {
             *out_it = it;
             return true;
@@ -129,20 +151,24 @@ bool ShapeHistory::findInstance(Shape& sh,std::vector<std::list<Shape>>::iterato
     return false;
 }
 
-void ShapeHistory::addNewInstance(Shape& sh)
+void ShapeHistory::addNewInstance(
+        Shape& sh)
 {
     std::list<Shape> shapelist;
     shapelist.push_back(sh);
     m_history.push_back(shapelist);
 }
 
-bool ShapeHistory::passContentFilter(Shape& sh)
+bool ShapeHistory::passContentFilter(
+        Shape& sh)
 {
-    if(!m_filter.m_useContentFilter)
+    if (!m_filter.m_useContentFilter)
+    {
         return true;
+    }
     else
     {
-        if(sh.m_shape.x() < m_filter.m_maxX &&
+        if (sh.m_shape.x() < m_filter.m_maxX &&
                 sh.m_shape.x() > m_filter.m_minX &&
                 sh.m_shape.y() < m_filter.m_maxY &&
                 sh.m_shape.y() > m_filter.m_minY)
@@ -154,12 +180,13 @@ bool ShapeHistory::passContentFilter(Shape& sh)
     return false;
 }
 
-void ShapeHistory::dispose(const SD_COLOR color)
+void ShapeHistory::dispose(
+        const SD_COLOR color)
 {
-    for(std::vector<std::list<Shape>>::iterator it = m_history.begin();
-        it!= m_history.end();++it)
+    for (std::vector<std::list<Shape>>::iterator it = m_history.begin();
+            it != m_history.end(); ++it)
     {
-        if(it->front().m_shape.color() == getColorStr(color))
+        if (it->front().m_shape.color() == getColorStr(color))
         {
             it->front().m_hasOwner = false;
             return;
@@ -168,12 +195,13 @@ void ShapeHistory::dispose(const SD_COLOR color)
     return;
 }
 
-void ShapeHistory::unregister(const SD_COLOR color)
+void ShapeHistory::unregister(
+        const SD_COLOR color)
 {
-    for(std::vector<std::list<Shape>>::iterator it = m_history.begin();
-        it!= m_history.end();++it)
+    for (std::vector<std::list<Shape>>::iterator it = m_history.begin();
+            it != m_history.end(); ++it)
     {
-        if(it->front().m_shape.color() == getColorStr(color))
+        if (it->front().m_shape.color() == getColorStr(color))
         {
             m_history.erase(it);
             return;
@@ -182,9 +210,10 @@ void ShapeHistory::unregister(const SD_COLOR color)
     return;
 }
 
-void ShapeHistory::adjustContentFilter(ShapeFilter& filter)
+void ShapeHistory::adjustContentFilter(
+        ShapeFilter& filter)
 {
-    if(m_filter.m_useContentFilter)
+    if (m_filter.m_useContentFilter)
     {
         m_filter.m_maxX = filter.m_maxX;
         m_filter.m_maxY = filter.m_maxY;
@@ -193,12 +222,13 @@ void ShapeHistory::adjustContentFilter(ShapeFilter& filter)
     }
 }
 
-void ShapeHistory::removedOwner(const GUID_t& guid)
+void ShapeHistory::removedOwner(
+        const GUID_t& guid)
 {
-    for(std::vector<std::list<Shape>>::iterator it = m_history.begin();
-        it!= m_history.end();++it)
+    for (std::vector<std::list<Shape>>::iterator it = m_history.begin();
+            it != m_history.end(); ++it)
     {
-        if(it->front().m_writerGuid == guid)
+        if (it->front().m_writerGuid == guid)
         {
             it->front().m_hasOwner = false;
             return;

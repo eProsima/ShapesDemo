@@ -37,33 +37,45 @@ using namespace eprosima::fastrtps;
 
 class Shape
 {
-    public:
+public:
 
-        Shape() : m_strength(0), m_hasOwner(true),
-        m_dirX(0), m_dirY(0), m_changeDir(true), m_max_speed_variance(0.1) {}
+    Shape()
+        : m_strength(0)
+        , m_hasOwner(true)
+        , m_dirX(0)
+        , m_dirY(0)
+        , m_changeDir(true)
+        , m_max_speed_variance(0.1)
+    {
+    }
 
-        virtual ~Shape() {}
+    virtual ~Shape()
+    {
+    }
 
-        void define(SD_COLOR color = SD_BLUE, uint32_t x = 30,
-                uint32_t y = 30, uint32_t size = 30)
-        {
-            m_shape.color(getColorStr(color));
-            m_shape.x(x);
-            m_shape.y(y);
-            m_shape.shapesize(size);
-            m_strength = 0;
-        }
+    void define(
+            SD_COLOR color = SD_BLUE,
+            uint32_t x = 30,
+            uint32_t y = 30,
+            uint32_t size = 30)
+    {
+        m_shape.color(getColorStr(color));
+        m_shape.x(x);
+        m_shape.y(y);
+        m_shape.shapesize(size);
+        m_strength = 0;
+    }
 
-        ShapeType m_shape;
-        TYPESHAPE m_type;
-        Time_t m_time;
-        rtps::GUID_t m_writerGuid;
-        uint32_t m_strength;
-        bool m_hasOwner;
-        float m_dirX;
-        float m_dirY;
-        bool m_changeDir;
-        float m_max_speed_variance;
+    ShapeType m_shape;
+    TYPESHAPE m_type;
+    Time_t m_time;
+    rtps::GUID_t m_writerGuid;
+    uint32_t m_strength;
+    bool m_hasOwner;
+    float m_dirX;
+    float m_dirY;
+    bool m_changeDir;
+    float m_max_speed_variance;
 };
 
 typedef std::pair<SD_COLOR, rtps::InstanceHandle_t> colorPair;
@@ -71,6 +83,7 @@ typedef std::pair<SD_COLOR, rtps::InstanceHandle_t> colorPair;
 class ColorInstanceHandle
 {
 public:
+
     colorPair PurpleIH;
     colorPair BlueIH;
     colorPair RedIH;
@@ -109,51 +122,54 @@ public:
         //        cout << BlueIH.second << endl;
         //        cout << RedIH.second<<endl;
     }
+
     ~ColorInstanceHandle()
     {
 
     }
+
 };
 
 
 const ColorInstanceHandle c_ShapesHandles;
 
 
-inline SD_COLOR getColorFromInstanceHandle(rtps::InstanceHandle_t& iHandle)
+inline SD_COLOR getColorFromInstanceHandle(
+        rtps::InstanceHandle_t& iHandle)
 {
-    if(iHandle == c_ShapesHandles.BlueIH.second)
+    if (iHandle == c_ShapesHandles.BlueIH.second)
     {
         return SD_BLUE;
     }
-    if(iHandle == c_ShapesHandles.PurpleIH.second)
+    if (iHandle == c_ShapesHandles.PurpleIH.second)
     {
         return SD_PURPLE;
     }
-    if(iHandle == c_ShapesHandles.RedIH.second)
+    if (iHandle == c_ShapesHandles.RedIH.second)
     {
         return SD_RED;
     }
-    if(iHandle == c_ShapesHandles.MagentaIH.second)
+    if (iHandle == c_ShapesHandles.MagentaIH.second)
     {
         return SD_MAGENTA;
     }
-    if(iHandle == c_ShapesHandles.OrangeIH.second)
+    if (iHandle == c_ShapesHandles.OrangeIH.second)
     {
         return SD_ORANGE;
     }
-    if(iHandle == c_ShapesHandles.YellowIH.second)
+    if (iHandle == c_ShapesHandles.YellowIH.second)
     {
         return SD_YELLOW;
     }
-    if(iHandle == c_ShapesHandles.GreenIH.second)
+    if (iHandle == c_ShapesHandles.GreenIH.second)
     {
         return SD_GREEN;
     }
-    if(iHandle == c_ShapesHandles.CyanIH.second)
+    if (iHandle == c_ShapesHandles.CyanIH.second)
     {
         return SD_CYAN;
     }
-    if(iHandle == c_ShapesHandles.GrayIH.second)
+    if (iHandle == c_ShapesHandles.GrayIH.second)
     {
         return SD_GRAY;
     }

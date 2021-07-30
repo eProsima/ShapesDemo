@@ -87,7 +87,7 @@ bool ShapePublisher::initPublisher()
 
 void ShapePublisher::write()
 {
-    if (mp_datawriter !=nullptr)
+    if (mp_datawriter != nullptr)
     {
         mp_datawriter->write(&m_shape.m_shape);
         m_mutex.lock();
@@ -103,12 +103,12 @@ void ShapePublisher::PubListener::on_publication_matched(
     if (info.current_count_change >= 1)
     {
         std::cout << "Publisher in topic " << writer->get_topic()->get_name() << " MATCHES Sub: "
-            << info.last_subscription_handle << std::endl;
+                  << info.last_subscription_handle << std::endl;
     }
     else
     {
         std::cout << "Publisher in topic " <<  writer->get_topic()->get_name() << " REMOVES Sub: "
-            << info.last_subscription_handle << std::endl;
+                  << info.last_subscription_handle << std::endl;
     }
 }
 

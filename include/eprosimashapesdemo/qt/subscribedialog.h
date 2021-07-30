@@ -19,7 +19,7 @@
 
 namespace Ui {
 class SubscribeDialog;
-}
+} // namespace Ui
 
 class ShapesDemo;
 class ShapeSubscriber;
@@ -30,29 +30,30 @@ class SubscribeDialog : public QDialog
     Q_OBJECT
 
 public:
+
     explicit SubscribeDialog(
             ShapesDemo* psd,
-            QWidget *parent = 0);
+            QWidget* parent = 0);
 
     ~SubscribeDialog();
 
-    private slots:
+private slots:
 
-        void on_buttonBox_accepted();
+    void on_buttonBox_accepted();
 
-        void on_comboBox_ownership_currentIndexChanged(
-                int index);
+    void on_comboBox_ownership_currentIndexChanged(
+            int index);
 
 
-        void on_checkBox_reliable_toggled(
-                bool checked);
+    void on_checkBox_reliable_toggled(
+            bool checked);
 
-        void on_checkBox_timeBasedFilter_clicked(
-                bool checked);
-
+    void on_checkBox_timeBasedFilter_clicked(
+            bool checked);
 
 private:
-    Ui::SubscribeDialog *ui;
+
+    Ui::SubscribeDialog* ui;
     ShapesDemo* mp_sd;
     MainWindow* mp_parent;
 };

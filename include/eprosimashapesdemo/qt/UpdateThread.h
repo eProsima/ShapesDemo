@@ -30,26 +30,39 @@ using namespace std;
 class MainWindow;
 
 
-class UpdateThread: public QThread
+class UpdateThread : public QThread
 {
-     Q_OBJECT
+    Q_OBJECT
+
 public:
-    explicit UpdateThread(QObject* parent = 0,uint32_t threadN=200);
+
+    explicit UpdateThread(
+            QObject* parent = 0,
+            uint32_t threadN = 200);
     ~UpdateThread();
 
-    void setMainW(MainWindow* mw);
-    void updateInterval(uint32_t interval)
+    void setMainW(
+            MainWindow* mw);
+    void updateInterval(
+            uint32_t interval)
     {
-      //  cout << "UPDATE: Thread ID: "<< this->thread()->currentThreadId()<<endl;
+        //  cout << "UPDATE: Thread ID: "<< this->thread()->currentThreadId()<<endl;
         m_interval = interval;
         m_hasIntervalChanged = true;
     }
 
 private slots:
-    void updateAll(void);
+
+    void updateAll(
+            void);
+
 protected:
-    void run(void);
+
+    void run(
+            void);
+
 private:
+
     MainWindow* m_mainW;
     QTimer* m_timer;
     uint32_t m_interval;

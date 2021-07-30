@@ -26,7 +26,7 @@
 
 PublishDialog::PublishDialog(
         ShapesDemo* psd,
-        QWidget *parent)
+        QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::PublishDialog)
     , mp_sd(psd)
@@ -88,7 +88,7 @@ void PublishDialog::on_button_OkCancel_accepted()
         SP->m_dw_qos.reliability().kind = eprosima::fastdds::dds::BEST_EFFORT_RELIABILITY_QOS;
     }
 
-        //LIVELINESS
+    //LIVELINESS
     QString lease_duration_value;
     if (this->ui->comboBox_liveliness->currentIndex() == 0)
     {
@@ -103,45 +103,50 @@ void PublishDialog::on_button_OkCancel_accepted()
         SP->m_dw_qos.liveliness().kind = eprosima::fastdds::dds::MANUAL_BY_TOPIC_LIVELINESS_QOS;
     }
 
-    if (this->ui->lineEdit_leaseDuration->text()=="INF")
+    if (this->ui->lineEdit_leaseDuration->text() == "INF")
     {
         SP->m_dw_qos.liveliness().lease_duration = c_TimeInfinite;
     }
     else
     {
         lease_duration_value = this->ui->lineEdit_leaseDuration->text();
-        if (lease_duration_value.toDouble()>0)
+        if (lease_duration_value.toDouble() > 0)
         {
-            SP->m_dw_qos.liveliness().lease_duration = rtps::TimeConv::MilliSeconds2Time_t(lease_duration_value.toDouble()).to_duration_t();
+            SP->m_dw_qos.liveliness().lease_duration = rtps::TimeConv::MilliSeconds2Time_t(
+                lease_duration_value.toDouble()).to_duration_t();
         }
     }
 
-    if (this->ui->lineEdit_announcementPeriod->text()=="INF" && SP->m_dw_qos.liveliness().lease_duration == c_TimeInfinite)
+    if (this->ui->lineEdit_announcementPeriod->text() == "INF" &&
+            SP->m_dw_qos.liveliness().lease_duration == c_TimeInfinite)
     {
         SP->m_dw_qos.liveliness().announcement_period = c_TimeInfinite;
     }
-    else if (this->ui->lineEdit_announcementPeriod->text()=="INF" && SP->m_dw_qos.liveliness().lease_duration != c_TimeInfinite)
+    else if (this->ui->lineEdit_announcementPeriod->text() == "INF" &&
+            SP->m_dw_qos.liveliness().lease_duration != c_TimeInfinite)
     {
-        SP->m_dw_qos.liveliness().announcement_period = rtps::TimeConv::MilliSeconds2Time_t(lease_duration_value.toDouble()*0.1).to_duration_t();
+        SP->m_dw_qos.liveliness().announcement_period = rtps::TimeConv::MilliSeconds2Time_t(
+            lease_duration_value.toDouble() * 0.1).to_duration_t();
     }
     else
     {
         QString value = this->ui->lineEdit_announcementPeriod->text();
-        if (value.toDouble()>0)
+        if (value.toDouble() > 0)
         {
-            SP->m_dw_qos.liveliness().announcement_period = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+            SP->m_dw_qos.liveliness().announcement_period =
+                    rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
         }
     }
 
     //DURABILITY
-    switch(this->ui->comboBox_durability->currentIndex())
+    switch (this->ui->comboBox_durability->currentIndex())
     {
         case 0: SP->m_dw_qos.durability().kind = eprosima::fastdds::dds::VOLATILE_DURABILITY_QOS; break;
         case 1: SP->m_dw_qos.durability().kind = eprosima::fastdds::dds::TRANSIENT_LOCAL_DURABILITY_QOS; break;
     }
 
     //Ownership:
-    switch(this->ui->comboBox_ownership->currentIndex())
+    switch (this->ui->comboBox_ownership->currentIndex())
     {
         case 0: SP->m_dw_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS; break;
         case 1: SP->m_dw_qos.ownership().kind = eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS; break;
@@ -152,28 +157,28 @@ void PublishDialog::on_button_OkCancel_accepted()
     }
 
     //DEADLINE
-    if (this->ui->lineEdit_Deadline->text()=="INF")
+    if (this->ui->lineEdit_Deadline->text() == "INF")
     {
         SP->m_dw_qos.deadline().period = c_TimeInfinite;
     }
     else
     {
         QString value = this->ui->lineEdit_Deadline->text();
-        if (value.toDouble()>0)
+        if (value.toDouble() > 0)
         {
             SP->m_dw_qos.deadline().period = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
         }
     }
 
     //LIFESPAN
-    if (this->ui->lineEdit_Lifespan->text()=="INF")
+    if (this->ui->lineEdit_Lifespan->text() == "INF")
     {
         SP->m_dw_qos.lifespan().duration = c_TimeInfinite;
     }
     else
     {
         QString value = this->ui->lineEdit_Lifespan->text();
-        if (value.toDouble()>0)
+        if (value.toDouble() > 0)
         {
             SP->m_dw_qos.lifespan().duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
         }
@@ -282,7 +287,7 @@ void PublishDialog::on_comboBox_ownership_currentIndexChanged(
 void PublishDialog::on_comboBox_liveliness_currentIndexChanged(
         int index)
 {
-    switch(index)
+    switch (index)
     {
         case 2: this->ui->lineEdit_announcementPeriod->setEnabled(false); break;
         default: this->ui->lineEdit_announcementPeriod->setEnabled(true); break;

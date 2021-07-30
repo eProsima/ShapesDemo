@@ -29,7 +29,7 @@
 
 SubscribeDialog::SubscribeDialog(
         ShapesDemo* psd,
-        QWidget *parent)
+        QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::SubscribeDialog)
     , mp_sd(psd)
@@ -102,27 +102,28 @@ void SubscribeDialog::on_buttonBox_accepted()
     //LIVELINESS
     if (this->ui->comboBox_liveliness->currentIndex() == 0)
     {
-       SSub->m_dr_qos.liveliness().kind = eprosima::fastdds::dds::AUTOMATIC_LIVELINESS_QOS;
+        SSub->m_dr_qos.liveliness().kind = eprosima::fastdds::dds::AUTOMATIC_LIVELINESS_QOS;
     }
     if (this->ui->comboBox_liveliness->currentIndex() == 1)
     {
-       SSub->m_dr_qos.liveliness().kind = eprosima::fastdds::dds::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS;
+        SSub->m_dr_qos.liveliness().kind = eprosima::fastdds::dds::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS;
     }
     if (this->ui->comboBox_liveliness->currentIndex() == 2)
     {
-       SSub->m_dr_qos.liveliness().kind = eprosima::fastdds::dds::MANUAL_BY_TOPIC_LIVELINESS_QOS;
+        SSub->m_dr_qos.liveliness().kind = eprosima::fastdds::dds::MANUAL_BY_TOPIC_LIVELINESS_QOS;
     }
 
-    if (this->ui->lineEdit_leaseDuration->text()=="INF")
+    if (this->ui->lineEdit_leaseDuration->text() == "INF")
     {
-       SSub->m_dr_qos.liveliness().lease_duration = c_TimeInfinite;
+        SSub->m_dr_qos.liveliness().lease_duration = c_TimeInfinite;
     }
     else
     {
         QString value = this->ui->lineEdit_leaseDuration->text();
-        if (value.toDouble()>0)
+        if (value.toDouble() > 0)
         {
-            SSub->m_dr_qos.liveliness().lease_duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+            SSub->m_dr_qos.liveliness().lease_duration =
+                    rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
         }
     }
 
@@ -139,28 +140,28 @@ void SubscribeDialog::on_buttonBox_accepted()
     }
 
     //DEADLINE
-    if (this->ui->lineEdit_Deadline->text()=="INF")
+    if (this->ui->lineEdit_Deadline->text() == "INF")
     {
         SSub->m_dr_qos.deadline().period = c_TimeInfinite;
     }
     else
     {
         QString value = this->ui->lineEdit_Deadline->text();
-        if (value.toDouble()>0)
+        if (value.toDouble() > 0)
         {
             SSub->m_dr_qos.deadline().period = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
         }
     }
 
     //LIFESPAN
-    if (this->ui->lineEdit_Lifespan->text()=="INF")
+    if (this->ui->lineEdit_Lifespan->text() == "INF")
     {
         SSub->m_dr_qos.lifespan().duration = c_TimeInfinite;
     }
     else
     {
         QString value = this->ui->lineEdit_Lifespan->text();
-        if (value.toDouble()>0)
+        if (value.toDouble() > 0)
         {
             SSub->m_dr_qos.lifespan().duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
         }
@@ -192,7 +193,7 @@ void SubscribeDialog::on_buttonBox_accepted()
     if (this->ui->checkBox_timeBasedFilter->isChecked())
     {
         SSub->m_shapeHistory.m_filter.m_useTimeFilter = true;
-        if (this->ui->lineEdit_TimeBasedFilter->text()=="INF")
+        if (this->ui->lineEdit_TimeBasedFilter->text() == "INF")
         {
             //pWarning("Setting TimeBasedFilter as Infinite should be avoided, putting 0 instead"<<endl);
             SSub->m_dr_qos.time_based_filter().minimum_separation.seconds = 0;
@@ -201,10 +202,10 @@ void SubscribeDialog::on_buttonBox_accepted()
         {
             QString value = this->ui->lineEdit_TimeBasedFilter->text();
             //cout << "TIME VALUE: "<< value.toStdString() << endl;
-            if (value.toInt()>0)
+            if (value.toInt() > 0)
             {
                 SSub->m_dr_qos.time_based_filter().minimum_separation =
-                    rtps::TimeConv::MilliSeconds2Time_t(value.toInt()).to_duration_t();
+                        rtps::TimeConv::MilliSeconds2Time_t(value.toInt()).to_duration_t();
             }
 
         }
@@ -243,15 +244,12 @@ void SubscribeDialog::on_comboBox_ownership_currentIndexChanged(
     }
 }
 
-
-
-
 void SubscribeDialog::on_checkBox_reliable_toggled(
         bool checked)
 {
     if (!checked)
     {
-        if (this->ui->comboBox_ownership->currentIndex()==1)
+        if (this->ui->comboBox_ownership->currentIndex() == 1)
         {
             QMessageBox msgBox;
             msgBox.setText("EXCLUSIVE OWNERSHIP only available with Reliable subscribers");

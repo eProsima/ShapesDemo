@@ -20,7 +20,7 @@
 
 namespace Ui {
 class PublishDialog;
-}
+} // namespace Ui
 
 class ShapesDemo;
 class ShapePublisher;
@@ -31,9 +31,10 @@ class PublishDialog : public QDialog
     Q_OBJECT
 
 public:
+
     explicit PublishDialog(
             ShapesDemo* psd,
-            QWidget *parent = 0);
+            QWidget* parent = 0);
     ~PublishDialog();
 
 private slots:
@@ -46,7 +47,8 @@ private slots:
             int index);
 
 private:
-    Ui::PublishDialog *ui;
+
+    Ui::PublishDialog* ui;
     ShapesDemo* mp_sd;
 
     void setShapeAttributes(

@@ -19,12 +19,15 @@
 
 #include <fastrtps/config.h> // FASTDDS_STATISTICS availability
 
-OptionsDialog::OptionsDialog(MainWindow *mw, ShapesDemo* psd, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::OptionsDialog),
-    mp_sd(psd),
-    mp_mw(mw),
-    mb_started(true)
+OptionsDialog::OptionsDialog(
+        MainWindow* mw,
+        ShapesDemo* psd,
+        QWidget* parent)
+    : QDialog(parent)
+    , ui(new Ui::OptionsDialog)
+    , mp_sd(psd)
+    , mp_mw(mw)
+    , mb_started(true)
 {
     ui->setupUi(this);
     m_options = new ShapesDemoOptions(this->mp_sd->getOptions());
@@ -64,7 +67,7 @@ OptionsDialog::~OptionsDialog()
 
 void OptionsDialog::setEnableState()
 {
-    if(this->mp_sd->isInitialized())
+    if (this->mp_sd->isInitialized())
     {
         mb_started = false;
     }
@@ -111,43 +114,50 @@ void OptionsDialog::on_pushButton_stop_clicked()
     setEnableState();
 }
 
-void OptionsDialog::on_spin_updateInterval_valueChanged(int arg1)
+void OptionsDialog::on_spin_updateInterval_valueChanged(
+        int arg1)
 {
     m_options->m_updateIntervalMs = arg1;
     mp_sd->setOptions(*m_options);
 }
 
-void OptionsDialog::on_horizontalSlider_speed_valueChanged(int arg1)
+void OptionsDialog::on_horizontalSlider_speed_valueChanged(
+        int arg1)
 {
     m_options->m_movementSpeed = arg1;
     mp_sd->setOptions(*m_options);
 }
 
-void OptionsDialog::on_spin_domainId_valueChanged(int arg1)
+void OptionsDialog::on_spin_domainId_valueChanged(
+        int arg1)
 {
     m_options->m_domainId = arg1;
     mp_sd->setOptions(*m_options);
 }
 
-void OptionsDialog::on_spin_server_port_valueChanged(int arg1)
+void OptionsDialog::on_spin_server_port_valueChanged(
+        int arg1)
 {
     m_options->m_serverPort = arg1;
     mp_sd->setOptions(*m_options);
 }
 
-void OptionsDialog::on_spin_listen_port_valueChanged(int arg1)
+void OptionsDialog::on_spin_listen_port_valueChanged(
+        int arg1)
 {
     m_options->m_listenPort = arg1;
     mp_sd->setOptions(*m_options);
 }
 
-void OptionsDialog::on_lineEdit_server_ip_textChanged(const QString& arg1)
+void OptionsDialog::on_lineEdit_server_ip_textChanged(
+        const QString& arg1)
 {
     m_options->m_serverIp = arg1.toStdString();
     mp_sd->setOptions(*m_options);
 }
 
-void OptionsDialog::on_statisticsCheckBox_stateChanged(int arg1)
+void OptionsDialog::on_statisticsCheckBox_stateChanged(
+        int arg1)
 {
     m_options->m_statistics = arg1;
     mp_sd->setOptions(*m_options);
@@ -178,31 +188,36 @@ void OptionsDialog::tcp_enable_buttons()
     }
 }
 
-void OptionsDialog::on_IntraprocesscheckBox_stateChanged(int arg1)
+void OptionsDialog::on_IntraprocesscheckBox_stateChanged(
+        int arg1)
 {
     m_options->m_intraprocess_transport = arg1;
     mp_sd->setOptions(*m_options);
 }
 
-void OptionsDialog::on_DataSharingcheckBox_stateChanged(int arg1)
+void OptionsDialog::on_DataSharingcheckBox_stateChanged(
+        int arg1)
 {
     m_options->m_datasharing_transport = arg1;
     mp_sd->setOptions(*m_options);
 }
 
-void OptionsDialog::on_SHMcheckBox_stateChanged(int arg1)
+void OptionsDialog::on_SHMcheckBox_stateChanged(
+        int arg1)
 {
     m_options->m_shm_transport = arg1;
     mp_sd->setOptions(*m_options);
 }
 
-void OptionsDialog::on_UDPcheckBox_stateChanged(int arg1)
+void OptionsDialog::on_UDPcheckBox_stateChanged(
+        int arg1)
 {
     m_options->m_udp_transport = arg1;
     mp_sd->setOptions(*m_options);
 }
 
-void OptionsDialog::on_TCPcheckBox_stateChanged(int arg1)
+void OptionsDialog::on_TCPcheckBox_stateChanged(
+        int arg1)
 {
     m_options->m_tcp_transport = arg1;
     mp_sd->setOptions(*m_options);
@@ -210,7 +225,8 @@ void OptionsDialog::on_TCPcheckBox_stateChanged(int arg1)
     tcp_enable_buttons();
 }
 
-void OptionsDialog::on_TCPcomboBox_currentTextChanged(const QString &arg1)
+void OptionsDialog::on_TCPcomboBox_currentTextChanged(
+        const QString& arg1)
 {
     m_options->m_tcp_type = arg1;
     mp_sd->setOptions(*m_options);

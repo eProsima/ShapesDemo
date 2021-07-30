@@ -34,10 +34,14 @@ using namespace eprosima::fastdds::dds;
 using namespace eprosima::fastdds::rtps;
 using namespace eprosima::fastrtps::rtps;
 
-ShapesDemo::ShapesDemo(MainWindow *mw)
+ShapesDemo::ShapesDemo(
+        MainWindow* mw)
     : mp_participant(nullptr)
     , m_isInitialized(false)
-    , minX(0),minY(0),maxX(0),maxY(0)
+    , minX(0)
+    , minY(0)
+    , maxX(0)
+    , maxY(0)
     , m_mainWindow(mw)
     , m_mutex(QMutex::Recursive)
     , m_type(new ShapeTypePubSubType())
@@ -57,21 +61,25 @@ ShapesDemo::~ShapesDemo()
 
 DomainParticipant* ShapesDemo::getParticipant()
 {
-    if(m_isInitialized && mp_participant !=nullptr)
+    if (m_isInitialized && mp_participant != nullptr)
+    {
         return mp_participant;
+    }
     else
     {
-        if(init())
+        if (init())
+        {
             return mp_participant;
+        }
     }
     return nullptr;
 }
 
 bool ShapesDemo::init()
 {
-    if(!m_isInitialized)
+    if (!m_isInitialized)
     {
-        std::cout <<"Creating new Participant in domain: " << m_options.m_domainId << std::endl;
+        std::cout << "Creating new Participant in domain: " << m_options.m_domainId << std::endl;
 
         DomainParticipantQos qos;
 
@@ -81,7 +89,7 @@ bool ShapesDemo::init()
         // Intraprocess
         LibrarySettingsAttributes library_settings;
         library_settings.intraprocess_delivery = m_options.m_intraprocess_transport ?
-            IntraprocessDeliveryType::INTRAPROCESS_FULL : IntraprocessDeliveryType::INTRAPROCESS_OFF;
+                IntraprocessDeliveryType::INTRAPROCESS_FULL : IntraprocessDeliveryType::INTRAPROCESS_OFF;
         xmlparser::XMLProfileManager::library_settings(library_settings);
 
         // Data Sharing
@@ -92,7 +100,7 @@ bool ShapesDemo::init()
         {
             // Configure SHM Transport
             std::shared_ptr<SharedMemTransportDescriptor> shm_transport =
-                std::make_shared<SharedMemTransportDescriptor>();
+                    std::make_shared<SharedMemTransportDescriptor>();
             qos.transport().user_transports.push_back(shm_transport);
         }
 
@@ -136,11 +144,11 @@ bool ShapesDemo::init()
         }
 
         if (!m_options.m_shm_transport &&
-            !m_options.m_udp_transport &&
-            !m_options.m_tcp_transport)
+                !m_options.m_udp_transport &&
+                !m_options.m_tcp_transport)
         {
             m_mainWindow->addMessageToOutput(
-                QString("No Transport configured, using Fast DDS transports by default"),true);
+                QString("No Transport configured, using Fast DDS transports by default"), true);
             qos.transport().use_builtin_transports = true;
         }
 
@@ -167,7 +175,7 @@ bool ShapesDemo::init()
                 "DISCOVERY_TOPIC;" \
                 "PHYSICAL_DATA_TOPIC");
 
-// In case the Statistics are not compiled, show an error
+            // In case the Statistics are not compiled, show an error
 #ifndef FASTDDS_STATISTICS
             std::cerr << "Statistics Module is not available" << std::endl;
 #endif // #ifndef FASTDDS_STATISTICS
@@ -195,21 +203,21 @@ bool ShapesDemo::init()
 void ShapesDemo::stop()
 {
     QMutexLocker lock(&m_mutex);
-    if(m_isInitialized)
+    if (m_isInitialized)
     {
         this->m_mainWindow->quitThreads();
 
         // Remove all publishers
-        for(std::vector<ShapePublisher*>::iterator it = m_publishers.begin();
-            it!=m_publishers.end();++it)
+        for (std::vector<ShapePublisher*>::iterator it = m_publishers.begin();
+                it != m_publishers.end(); ++it)
         {
             delete(*it);
         }
         m_publishers.clear();
 
         // Remove all subscribers
-        for(std::vector<ShapeSubscriber*>::iterator it = m_subscribers.begin();
-            it!=m_subscribers.end();++it)
+        for (std::vector<ShapeSubscriber*>::iterator it = m_subscribers.begin();
+                it != m_subscribers.end(); ++it)
         {
             delete(*it);
         }
@@ -224,7 +232,7 @@ void ShapesDemo::stop()
 
         // Remove Participant
         if (eprosima::fastrtps::types::ReturnCode_t::RETCODE_OK !=
-            DomainParticipantFactory::get_instance()->delete_participant(mp_participant))
+                DomainParticipantFactory::get_instance()->delete_participant(mp_participant))
         {
             std::cerr << "Error deleting Participant" << std::endl;
             return;
@@ -234,7 +242,8 @@ void ShapesDemo::stop()
     }
 }
 
-void ShapesDemo::addPublisher(ShapePublisher* SP)
+void ShapesDemo::addPublisher(
+        ShapePublisher* SP)
 {
     if (m_isInitialized)
     {
@@ -247,7 +256,8 @@ void ShapesDemo::addPublisher(ShapePublisher* SP)
     }
 }
 
-void ShapesDemo::addSubscriber(ShapeSubscriber* SSub)
+void ShapesDemo::addSubscriber(
+        ShapeSubscriber* SSub)
 {
     if (m_isInitialized)
     {
@@ -260,20 +270,22 @@ void ShapesDemo::addSubscriber(ShapeSubscriber* SSub)
     }
 }
 
-uint32_t ShapesDemo::getRandomX(uint32_t size)
+uint32_t ShapesDemo::getRandomX(
+        uint32_t size)
 {
-    return minX+size+(uint32_t)(((maxX-size)-(minX+size))*((double) rand() / (RAND_MAX)));
+    return minX + size + (uint32_t)(((maxX - size) - (minX + size)) * ((double) rand() / (RAND_MAX)));
 }
 
-uint32_t ShapesDemo::getRandomY(uint32_t size)
+uint32_t ShapesDemo::getRandomY(
+        uint32_t size)
 {
-    return minY+size+(uint32_t)(((maxY-size)-(minY+size))*((double) rand() / (RAND_MAX)));
+    return minY + size + (uint32_t)(((maxY - size) - (minY + size)) * ((double) rand() / (RAND_MAX)));
 }
 
 void ShapesDemo::moveAllShapes()
 {
-    for(std::vector<ShapePublisher*>::iterator it = m_publishers.begin();
-        it!=m_publishers.end();++it)
+    for (std::vector<ShapePublisher*>::iterator it = m_publishers.begin();
+            it != m_publishers.end(); ++it)
     {
         (*it)->m_mutex.lock();
         moveShape(&(*it)->m_shape);
@@ -281,39 +293,43 @@ void ShapesDemo::moveAllShapes()
     }
 }
 
-void ShapesDemo::moveShape(Shape* sh)
+void ShapesDemo::moveShape(
+        Shape* sh)
 {
     //TODO ESTAS DOS LINEAS NO SON NECESARIAS.
-    if(sh->m_changeDir)
-        getNewDirection(sh);
-    //Apply movement
-    int nx = sh->m_shape.x() + m_options.m_movementSpeed*sh->m_dirX;
-    int ny = sh->m_shape.y() + m_options.m_movementSpeed*sh->m_dirY;
-    //Check if the movement is correct
-    bool cond1 = nx+(int)sh->m_shape.shapesize() /2 > (int)maxX;
-    bool cond2 = nx-(int)sh->m_shape.shapesize() /2 < (int)minX;
-    bool cond3 = ny+(int)sh->m_shape.shapesize() /2 > (int)maxY;
-    bool cond4 = ny-(int)sh->m_shape.shapesize() /2 < (int)minY;
-    while(cond1 || cond2 || cond3 || cond4)
+    if (sh->m_changeDir)
     {
         getNewDirection(sh);
-        nx = sh->m_shape.x() + m_options.m_movementSpeed*sh->m_dirX;
-        ny = sh->m_shape.y() + m_options.m_movementSpeed*sh->m_dirY;
-        cond1 = nx+(int)sh->m_shape.shapesize() /2 > (int)maxX;
-        cond2 = nx-(int)sh->m_shape.shapesize() /2 < (int)minX;
-        cond3 = ny+(int)sh->m_shape.shapesize() /2 > (int)maxY;
-        cond4 = ny-(int)sh->m_shape.shapesize() /2 < (int)minY;
+    }
+    //Apply movement
+    int nx = sh->m_shape.x() + m_options.m_movementSpeed * sh->m_dirX;
+    int ny = sh->m_shape.y() + m_options.m_movementSpeed * sh->m_dirY;
+    //Check if the movement is correct
+    bool cond1 = nx + (int)sh->m_shape.shapesize() / 2 > (int)maxX;
+    bool cond2 = nx - (int)sh->m_shape.shapesize() / 2 < (int)minX;
+    bool cond3 = ny + (int)sh->m_shape.shapesize() / 2 > (int)maxY;
+    bool cond4 = ny - (int)sh->m_shape.shapesize() / 2 < (int)minY;
+    while (cond1 || cond2 || cond3 || cond4)
+    {
+        getNewDirection(sh);
+        nx = sh->m_shape.x() + m_options.m_movementSpeed * sh->m_dirX;
+        ny = sh->m_shape.y() + m_options.m_movementSpeed * sh->m_dirY;
+        cond1 = nx + (int)sh->m_shape.shapesize() / 2 > (int)maxX;
+        cond2 = nx - (int)sh->m_shape.shapesize() / 2 < (int)minX;
+        cond3 = ny + (int)sh->m_shape.shapesize() / 2 > (int)maxY;
+        cond4 = ny - (int)sh->m_shape.shapesize() / 2 < (int)minY;
     }
     sh->m_shape.x(nx);
     sh->m_shape.y(ny);
 }
 
-void ShapesDemo::getNewDirection(Shape* sh)
+void ShapesDemo::getNewDirection(
+        Shape* sh)
 {
-    sh->m_dirX = ((double) rand() / (RAND_MAX))*2-1;
-    sh->m_dirY = ((double) rand() / (RAND_MAX))*2-1;
+    sh->m_dirX = ((double) rand() / (RAND_MAX)) * 2 - 1;
+    sh->m_dirY = ((double) rand() / (RAND_MAX)) * 2 - 1;
     //Normalize
-    float module = sqrt(pow(sh->m_dirX,2)+pow(sh->m_dirY,2));
+    float module = sqrt(pow(sh->m_dirX, 2) + pow(sh->m_dirY, 2));
     sh->m_dirX /= module;
     sh->m_dirY /= module;
     sh->m_changeDir = false;
@@ -321,14 +337,15 @@ void ShapesDemo::getNewDirection(Shape* sh)
 
 void ShapesDemo::writeAll()
 {
-    for(std::vector<ShapePublisher*>::iterator it = m_publishers.begin();
-        it!=m_publishers.end();++it)
+    for (std::vector<ShapePublisher*>::iterator it = m_publishers.begin();
+            it != m_publishers.end(); ++it)
     {
         (*it)->write();
     }
 }
 
-void ShapesDemo::setOptions(ShapesDemoOptions& opt)
+void ShapesDemo::setOptions(
+        ShapesDemoOptions& opt)
 {
     m_options = opt;
     m_mainWindow->updateInterval(m_options.m_updateIntervalMs);
@@ -340,7 +357,8 @@ ShapesDemoOptions ShapesDemo::getOptions()
     return m_options;
 }
 
-void ShapesDemo::removePublisher(ShapePublisher* SP)
+void ShapesDemo::removePublisher(
+        ShapePublisher* SP)
 {
     if (!SP || !SP->isInitialized)
     {
@@ -348,10 +366,10 @@ void ShapesDemo::removePublisher(ShapePublisher* SP)
     }
 
     //cout << "REMOVING PUBLISHER"<<endl;
-    for(std::vector<ShapePublisher*>::iterator it = this->m_publishers.begin();
-        it!=this->m_publishers.end();++it)
+    for (std::vector<ShapePublisher*>::iterator it = this->m_publishers.begin();
+            it != this->m_publishers.end(); ++it)
     {
-        if(SP->mp_datawriter->guid() == (*it)->mp_datawriter->guid())
+        if (SP->mp_datawriter->guid() == (*it)->mp_datawriter->guid())
         {
             m_publishers.erase(it);
             delete SP;
@@ -360,7 +378,8 @@ void ShapesDemo::removePublisher(ShapePublisher* SP)
     }
 }
 
-void ShapesDemo::removeSubscriber(ShapeSubscriber* SS)
+void ShapesDemo::removeSubscriber(
+        ShapeSubscriber* SS)
 {
     if (!SS || !SS->mp_datareader) // There is no SS initialized variable
     {
@@ -368,10 +387,10 @@ void ShapesDemo::removeSubscriber(ShapeSubscriber* SS)
     }
 
     //cout << "REMOVING SUBSCRIBER"<<endl;
-    for(std::vector<ShapeSubscriber*>::iterator it = this->m_subscribers.begin();
-        it!=this->m_subscribers.end();++it)
+    for (std::vector<ShapeSubscriber*>::iterator it = this->m_subscribers.begin();
+            it != this->m_subscribers.end(); ++it)
     {
-        if(SS->mp_datareader->guid() == (*it)->mp_datareader->guid())
+        if (SS->mp_datareader->guid() == (*it)->mp_datareader->guid())
         {
             m_subscribers.erase(it);
             delete SS;
@@ -380,7 +399,8 @@ void ShapesDemo::removeSubscriber(ShapeSubscriber* SS)
     }
 }
 
-Topic* ShapesDemo::getTopic(std::string topic_name)
+Topic* ShapesDemo::getTopic(
+        std::string topic_name)
 {
     QMutexLocker lock(&m_mutex);
 

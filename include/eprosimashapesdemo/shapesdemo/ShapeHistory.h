@@ -26,12 +26,22 @@
 class ShapeFilter
 {
 public:
-    ShapeFilter(): m_maxX(MAX_DRAW_AREA_X),m_minX(0),m_maxY(MAX_DRAW_AREA_Y),m_minY(0),
-        m_useContentFilter(false),m_useTimeFilter(false)
+
+    ShapeFilter()
+        : m_maxX(MAX_DRAW_AREA_X)
+        , m_minX(0)
+        , m_maxY(MAX_DRAW_AREA_Y)
+        , m_minY(0)
+        , m_useContentFilter(false)
+        , m_useTimeFilter(false)
     {
 
     }
-   ~ShapeFilter(){}
+
+    ~ShapeFilter()
+    {
+    }
+
     int32_t m_maxX;
     int32_t m_minX;
     int32_t m_maxY;
@@ -47,24 +57,53 @@ public:
 class ShapeHistory
 {
 public:
-    ShapeHistory():m_history_depth(0),m_isExclusiveOwnership(false){}
-    virtual ~ShapeHistory(){}
+
+    ShapeHistory()
+        : m_history_depth(0)
+        , m_isExclusiveOwnership(false)
+    {
+    }
+
+    virtual ~ShapeHistory()
+    {
+    }
+
     std::vector<std::list<Shape>> m_history;
-    bool addToHistory(Shape& sh);
+    bool addToHistory(
+            Shape& sh);
+
 private:
 
-    bool findInstance(Shape& sh,std::vector<std::list<Shape>>::iterator* it);
-    void addNewInstance(Shape& sh);
-    bool passContentFilter(Shape& sh);
-    bool passTimeFilter(Shape& sh_in, Shape& sh_last);
-    void addShapeToList(Shape&sh,std::list<Shape>& list);
-    void addShape(Shape& sh,std::list<Shape>& list);
-    void addShapeExclusive(Shape& sh,std::list<Shape>& list);
+    bool findInstance(
+            Shape& sh,
+            std::vector<std::list<Shape>>::iterator* it);
+    void addNewInstance(
+            Shape& sh);
+    bool passContentFilter(
+            Shape& sh);
+    bool passTimeFilter(
+            Shape& sh_in,
+            Shape& sh_last);
+    void addShapeToList(
+            Shape& sh,
+            std::list<Shape>& list);
+    void addShape(
+            Shape& sh,
+            std::list<Shape>& list);
+    void addShapeExclusive(
+            Shape& sh,
+            std::list<Shape>& list);
+
 public:
-    void dispose(const SD_COLOR color);
-    void unregister(const SD_COLOR color);
-    void adjustContentFilter(ShapeFilter& filter);
-    void removedOwner(const rtps::GUID_t& guid);
+
+    void dispose(
+            const SD_COLOR color);
+    void unregister(
+            const SD_COLOR color);
+    void adjustContentFilter(
+            ShapeFilter& filter);
+    void removedOwner(
+            const rtps::GUID_t& guid);
 
     uint32_t m_history_depth;
     ShapeFilter m_filter;

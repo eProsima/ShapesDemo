@@ -37,8 +37,10 @@ using namespace eprosima::fastdds::dds;
 /**
  * @brief The ShapePublisher class, implements a Publisher to transmit shapes.
  */
-class ShapePublisher: public DataWriterListener {
+class ShapePublisher : public DataWriterListener
+{
 public:
+
     ShapePublisher(
             MainWindow* win,
             DomainParticipant* par,
@@ -66,9 +68,10 @@ public:
 
     class PubListener : public eprosima::fastdds::dds::DataWriterListener
     {
-public:
+    public:
 
-        PubListener(ShapePublisher* parent)
+        PubListener(
+                ShapePublisher* parent)
             : parent_(parent)
         {
         }
@@ -93,11 +96,12 @@ public:
                 DataWriter* writer,
                 const LivelinessLostStatus& status) override;
 
-private:
+    private:
 
         ShapePublisher* parent_;
 
-    } listener_;
+    }
+    listener_;
 
     std::string getTopicName() const
     {
