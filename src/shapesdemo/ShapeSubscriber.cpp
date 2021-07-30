@@ -17,22 +17,21 @@
  *
  */
 
-#include <eprosimashapesdemo/qt/ContentFilterSelector.h>
-#include <eprosimashapesdemo/qt/mainwindow.h>
 #include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
-
+#include <eprosimashapesdemo/qt/ContentFilterSelector.h>
 #include <fastrtps/utils/TimeConversion.h>
-#include <fastdds/dds/subscriber/SampleInfo.hpp>
+
+#include <fastrtps/subscriber/Subscriber.h>
+#include <fastrtps/subscriber/SampleInfo.h>
+#include <fastrtps/Domain.h>
+
+#include <eprosimashapesdemo/qt/mainwindow.h>
 
 ShapeSubscriber::ShapeSubscriber(
         MainWindow* win,
-        DomainParticipant* par,
-        Topic* topic)
-    : mp_participant(par)
-    , mp_datareader(nullptr)
-    , mp_subscriber(nullptr)
-    , mp_topic(topic)
-    , listener_(this)
+        Participant* par)
+    : mp_sub(nullptr)
+    , mp_participant(par)
     , hasReceived(false)
     , m_mutex(QMutex::Recursive)
     , mp_contentFilter(nullptr)
@@ -43,24 +42,8 @@ ShapeSubscriber::ShapeSubscriber(
 
 ShapeSubscriber::~ShapeSubscriber()
 {
-    if (mp_participant && mp_subscriber && mp_datareader)
-    {
-        if (ReturnCode_t::RETCODE_OK != mp_subscriber->delete_datareader(mp_datareader))
-        {
-            std::cerr << "Error deleting datareader: " << mp_datareader->guid() << std::endl;
-            return;
-        }
-    }
-
-    if (mp_participant && mp_subscriber)
-    {
-        if (ReturnCode_t::RETCODE_OK != mp_participant->delete_subscriber(mp_subscriber))
-        {
-            std::cerr << "Error deleting subscriber: " << std::endl;
-            return;
-        }
-    }
-
+    // TODO Auto-generated destructor stub
+    Domain::removeSubscriber(mp_sub);
     if (mp_contentFilter!=nullptr)
     {
         delete(mp_contentFilter);
@@ -69,61 +52,59 @@ ShapeSubscriber::~ShapeSubscriber()
 
 bool ShapeSubscriber::initSubscriber()
 {
-    mp_subscriber = mp_participant->create_subscriber(m_sub_qos);
-
-    mp_datareader = mp_subscriber->create_datareader(mp_topic, m_dr_qos, &listener_);
-
-    return nullptr != mp_datareader;
+    mp_sub = Domain::createSubscriber(mp_participant,m_attributes,(SubscriberListener*)this);
+    if (mp_sub !=nullptr)
+    {
+        return true;
+    }
+    return false;
 }
 
-void ShapeSubscriber::SubListener::on_data_available(
-        DataReader* reader)
+void ShapeSubscriber::onNewDataMessage(
+        Subscriber* sub)
 {
     Shape shape;
-    shape.m_type = parent_->m_shapeType;
-    eprosima::fastdds::dds::SampleInfo info;
-
-    while (reader->take_next_sample(&shape.m_shape, &info) == ReturnCode_t::RETCODE_OK)
+    shape.m_type = this->m_shapeType;
+    SampleInfo_t info;
+    while (sub->takeNextData((void*)&shape.m_shape,&info))
     {
-        shape.m_time = info.source_timestamp.to_duration_t();
+        shape.m_time = info.sourceTimestamp.to_duration_t();
         shape.m_writerGuid = info.sample_identity.writer_guid();
-
-        // TODO (@paris)
-        // shape.m_strength = info.ownershipStrength;
-
-        QMutexLocker locck(&parent_->m_mutex);
-        if (info.instance_state == ALIVE_INSTANCE_STATE)
+        shape.m_strength = info.ownershipStrength;
+        QMutexLocker locck(&this->m_mutex);
+        if (info.sampleKind == rtps::ALIVE)
         {
-            parent_->hasReceived = true;
-            parent_->m_shapeHistory.addToHistory(shape);
+            hasReceived = true;
+            m_shapeHistory.addToHistory(shape);
         }
         else
         {
-            SD_COLOR color = getColorFromInstanceHandle(info.instance_handle);
-            if (info.instance_state == NOT_ALIVE_DISPOSED_INSTANCE_STATE)
+            SD_COLOR color = getColorFromInstanceHandle(info.iHandle);
+            if (info.sampleKind == rtps::NOT_ALIVE_DISPOSED)
             {
-                parent_->m_shapeHistory.dispose(color);
+                m_shapeHistory.dispose(color);
             }
             else
             {
-                parent_->m_shapeHistory.unregister(color);
+                m_shapeHistory.unregister(color);
             }
         }
     }
 }
 
-void ShapeSubscriber::SubListener::on_subscription_matched(
-        DataReader* reader,
-        const eprosima::fastdds::dds::SubscriptionMatchedStatus& info)
+
+
+void ShapeSubscriber::onSubscriptionMatched(
+        Subscriber* /*sub*/,
+        rtps::MatchingInfo& info)
 {
-    static_cast<void>(reader);
-    if (info.current_count_change > 1)
+    if (info.status == rtps::MATCHED_MATCHING)
     {
         bool found = false;
-        for (std::vector<rtps::GUID_t>::iterator it = parent_->m_remoteWriters.begin();
-            it!=parent_->m_remoteWriters.end();++it)
+        for (std::vector<rtps::GUID_t>::iterator it = m_remoteWriters.begin();
+            it!=m_remoteWriters.end();++it)
         {
-            if (*it == iHandle2GUID(info.last_publication_handle))
+            if (*it==info.remoteEndpointGuid)
             {
                 found = true;
                 break;
@@ -131,14 +112,14 @@ void ShapeSubscriber::SubListener::on_subscription_matched(
         }
         if (!found)
         {
-            parent_->m_remoteWriters.push_back(iHandle2GUID(info.last_publication_handle));
+            m_remoteWriters.push_back(info.remoteEndpointGuid);
         }
     }
-    else
+    else if (info.status == rtps::REMOVED_MATCHING)
     {
-        parent_->m_mutex.lock();
-        parent_->m_shapeHistory.removedOwner(iHandle2GUID(info.last_publication_handle));
-        parent_->m_mutex.unlock();
+        m_mutex.lock();
+        m_shapeHistory.removedOwner(info.remoteEndpointGuid);
+        m_mutex.unlock();
     }
 }
 
@@ -150,27 +131,24 @@ void ShapeSubscriber::adjustContentFilter(
     m_mutex.unlock();
 }
 
-void ShapeSubscriber::SubListener::on_requested_deadline_missed(
-        DataReader* reader,
-        const eprosima::fastrtps::RequestedDeadlineMissedStatus& status)
+void ShapeSubscriber::on_requested_deadline_missed(
+        Subscriber*,
+        const RequestedDeadlineMissedStatus&)
 {
-    static_cast<void>(reader);
-    static_cast<void>(status);
-    parent_->m_mainWindow->addMessageToOutput(QString("Requested deadline missed"));
+    m_mainWindow->addMessageToOutput(QString("Requested deadline missed"));
 }
 
-void ShapeSubscriber::SubListener::on_liveliness_changed(
-        DataReader* reader,
-        const eprosima::fastrtps::LivelinessChangedStatus& status)
+void ShapeSubscriber::on_liveliness_changed(
+        Subscriber*,
+        const LivelinessChangedStatus& status)
 {
-    static_cast<void>(reader);
     if (status.alive_count_change == 1)
     {
-        parent_->m_mainWindow->addMessageToOutput(QString("Liveliness recovered"));
+        m_mainWindow->addMessageToOutput(QString("Liveliness recovered"));
     }
     else if (status.not_alive_count_change == 1)
     {
-        parent_->m_mainWindow->addMessageToOutput(QString("Liveliness lost"));
+        m_mainWindow->addMessageToOutput(QString("Liveliness lost"));
     }
 }
 

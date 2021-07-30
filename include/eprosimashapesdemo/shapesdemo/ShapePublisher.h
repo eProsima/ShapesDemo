@@ -20,38 +20,32 @@
 #ifndef SHAPEPUBLISHER_H_
 #define SHAPEPUBLISHER_H_
 
+#include "ShapeInfo.h"
+
 #include <QMutex>
+#include <fastrtps/attributes/PublisherAttributes.h>
+#include <fastrtps/publisher/PublisherListener.h>
 
-#include "eprosimashapesdemo/shapesdemo/ShapeInfo.h"
-
-#include <fastdds/dds/publisher/DataWriter.hpp>
-#include <fastdds/dds/publisher/DataWriterListener.hpp>
-#include <fastdds/dds/publisher/Publisher.hpp>
-#include <fastdds/dds/publisher/qos/DataWriterQos.hpp>
-#include <fastdds/dds/topic/Topic.hpp>
+#include <fastrtps/fastrtps_fwd.h>
 
 class MainWindow;
 
-using namespace eprosima::fastdds::dds;
+using namespace eprosima::fastrtps;
 
 /**
  * @brief The ShapePublisher class, implements a Publisher to transmit shapes.
  */
-class ShapePublisher: public DataWriterListener {
+class ShapePublisher: public PublisherListener {
 public:
     ShapePublisher(
-            MainWindow* win,
-            DomainParticipant* par,
-            Topic* topic);
+            MainWindow*,
+            Participant* par);
 
     virtual ~ShapePublisher();
 
-    DataWriterQos m_dw_qos;
-    PublisherQos m_pub_qos;
-    DomainParticipant* mp_participant;
-    DataWriter* mp_datawriter;
-    eprosima::fastdds::dds::Publisher* mp_publisher;
-    Topic* mp_topic;
+    PublisherAttributes m_attributes;
+    Publisher* mp_pub;
+    Participant* mp_participant;
 
     /**
      * @brief Initialize the publisher.
@@ -64,45 +58,21 @@ public:
      */
     void write();
 
-    class PubListener : public eprosima::fastdds::dds::DataWriterListener
-    {
-public:
+    /**
+     * @brief onPublicationMatched
+     * @param info
+     */
+    void onPublicationMatched(
+            Publisher* pub,
+            rtps::MatchingInfo& info);
 
-        PubListener(ShapePublisher* parent)
-            : parent_(parent)
-        {
-        }
+    void on_offered_deadline_missed(
+            Publisher*,
+            const OfferedDeadlineMissedStatus&) override;
 
-        ~PubListener() override
-        {
-        }
-
-        /**
-         * @brief onPublicationMatched
-         * @param info
-         */
-        void on_publication_matched(
-                DataWriter* writer,
-                const PublicationMatchedStatus& info) override;
-
-        void on_offered_deadline_missed(
-                DataWriter* writer,
-                const OfferedDeadlineMissedStatus& status) override;
-
-        void on_liveliness_lost(
-                DataWriter* writer,
-                const LivelinessLostStatus& status) override;
-
-private:
-
-        ShapePublisher* parent_;
-
-    } listener_;
-
-    std::string getTopicName() const
-    {
-        return mp_topic->get_name();
-    }
+    void on_liveliness_lost(
+            Publisher*,
+            const LivelinessLostStatus&) override;
 
     Shape m_shape;
     QMutex m_mutex;

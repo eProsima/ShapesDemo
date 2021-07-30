@@ -6,7 +6,7 @@ Each shape refers to its own topic: Square, Triangle or Circle.
 A single instance of the eProsima Shapes Demo can publish on or subscribe to several topics at a time.
 
 It can be used to demonstrate the capabilities of eProsima *Fast DDS* or as a proof of interoperability with other
-DDS/RTPS-compliant implementations.
+RTPS-compliant implementations.
 
 
 ## Installation from sources
@@ -87,11 +87,11 @@ the need for compilation. To do this, a Docker image will be used.
 
 4.  Load the Docker image:
 
-        $ docker load -i ubuntu-fast-dds-shapesdemo:2.3.4.tar
+        $ docker load -i ubuntu-fast-dds-shapesdemo:2.3.2.tar
 
 5.  Run the Docker image:
 
-        $ docker run -it --privileged -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix ubuntu-fast-dds-shapesdemo:v2.3.4
+        $ docker run -it --privileged -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix ubuntu-fast-dds-shapesdemo:v2.3.2
 
 ### Windows
 
