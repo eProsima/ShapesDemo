@@ -151,7 +151,13 @@ void MainWindow::on_actionStart_triggered()
     if(this->m_shapesDemo.init())
     {
         if(m_shapesDemo.isInitialized())
+        {
             addMessageToOutput(QString("Participant ready in domainId %1").arg(m_shapesDemo.getOptions().m_domainId),true);
+        }
+        else
+        {
+            addMessageToOutput(QString("Error creating  Participant").arg(m_shapesDemo.getOptions().m_domainId),true);
+        }
     }
 }
 

@@ -194,12 +194,14 @@ void OptionsDialog::on_SHMcheckBox_stateChanged(int arg1)
 {
     m_options->m_shm_transport = arg1;
     mp_sd->setOptions(*m_options);
+    check_transports();
 }
 
 void OptionsDialog::on_UDPcheckBox_stateChanged(int arg1)
 {
     m_options->m_udp_transport = arg1;
     mp_sd->setOptions(*m_options);
+    check_transports();
 }
 
 void OptionsDialog::on_TCPcheckBox_stateChanged(int arg1)
@@ -208,6 +210,7 @@ void OptionsDialog::on_TCPcheckBox_stateChanged(int arg1)
     mp_sd->setOptions(*m_options);
 
     tcp_enable_buttons();
+    check_transports();
 }
 
 void OptionsDialog::on_TCPcomboBox_currentTextChanged(const QString &arg1)
@@ -216,4 +219,12 @@ void OptionsDialog::on_TCPcomboBox_currentTextChanged(const QString &arg1)
     mp_sd->setOptions(*m_options);
 
     tcp_enable_buttons();
+}
+
+void OptionsDialog::check_transports()
+{
+    if (!m_options->m_tcp_transport && !m_options->m_udp_transport && !m_options->m_shm_transport)
+    {
+        this->ui->UDPcheckBox->setChecked(mb_started);
+    }
 }

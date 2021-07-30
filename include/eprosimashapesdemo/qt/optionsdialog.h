@@ -61,6 +61,9 @@ private slots:
 
     void tcp_enable_buttons();
 
+    //! Check that at least one transport is enabled
+    void check_transports();
+
 private:
     ShapesDemoOptions* m_options;
     Ui::OptionsDialog *ui;

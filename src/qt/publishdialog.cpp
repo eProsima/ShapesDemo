@@ -44,7 +44,11 @@ PublishDialog::~PublishDialog()
 void PublishDialog::on_button_OkCancel_accepted()
 {
     // Check the participant is created
-    this->mp_sd->init();
+    if (!this->mp_sd->init())
+    {
+        std::cerr << "Error initializing Participant when creating Subscriber" << std::endl;
+        return;
+    }
 
     // Get Topic if exist or add one
     TopicDescription* topic_desc = this->mp_sd->getTopic(this->ui->combo_Shape->currentText().toUtf8().constData());
