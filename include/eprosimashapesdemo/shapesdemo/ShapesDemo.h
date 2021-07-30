@@ -20,22 +20,19 @@
 #ifndef SHAPESDEMO_H_
 #define SHAPESDEMO_H_
 
+#include <QMutex>
+
 #include "eprosimashapesdemo/shapesdemo/ShapePubSubTypes.h"
 #include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
-#include <QMutex>
-#include <vector>
 
-namespace eprosima
-{
-namespace fastrtps
-{
-class Participant;
-}
-}
+#include <fastdds/dds/domain/DomainParticipant.hpp>
+#include <fastdds/dds/domain/DomainParticipantFactory.hpp>
+#include <fastdds/dds/publisher/Publisher.hpp>
+#include <fastdds/dds/subscriber/Subscriber.hpp>
+#include <fastdds/dds/topic/TopicDescription.hpp>
+#include <fastdds/dds/topic/TypeSupport.hpp>
 
-using namespace eprosima::fastrtps;
-
-
+using namespace eprosima::fastdds::dds;
 
 /**
  * @brief The ShapesDemoOptions class, used to transmit the options between the options menu and the ShapesDemo class.
@@ -43,9 +40,13 @@ using namespace eprosima::fastrtps;
 class ShapesDemoOptions
 {
 public:
-    bool m_udpTransport;
-    bool m_tcpServer;
-    bool m_tcpWAN;
+    bool m_udp_transport;
+    bool m_tcp_transport;
+    bool m_intraprocess_transport;
+    bool m_datasharing_transport;
+    bool m_shm_transport;
+    bool m_statistics;
+    QString m_tcp_type;
     uint16_t m_listenPort;
     uint16_t m_serverPort;
     std::string m_serverIp;
@@ -54,16 +55,36 @@ public:
     uint32_t m_domainId;
     ShapesDemoOptions()
     {
-        m_udpTransport = true;
-        m_tcpServer = true;
-        m_tcpWAN = false;
+        m_udp_transport = true;
+        m_tcp_transport = false;
+        m_intraprocess_transport = true;
+        m_datasharing_transport = true;
+        m_shm_transport = true;
+        m_statistics = false;
         m_listenPort = 5100;
         m_serverPort = 5100;
         m_serverIp = "127.0.0.1";
         m_updateIntervalMs = INITIAL_INTERVAL_MS;
         m_movementSpeed = 7;
         m_domainId = 0;
+        m_tcp_type = QString("TCP LAN Server");
     }
+
+    bool tcp_lan()
+    {
+        return m_tcp_type == QString("TCP LAN Server");
+    }
+
+    bool tcp_wan()
+    {
+        return m_tcp_type == QString("TCP WAN Server");
+    }
+
+    bool tcp_client()
+    {
+        return m_tcp_type == QString("TCP Client");
+    }
+
     ~ShapesDemoOptions()
     {
 
@@ -95,10 +116,10 @@ public:
      */
     void stop();
     /**
-     * @brief Get a pointer to the Participant.
-     * @return Participant pointer.
+     * @brief Get a pointer to the DomainParticipant.
+     * @return DomainParticipant pointer.
      */
-    Participant* getParticipant();
+    DomainParticipant* getParticipant();
     /**
      * @brief Add a ShapePublisher to the demo.
      * @param SP Pointer to the ShapePublisher object.
@@ -158,11 +179,17 @@ public:
      */
     bool isInitialized(){return this->m_isInitialized;}
 
+    Topic* getTopic(std::string topic_name);
+
+    bool data_sharing_enable ()
+    {
+        return m_data_sharing_enable;
+    }
 
 private:
     std::vector<ShapePublisher*> m_publishers;
     std::vector<ShapeSubscriber*> m_subscribers;
-    Participant* mp_participant;
+    eprosima::fastdds::dds::DomainParticipant* mp_participant;
 
     //std::vector<ShapeType*> m_shapes;
     bool m_isInitialized;
@@ -171,15 +198,17 @@ private:
 
 
     void moveShape(Shape* sh);
+
+    // Modify X axis or Y axis
     void getNewDirection(Shape* sh);
 
     ShapeTypePubSubType m_shapeTopicDataType;
     ShapesDemoOptions m_options;
     MainWindow* m_mainWindow;
     QMutex m_mutex;
-
+    TypeSupport m_type;
+    std::map<std::string, Topic*> m_topics;
+    bool m_data_sharing_enable;
 };
-
-
 
 #endif /* SHAPESDEMO_H_ */

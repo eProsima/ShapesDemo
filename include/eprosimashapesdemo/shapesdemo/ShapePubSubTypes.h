@@ -1,4 +1,4 @@
-// Copyright 2017 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+// Copyright 2016 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,30 +23,78 @@
 #ifndef _SHAPE_PUBSUBTYPES_H_
 #define _SHAPE_PUBSUBTYPES_H_
 
-#include <fastrtps/TopicDataType.h>
-
-using namespace eprosima::fastrtps;
+#include <fastdds/dds/topic/TopicDataType.hpp>
+#include <fastrtps/utils/md5.h>
 
 #include "Shape.h"
+
+#if !defined(GEN_API_VER) || (GEN_API_VER != 1)
+#error Generated Shape is not compatible with current installed Fast DDS. Please, regenerate it with fastddsgen.
+#endif  // GEN_API_VER
 
 /*!
  * @brief This class represents the TopicDataType of the type ShapeType defined by the user in the IDL file.
  * @ingroup SHAPE
  */
-class ShapeTypePubSubType : public TopicDataType {
+class ShapeTypePubSubType : public eprosima::fastdds::dds::TopicDataType
+{
 public:
-        typedef ShapeType type;
 
-	ShapeTypePubSubType();
-	virtual ~ShapeTypePubSubType();
-    bool serialize(void *data, rtps::SerializedPayload_t *payload);
-    bool deserialize(rtps::SerializedPayload_t *payload, void *data);
-        std::function<uint32_t()> getSerializedSizeProvider(void* data);
-    bool getKey(void *data, rtps::InstanceHandle_t *ihandle, bool force_md5 = false);
-	void* createData();
-	void deleteData(void * data);
-	MD5 m_md5;
-	unsigned char* m_keyBuffer;
+    typedef ShapeType type;
+
+    eProsima_user_DllExport ShapeTypePubSubType();
+
+    eProsima_user_DllExport virtual ~ShapeTypePubSubType();
+
+    eProsima_user_DllExport virtual bool serialize(
+            void* data,
+            eprosima::fastrtps::rtps::SerializedPayload_t* payload) override;
+
+    eProsima_user_DllExport virtual bool deserialize(
+            eprosima::fastrtps::rtps::SerializedPayload_t* payload,
+            void* data) override;
+
+    eProsima_user_DllExport virtual std::function<uint32_t()> getSerializedSizeProvider(
+            void* data) override;
+
+    eProsima_user_DllExport virtual bool getKey(
+            void* data,
+            eprosima::fastrtps::rtps::InstanceHandle_t* ihandle,
+            bool force_md5 = false) override;
+
+    eProsima_user_DllExport virtual void* createData() override;
+
+    eProsima_user_DllExport virtual void deleteData(
+            void* data) override;
+
+#ifdef TOPIC_DATA_TYPE_API_HAS_IS_BOUNDED
+    eProsima_user_DllExport inline bool is_bounded() const override
+    {
+        return false;
+    }
+
+#endif  // TOPIC_DATA_TYPE_API_HAS_IS_BOUNDED
+
+#ifdef TOPIC_DATA_TYPE_API_HAS_IS_PLAIN
+    eProsima_user_DllExport inline bool is_plain() const override
+    {
+        return false;
+    }
+
+#endif  // TOPIC_DATA_TYPE_API_HAS_IS_PLAIN
+
+#ifdef TOPIC_DATA_TYPE_API_HAS_CONSTRUCT_SAMPLE
+    eProsima_user_DllExport inline bool construct_sample(
+            void* memory) const override
+    {
+        (void)memory;
+        return false;
+    }
+
+#endif  // TOPIC_DATA_TYPE_API_HAS_CONSTRUCT_SAMPLE
+
+    MD5 m_md5;
+    unsigned char* m_keyBuffer;
 };
 
-#endif // _Shape_PUBSUBTYPE_H_
+#endif // _SHAPE_PUBSUBTYPES_H_
