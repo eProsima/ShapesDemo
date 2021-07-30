@@ -37,5 +37,6 @@ int main(int argc, char *argv[])
     w.show();
 
     a.exec();
+    Domain::stopAll();
     return 0;
 }

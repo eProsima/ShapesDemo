@@ -40,8 +40,6 @@ MainWindow::MainWindow(QWidget *parent) :
     mp_writeThread(NULL),
     m_tableRow(-1)
 {
-    setWindowIcon(QIcon(":images/eprosima_icon.png"));
-
     ui->setupUi(this);
     ui->areaDraw->setShapesDemo(this->getShapesDemo());
 
@@ -81,12 +79,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->widget_contentFilter->setVisible(false);
 
-    // Initialize when a new Endpoint is added
-    // this->m_shapesDemo.init();
-    // if(m_shapesDemo.isInitialized())
-    // {
-    //     addMessageToOutput(QString("RTPSParticipant ready in domainId %1").arg(m_shapesDemo.getOptions().m_domainId),true);
-    // }
+    this->m_shapesDemo.init();
+    if(m_shapesDemo.isInitialized())
+    {
+        addMessageToOutput(QString("RTPSParticipant ready in domainId %1").arg(m_shapesDemo.getOptions().m_domainId),true);
+    }
 }
 
 MainWindow::~MainWindow()
@@ -151,13 +148,7 @@ void MainWindow::on_actionStart_triggered()
     if(this->m_shapesDemo.init())
     {
         if(m_shapesDemo.isInitialized())
-        {
-            addMessageToOutput(QString("Participant ready in domainId %1").arg(m_shapesDemo.getOptions().m_domainId),true);
-        }
-        else
-        {
-            addMessageToOutput(QString("Error creating  Participant").arg(m_shapesDemo.getOptions().m_domainId),true);
-        }
+            addMessageToOutput(QString("RTPSParticipant ready in domainId %1").arg(m_shapesDemo.getOptions().m_domainId),true);
     }
 }
 
@@ -195,14 +186,14 @@ void MainWindow::addPublisherToTable(ShapePublisher* spub)
     items.append(new QStandardItem(QString(spub->m_shape.m_shape.color().c_str())));
     items.append(new QStandardItem(QString("%1").arg(spub->m_shape.m_shape.shapesize())));
     items.append(new QStandardItem("Pub"));
-    if(spub->m_dw_qos.reliability().kind == eprosima::fastdds::dds::RELIABLE_RELIABILITY_QOS)
+    if(spub->m_attributes.qos.m_reliability.kind == RELIABLE_RELIABILITY_QOS)
         items.append(new QStandardItem("True"));
     else
         items.append(new QStandardItem("False"));
-    items.append(new QStandardItem(QString("%1").arg(spub->m_dw_qos.history().depth)));
+    items.append(new QStandardItem(QString("%1").arg(spub->m_attributes.topic.historyQos.depth)));
     //PARTITIONS:
     QString partitions;
-    std::vector<std::string> part = spub->m_pub_qos.partition().getNames();
+    std::vector<std::string> part = spub->m_attributes.qos.m_partition.getNames();
     for(std::vector<std::string>::iterator it = part.begin();
         it!=part.end();it++)
     {
@@ -214,24 +205,24 @@ void MainWindow::addPublisherToTable(ShapePublisher* spub)
     items.append(new QStandardItem(partitions));
 
     //OWNERSHIP:
-    if(spub->m_dw_qos.ownership().kind == eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS)
+    if(spub->m_attributes.qos.m_ownership.kind == SHARED_OWNERSHIP_QOS)
         items.append(new QStandardItem("SHARED"));
     else
     {
-        QString value = QString("EXCL - %1").arg(spub->m_dw_qos.ownership_strength().value);
+        QString value = QString("EXCL - %1").arg(spub->m_attributes.qos.m_ownershipStrength.value);
         items.append(new QStandardItem(value));
     }
 
     //DURABILITY:
-    if(spub->m_dw_qos.durability().kind == eprosima::fastdds::dds::VOLATILE_DURABILITY_QOS)
+    if(spub->m_attributes.qos.m_durability.kind == VOLATILE_DURABILITY_QOS)
         items.append(new QStandardItem("VOLATILE"));
     else
         items.append(new QStandardItem("TRANSIENT"));
 
     //LIVELINESS:
-    if(spub->m_dw_qos.liveliness().kind == eprosima::fastdds::dds::AUTOMATIC_LIVELINESS_QOS)
+    if(spub->m_attributes.qos.m_liveliness.kind == AUTOMATIC_LIVELINESS_QOS)
         items.append(new QStandardItem("AUTOMATIC"));
-    else if(spub->m_dw_qos.liveliness().kind == eprosima::fastdds::dds::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+    else if(spub->m_attributes.qos.m_liveliness.kind == MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
         items.append(new QStandardItem("MAN_PARTICIPANT"));
     else
         items.append(new QStandardItem("MAN_TOPIC"));
@@ -243,7 +234,7 @@ void MainWindow::addPublisherToTable(ShapePublisher* spub)
     sdend.pub = spub;
     sdend.pos = m_pubsub->rowCount()-1;
     this->m_pubsub_pointers.push_back(sdend);
-    addMessageToOutput(QString("Publisher created in topic: %2 %1").arg(spub->getTopicName().c_str()).arg(spub->m_shape.m_shape.color().c_str()),false);
+    addMessageToOutput(QString("Publisher created in topic: %2 %1").arg(spub->m_attributes.topic.topicName.c_str()).arg(spub->m_shape.m_shape.color().c_str()),false);
 
 }
 
@@ -259,15 +250,15 @@ void MainWindow::addSubscriberToTable(ShapeSubscriber* ssub)
     items.append(new QStandardItem("---"));
     items.append(new QStandardItem("Sub"));
 
-    if(ssub->m_dr_qos.reliability().kind == eprosima::fastdds::dds::RELIABLE_RELIABILITY_QOS)
+    if(ssub->m_attributes.qos.m_reliability.kind == RELIABLE_RELIABILITY_QOS)
         items.append(new QStandardItem("True"));
     else
         items.append(new QStandardItem("False"));
 
-    items.append(new QStandardItem(QString("%1").arg(ssub->m_dr_qos.history().depth)));
+    items.append(new QStandardItem(QString("%1").arg(ssub->m_attributes.topic.historyQos.depth)));
     //PARTITIONS:
     QString partitions;
-    std::vector<std::string> part = ssub->m_sub_qos.partition().getNames();
+    std::vector<std::string> part = ssub->m_attributes.qos.m_partition.getNames();
     for(std::vector<std::string>::iterator it = part.begin();
         it!=part.end();it++)
     {
@@ -279,21 +270,21 @@ void MainWindow::addSubscriberToTable(ShapeSubscriber* ssub)
     items.append(new QStandardItem(partitions));
 
     //OWNERSHIP:
-    if(ssub->m_dr_qos.ownership().kind == eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS)
+    if(ssub->m_attributes.qos.m_ownership.kind == SHARED_OWNERSHIP_QOS)
         items.append(new QStandardItem("SHARED"));
     else
         items.append(new QStandardItem("EXCLUSIVE"));
 
     //DURABILITY:
-    if(ssub->m_dr_qos.durability().kind == eprosima::fastdds::dds::VOLATILE_DURABILITY_QOS)
+    if(ssub->m_attributes.qos.m_durability.kind == VOLATILE_DURABILITY_QOS)
         items.append(new QStandardItem("VOLATILE"));
     else
         items.append(new QStandardItem("TRANSIENT"));
 
     //LIVELINESS:
-    if(ssub->m_dr_qos.liveliness().kind == eprosima::fastdds::dds::AUTOMATIC_LIVELINESS_QOS)
+    if(ssub->m_attributes.qos.m_liveliness.kind == AUTOMATIC_LIVELINESS_QOS)
         items.append(new QStandardItem("AUTOMATIC"));
-    else if(ssub->m_dr_qos.liveliness().kind == eprosima::fastdds::dds::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
+    else if(ssub->m_attributes.qos.m_liveliness.kind == MANUAL_BY_PARTICIPANT_LIVELINESS_QOS)
         items.append(new QStandardItem("MAN_PARTICIPANT"));
     else
         items.append(new QStandardItem("MAN_TOPIC"));
@@ -304,7 +295,7 @@ void MainWindow::addSubscriberToTable(ShapeSubscriber* ssub)
     sdend.sub = ssub;
     sdend.pos = m_pubsub->rowCount()-1;
     this->m_pubsub_pointers.push_back(sdend);
-    addMessageToOutput(QString("Subscriber created in topic: %1").arg(ssub->getTopicName().c_str()),false);
+    addMessageToOutput(QString("Subscriber created in topic: %1").arg(ssub->m_attributes.topic.getTopicName().c_str()),false);
 }
 
 void MainWindow::on_tableEndpoint_customContextMenuRequested(const QPoint &pos)

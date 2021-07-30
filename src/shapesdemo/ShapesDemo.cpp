@@ -22,26 +22,22 @@
 #include <eprosimashapesdemo/shapesdemo/ShapeInfo.h>
 #include <eprosimashapesdemo/qt/mainwindow.h>
 
-#include <fastdds/dds/domain/qos/DomainParticipantQos.hpp>
-#include <fastdds/rtps/transport/TCPv4TransportDescriptor.h>
-#include <fastdds/rtps/transport/UDPv4TransportDescriptor.h>
-#include <fastdds/rtps/transport/shared_mem/SharedMemTransportDescriptor.h>
-#include <fastrtps/config.h> // FASTDDS_STATISTICS availability
+#include <fastrtps/transport/TCPv4TransportDescriptor.h>
+#include <fastrtps/attributes/ParticipantAttributes.h>
+#include <fastrtps/Domain.h>
+#include <fastrtps/publisher/Publisher.h>
+#include <fastrtps/subscriber/Subscriber.h>
+#include <fastrtps/subscriber/Subscriber.h>
 #include <fastrtps/utils/IPLocator.h>
-#include <fastrtps/xmlparser/XMLProfileManager.h>
 
-using namespace eprosima::fastdds::dds;
-using namespace eprosima::fastdds::rtps;
 using namespace eprosima::fastrtps::rtps;
 
-ShapesDemo::ShapesDemo(MainWindow *mw)
-    : mp_participant(nullptr)
-    , m_isInitialized(false)
-    , minX(0),minY(0),maxX(0),maxY(0)
-    , m_mainWindow(mw)
-    , m_mutex(QMutex::Recursive)
-    , m_type(new ShapeTypePubSubType())
-    , m_data_sharing_enable(false)
+ShapesDemo::ShapesDemo(MainWindow *mw):
+    mp_participant(nullptr),
+    m_isInitialized(false),
+    minX(0),minY(0),maxX(0),maxY(0),
+    m_mainWindow(mw),
+    m_mutex(QMutex::Recursive)
 {
     srand (time(nullptr));
     minX = 0;
@@ -55,7 +51,7 @@ ShapesDemo::~ShapesDemo()
     stop();
 }
 
-DomainParticipant* ShapesDemo::getParticipant()
+Participant* ShapesDemo::getParticipant()
 {
     if(m_isInitialized && mp_participant !=nullptr)
         return mp_participant;
@@ -69,52 +65,29 @@ DomainParticipant* ShapesDemo::getParticipant()
 
 bool ShapesDemo::init()
 {
+    //cout << "Initializing ShapesDemo "<< m_isInitialized <<endl;
     if(!m_isInitialized)
     {
-        std::cout <<"Creating new Participant in domain: " << m_options.m_domainId << std::endl;
+        //cout <<"Creating new Participant"<<endl;
+        ParticipantAttributes pparam;
+        pparam.rtps.setName("fastrtpsParticipant");
+        pparam.domainId = m_options.m_domainId;
 
-        DomainParticipantQos qos;
-
-        qos.name("Fast-DDS ShapesDemo Participant");
-        qos.transport().use_builtin_transports = false;
-
-        // Intraprocess
-        LibrarySettingsAttributes library_settings;
-        library_settings.intraprocess_delivery = m_options.m_intraprocess_transport ?
-            IntraprocessDeliveryType::INTRAPROCESS_FULL : IntraprocessDeliveryType::INTRAPROCESS_OFF;
-        xmlparser::XMLProfileManager::library_settings(library_settings);
-
-        // Data Sharing
-        m_data_sharing_enable = m_options.m_datasharing_transport;
-
-        // Shared Memory
-        if (m_options.m_shm_transport)
+        if (m_options.m_udpTransport)
         {
-            // Configure SHM Transport
-            std::shared_ptr<SharedMemTransportDescriptor> shm_transport =
-                std::make_shared<SharedMemTransportDescriptor>();
-            qos.transport().user_transports.push_back(shm_transport);
+            pparam.rtps.useBuiltinTransports = true;
         }
-
-        // UDP
-        if (m_options.m_udp_transport)
+        else
         {
-            // Configure UDP Transport
-            std::shared_ptr<UDPv4TransportDescriptor> descriptor = std::make_shared<UDPv4TransportDescriptor>();
-            qos.transport().user_transports.push_back(descriptor);
-        }
+            pparam.rtps.useBuiltinTransports = false;
 
-        // TCP
-        if (m_options.m_tcp_transport)
-        {
             std::shared_ptr<TCPv4TransportDescriptor> descriptor = std::make_shared<TCPv4TransportDescriptor>();
-
             descriptor->wait_for_tcp_negotiation = false;
             descriptor->maxInitialPeersRange = 20;
 
-            if (m_options.tcp_lan() || m_options.tcp_wan())
+            if (m_options.m_tcpServer)
             {
-                if (m_options.tcp_wan())
+                if (m_options.m_tcpWAN)
                 {
                     descriptor->set_WAN_address(m_options.m_serverIp);
                 }
@@ -127,99 +100,46 @@ bool ShapesDemo::init()
                 initial_peer_locator.kind = LOCATOR_KIND_TCPv4;
                 IPLocator::setIPv4(initial_peer_locator, m_options.m_serverIp);
                 initial_peer_locator.port = m_options.m_serverPort;
-
-                qos.wire_protocol().builtin.initialPeersList.push_back(initial_peer_locator);
+                pparam.rtps.builtin.initialPeersList.push_back(initial_peer_locator); // Publisher's meta channel
             }
 
-            qos.transport().user_transports.push_back(descriptor);
-            qos.wire_protocol().builtin.discovery_config.leaseDuration_announcementperiod.seconds = 5;
+            pparam.rtps.userTransports.push_back(descriptor);
+            pparam.rtps.builtin.discovery_config.leaseDuration_announcementperiod.seconds = 5;
         }
 
-        // Set the statistics if clicked
-        if (m_options.m_statistics)
+        mp_participant = Domain::createParticipant(pparam);
+        if(mp_participant!=nullptr)
         {
-            qos.properties().properties().emplace_back(
-                "fastdds.statistics",
-                "HISTORY_LATENCY_TOPIC;" \
-                "NETWORK_LATENCY_TOPIC;" \
-                "PUBLICATION_THROUGHPUT_TOPIC;" \
-                "SUBSCRIPTION_THROUGHPUT_TOPIC;" \
-                "RTPS_SENT_TOPIC;" \
-                "RTPS_LOST_TOPIC;" \
-                "HEARTBEAT_COUNT_TOPIC;" \
-                "ACKNACK_COUNT_TOPIC;" \
-                "NACKFRAG_COUNT_TOPIC;" \
-                "GAP_COUNT_TOPIC;" \
-                "DATA_COUNT_TOPIC;" \
-                "RESENT_DATAS_TOPIC;" \
-                "SAMPLE_DATAS_TOPIC;" \
-                "PDP_PACKETS_TOPIC;" \
-                "EDP_PACKETS_TOPIC;" \
-                "DISCOVERY_TOPIC;" \
-                "PHYSICAL_DATA_TOPIC");
-
-// In case the Statistics are not compiled, show an error
-#ifndef FASTDDS_STATISTICS
-            std::cerr << "Statistics Module is not available" << std::endl;
-#endif // #ifndef FASTDDS_STATISTICS
+            // cout << "RTPSParticipant Created "<< mp_participant->getGuid() << endl;l
+            m_isInitialized = true;
+            Domain::registerType(mp_participant,&m_shapeTopicDataType);
+            return true;
         }
-
-
-        mp_participant = DomainParticipantFactory::get_instance()->create_participant(
-            m_options.m_domainId,
-            qos);
-
-        if (nullptr == mp_participant)
-        {
-            return false;
-        }
-
-        // If the creation has been correct, register type
-        m_isInitialized = true;
-        m_type.register_type(mp_participant);
-
-        std::cout << "Participant created correctly" << std::endl;
+        return false;
     }
     return true;
 }
 
 void ShapesDemo::stop()
 {
-    QMutexLocker lock(&m_mutex);
     if(m_isInitialized)
     {
+        QMutexLocker lock(&m_mutex);
         this->m_mainWindow->quitThreads();
-
-        // Remove all publishers
         for(std::vector<ShapePublisher*>::iterator it = m_publishers.begin();
             it!=m_publishers.end();++it)
         {
             delete(*it);
         }
         m_publishers.clear();
-
-        // Remove all subscribers
         for(std::vector<ShapeSubscriber*>::iterator it = m_subscribers.begin();
             it!=m_subscribers.end();++it)
         {
             delete(*it);
         }
         m_subscribers.clear();
-
-        // Eliminate topics
-        for (auto it : m_topics)
-        {
-            mp_participant->delete_topic(it.second);
-        }
-        m_topics.clear();
-
-        // Remove Participant
-        if (eprosima::fastrtps::types::ReturnCode_t::RETCODE_OK !=
-            DomainParticipantFactory::get_instance()->delete_participant(mp_participant))
-        {
-            std::cerr << "Error deleting Participant" << std::endl;
-            return;
-        }
+        Domain::removeParticipant(mp_participant);
+        //cout << "All Stoped, removing"<<endl;
         mp_participant = nullptr;
         m_isInitialized = false;
     }
@@ -227,28 +147,14 @@ void ShapesDemo::stop()
 
 void ShapesDemo::addPublisher(ShapePublisher* SP)
 {
-    if (m_isInitialized)
-    {
-        m_publishers.push_back(SP);
-        this->m_mainWindow->addPublisherToTable(SP);
-    }
-    else
-    {
-        delete SP;
-    }
+    m_publishers.push_back(SP);
+    this->m_mainWindow->addPublisherToTable(SP);
 }
 
 void ShapesDemo::addSubscriber(ShapeSubscriber* SSub)
 {
-    if (m_isInitialized)
-    {
-        m_subscribers.push_back(SSub);
-        this->m_mainWindow->addSubscriberToTable(SSub);
-    }
-    else
-    {
-        delete SSub;
-    }
+    m_subscribers.push_back(SSub);
+    this->m_mainWindow->addSubscriberToTable(SSub);
 }
 
 uint32_t ShapesDemo::getRandomX(uint32_t size)
@@ -310,6 +216,7 @@ void ShapesDemo::getNewDirection(Shape* sh)
     sh->m_changeDir = false;
 }
 
+
 void ShapesDemo::writeAll()
 {
     for(std::vector<ShapePublisher*>::iterator it = m_publishers.begin();
@@ -328,72 +235,37 @@ void ShapesDemo::setOptions(ShapesDemoOptions& opt)
 
 ShapesDemoOptions ShapesDemo::getOptions()
 {
+
     return m_options;
 }
 
 void ShapesDemo::removePublisher(ShapePublisher* SP)
 {
-    if (!SP || !SP->isInitialized)
-    {
-        return;
-    }
-
     //cout << "REMOVING PUBLISHER"<<endl;
     for(std::vector<ShapePublisher*>::iterator it = this->m_publishers.begin();
         it!=this->m_publishers.end();++it)
     {
-        if(SP->mp_datawriter->guid() == (*it)->mp_datawriter->guid())
+        if(SP->mp_pub->getGuid() == (*it)->mp_pub->getGuid())
         {
             m_publishers.erase(it);
-            delete SP;
-            return;
+            delete(SP);
+            break;
         }
     }
+
 }
 
 void ShapesDemo::removeSubscriber(ShapeSubscriber* SS)
 {
-    if (!SS || !SS->mp_datareader) // There is no SS initialized variable
-    {
-        return;
-    }
-
     //cout << "REMOVING SUBSCRIBER"<<endl;
     for(std::vector<ShapeSubscriber*>::iterator it = this->m_subscribers.begin();
         it!=this->m_subscribers.end();++it)
     {
-        if(SS->mp_datareader->guid() == (*it)->mp_datareader->guid())
+        if(SS->mp_sub->getGuid() == (*it)->mp_sub->getGuid())
         {
             m_subscribers.erase(it);
-            delete SS;
-            return;
+            delete(SS);
+            break;
         }
-    }
-}
-
-Topic* ShapesDemo::getTopic(std::string topic_name)
-{
-    QMutexLocker lock(&m_mutex);
-
-    // Look up if topic already exists
-    auto it = m_topics.find(topic_name);
-
-    if (it != m_topics.end())
-    {
-        // Topic already exists
-        return it->second;
-    }
-    else
-    {
-        // Create new Topic
-        Topic* topic = mp_participant->create_topic(
-            topic_name,         // Topic name
-            "ShapeType",        // Alwaysa same type
-            TOPIC_QOS_DEFAULT); // TODO check if default QoS is correct
-
-        // Add new topic to map
-        m_topics[topic_name] = topic;
-
-        return topic;
     }
 }

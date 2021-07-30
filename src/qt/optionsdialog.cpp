@@ -17,8 +17,6 @@
 #include "eprosimashapesdemo/shapesdemo/ShapesDemo.h"
 #include "eprosimashapesdemo/qt/mainwindow.h"
 
-#include <fastrtps/config.h> // FASTDDS_STATISTICS availability
-
 OptionsDialog::OptionsDialog(MainWindow *mw, ShapesDemo* psd, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::OptionsDialog),
@@ -28,32 +26,20 @@ OptionsDialog::OptionsDialog(MainWindow *mw, ShapesDemo* psd, QWidget *parent) :
 {
     ui->setupUi(this);
     m_options = new ShapesDemoOptions(this->mp_sd->getOptions());
-
-    // Domain ID Configuration
     this->ui->spin_domainId->setValue(m_options->m_domainId);
-
-    // Running Congiguration
+    if (mp_sd->isInitialized())
+    {
+        this->ui->spin_domainId->setEnabled(false);
+    }
     this->ui->spin_updateInterval->setValue(m_options->m_updateIntervalMs);
     this->ui->horizontalSlider_speed->setValue(m_options->m_movementSpeed);
-
-    // TCP Configuration
     this->ui->spin_server_port->setValue(m_options->m_serverPort);
     this->ui->spin_listen_port->setValue(m_options->m_listenPort);
     this->ui->lineEdit_server_ip->setText(QString::fromStdString(m_options->m_serverIp));
-
-    // Transport Configurations
-    this->ui->IntraprocesscheckBox->setChecked(m_options->m_intraprocess_transport);
-    this->ui->DataSharingcheckBox->setChecked(m_options->m_datasharing_transport);
-    this->ui->SHMcheckBox->setChecked(m_options->m_shm_transport);
-    this->ui->UDPcheckBox->setChecked(m_options->m_udp_transport);
-    this->ui->TCPcheckBox->setChecked(m_options->m_tcp_transport);
-
-    // Statistics Button
-    // Show if it is checked or not
-    this->ui->statisticsCheckBox->setChecked(m_options->m_statistics);
-
     setEnableState();
+    UpdateTransportControls();
     setAttribute ( Qt::WA_DeleteOnClose, true );
+
 }
 
 OptionsDialog::~OptionsDialog()
@@ -73,36 +59,58 @@ void OptionsDialog::setEnableState()
         mb_started = true;
     }
 
-    // Enable in Stop
+    UpdateTransportControls();
+
     this->ui->pushButton_start->setEnabled(mb_started);
     this->ui->spin_domainId->setEnabled(mb_started);
-    this->ui->statisticsCheckBox->setEnabled(mb_started);
-    this->ui->IntraprocesscheckBox->setEnabled(mb_started);
-    this->ui->DataSharingcheckBox->setEnabled(mb_started);
-    this->ui->SHMcheckBox->setEnabled(mb_started);
-    this->ui->UDPcheckBox->setEnabled(mb_started);
-    this->ui->TCPcheckBox->setEnabled(mb_started);
-
-    // Enable in Running
     this->ui->pushButton_stop->setEnabled(!mb_started);
-
-    // Disable statistics if the statistics Module is not compiled
-#ifndef FASTDDS_STATISTICS
-    this->ui->statisticsCheckBox->setEnabled(false);
-#endif // #ifndef FASTDDS_STATISTICS
-
-    // Transports enabled
-    tcp_enable_buttons();
 }
 
 void OptionsDialog::on_OptionsDialog_accepted()
 {
 }
 
+void OptionsDialog::on_pushButton_udp_clicked()
+{
+    m_options->m_udpTransport = true;
+    mp_sd->setOptions(*m_options);
+
+    UpdateTransportControls();
+}
+
+void OptionsDialog::on_pushButton_tcp_client_clicked()
+{
+    m_options->m_tcpServer = false;
+    m_options->m_udpTransport = false;
+    mp_sd->setOptions(*m_options);
+
+    UpdateTransportControls();
+}
+
+void OptionsDialog::on_pushButton_tcp_server_clicked()
+{
+    m_options->m_tcpServer = true;
+    m_options->m_tcpWAN = false;
+    m_options->m_udpTransport = false;
+    mp_sd->setOptions(*m_options);
+
+    UpdateTransportControls();
+}
+
+void OptionsDialog::on_pushButton_tcp_WAN_server_clicked()
+{
+    m_options->m_tcpServer = true;
+    m_options->m_tcpWAN = true;
+    m_options->m_udpTransport = false;
+    mp_sd->setOptions(*m_options);
+
+    UpdateTransportControls();
+}
+
 void OptionsDialog::on_pushButton_start_clicked()
 {
     this->mp_mw->on_actionStart_triggered();
-    this->close();
+    setEnableState();
 }
 
 void OptionsDialog::on_pushButton_stop_clicked()
@@ -147,84 +155,31 @@ void OptionsDialog::on_lineEdit_server_ip_textChanged(const QString& arg1)
     mp_sd->setOptions(*m_options);
 }
 
-void OptionsDialog::on_statisticsCheckBox_stateChanged(int arg1)
+void OptionsDialog::UpdateTransportControls()
 {
-    m_options->m_statistics = arg1;
-    mp_sd->setOptions(*m_options);
-}
+	// Enable or disable controls
 
-void OptionsDialog::tcp_enable_buttons()
-{
-    // Enable Combo Box
-    this->ui->TCPcomboBox->setEnabled(m_options->m_tcp_transport && mb_started);
+    this->ui->pushButton_tcp_client->setEnabled(mb_started && (m_options->m_udpTransport || m_options->m_tcpServer));
+    this->ui->pushButton_udp->setEnabled(mb_started && !m_options->m_udpTransport);
+    this->ui->pushButton_tcp_server->setEnabled(mb_started && !(!m_options->m_udpTransport && m_options->m_tcpServer && !m_options->m_tcpWAN));
+	this->ui->pushButton_tcp_WAN_server->setEnabled(mb_started && !(!m_options->m_udpTransport && m_options->m_tcpServer && m_options->m_tcpWAN));
+    this->ui->spin_listen_port->setEnabled(mb_started && !m_options->m_udpTransport && m_options->m_tcpServer);
+    this->ui->spin_server_port->setEnabled(mb_started && !m_options->m_udpTransport && !m_options->m_tcpServer);
 
-    // Enable/Disable buttons depending on transport
-    this->ui->spin_listen_port->setEnabled(m_options->m_tcp_transport && mb_started);
-    this->ui->spin_server_port->setEnabled(m_options->m_tcp_transport && mb_started);
-    this->ui->lineEdit_server_ip->setEnabled(m_options->m_tcp_transport && mb_started);
+	// Make the current selection appear bold
 
-    if (QString("TCP LAN Server") == m_options->m_tcp_type)
-    {
-        this->ui->spin_server_port->setEnabled(false);
-        this->ui->lineEdit_server_ip->setEnabled(false);
-    }
-    if (QString("TCP WAN Server") == m_options->m_tcp_type)
-    {
-        this->ui->spin_server_port->setEnabled(false);
-    }
-    if (QString("TCP Client") == m_options->m_tcp_type)
-    {
-        this->ui->spin_listen_port->setEnabled(false);
-    }
-}
+	QFont font, fontn;
+	font.setBold(false);
+	fontn.setBold(true);
+	fontn.setWeight(75);
 
-void OptionsDialog::on_IntraprocesscheckBox_stateChanged(int arg1)
-{
-    m_options->m_intraprocess_transport = arg1;
-    mp_sd->setOptions(*m_options);
-}
+	this->ui->pushButton_tcp_client->setFont(!mb_started && !m_options->m_udpTransport && !m_options->m_tcpServer ? fontn : font);
+	this->ui->pushButton_udp->setFont(!mb_started && m_options->m_udpTransport ? fontn : font);
+	this->ui->pushButton_tcp_server->setFont(!mb_started && !m_options->m_udpTransport && m_options->m_tcpServer && !m_options->m_tcpWAN ? fontn : font);
+	this->ui->pushButton_tcp_WAN_server->setFont(!mb_started && !m_options->m_udpTransport && m_options->m_tcpServer && m_options->m_tcpWAN ? fontn : font);
 
-void OptionsDialog::on_DataSharingcheckBox_stateChanged(int arg1)
-{
-    m_options->m_datasharing_transport = arg1;
-    mp_sd->setOptions(*m_options);
-}
-
-void OptionsDialog::on_SHMcheckBox_stateChanged(int arg1)
-{
-    m_options->m_shm_transport = arg1;
-    mp_sd->setOptions(*m_options);
-    check_transports();
-}
-
-void OptionsDialog::on_UDPcheckBox_stateChanged(int arg1)
-{
-    m_options->m_udp_transport = arg1;
-    mp_sd->setOptions(*m_options);
-    check_transports();
-}
-
-void OptionsDialog::on_TCPcheckBox_stateChanged(int arg1)
-{
-    m_options->m_tcp_transport = arg1;
-    mp_sd->setOptions(*m_options);
-
-    tcp_enable_buttons();
-    check_transports();
-}
-
-void OptionsDialog::on_TCPcomboBox_currentTextChanged(const QString &arg1)
-{
-    m_options->m_tcp_type = arg1;
-    mp_sd->setOptions(*m_options);
-
-    tcp_enable_buttons();
-}
-
-void OptionsDialog::check_transports()
-{
-    if (!m_options->m_tcp_transport && !m_options->m_udp_transport && !m_options->m_shm_transport)
-    {
-        this->ui->UDPcheckBox->setChecked(mb_started);
-    }
+	
+    // lineEdit_server_ip meaning depends on TCP config.
+    this->ui->label_6->setText(m_options->m_tcpServer && m_options->m_tcpWAN ? QApplication::translate("OptionsDialog", "WAN IP:", nullptr) : QApplication::translate("OptionsDialog", "Server IP:", nullptr));
+    this->ui->lineEdit_server_ip->setEnabled(mb_started && !m_options->m_udpTransport && !(m_options->m_tcpServer && !m_options->m_tcpWAN));
 }

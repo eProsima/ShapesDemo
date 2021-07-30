@@ -64,7 +64,7 @@ public:
     void dispose(const SD_COLOR color);
     void unregister(const SD_COLOR color);
     void adjustContentFilter(ShapeFilter& filter);
-    void removedOwner(const rtps::GUID_t& guid);
+    void removedOwner(rtps::GUID_t& guid);
 
     uint32_t m_history_depth;
     ShapeFilter m_filter;
