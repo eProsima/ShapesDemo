@@ -17,12 +17,12 @@
  *
  */
 
+#include <fastdds/dds/subscriber/SampleInfo.hpp>
+#include <fastrtps/utils/TimeConversion.h>
+
 #include <eprosimashapesdemo/qt/ContentFilterSelector.h>
 #include <eprosimashapesdemo/qt/mainwindow.h>
 #include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
-
-#include <fastrtps/utils/TimeConversion.h>
-#include <fastdds/dds/subscriber/SampleInfo.hpp>
 
 ShapeSubscriber::ShapeSubscriber(
         MainWindow* win,

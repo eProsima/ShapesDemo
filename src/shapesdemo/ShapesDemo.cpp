@@ -75,7 +75,7 @@ bool ShapesDemo::init()
 
         DomainParticipantQos qos;
 
-        qos.name("Fast-DDS ShapesDemo Participant");
+        qos.name("Fast DDS ShapesDemo Participant");
         qos.transport().use_builtin_transports = false;
 
         // Intraprocess
@@ -133,6 +133,15 @@ bool ShapesDemo::init()
 
             qos.transport().user_transports.push_back(descriptor);
             qos.wire_protocol().builtin.discovery_config.leaseDuration_announcementperiod.seconds = 5;
+        }
+
+        if (!m_options.m_shm_transport &&
+            !m_options.m_udp_transport &&
+            !m_options.m_tcp_transport)
+        {
+            m_mainWindow->addMessageToOutput(
+                QString("No Transport configured, using Fast DDS transports by default"),true);
+            qos.transport().use_builtin_transports = true;
         }
 
         // Set the statistics if clicked

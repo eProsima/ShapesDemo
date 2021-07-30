@@ -50,7 +50,6 @@ SubscribeDialog::~SubscribeDialog()
     delete ui;
 }
 
-// TODO (@paris)
 void SubscribeDialog::on_buttonBox_accepted()
 {
     // Check the participant is created
@@ -61,8 +60,7 @@ void SubscribeDialog::on_buttonBox_accepted()
     }
 
     // Get Topic if exist or add one
-    TopicDescription* topic_desc = this->mp_sd->getTopic(this->ui->combo_Shape->currentText().toUtf8().constData());
-    Topic* topic = dynamic_cast<Topic*>(topic_desc);
+    Topic* topic = this->mp_sd->getTopic(this->ui->combo_Shape->currentText().toUtf8().constData());
 
     ShapeSubscriber* SSub = new ShapeSubscriber((MainWindow*)mp_parent, this->mp_sd->getParticipant(), topic);
 
@@ -86,7 +84,7 @@ void SubscribeDialog::on_buttonBox_accepted()
     SSub->m_dr_qos.history().depth = this->ui->spin_HistoryQos->value();
     SSub->m_shapeHistory.m_history_depth = this->ui->spin_HistoryQos->value();
 
-    SSub->m_sub_qos.presentation().hasChanged = true; // TODO check if needed
+    SSub->m_sub_qos.presentation().hasChanged = true; // Not implemented yet
 
     //RELIABILITY
     if (this->ui->checkBox_reliable->isChecked())

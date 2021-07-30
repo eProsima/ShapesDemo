@@ -81,12 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->widget_contentFilter->setVisible(false);
 
-    // Initialize when a new Endpoint is added
-    // this->m_shapesDemo.init();
-    // if(m_shapesDemo.isInitialized())
-    // {
-    //     addMessageToOutput(QString("RTPSParticipant ready in domainId %1").arg(m_shapesDemo.getOptions().m_domainId),true);
-    // }
+    // The Participant is created when Start is pressed or when an Endpoint is created
 }
 
 MainWindow::~MainWindow()
@@ -156,8 +151,12 @@ void MainWindow::on_actionStart_triggered()
         }
         else
         {
-            addMessageToOutput(QString("Error creating  Participant").arg(m_shapesDemo.getOptions().m_domainId),true);
+            addMessageToOutput(QString("Error, Participant has not been initialized"),true);
         }
+    }
+    else
+    {
+        addMessageToOutput(QString("Error creating Participant"),true);
     }
 }
 
