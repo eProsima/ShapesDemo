@@ -46,7 +46,7 @@ void PublishDialog::on_button_OkCancel_accepted()
     // Check the participant is created
     if (!this->mp_sd->init())
     {
-        std::cerr << "Error initializing Participant when creating Subscriber" << std::endl;
+        std::cerr << "Error initializing Participant when creating Publisher" << std::endl;
         return;
     }
 
