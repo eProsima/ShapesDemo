@@ -106,6 +106,7 @@ private slots:
     void on_bt_subscribe_clicked();
 
     void on_actionPreferences_triggered();
+    void on_actionParticipant_triggered();
 
 
 

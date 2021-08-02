@@ -16,6 +16,7 @@
 #include <eprosimashapesdemo/qt/publishdialog.h>
 #include <eprosimashapesdemo/qt/subscribedialog.h>
 #include <eprosimashapesdemo/qt/optionsdialog.h>
+#include <eprosimashapesdemo/qt/participantdialog.h>
 #include "ui_mainwindow.h"
 #include <eprosimashapesdemo/qt/UpdateThread.h>
 
@@ -133,6 +134,12 @@ void MainWindow::writeNewSamples()
 void MainWindow::on_actionPreferences_triggered()
 {
     OptionsDialog* od = new OptionsDialog(this, this->getShapesDemo(), this);
+    od->show();
+}
+
+void MainWindow::on_actionParticipant_triggered()
+{
+    ParticipantDialog* od = new ParticipantDialog(this, this->getShapesDemo(), this);
     od->show();
 }
 

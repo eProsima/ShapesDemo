@@ -62,7 +62,7 @@ void SubscribeDialog::on_buttonBox_accepted()
     // Get Topic if exist or add one
     Topic* topic = this->mp_sd->getTopic(this->ui->combo_Shape->currentText().toUtf8().constData());
 
-    ShapeSubscriber* SSub = new ShapeSubscriber((MainWindow*)mp_parent, this->mp_sd->getParticipant(), topic);
+    ShapeSubscriber* SSub = new ShapeSubscriber((MainWindow*)mp_parent, this->mp_sd, topic);
 
     // Set shape type
     if (this->ui->combo_Shape->currentText() == QString("Square"))

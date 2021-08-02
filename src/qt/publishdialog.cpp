@@ -55,7 +55,7 @@ void PublishDialog::on_button_OkCancel_accepted()
     Topic* topic = dynamic_cast<Topic*>(topic_desc);
 
     // Create ShapePublisher object with a Publisher and a DataWriter
-    ShapePublisher* SP = new ShapePublisher(mp_parent, this->mp_sd->getParticipant(), topic);
+    ShapePublisher* SP = new ShapePublisher(mp_parent, this->mp_sd, topic);
 
     // Set shape type
     if (this->ui->combo_Shape->currentText() == QString("Square"))

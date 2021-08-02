@@ -41,6 +41,7 @@ INCLUDEPATH += include/
                forms/ui/
 
 FORMS    +=   forms/mainwindow.ui \
+              forms/participantdialog.ui \
               forms/publishdialog.ui \
               forms/subscribedialog.ui \
               forms/optionsdialog.ui
@@ -66,6 +67,7 @@ INCLUDEPATH += $$PWD/thirdparty/eprosima-common-code
 HEADERS += \
     include/eprosimashapesdemo/qt/DrawArea.h \
     include/eprosimashapesdemo/qt/mainwindow.h \
+    include/eprosimashapesdemo/qt/participantdialog.h \
     include/eprosimashapesdemo/qt/publishdialog.h \
     include/eprosimashapesdemo/qt/subscribedialog.h \
     include/eprosimashapesdemo/shapesdemo/Shape.h \
@@ -83,6 +85,7 @@ HEADERS += \
 SOURCES += \
     src/qt/DrawArea.cpp \
     src/qt/mainwindow.cpp \
+    src/qt/participantdialog.cpp \
     src/qt/publishdialog.cpp \
     src/qt/subscribedialog.cpp \
     src/shapesdemo/ShapesDemo.cpp \
