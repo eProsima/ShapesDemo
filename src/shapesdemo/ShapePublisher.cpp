@@ -25,9 +25,9 @@
 
 ShapePublisher::ShapePublisher(
         MainWindow* win,
-        DomainParticipant* par,
+        ShapesDemo* sd,
         Topic* topic)
-    : mp_participant(par)
+    : mp_sd(sd)
     , mp_datawriter(nullptr)
     , mp_publisher(nullptr)
     , mp_topic(topic)
@@ -45,7 +45,7 @@ ShapePublisher::~ShapePublisher()
     // TODO Auto-generated destructor stub
     if (isInitialized)
     {
-        if (mp_participant && mp_publisher && mp_datawriter)
+        if (mp_sd->getParticipant() && mp_publisher && mp_datawriter)
         {
             Duration_t wait_time(1, 0);
             rtps::InstanceHandle_t handle;
@@ -60,9 +60,9 @@ ShapePublisher::~ShapePublisher()
             }
         }
 
-        if (mp_participant && mp_publisher)
+        if (mp_sd->getParticipant() && mp_publisher)
         {
-            if (ReturnCode_t::RETCODE_OK != mp_participant->delete_publisher(mp_publisher))
+            if (ReturnCode_t::RETCODE_OK != mp_sd->getParticipant()->delete_publisher(mp_publisher))
             {
                 std::cerr << "Error deleting publisher: " << std::endl;
                 return;
@@ -73,7 +73,7 @@ ShapePublisher::~ShapePublisher()
 
 bool ShapePublisher::initPublisher()
 {
-    mp_publisher = mp_participant->create_publisher(m_pub_qos);
+    mp_publisher = mp_sd->getParticipant()->create_publisher(m_pub_qos);
 
     m_dw_qos.reliable_writer_qos().times.heartbeatPeriod.seconds = 0;
     m_dw_qos.reliable_writer_qos().times.heartbeatPeriod.nanosec = 500000000;

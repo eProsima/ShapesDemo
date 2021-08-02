@@ -23,6 +23,7 @@
 #include <QMutex>
 
 #include "eprosimashapesdemo/shapesdemo/ShapeInfo.h"
+#include "eprosimashapesdemo/shapesdemo/ShapesDemo.h"
 
 #include <fastdds/dds/publisher/DataWriter.hpp>
 #include <fastdds/dds/publisher/DataWriterListener.hpp>
@@ -43,14 +44,14 @@ public:
 
     ShapePublisher(
             MainWindow* win,
-            DomainParticipant* par,
+            ShapesDemo* sd,
             Topic* topic);
 
     virtual ~ShapePublisher();
 
     DataWriterQos m_dw_qos;
     PublisherQos m_pub_qos;
-    DomainParticipant* mp_participant;
+    ShapesDemo* mp_sd;
     DataWriter* mp_datawriter;
     eprosima::fastdds::dds::Publisher* mp_publisher;
     Topic* mp_topic;

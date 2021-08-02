@@ -26,9 +26,9 @@
 
 ShapeSubscriber::ShapeSubscriber(
         MainWindow* win,
-        DomainParticipant* par,
+        ShapesDemo* sd,
         Topic* topic)
-    : mp_participant(par)
+    : mp_sd(sd)
     , mp_datareader(nullptr)
     , mp_subscriber(nullptr)
     , mp_topic(topic)
@@ -43,7 +43,7 @@ ShapeSubscriber::ShapeSubscriber(
 
 ShapeSubscriber::~ShapeSubscriber()
 {
-    if (mp_participant && mp_subscriber && mp_datareader)
+    if (mp_sd->getParticipant() && mp_subscriber && mp_datareader)
     {
         if (ReturnCode_t::RETCODE_OK != mp_subscriber->delete_datareader(mp_datareader))
         {
@@ -52,9 +52,9 @@ ShapeSubscriber::~ShapeSubscriber()
         }
     }
 
-    if (mp_participant && mp_subscriber)
+    if (mp_sd->getParticipant() && mp_subscriber)
     {
-        if (ReturnCode_t::RETCODE_OK != mp_participant->delete_subscriber(mp_subscriber))
+        if (ReturnCode_t::RETCODE_OK != mp_sd->getParticipant()->delete_subscriber(mp_subscriber))
         {
             std::cerr << "Error deleting subscriber: " << std::endl;
             return;
@@ -69,7 +69,7 @@ ShapeSubscriber::~ShapeSubscriber()
 
 bool ShapeSubscriber::initSubscriber()
 {
-    mp_subscriber = mp_participant->create_subscriber(m_sub_qos);
+    mp_subscriber = mp_sd->getParticipant()->create_subscriber(m_sub_qos);
 
     mp_datareader = mp_subscriber->create_datareader(mp_topic, m_dr_qos, &listener_);
 
@@ -88,8 +88,8 @@ void ShapeSubscriber::SubListener::on_data_available(
         shape.m_time = info.source_timestamp.to_duration_t();
         shape.m_writerGuid = info.sample_identity.writer_guid();
 
-        // TODO (@paris)
-        // shape.m_strength = info.ownershipStrength;
+        shape.m_strength = parent_->mp_sd->writer_strength(
+            eprosima::fastrtps::rtps::iHandle2GUID(info.publication_handle));
 
         QMutexLocker locck(&parent_->m_mutex);
         if (info.instance_state == ALIVE_INSTANCE_STATE)
@@ -126,6 +126,14 @@ void ShapeSubscriber::SubListener::on_subscription_matched(
             if (*it == iHandle2GUID(info.last_publication_handle))
             {
                 found = true;
+
+                // Get ownership (to fake not implemented feature)
+                eprosima::fastdds::dds::builtin::PublicationBuiltinTopicData writer_data;
+
+                reader->get_matched_publication_data(
+                    writer_data,
+                    eprosima::fastrtps::rtps::iHandle2GUID(info.last_publication_handle));
+
                 break;
             }
         }

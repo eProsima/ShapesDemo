@@ -46,14 +46,14 @@ public:
 
     ShapeSubscriber(
             MainWindow* win,
-            DomainParticipant* par,
+            ShapesDemo* sd,
             Topic* topic);
 
     virtual ~ShapeSubscriber();
 
     DataReaderQos m_dr_qos;
     SubscriberQos m_sub_qos;
-    DomainParticipant* mp_participant;
+    ShapesDemo* mp_sd;
     DataReader* mp_datareader;
     eprosima::fastdds::dds::Subscriber* mp_subscriber;
     Topic* mp_topic;

@@ -46,12 +46,15 @@ ShapesDemo::ShapesDemo(
     , m_mutex(QMutex::Recursive)
     , m_type(new ShapeTypePubSubType())
     , m_data_sharing_enable(false)
+    , m_listener(this)
 {
     srand (time(nullptr));
     minX = 0;
     minY = 0;
     maxX = MAX_DRAW_AREA_X;
     maxY = MAX_DRAW_AREA_Y;
+
+    std::cout << "Creating ShapesDemo : " << m_ownership_strength_map.size() << std::endl;
 }
 
 ShapesDemo::~ShapesDemo()
@@ -184,7 +187,9 @@ bool ShapesDemo::init()
 
         mp_participant = DomainParticipantFactory::get_instance()->create_participant(
             m_options.m_domainId,
-            qos);
+            qos,
+            &m_listener,
+            eprosima::fastdds::dds::StatusMask::none());
 
         if (nullptr == mp_participant)
         {
@@ -229,6 +234,9 @@ void ShapesDemo::stop()
             mp_participant->delete_topic(it.second);
         }
         m_topics.clear();
+
+        // Reset all ownerships from remote writers
+        m_ownership_strength_map.clear();
 
         // Remove Participant
         if (eprosima::fastrtps::types::ReturnCode_t::RETCODE_OK !=
@@ -425,4 +433,25 @@ Topic* ShapesDemo::getTopic(
 
         return topic;
     }
+}
+
+bool ShapesDemo::add_writer_strength(const GUID_t& guid, uint32_t strength)
+{
+    m_ownership_strength_map[guid] = strength;
+    return true;
+}
+
+bool ShapesDemo::remove_writer_strength(GUID_t guid)
+{
+    return m_ownership_strength_map.erase(guid);
+}
+
+uint32_t ShapesDemo::writer_strength(GUID_t guid)
+{
+    auto it = m_ownership_strength_map.find(guid);
+    if (it != m_ownership_strength_map.end())
+    {
+        return it->second;
+    }
+    return 0;
 }
