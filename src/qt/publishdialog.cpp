@@ -112,8 +112,8 @@ void PublishDialog::on_button_OkCancel_accepted()
         lease_duration_value = this->ui->lineEdit_leaseDuration->text();
         if (lease_duration_value.toDouble() > 0)
         {
-            SP->m_dw_qos.liveliness().lease_duration = rtps::TimeConv::MilliSeconds2Time_t(
-                lease_duration_value.toDouble()).to_duration_t();
+            SP->m_dw_qos.liveliness().lease_duration =
+                eprosima::fastrtps::Duration_t(lease_duration_value.toDouble() * 1e-3);
         }
     }
 
@@ -125,16 +125,15 @@ void PublishDialog::on_button_OkCancel_accepted()
     else if (this->ui->lineEdit_announcementPeriod->text() == "INF" &&
             SP->m_dw_qos.liveliness().lease_duration != c_TimeInfinite)
     {
-        SP->m_dw_qos.liveliness().announcement_period = rtps::TimeConv::MilliSeconds2Time_t(
-            lease_duration_value.toDouble() * 0.1).to_duration_t();
+        SP->m_dw_qos.liveliness().announcement_period =
+            eprosima::fastrtps::Duration_t(lease_duration_value.toDouble() * 1e-3);
     }
     else
     {
         QString value = this->ui->lineEdit_announcementPeriod->text();
         if (value.toDouble() > 0)
         {
-            SP->m_dw_qos.liveliness().announcement_period =
-                    rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+            SP->m_dw_qos.liveliness().announcement_period = eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
         }
     }
 
@@ -166,7 +165,7 @@ void PublishDialog::on_button_OkCancel_accepted()
         QString value = this->ui->lineEdit_Deadline->text();
         if (value.toDouble() > 0)
         {
-            SP->m_dw_qos.deadline().period = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+            SP->m_dw_qos.deadline().period = eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
         }
     }
 
@@ -180,7 +179,7 @@ void PublishDialog::on_button_OkCancel_accepted()
         QString value = this->ui->lineEdit_Lifespan->text();
         if (value.toDouble() > 0)
         {
-            SP->m_dw_qos.lifespan().duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+            SP->m_dw_qos.lifespan().duration = eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
         }
     }
 

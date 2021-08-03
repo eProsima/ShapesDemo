@@ -122,8 +122,8 @@ void SubscribeDialog::on_buttonBox_accepted()
         QString value = this->ui->lineEdit_leaseDuration->text();
         if (value.toDouble() > 0)
         {
-            SSub->m_dr_qos.liveliness().lease_duration =
-                    rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+            // Liveliness is retrieving by user in ms and is stored in s
+            SSub->m_dr_qos.liveliness().lease_duration = eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
         }
     }
 
@@ -149,7 +149,7 @@ void SubscribeDialog::on_buttonBox_accepted()
         QString value = this->ui->lineEdit_Deadline->text();
         if (value.toDouble() > 0)
         {
-            SSub->m_dr_qos.deadline().period = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+            SSub->m_dr_qos.deadline().period = eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
         }
     }
 
@@ -163,7 +163,7 @@ void SubscribeDialog::on_buttonBox_accepted()
         QString value = this->ui->lineEdit_Lifespan->text();
         if (value.toDouble() > 0)
         {
-            SSub->m_dr_qos.lifespan().duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+            SSub->m_dr_qos.lifespan().duration = eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
         }
     }
 
@@ -205,7 +205,7 @@ void SubscribeDialog::on_buttonBox_accepted()
             if (value.toInt() > 0)
             {
                 SSub->m_dr_qos.time_based_filter().minimum_separation =
-                        rtps::TimeConv::MilliSeconds2Time_t(value.toInt()).to_duration_t();
+                    eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
             }
 
         }
