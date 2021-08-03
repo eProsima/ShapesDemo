@@ -17,7 +17,9 @@
  *
  */
 
+#include <fastdds/dds/builtin/topic/PublicationBuiltinTopicData.hpp>
 #include <fastdds/dds/subscriber/SampleInfo.hpp>
+#include <fastdds/rtps/common/InstanceHandle.h>
 #include <fastrtps/utils/TimeConversion.h>
 
 #include <eprosimashapesdemo/qt/ContentFilterSelector.h>

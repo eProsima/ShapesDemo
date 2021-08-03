@@ -17,10 +17,9 @@
 #include "eprosimashapesdemo/shapesdemo/ShapesDemo.h"
 #include "eprosimashapesdemo/shapesdemo/ShapeSubscriber.h"
 
-#include "fastrtps/utils/TimeConversion.h"
-
 #include <fastdds/dds/subscriber/qos/DataReaderQos.hpp>
 #include <fastdds/dds/subscriber/qos/SubscriberQos.hpp>
+#include <fastdds/rtps/common/Time_t.h>
 
 #include <QIntValidator>
 #include <QMessageBox>
