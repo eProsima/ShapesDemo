@@ -18,7 +18,6 @@
 #include <eprosimashapesdemo/shapesdemo/ShapesDemo.h>
 #include <eprosimashapesdemo/shapesdemo/ShapePublisher.h>
 
-// #include "fastrtps/utils/TimeConversion.h"
 #include <fastdds/dds/publisher/qos/DataWriterQos.hpp>
 #include <fastdds/dds/publisher/qos/PublisherQos.hpp>
 #include <fastdds/rtps/common/Time_t.h>
