@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>374</width>
+    <width>379</width>
     <height>501</height>
    </rect>
   </property>
@@ -302,8 +302,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>374</width>
-     <height>21</height>
+     <width>379</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOptions">
@@ -311,6 +311,7 @@
      <string>Options</string>
     </property>
     <addaction name="actionPreferences"/>
+    <addaction name="actionParticipant"/>
    </widget>
    <widget class="QMenu" name="menuControl">
     <property name="title">
@@ -370,6 +371,11 @@
   <action name="actionInteroperability_Troubleshooting">
    <property name="text">
     <string>Interoperability Troubleshooting</string>
+   </property>
+  </action>
+  <action name="actionParticipant">
+   <property name="text">
+    <string>Participant Configuration</string>
    </property>
   </action>
  </widget>

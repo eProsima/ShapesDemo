@@ -1,4 +1,4 @@
-// Copyright 2017 Proyectos y Sistemas de Mantenimiento SL (eProsima).
+// Copyright 2016 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/*! 
+/*!
  * @file Shape.cpp
  * This source file contains the definition of the described types in the IDL file.
  *
@@ -21,8 +21,10 @@
 
 #ifdef _WIN32
 // Remove linker warning LNK4221 on Visual Studio
-namespace { char dummy; }
-#endif
+namespace {
+char dummy;
+}  // namespace
+#endif  // _WIN32
 
 #include <eprosimashapesdemo/shapesdemo/Shape.h>
 
@@ -35,17 +37,27 @@ using namespace eprosima::fastcdr::exception;
 
 ShapeType::ShapeType()
 {
-
+    // m_color com.eprosima.idl.parser.typecode.StringTypeCode@70a9f84e
+    m_color ="";
+    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@130f889
     m_x = 0;
+    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@1188e820
     m_y = 0;
+    // m_shapesize com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2f490758
     m_shapesize = 0;
+
 }
 
 ShapeType::~ShapeType()
 {
+
+
+
+
 }
 
-ShapeType::ShapeType(const ShapeType &x)
+ShapeType::ShapeType(
+        const ShapeType& x)
 {
     m_color = x.m_color;
     m_x = x.m_x;
@@ -53,7 +65,8 @@ ShapeType::ShapeType(const ShapeType &x)
     m_shapesize = x.m_shapesize;
 }
 
-ShapeType::ShapeType(ShapeType &&x)
+ShapeType::ShapeType(
+        ShapeType&& x)
 {
     m_color = std::move(x.m_color);
     m_x = x.m_x;
@@ -61,86 +74,225 @@ ShapeType::ShapeType(ShapeType &&x)
     m_shapesize = x.m_shapesize;
 }
 
-ShapeType& ShapeType::operator=(const ShapeType &x)
+ShapeType& ShapeType::operator =(
+        const ShapeType& x)
 {
+
     m_color = x.m_color;
     m_x = x.m_x;
     m_y = x.m_y;
     m_shapesize = x.m_shapesize;
-    
+
     return *this;
 }
 
-ShapeType& ShapeType::operator=(ShapeType &&x)
+ShapeType& ShapeType::operator =(
+        ShapeType&& x)
 {
+
     m_color = std::move(x.m_color);
     m_x = x.m_x;
     m_y = x.m_y;
     m_shapesize = x.m_shapesize;
-    
+
     return *this;
 }
 
-size_t ShapeType::getMaxCdrSerializedSize(size_t current_alignment)
+size_t ShapeType::getMaxCdrSerializedSize(
+        size_t current_alignment)
 {
     size_t initial_alignment = current_alignment;
-            
+
+
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + 255 + 1;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
 
 
     return current_alignment - initial_alignment;
 }
 
-size_t ShapeType::getCdrSerializedSize(const ShapeType& data, size_t current_alignment)
+size_t ShapeType::getCdrSerializedSize(
+        const ShapeType& data,
+        size_t current_alignment)
 {
+    (void)data;
     size_t initial_alignment = current_alignment;
-            
+
+
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + data.color().size() + 1;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
 
 
     return current_alignment - initial_alignment;
 }
 
-void ShapeType::serialize(eprosima::fastcdr::Cdr &scdr) const
+void ShapeType::serialize(
+        eprosima::fastcdr::Cdr& scdr) const
 {
-    if(m_color.length() <= 255)
+
     scdr << m_color;
-    else
-        throw eprosima::fastcdr::exception::BadParamException("color field exceeds the maximum length");
     scdr << m_x;
-
     scdr << m_y;
-
     scdr << m_shapesize;
 
 }
 
-void ShapeType::deserialize(eprosima::fastcdr::Cdr &dcdr)
+void ShapeType::deserialize(
+        eprosima::fastcdr::Cdr& dcdr)
 {
+
     dcdr >> m_color;
     dcdr >> m_x;
     dcdr >> m_y;
     dcdr >> m_shapesize;
 }
 
-size_t ShapeType::getKeyMaxCdrSerializedSize(size_t current_alignment)
+/*!
+ * @brief This function copies the value in member color
+ * @param _color New value to be copied in member color
+ */
+void ShapeType::color(
+        const std::string& _color)
 {
-	size_t current_align = current_alignment;
-            
+    m_color = _color;
+}
+
+/*!
+ * @brief This function moves the value in member color
+ * @param _color New value to be moved in member color
+ */
+void ShapeType::color(
+        std::string&& _color)
+{
+    m_color = std::move(_color);
+}
+
+/*!
+ * @brief This function returns a constant reference to member color
+ * @return Constant reference to member color
+ */
+const std::string& ShapeType::color() const
+{
+    return m_color;
+}
+
+/*!
+ * @brief This function returns a reference to member color
+ * @return Reference to member color
+ */
+std::string& ShapeType::color()
+{
+    return m_color;
+}
+/*!
+ * @brief This function sets a value in member x
+ * @param _x New value for member x
+ */
+void ShapeType::x(
+        int32_t _x)
+{
+    m_x = _x;
+}
+
+/*!
+ * @brief This function returns the value of member x
+ * @return Value of member x
+ */
+int32_t ShapeType::x() const
+{
+    return m_x;
+}
+
+/*!
+ * @brief This function returns a reference to member x
+ * @return Reference to member x
+ */
+int32_t& ShapeType::x()
+{
+    return m_x;
+}
+
+/*!
+ * @brief This function sets a value in member y
+ * @param _y New value for member y
+ */
+void ShapeType::y(
+        int32_t _y)
+{
+    m_y = _y;
+}
+
+/*!
+ * @brief This function returns the value of member y
+ * @return Value of member y
+ */
+int32_t ShapeType::y() const
+{
+    return m_y;
+}
+
+/*!
+ * @brief This function returns a reference to member y
+ * @return Reference to member y
+ */
+int32_t& ShapeType::y()
+{
+    return m_y;
+}
+
+/*!
+ * @brief This function sets a value in member shapesize
+ * @param _shapesize New value for member shapesize
+ */
+void ShapeType::shapesize(
+        int32_t _shapesize)
+{
+    m_shapesize = _shapesize;
+}
+
+/*!
+ * @brief This function returns the value of member shapesize
+ * @return Value of member shapesize
+ */
+int32_t ShapeType::shapesize() const
+{
+    return m_shapesize;
+}
+
+/*!
+ * @brief This function returns a reference to member shapesize
+ * @return Reference to member shapesize
+ */
+int32_t& ShapeType::shapesize()
+{
+    return m_shapesize;
+}
+
+
+size_t ShapeType::getKeyMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    size_t current_align = current_alignment;
+
+
      current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4) + 255 + 1;
-     
+
 
 
 
@@ -153,13 +305,10 @@ bool ShapeType::isKeyDefined()
     return true;
 }
 
-void ShapeType::serializeKey(eprosima::fastcdr::Cdr &scdr) const
+void ShapeType::serializeKey(
+        eprosima::fastcdr::Cdr& scdr) const
 {
-	 if(m_color.length() <= 255)
-	scdr << m_color;
-	else
-	    throw eprosima::fastcdr::exception::BadParamException("color field exceeds the maximum length");  
-	 
-	 
-	 
+    (void) scdr;
+     scdr << m_color;
+
 }

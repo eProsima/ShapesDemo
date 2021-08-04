@@ -142,6 +142,7 @@ set( MOC_HEADERS
     include/eprosimashapesdemo/qt/UpdateThread.h
     include/eprosimashapesdemo/qt/mainwindow.h
     include/eprosimashapesdemo/qt/optionsdialog.h
+    include/eprosimashapesdemo/qt/participantdialog.h
     include/eprosimashapesdemo/qt/publishdialog.h
     include/eprosimashapesdemo/qt/subscribedialog.h
     )
@@ -149,10 +150,11 @@ set( MOC_HEADERS
 set( UIS
     forms/mainwindow.ui
     forms/optionsdialog.ui
+    forms/participantdialog.ui
     forms/publishdialog.ui
     forms/subscribedialog.ui
     )
-    
+
 set( RESOURCES
     images/eprosimalogo.qrc
     )
@@ -179,6 +181,7 @@ set( SHAPESDEMO_SOURCES
     src/qt/UpdateThread.cpp
     src/shapesdemo/ShapeSubscriber.cpp
     src/qt/optionsdialog.cpp
+    src/qt/participantdialog.cpp
     src/qt/ContentFilterSelector.cpp
     src/shapesdemo/ShapeHistory.cpp
     images/eprosima_icon.rc

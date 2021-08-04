@@ -36,29 +36,39 @@ class ShapeSubscriber;
 /**
  * @brief Class ContentFilterSelector, implements content filter selector.
  */
-class ContentFilterSelector: public QWidget
+class ContentFilterSelector : public QWidget
 {
     // Q_OBJECT
+
 public:
-    ContentFilterSelector(QWidget* parent=0);
+
+    ContentFilterSelector(
+            QWidget* parent = 0);
     virtual ~ContentFilterSelector();
 
     //    QSize minimumSizeHint() const;
     //    QSize sizeHint() const;
 
-    void assignShapeSubscriber(ShapeSubscriber* ssub);
+    void assignShapeSubscriber(
+            ShapeSubscriber* ssub);
+
 protected:
 
-
 private:
-
 
 public slots:
-    void mousePressEvent(QMouseEvent* event);
-    void mouseMoveEvent(QMouseEvent* event);
-    void mouseReleaseEvent(QMouseEvent* event);
-    void paintEvent(QPaintEvent *event);
+
+    void mousePressEvent(
+            QMouseEvent* event);
+    void mouseMoveEvent(
+            QMouseEvent* event);
+    void mouseReleaseEvent(
+            QMouseEvent* event);
+    void paintEvent(
+            QPaintEvent* event);
+
 private:
+
     QPen m_pen;
     QBrush m_brush;
     QPoint offset;
@@ -66,7 +76,8 @@ private:
     int m_size_y;
     bool m_moveFilter;
     bool m_resizeFilter;
-    SD_CONTENTCORNER getCorner(QMouseEvent* event);
+    SD_CONTENTCORNER getCorner(
+            QMouseEvent* event);
     QFrame* m_frame;
     SD_CONTENTCORNER m_corner;
     ShapeSubscriber* mp_ssub;

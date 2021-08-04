@@ -6,7 +6,7 @@ Each shape refers to its own topic: Square, Triangle or Circle.
 A single instance of the eProsima Shapes Demo can publish on or subscribe to several topics at a time.
 
 It can be used to demonstrate the capabilities of eProsima *Fast DDS* or as a proof of interoperability with other
-RTPS-compliant implementations.
+DDS/RTPS-compliant implementations.
 
 
 ## Installation from sources
@@ -167,17 +167,18 @@ Note that using Lifespan QoS will not have any visual effect.
 
 ## Miscellaneous Options and Windows
 
-### Other Options
+### Participant Configuration
 
-Under the Options->Preferences tab you will find the following menu:
+Under the Options->Participant Configuration tab you will find the following menu:
 
-![Other options](docs/options.png)
+![Other options](docs/participant.png)
 
 You can modify the following settings:
 
-- **Transport Protocol:**  You can select between UDP protocol, TCP LAN Server, TCP WAN Server or TCP Client.
-  With UDP Protocol the applicacion will work sending multicast packets to communicate with other apps.
-  TCP protocol needs a minimal configuration to create the connection between the machines:
+- **Transport Protocol:**  You can select between UDP protocol, TCP LAN Server, TCP WAN Server or TCP Client,
+  and Shared Memory protocol.
+  - **UDP:** With UDP Protocol the applicacion will work sending multicast packets to communicate with other apps.
+  - **TCP:** TCP protocol needs a minimal configuration to create the connection between the machines:
     - If the applicacion is going to run as a LAN server, it only needs to set the listening port where it is going to
       accept connections (note that firewall must be configured to allow inbound traffic).
     - If the applicacion is going to run as a WAN server, it needs to set the listening port where it is going to
@@ -185,10 +186,35 @@ You can modify the following settings:
       and router must relay listening port traffic to server machine).
     - If the applicacion is going to run as a client it needs to know the IP address of the server (or its WAN address
       if both instances don't share network) and the port where server is listening for connections.
-- **Domain ID:** The user can select different Domain IDs.
+  - **Shared Memory (SHM):** Activating Shared Memory protocol will use the Shared Memory Transport, a *Fast DDS* feature that
+  allows a faster and more efficient communication for Participants running in the same host.
+  - **Default** In case no transport has been activated, *Fast DDS* default transports will be used (UDP + SHM).
+
+- **Same host delivery:**  *Fast DDS* has some features that allow Participants running in the same host or process
+  to share resources in order to improve the communication:
+  - **Intraprocess:** Allow using Intraprocess delivery when both Endpoints are running in the same process.
+  - **Data Sharing:** Allow using Data Sharing delivery when both Endpoints are running in the same host.
+
+- **Domain:** The user can select different Domain IDs.
   Shapes Demo instances using different Domain IDs will not communicate.
   To modify the Domain ID the user needs to stop the participant (thus removing all existing publishers and
   subscribers) and start a new one with the new Domain ID.
+
+- **Statistics:** The user can activate *Fast DDS Statistics module* so different instrumentation data could be
+  collected and analyzed by the *Fast DDS Statistics Backend*, or be represented by *Fast DDS Monitor*.
+  This module requires to have compiled *Fast DDS* with Statistics Module ON.
+
+In order to apply the changes done in this dialog, the current Participant must be stopped (in case it is running)
+and a new one will be created with this new configuration.
+
+### Preferences
+
+Under the Options->Preferences tab you will find the following menu:
+
+![Other options](docs/preferences.png)
+
+You can modify the following settings:
+
 - **Update interval:** This value changes the publication period for all the publishers.
 - **Speed:** This scroll bar allows the user to change how much the Shape moves between two write calls.
 

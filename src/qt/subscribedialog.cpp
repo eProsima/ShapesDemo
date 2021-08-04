@@ -17,8 +17,9 @@
 #include "eprosimashapesdemo/shapesdemo/ShapesDemo.h"
 #include "eprosimashapesdemo/shapesdemo/ShapeSubscriber.h"
 
-#include "fastrtps/utils/TimeConversion.h"
-
+#include <fastdds/dds/subscriber/qos/DataReaderQos.hpp>
+#include <fastdds/dds/subscriber/qos/SubscriberQos.hpp>
+#include <fastdds/rtps/common/Time_t.h>
 
 #include <QIntValidator>
 #include <QMessageBox>
@@ -27,7 +28,7 @@
 
 SubscribeDialog::SubscribeDialog(
         ShapesDemo* psd,
-        QWidget *parent)
+        QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::SubscribeDialog)
     , mp_sd(psd)
@@ -50,157 +51,164 @@ SubscribeDialog::~SubscribeDialog()
 
 void SubscribeDialog::on_buttonBox_accepted()
 {
-    ShapeSubscriber* SSub = new ShapeSubscriber((MainWindow*)mp_parent, this->mp_sd->getParticipant());
+    // Check the participant is created
+    if (!this->mp_sd->init())
+    {
+        std::cerr << "Error initializing Participant when creating Subscriber" << std::endl;
+        return;
+    }
 
-    //SHAPE/TOPIC:
+    // Get Topic if exist or add one
+    Topic* topic = this->mp_sd->getTopic(this->ui->combo_Shape->currentText().toUtf8().constData());
+
+    ShapeSubscriber* SSub = new ShapeSubscriber((MainWindow*)mp_parent, this->mp_sd, topic);
+
+    // Set shape type
     if (this->ui->combo_Shape->currentText() == QString("Square"))
     {
         SSub->m_shapeType = SQUARE;
-        SSub->m_attributes.topic.topicName = "Square";
     }
     else if (this->ui->combo_Shape->currentText() == QString("Triangle"))
     {
-        SSub->m_shapeType= TRIANGLE;
-        SSub->m_attributes.topic.topicName = "Triangle";
+        SSub->m_shapeType = TRIANGLE;
     }
     else if (this->ui->combo_Shape->currentText() == QString("Circle"))
     {
         SSub->m_shapeType = CIRCLE;
-        SSub->m_attributes.topic.topicName = "Circle";
     }
-    SSub->m_attributes.topic.topicDataType = "ShapeType";
-    SSub->m_attributes.topic.topicKind = rtps::WITH_KEY;
 
     //HISTORY
-    SSub->m_attributes.expectsInlineQos = false;
-    SSub->m_attributes.topic.historyQos.kind = KEEP_LAST_HISTORY_QOS;
-    SSub->m_attributes.topic.historyQos.depth = this->ui->spin_HistoryQos->value();
+    SSub->m_dr_qos.expects_inline_qos(false);
+    SSub->m_dr_qos.history().kind = eprosima::fastdds::dds::KEEP_LAST_HISTORY_QOS;
+    SSub->m_dr_qos.history().depth = this->ui->spin_HistoryQos->value();
     SSub->m_shapeHistory.m_history_depth = this->ui->spin_HistoryQos->value();
 
-    SSub->m_attributes.qos.m_presentation.hasChanged = true;
+    SSub->m_sub_qos.presentation().hasChanged = true; // Not implemented yet
 
     //RELIABILITY
     if (this->ui->checkBox_reliable->isChecked())
     {
-        SSub->m_attributes.qos.m_reliability.kind = RELIABLE_RELIABILITY_QOS;
+        SSub->m_dr_qos.reliability().kind = eprosima::fastdds::dds::RELIABLE_RELIABILITY_QOS;
     }
 
     //DURABILITY
     switch (this->ui->comboBox_durability->currentIndex())
     {
-        case 0: SSub->m_attributes.qos.m_durability.kind = VOLATILE_DURABILITY_QOS; break;
-        case 1: SSub->m_attributes.qos.m_durability.kind = TRANSIENT_LOCAL_DURABILITY_QOS; break;
+        case 0: SSub->m_dr_qos.durability().kind = eprosima::fastdds::dds::VOLATILE_DURABILITY_QOS; break;
+        case 1: SSub->m_dr_qos.durability().kind = eprosima::fastdds::dds::TRANSIENT_LOCAL_DURABILITY_QOS; break;
     }
 
     //LIVELINESS
     if (this->ui->comboBox_liveliness->currentIndex() == 0)
     {
-       SSub->m_attributes.qos.m_liveliness.kind = AUTOMATIC_LIVELINESS_QOS;
+        SSub->m_dr_qos.liveliness().kind = eprosima::fastdds::dds::AUTOMATIC_LIVELINESS_QOS;
     }
     if (this->ui->comboBox_liveliness->currentIndex() == 1)
     {
-       SSub->m_attributes.qos.m_liveliness.kind = MANUAL_BY_PARTICIPANT_LIVELINESS_QOS;
+        SSub->m_dr_qos.liveliness().kind = eprosima::fastdds::dds::MANUAL_BY_PARTICIPANT_LIVELINESS_QOS;
     }
     if (this->ui->comboBox_liveliness->currentIndex() == 2)
     {
-       SSub->m_attributes.qos.m_liveliness.kind = MANUAL_BY_TOPIC_LIVELINESS_QOS;
+        SSub->m_dr_qos.liveliness().kind = eprosima::fastdds::dds::MANUAL_BY_TOPIC_LIVELINESS_QOS;
     }
-    if (this->ui->lineEdit_leaseDuration->text()=="INF")
+
+    if (this->ui->lineEdit_leaseDuration->text() == "INF")
     {
-       SSub->m_attributes.qos.m_liveliness.lease_duration = c_TimeInfinite;
+        SSub->m_dr_qos.liveliness().lease_duration = c_TimeInfinite;
     }
     else
     {
         QString value = this->ui->lineEdit_leaseDuration->text();
-        if (value.toDouble()>0)
+        if (value.toDouble() > 0)
         {
-            SSub->m_attributes.qos.m_liveliness.lease_duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+            // Liveliness is retrieving by user in ms and is stored in s
+            SSub->m_dr_qos.liveliness().lease_duration = eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
         }
     }
 
     //OWNERSHIP
     switch (this->ui->comboBox_ownership->currentIndex())
     {
-        case 0: SSub->m_attributes.qos.m_ownership.kind = SHARED_OWNERSHIP_QOS; break;
+        case 0: SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS; break;
         case 1:
         {
-            SSub->m_attributes.qos.m_ownership.kind = EXCLUSIVE_OWNERSHIP_QOS;
+            SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS;
             SSub->m_shapeHistory.m_isExclusiveOwnership = true;
             break;
         }
     }
 
     //DEADLINE
-    if (this->ui->lineEdit_Deadline->text()=="INF")
+    if (this->ui->lineEdit_Deadline->text() == "INF")
     {
-        SSub->m_attributes.qos.m_deadline.period = c_TimeInfinite;
+        SSub->m_dr_qos.deadline().period = c_TimeInfinite;
     }
     else
     {
         QString value = this->ui->lineEdit_Deadline->text();
-        if (value.toDouble()>0)
+        if (value.toDouble() > 0)
         {
-            SSub->m_attributes.qos.m_deadline.period = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+            SSub->m_dr_qos.deadline().period = eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
         }
     }
 
     //LIFESPAN
-    if (this->ui->lineEdit_Lifespan->text()=="INF")
+    if (this->ui->lineEdit_Lifespan->text() == "INF")
     {
-        SSub->m_attributes.qos.m_lifespan.duration = c_TimeInfinite;
+        SSub->m_dr_qos.lifespan().duration = c_TimeInfinite;
     }
     else
     {
         QString value = this->ui->lineEdit_Lifespan->text();
-        if (value.toDouble()>0)
+        if (value.toDouble() > 0)
         {
-            SSub->m_attributes.qos.m_lifespan.duration = rtps::TimeConv::MilliSeconds2Time_t(value.toDouble()).to_duration_t();
+            SSub->m_dr_qos.lifespan().duration = eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
         }
     }
 
     //PARTITIONS
     if (this->ui->checkBox_Asterisk->isChecked())
     {
-        SSub->m_attributes.qos.m_partition.push_back("*");
+        SSub->m_sub_qos.partition().push_back("*");
     }
     if (this->ui->checkBox_A->isChecked())
     {
-        SSub->m_attributes.qos.m_partition.push_back("A");
+        SSub->m_sub_qos.partition().push_back("A");
     }
     if (this->ui->checkBox_B->isChecked())
     {
-        SSub->m_attributes.qos.m_partition.push_back("B");
+        SSub->m_sub_qos.partition().push_back("B");
     }
     if (this->ui->checkBox_C->isChecked())
     {
-        SSub->m_attributes.qos.m_partition.push_back("C");
+        SSub->m_sub_qos.partition().push_back("C");
     }
     if (this->ui->checkBox_D->isChecked())
     {
-        SSub->m_attributes.qos.m_partition.push_back("D");
+        SSub->m_sub_qos.partition().push_back("D");
     }
 
     //TIME FILTER
     if (this->ui->checkBox_timeBasedFilter->isChecked())
     {
         SSub->m_shapeHistory.m_filter.m_useTimeFilter = true;
-        if (this->ui->lineEdit_TimeBasedFilter->text()=="INF")
+        if (this->ui->lineEdit_TimeBasedFilter->text() == "INF")
         {
             //pWarning("Setting TimeBasedFilter as Infinite should be avoided, putting 0 instead"<<endl);
-            SSub->m_attributes.qos.m_timeBasedFilter.minimum_separation.seconds = 0;
+            SSub->m_dr_qos.time_based_filter().minimum_separation.seconds = 0;
         }
         else
         {
             QString value = this->ui->lineEdit_TimeBasedFilter->text();
             //cout << "TIME VALUE: "<< value.toStdString() << endl;
-            if (value.toInt()>0)
+            if (value.toInt() > 0)
             {
-                SSub->m_attributes.qos.m_timeBasedFilter.minimum_separation =
-                    rtps::TimeConv::MilliSeconds2Time_t(value.toInt()).to_duration_t();
+                SSub->m_dr_qos.time_based_filter().minimum_separation =
+                    eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
             }
 
         }
-        SSub->m_shapeHistory.m_filter.m_minimumSeparation = SSub->m_attributes.qos.m_timeBasedFilter.minimum_separation;
+        SSub->m_shapeHistory.m_filter.m_minimumSeparation = SSub->m_dr_qos.time_based_filter().minimum_separation;
     }
 
     //CONTENT FILTER
@@ -208,6 +216,18 @@ void SubscribeDialog::on_buttonBox_accepted()
     {
         SSub->m_shapeHistory.m_filter.m_useContentFilter = true;
     }
+
+    // Data Sharing
+    if (this->mp_sd->data_sharing_enable())
+    {
+        SSub->m_dr_qos.data_sharing().automatic();
+    }
+    else
+    {
+        SSub->m_dr_qos.data_sharing().off();
+    }
+
+    // Create Subscriber
     if (SSub->initSubscriber())
     {
         this->mp_sd->addSubscriber(SSub);
@@ -223,15 +243,12 @@ void SubscribeDialog::on_comboBox_ownership_currentIndexChanged(
     }
 }
 
-
-
-
 void SubscribeDialog::on_checkBox_reliable_toggled(
         bool checked)
 {
     if (!checked)
     {
-        if (this->ui->comboBox_ownership->currentIndex()==1)
+        if (this->ui->comboBox_ownership->currentIndex() == 1)
         {
             QMessageBox msgBox;
             msgBox.setText("EXCLUSIVE OWNERSHIP only available with Reliable subscribers");
