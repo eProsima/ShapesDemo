@@ -1,16 +1,19 @@
 // Copyright 2016 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+// This file is part of eProsima Fast DDS Shapes-Demo.
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+// eProsima Fast DDS Shapes-Demo is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// eProsima Fast DDS Shapes-Demo is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with eProsima Fast DDS Shapes-Demo. If not, see <https://www.gnu.org/licenses/>.
 
 /*!
  * @file Shape.cpp
@@ -103,7 +106,10 @@ size_t ShapeType::getMaxCdrSerializedSize(
 {
     size_t initial_alignment = current_alignment;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bafd75e... change files license
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + 255 + 1;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
@@ -126,7 +132,10 @@ size_t ShapeType::getCdrSerializedSize(
     (void)data;
     size_t initial_alignment = current_alignment;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bafd75e... change files license
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + data.color().size() + 1;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
@@ -288,8 +297,12 @@ int32_t& ShapeType::shapesize()
 size_t ShapeType::getKeyMaxCdrSerializedSize(
         size_t current_alignment)
 {
+<<<<<<< HEAD
     size_t current_align = current_alignment;
 
+=======
+	size_t current_align = current_alignment;
+>>>>>>> bafd75e... change files license
 
      current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4) + 255 + 1;
 
@@ -308,7 +321,16 @@ bool ShapeType::isKeyDefined()
 void ShapeType::serializeKey(
         eprosima::fastcdr::Cdr& scdr) const
 {
+<<<<<<< HEAD
     (void) scdr;
      scdr << m_color;
+=======
+	 if(m_color.length() <= 255)
+	scdr << m_color;
+	else
+	    throw eprosima::fastcdr::exception::BadParamException("color field exceeds the maximum length");
+
+
+>>>>>>> bafd75e... change files license
 
 }
