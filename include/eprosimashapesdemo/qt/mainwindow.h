@@ -1,17 +1,19 @@
 // Copyright 2021 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 //
-// This file is part of eProsima Fast DDS Shapes-Demo.
+// This file is part of eProsima Fast DDS Shapes Demo.
 //
-// eProsima Fast DDS Shapes-Demo is free software: you can redistribute it and/or modify
+// eProsima Fast DDS Shapes Demo is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// eProsima Fast DDS Shapes Demo is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with eProsima Fast DDS Shapes Demo. If not, see <https://www.gnu.org/licenses/>.
 
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
