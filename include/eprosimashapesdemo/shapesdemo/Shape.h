@@ -1,16 +1,19 @@
 // Copyright 2016 Proyectos y Sistemas de Mantenimiento SL (eProsima).
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+// This file is part of eProsima Fast DDS Shapes-Demo.
 //
-//     http://www.apache.org/licenses/LICENSE-2.0
+// eProsima Fast DDS Shapes-Demo is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// eProsima Fast DDS Shapes-Demo is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with eProsima Fast DDS Shapes-Demo. If not, see <https://www.gnu.org/licenses/>.
 
 /*!
  * @file Shape.h
@@ -83,45 +86,29 @@ public:
      * @brief Copy constructor.
      * @param x Reference to the object ShapeType that will be copied.
      */
-<<<<<<< HEAD
     eProsima_user_DllExport ShapeType(
             const ShapeType& x);
-=======
-    eProsima_user_DllExport ShapeType(const ShapeType &x);
->>>>>>> bafd75e... change files license
 
     /*!
      * @brief Move constructor.
      * @param x Reference to the object ShapeType that will be copied.
      */
-<<<<<<< HEAD
     eProsima_user_DllExport ShapeType(
             ShapeType&& x);
-=======
-    eProsima_user_DllExport ShapeType(ShapeType &&x);
->>>>>>> bafd75e... change files license
 
     /*!
      * @brief Copy assignment.
      * @param x Reference to the object ShapeType that will be copied.
      */
-<<<<<<< HEAD
     eProsima_user_DllExport ShapeType& operator =(
             const ShapeType& x);
-=======
-    eProsima_user_DllExport ShapeType& operator=(const ShapeType &x);
->>>>>>> bafd75e... change files license
 
     /*!
      * @brief Move assignment.
      * @param x Reference to the object ShapeType that will be copied.
      */
-<<<<<<< HEAD
     eProsima_user_DllExport ShapeType& operator =(
             ShapeType&& x);
-=======
-    eProsima_user_DllExport ShapeType& operator=(ShapeType &&x);
->>>>>>> bafd75e... change files license
 
     /*!
      * @brief This function copies the value in member color
@@ -203,15 +190,8 @@ public:
      * @brief This function returns a reference to member shapesize
      * @return Reference to member shapesize
      */
-<<<<<<< HEAD
     eProsima_user_DllExport int32_t& shapesize();
 
-=======
-    inline eProsima_user_DllExport int32_t& shapesize()
-    {
-        return m_shapesize;
-    }
->>>>>>> bafd75e... change files license
 
     /*!
      * @brief This function returns the maximum serialized size of an object
@@ -267,12 +247,8 @@ public:
      * @brief This function serializes the key members of an object using CDR serialization.
      * @param cdr CDR serialization object.
      */
-<<<<<<< HEAD
     eProsima_user_DllExport void serializeKey(
             eprosima::fastcdr::Cdr& cdr) const;
-=======
-    eProsima_user_DllExport void serializeKey(eprosima::fastcdr::Cdr &cdr) const;
->>>>>>> bafd75e... change files license
 
 private:
 

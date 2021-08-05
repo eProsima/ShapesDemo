@@ -103,10 +103,6 @@ size_t ShapeType::getMaxCdrSerializedSize(
 {
     size_t initial_alignment = current_alignment;
 
-<<<<<<< HEAD
-
-=======
->>>>>>> bafd75e... change files license
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + 255 + 1;
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
@@ -128,14 +124,6 @@ size_t ShapeType::getCdrSerializedSize(
 {
     (void)data;
     size_t initial_alignment = current_alignment;
-
-<<<<<<< HEAD
-
-=======
->>>>>>> bafd75e... change files license
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + data.color().size() + 1;
-
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
 
 
     current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
@@ -294,12 +282,8 @@ int32_t& ShapeType::shapesize()
 size_t ShapeType::getKeyMaxCdrSerializedSize(
         size_t current_alignment)
 {
-<<<<<<< HEAD
     size_t current_align = current_alignment;
 
-=======
-	size_t current_align = current_alignment;
->>>>>>> bafd75e... change files license
 
      current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4) + 255 + 1;
 
@@ -318,16 +302,7 @@ bool ShapeType::isKeyDefined()
 void ShapeType::serializeKey(
         eprosima::fastcdr::Cdr& scdr) const
 {
-<<<<<<< HEAD
     (void) scdr;
      scdr << m_color;
-=======
-	 if(m_color.length() <= 255)
-	scdr << m_color;
-	else
-	    throw eprosima::fastcdr::exception::BadParamException("color field exceeds the maximum length");
-
-
->>>>>>> bafd75e... change files license
 
 }
