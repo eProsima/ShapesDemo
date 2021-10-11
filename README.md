@@ -72,26 +72,105 @@ To install eProsima Shapes Demo using Colcon, please follow the steps below:
 
 ### Linux
 
-The following explains how to launch the eProsima Shapes Demo application on Linux systems running Ubuntu OS without
-the need for compilation. To do this, a Docker image will be used.
+eProsima provides the eProsima Fast DDS Suite Docker image for those who want a quick demonstration
+of Fast-DDS running on an Ubuntu platform. It can be downloaded from
+[eProsima's downloads page](https://eprosima.com/index.php/downloads-all).
 
-1.  Download and install Docker application. Open a terminal and type the following command:
+This Docker image was built for Ubuntu 20.04 (Focal Fossa).
 
-        $ sudo apt-get install docker.io
+To run this container you need **Docker installed**. From a terminal run the following command
 
-2.  Download the Docker image file from https://eprosima.com/index.php/downloads-all.
+	$ sudo apt-get install docker.io
 
-3.  Allow root to use graphical interface:
+Load the docker image:
 
-        $ xhost local:root
+	$ docker load -i ubuntu-fastdds-suite:<FastDDS-Version>.tar
+	$ docker tag ubuntu-fastdds-suite:<FastDDS-Version> ubuntu-fastdds-suite:latest
 
-4.  Load the Docker image:
+Run the eProsima Fast DDS Suite Docker container:
 
-        $ docker load -i ubuntu-fast-dds-shapesdemo:2.4.0.tar
+    $ xhost local:root
+    $ docker run -it --privileged -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix \
+    ubuntu-fastdds-suite:<FastDDS-Version>
 
-5.  Run the Docker image:
+You can run the **Shapes Demo** application once inside the Docker container by running:
 
-        $ docker run -it --privileged -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix ubuntu-fast-dds-shapesdemo:v2.4.0
+    $ ShapesDemo
+
+eProsima **Shapes Demo** usage information can be found on the
+[Shapes Demo First Steps page](https://eprosima-shapes-demo.readthedocs.io/en/latest/first_steps/first_steps.html).
+
+
+Other than the Shapes Demo application, Fast DDS Suite also provides the following bundled in the same Docker image:
+
+#### **Fast DDS Monitor**
+
+eProsima Fast DDS Monitor is a graphical desktop application aimed at monitoring DDS environments
+deployed using the *eProsima Fast DDS* library. Thus, the user can monitor in real time the status
+of publication/subscription communications between DDS entities. They can also choose from a wide
+variety of communication parameters to be measured (latency, throughput,packet loss, etc.), as well
+as record and compute in real time statistical measurements on these parameters (mean, variance,
+standard deviation, etc.).
+
+You can read more about this application on the
+[Fast DDS Monitor documentation page](https://fast-dds-monitor.readthedocs.io/).
+
+To run this application once inside the Docker container run:
+
+    $ fastdds_monitor
+
+eProsima Fast DDS Monitor usage information can be found on the
+[Fast DDS Monitor User Manual](
+https://fast-dds-monitor.readthedocs.io/en/latest/rst/user_manual/initialize_monitoring.html).
+
+
+#### **Fast DDS libraries and Examples**
+
+Included in this Docker container is a set of binary examples that showcase several functionalities of the
+Fast DDS libraries. These examples' path can be accessed from a terminal by typing
+
+    $ goToExamples
+
+From this folder you can access all examples, both for DDS and RTPS. We detail the steps to launch two such
+examples below.
+
+To launch the Hello World example (a minimal example that will perform a Publisher/Subscriber match and start
+sending samples) you could run:
+
+    $ goToExamples
+    $ cd HelloWorldExample/bin
+    $ tmux new-session "./HelloWorldExample publisher 0 1000" \; \
+    split-window "./HelloWorldExample subscriber" \; \
+    select-layout even-vertical
+
+This example is not constrained to the current instance. It's possible to run several instances of this
+container to check the communication between them by running the following from each container.
+
+    $ goToExamples
+    $ cd HelloWorldExample/bin
+    $ ./HelloWorldExample publisher
+
+or
+
+    $ goToExamples
+    $ cd HelloWorldExample/bin
+    $ ./HelloWorldExample subscriber
+
+Another example you could launch is the Benchmark example. This example creates either a Publisher or a Subscriber and
+on a successful match starts sending samples. After a few seconds the process that launched the Publisher will show
+a report with the number of samples transmitted.
+
+On the subscriber side, run:
+
+    $ goToExamples
+    $ cd Benchmark/bin
+    $ ./Benchmark subscriber udp
+
+On the publisher side, run:
+
+    $ goToExamples
+    $ cd Benchmark/bin
+    $ ./Benchmark publisher udp
 
 ### Windows
 
