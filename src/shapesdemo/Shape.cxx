@@ -37,13 +37,13 @@ using namespace eprosima::fastcdr::exception;
 
 ShapeType::ShapeType()
 {
-    // m_color com.eprosima.idl.parser.typecode.StringTypeCode@70a9f84e
+    // m_color com.eprosima.idl.parser.typecode.StringTypeCode@853265
     m_color ="";
-    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@130f889
+    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@1205a84
     m_x = 0;
-    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@1188e820
+    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@10587f1
     m_y = 0;
-    // m_shapesize com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2f490758
+    // m_shapesize com.eprosima.idl.parser.typecode.PrimitiveTypeCode@176b067
     m_shapesize = 0;
 
 }
@@ -96,6 +96,19 @@ ShapeType& ShapeType::operator =(
     m_shapesize = x.m_shapesize;
 
     return *this;
+}
+
+bool ShapeType::operator ==(
+        const ShapeType& x) const
+{
+
+    return (m_color == x.m_color && m_x == x.m_x && m_y == x.m_y && m_shapesize == x.m_shapesize);
+}
+
+bool ShapeType::operator !=(
+        const ShapeType& x) const
+{
+    return !(*this == x);
 }
 
 size_t ShapeType::getMaxCdrSerializedSize(
@@ -292,7 +305,7 @@ size_t ShapeType::getKeyMaxCdrSerializedSize(
 
 
      current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4) + 255 + 1;
-
+     
 
 
 
@@ -310,5 +323,5 @@ void ShapeType::serializeKey(
 {
     (void) scdr;
      scdr << m_color;
-
+         
 }
