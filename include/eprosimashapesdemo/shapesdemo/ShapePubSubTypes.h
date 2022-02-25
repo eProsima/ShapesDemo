@@ -30,7 +30,6 @@
 
 #if !defined(GEN_API_VER) || (GEN_API_VER != 1)
 #error \
-
     Generated Shape is not compatible with current installed Fast DDS. Please, regenerate it with fastddsgen.
 #endif  // GEN_API_VER
 
