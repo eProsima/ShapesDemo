@@ -57,6 +57,15 @@ ShapeSubscriber::~ShapeSubscriber()
         }
     }
 
+    if (mp_sd->getParticipant() && mp_filtered_topic)
+    {
+        if (ReturnCode_t::RETCODE_OK != mp_sd->getParticipant()->delete_contentfilteredtopic(mp_filtered_topic))
+        {
+            std::cerr << "Error deleting filtered topic" << std::endl;
+            // NOTE: don't return since we want to try and remove the subscriber
+        }
+    }
+    
     if (mp_sd->getParticipant() && mp_subscriber)
     {
         if (ReturnCode_t::RETCODE_OK != mp_sd->getParticipant()->delete_subscriber(mp_subscriber))
@@ -75,8 +84,31 @@ ShapeSubscriber::~ShapeSubscriber()
 bool ShapeSubscriber::initSubscriber()
 {
     mp_subscriber = mp_sd->getParticipant()->create_subscriber(m_sub_qos);
+    
+    eprosima::fastdds::dds::TopicDescription* topic = mp_topic;
+    
+    if (m_shapeHistory.m_filter.m_useContentFilter)
+    {
+        static uint64_t filter_index = 0;
+        std::vector<std::string> parameters;
+        parameters.emplace_back(std::to_string(m_shapeHistory.m_filter.m_minX));
+        parameters.emplace_back(std::to_string(m_shapeHistory.m_filter.m_maxX));
+        parameters.emplace_back(std::to_string(m_shapeHistory.m_filter.m_minY));
+        parameters.emplace_back(std::to_string(m_shapeHistory.m_filter.m_maxY));
+        mp_filtered_topic = mp_sd->getParticipant()->create_contentfilteredtopic(
+            std::to_string(filter_index), mp_topic,
+            "x > %0 and x < %1 and y > %2 and y < %3", parameters);
+        if (nullptr != mp_filtered_topic)
+        {
+            topic = mp_filtered_topic;
+        }
+        else
+        {
+            m_mainWindow->addMessageToOutput(QString("Error creating content filtered topic. Using application filtering."));
+        }
+    }
 
-    mp_datareader = mp_subscriber->create_datareader(mp_topic, m_dr_qos, &listener_);
+    mp_datareader = mp_subscriber->create_datareader(topic, m_dr_qos, &listener_);
 
     return nullptr != mp_datareader;
 }
@@ -160,6 +192,15 @@ void ShapeSubscriber::adjustContentFilter(
 {
     m_mutex.lock();
     m_shapeHistory.adjustContentFilter(filter);
+    if (nullptr != mp_filtered_topic)
+    {
+        std::vector<std::string> parameters;
+        parameters.emplace_back(std::to_string(filter.m_minX));
+        parameters.emplace_back(std::to_string(filter.m_maxX));
+        parameters.emplace_back(std::to_string(filter.m_minY));
+        parameters.emplace_back(std::to_string(filter.m_maxY));
+        mp_filtered_topic->set_expression_parameters(parameters);
+    }
     m_mutex.unlock();
 }
 

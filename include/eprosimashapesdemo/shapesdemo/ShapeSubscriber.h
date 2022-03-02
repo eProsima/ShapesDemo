@@ -34,6 +34,7 @@
 #include <fastdds/dds/subscriber/qos/DataReaderQos.hpp>
 #include <fastdds/dds/subscriber/Subscriber.hpp>
 #include <fastdds/dds/topic/Topic.hpp>
+#include <fastdds/dds/topic/ContentFilteredTopic.hpp>
 
 using namespace eprosima::fastdds::dds;
 
@@ -60,6 +61,7 @@ public:
     DataReader* mp_datareader;
     eprosima::fastdds::dds::Subscriber* mp_subscriber;
     Topic* mp_topic;
+    ContentFilteredTopic* mp_filtered_topic = nullptr;
 
     /**
      * @brief Initialize the subscriber
