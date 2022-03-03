@@ -97,7 +97,7 @@ bool ShapeSubscriber::initSubscriber()
         parameters.emplace_back(std::to_string(m_shapeHistory.m_filter.m_maxY));
         mp_filtered_topic = mp_sd->getParticipant()->create_contentfilteredtopic(
             std::to_string(filter_index), mp_topic,
-            "x > %0 and x < %1 and y > %2 and y < %3", parameters);
+            "x > %0 AND x < %1 AND y > %2 AND y < %3", parameters);
         if (nullptr != mp_filtered_topic)
         {
             topic = mp_filtered_topic;
