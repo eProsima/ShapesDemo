@@ -179,6 +179,7 @@ set( SHAPESDEMO_SOURCES
     src/shapesdemo/Shape.cxx
     src/shapesdemo/ShapesDemo.cpp
     src/shapesdemo/ShapePubSubTypes.cxx
+    src/shapesdemo/ShapeTypeObject.cxx
     src/main.cpp
     src/shapesdemo/ShapePublisher.cpp
     src/qt/UpdateThread.cpp
