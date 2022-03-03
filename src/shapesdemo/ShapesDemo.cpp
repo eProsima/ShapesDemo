@@ -22,6 +22,7 @@
 #include <eprosimashapesdemo/shapesdemo/ShapesDemo.h>
 #include <eprosimashapesdemo/shapesdemo/ShapePublisher.h>
 #include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
+#include <eprosimashapesdemo/shapesdemo/ShapeTypeObject.h>
 #include <eprosimashapesdemo/shapesdemo/ShapeInfo.h>
 #include <eprosimashapesdemo/qt/mainwindow.h>
 
@@ -58,6 +59,7 @@ ShapesDemo::ShapesDemo(
     maxY = MAX_DRAW_AREA_Y;
 
     std::cout << "Creating ShapesDemo : " << m_ownership_strength_map.size() << std::endl;
+    registerShapeTypes();
 }
 
 ShapesDemo::~ShapesDemo()
