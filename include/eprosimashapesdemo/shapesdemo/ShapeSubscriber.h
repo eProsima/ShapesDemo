@@ -33,8 +33,8 @@
 #include <fastdds/dds/subscriber/DataReaderListener.hpp>
 #include <fastdds/dds/subscriber/qos/DataReaderQos.hpp>
 #include <fastdds/dds/subscriber/Subscriber.hpp>
-#include <fastdds/dds/topic/Topic.hpp>
 #include <fastdds/dds/topic/ContentFilteredTopic.hpp>
+#include <fastdds/dds/topic/Topic.hpp>
 
 using namespace eprosima::fastdds::dds;
 
