@@ -23,6 +23,7 @@
 #include "ui_mainwindow.h"
 #include <eprosimashapesdemo/qt/UpdateThread.h>
 
+#include <eprosimashapesdemo/shapesdemo/ShapesDemoLogConsumer.h>
 #include <eprosimashapesdemo/shapesdemo/ShapePublisher.h>
 #include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
 
@@ -87,6 +88,8 @@ MainWindow::MainWindow(
     ui->widget_contentFilter->setVisible(false);
 
     // The Participant is created when Start is pressed or when an Endpoint is created
+    
+    ShapesDemoLogConsumer::register_new_consumer(this);
 }
 
 MainWindow::~MainWindow()
