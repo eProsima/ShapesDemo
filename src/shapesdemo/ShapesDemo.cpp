@@ -58,6 +58,9 @@ ShapesDemo::ShapesDemo(
     maxX = MAX_DRAW_AREA_X;
     maxY = MAX_DRAW_AREA_Y;
 
+    m_type->auto_fill_type_object(false);
+    m_type->auto_fill_type_information(false);
+
     std::cout << "Creating ShapesDemo : " << m_ownership_strength_map.size() << std::endl;
     registerShapeTypes();
 }
