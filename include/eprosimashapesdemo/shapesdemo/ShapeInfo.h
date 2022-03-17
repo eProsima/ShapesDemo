@@ -48,7 +48,7 @@ public:
         , m_dirX(0)
         , m_dirY(0)
         , m_changeDir(true)
-        , m_max_speed_variance(0.1)
+        , m_max_speed_variance(0.1f)
     {
     }
 
