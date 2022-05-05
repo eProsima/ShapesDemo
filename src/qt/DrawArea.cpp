@@ -17,6 +17,10 @@
 
 #include <eprosimashapesdemo/qt/DrawArea.h>
 
+#ifdef ENABLE_ROS_COMPONENTS
+#include <eprosimashapesdemo/qt/mainwindow.h>
+#endif // ifdef ENABLE_ROS_COMPONENTS
+
 #include <eprosimashapesdemo/qt/ContentFilterSelector.h>
 #include <eprosimashapesdemo/shapesdemo/ShapesDemo.h>
 
@@ -82,8 +86,23 @@ void DrawArea::timerEvent(
         QTimerEvent* e)
 {
     Q_UNUSED(e);
+#ifdef ENABLE_ROS_COMPONENTS
+    if (mp_SD->m_options.m_ros2_topic)
+    {
+        this->mp_SD->m_mainWindow->setWindowTitle("ROS 2 Shapes Demo");
+        this->setStyleSheet(
+            "QWidget#areaDraw{background-color: rgb(255, 255, 255);background-repeat:none;background-image: url(:/vulcanexusLogo.png);background-position:center;}");
+    }
+    else
+    {
+        this->mp_SD->m_mainWindow->setWindowTitle("Shapes Demo");
+        this->setStyleSheet(
+            "QWidget#areaDraw{background-color: rgb(255, 255, 255);background-repeat:none;background-image: url(:/eProsimaLogo.png);background-position:center;}");
+    }
+#else
     this->setStyleSheet(
         "QWidget#areaDraw{background-color: rgb(255, 255, 255);background-repeat:none;background-image: url(:/eProsimaLogo.png);background-position:center;}");
+#endif // ifdef ENABLE_ROS_COMPONENTS
     repaint();
 }
 

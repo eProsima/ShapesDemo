@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>eProsimaLogo.png</file>
+        <file>vulcanexusLogo.png</file>
     </qresource>
 </RCC>

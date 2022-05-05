@@ -62,7 +62,17 @@ void SubscribeDialog::on_buttonBox_accepted()
     }
 
     // Get Topic if exist or add one
-    Topic* topic = this->mp_sd->getTopic(this->ui->combo_Shape->currentText().toUtf8().constData());
+    Topic* topic;
+    if (mp_sd->getOptions().m_ros2_topic)
+    {
+        std::string topicName("rt/");
+        topicName.append(this->ui->combo_Shape->currentText().toUtf8().constData());
+        topic = this->mp_sd->getTopic(topicName);
+    }
+    else
+    {
+        topic = this->mp_sd->getTopic(this->ui->combo_Shape->currentText().toUtf8().constData());
+    }
 
     ShapeSubscriber* SSub = new ShapeSubscriber((MainWindow*)mp_parent, this->mp_sd, topic);
 
@@ -207,14 +217,13 @@ void SubscribeDialog::on_buttonBox_accepted()
             if (value.toInt() > 0)
             {
                 SSub->m_dr_qos.time_based_filter().minimum_separation =
-                    eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
+                        eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
             }
 
         }
         SSub->m_shapeHistory.m_filter.m_minimumSeparation = SSub->m_dr_qos.time_based_filter().minimum_separation;
     }
 
-    //CONTENT FILTER
     if (this->ui->checkBox_contentBasedFilter->isChecked())
     {
         SSub->m_shapeHistory.m_filter.m_useContentFilter = true;

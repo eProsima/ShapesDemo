@@ -54,7 +54,17 @@ void PublishDialog::on_button_OkCancel_accepted()
     }
 
     // Get Topic if exist or add one
-    TopicDescription* topic_desc = this->mp_sd->getTopic(this->ui->combo_Shape->currentText().toUtf8().constData());
+    TopicDescription* topic_desc;
+    if (mp_sd->getOptions().m_ros2_topic)
+    {
+        std::string topicName("rt/");
+        topicName.append(this->ui->combo_Shape->currentText().toUtf8().constData());
+        topic_desc = this->mp_sd->getTopic(topicName);
+    }
+    else
+    {
+        topic_desc = this->mp_sd->getTopic(this->ui->combo_Shape->currentText().toUtf8().constData());
+    }
     Topic* topic = dynamic_cast<Topic*>(topic_desc);
 
     // Create ShapePublisher object with a Publisher and a DataWriter
@@ -116,7 +126,7 @@ void PublishDialog::on_button_OkCancel_accepted()
         if (lease_duration_value.toDouble() > 0)
         {
             SP->m_dw_qos.liveliness().lease_duration =
-                eprosima::fastrtps::Duration_t(lease_duration_value.toDouble() * 1e-3);
+                    eprosima::fastrtps::Duration_t(lease_duration_value.toDouble() * 1e-3);
         }
     }
 
@@ -129,7 +139,7 @@ void PublishDialog::on_button_OkCancel_accepted()
             SP->m_dw_qos.liveliness().lease_duration != c_TimeInfinite)
     {
         SP->m_dw_qos.liveliness().announcement_period =
-            eprosima::fastrtps::Duration_t(lease_duration_value.toDouble() * 1e-3);
+                eprosima::fastrtps::Duration_t(lease_duration_value.toDouble() * 1e-3);
     }
     else
     {
