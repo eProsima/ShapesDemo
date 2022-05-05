@@ -33,8 +33,8 @@
 #include <sstream>
 #include <QString>
 
-#include "ShapeDefinitions.h"
-#include "ShapePubSubTypes.h"
+#include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
+#include "eprosimashapesdemo/shapesdemo/ShapePubSubTypes.h"
 
 using namespace eprosima::fastrtps;
 

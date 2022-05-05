@@ -26,8 +26,8 @@ char dummy;
 }  // namespace
 #endif  // _WIN32
 
-#include <eprosimashapesdemo/shapesdemo/Shape.h>
-
+#include "eprosimashapesdemo/shapesdemo/Shape.h"
+#include "eprosimashapesdemo/shapesdemo/ShapeTypeObject.h"
 #include <fastcdr/Cdr.h>
 
 #include <fastcdr/exceptions/BadParamException.h>
@@ -37,15 +37,17 @@ using namespace eprosima::fastcdr::exception;
 
 ShapeType::ShapeType()
 {
-    // m_color com.eprosima.idl.parser.typecode.StringTypeCode@853265
+    // m_color com.eprosima.idl.parser.typecode.StringTypeCode@5bfbf16f
     m_color ="";
-    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@1205a84
+    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@25af5db5
     m_x = 0;
-    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@10587f1
+    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@12cdcf4
     m_y = 0;
-    // m_shapesize com.eprosima.idl.parser.typecode.PrimitiveTypeCode@176b067
+    // m_shapesize com.eprosima.idl.parser.typecode.PrimitiveTypeCode@5bcea91b
     m_shapesize = 0;
 
+    // Just to register all known types
+    // registerShapeTypes();
 }
 
 ShapeType::~ShapeType()

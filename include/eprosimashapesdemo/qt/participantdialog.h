@@ -53,6 +53,9 @@ private slots:
     void on_statisticsCheckBox_stateChanged(
             int arg1);
 
+    void on_rosTopicCheckBox_stateChanged(
+            int arg1);
+
     void on_IntraprocesscheckBox_stateChanged(
             int arg1);
 

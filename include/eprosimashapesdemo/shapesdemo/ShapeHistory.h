@@ -18,7 +18,7 @@
 #ifndef SHAPEHISTORY_H
 #define SHAPEHISTORY_H
 
-#include "ShapeInfo.h"
+#include "eprosimashapesdemo/shapesdemo/ShapeInfo.h"
 #include <vector>
 #include <list>
 #include <cstdint>

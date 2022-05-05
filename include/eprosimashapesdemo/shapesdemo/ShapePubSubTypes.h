@@ -26,7 +26,7 @@
 #include <fastdds/dds/topic/TopicDataType.hpp>
 #include <fastrtps/utils/md5.h>
 
-#include "Shape.h"
+#include "eprosimashapesdemo/shapesdemo/Shape.h"
 
 #if !defined(GEN_API_VER) || (GEN_API_VER != 1)
 #error \

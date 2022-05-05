@@ -55,6 +55,7 @@ public:
     bool m_datasharing_transport;
     bool m_shm_transport;
     bool m_statistics;
+    bool m_ros2_topic;
     QString m_tcp_type;
     uint16_t m_listenPort;
     uint16_t m_serverPort;
@@ -70,6 +71,7 @@ public:
         m_datasharing_transport = true;
         m_shm_transport = true;
         m_statistics = false;
+        m_ros2_topic = false;
         m_listenPort = 5100;
         m_serverPort = 5100;
         m_serverIp = "127.0.0.1";
@@ -213,13 +215,17 @@ public:
     // on_publisher_discovery and storing to a map
 
     //! Add ownership strength to a writer
-    bool add_writer_strength(const eprosima::fastrtps::rtps::GUID_t& guid, uint32_t strength);
+    bool add_writer_strength(
+            const eprosima::fastrtps::rtps::GUID_t& guid,
+            uint32_t strength);
 
     //! Erase ownership strength from a writer (When writer drops)
-    bool remove_writer_strength(eprosima::fastrtps::rtps::GUID_t guid);
+    bool remove_writer_strength(
+            eprosima::fastrtps::rtps::GUID_t guid);
 
     //! Get writer strength
-    uint32_t writer_strength(eprosima::fastrtps::rtps::GUID_t guid);
+    uint32_t writer_strength(
+            eprosima::fastrtps::rtps::GUID_t guid);
 
 private:
 
@@ -242,11 +248,14 @@ private:
     void getNewDirection(
             Shape* sh);
 
-    ShapeTypePubSubType m_shapeTopicDataType;
+    //    ShapeTypePubSubType m_shapeTopicDataType;
     ShapesDemoOptions m_options;
     MainWindow* m_mainWindow;
     QMutex m_mutex;
     TypeSupport m_type;
+#ifdef ENABLE_ROS_COMPONENTS
+    TypeSupport m_ros_type;
+#endif // ifdef ENABLE_ROS_COMPONENTS
     std::map<std::string, Topic*> m_topics;
     bool m_data_sharing_enable;
 
@@ -254,7 +263,8 @@ private:
     {
     public:
 
-        Listener(ShapesDemo* participant)
+        Listener(
+                ShapesDemo* participant)
             : mp_parent_(participant)
         {
         }
@@ -265,19 +275,20 @@ private:
                 eprosima::fastrtps::rtps::WriterDiscoveryInfo&& info)
         {
             switch (info.status){
-            case eprosima::fastrtps::rtps::WriterDiscoveryInfo::DISCOVERED_WRITER:
-            case eprosima::fastrtps::rtps::WriterDiscoveryInfo::CHANGED_QOS_WRITER:
+                case eprosima::fastrtps::rtps::WriterDiscoveryInfo::DISCOVERED_WRITER:
+                case eprosima::fastrtps::rtps::WriterDiscoveryInfo::CHANGED_QOS_WRITER:
                     // Add strength to Participant map
                     mp_parent_->add_writer_strength(info.info.guid(), info.info.m_qos.m_ownershipStrength.value);
                     break;
-            case eprosima::fastrtps::rtps::WriterDiscoveryInfo::REMOVED_WRITER:
+                case eprosima::fastrtps::rtps::WriterDiscoveryInfo::REMOVED_WRITER:
                     // Erase strength to Participant map
                     mp_parent_->remove_writer_strength(info.info.guid());
                     break;
             }
         }
 
-private:
+    private:
+
         ShapesDemo* mp_parent_;
     }
     m_listener;

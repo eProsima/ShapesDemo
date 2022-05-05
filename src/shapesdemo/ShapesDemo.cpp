@@ -24,6 +24,10 @@
 #include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
 #include <eprosimashapesdemo/shapesdemo/ShapeTypeObject.h>
 #include <eprosimashapesdemo/shapesdemo/ShapeInfo.h>
+#ifdef ENABLE_ROS_COMPONENTS
+#include <eprosimashapesdemo/shapesdemo/KeylessShapeTypeObject.h>
+#include <eprosimashapesdemo/shapesdemo/KeylessShapePubSubTypes.h>
+#endif // ifdef ENABLE_ROS_COMPONENTS
 #include <eprosimashapesdemo/qt/mainwindow.h>
 
 #include <fastdds/dds/domain/qos/DomainParticipantQos.hpp>
@@ -49,6 +53,9 @@ ShapesDemo::ShapesDemo(
     , m_mainWindow(mw)
     , m_mutex(QMutex::Recursive)
     , m_type(new ShapeTypePubSubType())
+#ifdef ENABLE_ROS_COMPONENTS
+    , m_ros_type(new shapes_demo_typesupport::idl::KeylessShapeTypePubSubType())
+#endif // ifdef ENABLE_ROS_COMPONENTS
     , m_data_sharing_enable(false)
     , m_listener(this)
 {
@@ -60,6 +67,13 @@ ShapesDemo::ShapesDemo(
 
     m_type->auto_fill_type_object(false);
     m_type->auto_fill_type_information(false);
+
+#ifdef ENABLE_ROS_COMPONENTS
+    m_ros_type->auto_fill_type_object(false);
+    m_ros_type->auto_fill_type_information(false);
+
+    registerKeylessShapeTypes();
+#endif // ifdef ENABLE_ROS_COMPONENTS
 
     std::cout << "Creating ShapesDemo : " << m_ownership_strength_map.size() << std::endl;
     registerShapeTypes();
@@ -192,7 +206,6 @@ bool ShapesDemo::init()
 #endif // #ifndef FASTDDS_STATISTICS
         }
 
-
         mp_participant = DomainParticipantFactory::get_instance()->create_participant(
             m_options.m_domainId,
             qos,
@@ -207,7 +220,9 @@ bool ShapesDemo::init()
         // If the creation has been correct, register type
         m_isInitialized = true;
         m_type.register_type(mp_participant);
-
+#ifdef ENABLE_ROS_COMPONENTS
+        m_ros_type.register_type(mp_participant);
+#endif // ifdef ENABLE_ROS_COMPONENTS
         std::cout << "Participant created correctly" << std::endl;
     }
     return true;
@@ -421,7 +436,7 @@ Topic* ShapesDemo::getTopic(
     QMutexLocker lock(&m_mutex);
 
     // Look up if topic already exists
-    auto it = m_topics.find(topic_name);
+    std::map<std::string, Topic*>::iterator it = m_topics.find(topic_name);
 
     if (it != m_topics.end())
     {
@@ -430,31 +445,52 @@ Topic* ShapesDemo::getTopic(
     }
     else
     {
+        Topic* topic;
         // Create new Topic
-        Topic* topic = mp_participant->create_topic(
-            topic_name,         // Topic name
-            "ShapeType",        // Alwaysa same type
-            TOPIC_QOS_DEFAULT); // TODO check if default QoS is correct
 
+#ifdef ENABLE_ROS_COMPONENTS
+        if (m_options.m_ros2_topic)
+        {
+            topic = mp_participant->create_topic(
+                topic_name,     // Topic name
+                m_ros_type.get_type_name(),
+                TOPIC_QOS_DEFAULT); // TODO check if default QoS is correct
+
+            m_topics[topic_name] = topic;
+
+            return topic;
+        }
+        else
+#endif // ifdef ENABLE_ROS_COMPONENTS
+        {
+            topic = mp_participant->create_topic(
+                topic_name,     // Topic name
+                "ShapeType",    // Alwaysa same type
+                TOPIC_QOS_DEFAULT); // TODO check if default QoS is correct
+
+            m_topics[topic_name] = topic;
+        }
         // Add new topic to map
-        m_topics[topic_name] = topic;
-
         return topic;
     }
 }
 
-bool ShapesDemo::add_writer_strength(const GUID_t& guid, uint32_t strength)
+bool ShapesDemo::add_writer_strength(
+        const GUID_t& guid,
+        uint32_t strength)
 {
     m_ownership_strength_map[guid] = strength;
     return true;
 }
 
-bool ShapesDemo::remove_writer_strength(GUID_t guid)
+bool ShapesDemo::remove_writer_strength(
+        GUID_t guid)
 {
     return m_ownership_strength_map.erase(guid);
 }
 
-uint32_t ShapesDemo::writer_strength(GUID_t guid)
+uint32_t ShapesDemo::writer_strength(
+        GUID_t guid)
 {
     auto it = m_ownership_strength_map.find(guid);
     if (it != m_ownership_strength_map.end())
