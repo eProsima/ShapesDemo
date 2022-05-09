@@ -37,6 +37,26 @@ PublishDialog::PublishDialog(
 {
     setAttribute ( Qt::WA_DeleteOnClose, true );
     ui->setupUi(this);
+
+    if (mp_sd->getOptions().m_ros2_topic)
+    {
+        QRegularExpression checkbox_expression("checkBox_(A|B|C|D|Asterisk)");
+        QList<QCheckBox*> widgets = findChildren<QCheckBox*>(checkbox_expression);
+        for (auto& widget: widgets)
+        {
+            widget->setEnabled(false);
+        }
+        QList<QSpinBox*> widgets_spinbox = findChildren<QSpinBox*>("spin_ownershipStrength");
+        for (auto& widget: widgets_spinbox)
+        {
+            widget->setEnabled(false);
+        }
+        QList<QComboBox*> widgets_combobox = findChildren<QComboBox*>("comboBox_ownership");
+        for (auto& widget: widgets_combobox)
+        {
+            widget->setEnabled(false);
+        }
+    }
 }
 
 PublishDialog::~PublishDialog()
