@@ -165,10 +165,14 @@ void ParticipantDialog::on_rosTopicCheckBox_stateChanged(
         widget->setEnabled(!m_options->m_ros2_topic);
         widget->setChecked(false);
     }
-    QList<QSpinBox*> widgets_spinbox = parent()->findChildren<QSpinBox*>("spin_ownershipStrength");
-    for (auto& widget: widgets_spinbox)
+    QList<QWidget*> publisher_widget_list = parent()->findChildren<QWidget*>("PublishDialog");
+    for (auto& publisher_widget: publisher_widget_list)
     {
-        widget->setEnabled(!m_options->m_ros2_topic);
+        QList<QSpinBox*> widgets_spinbox = publisher_widget->findChildren<QSpinBox*>("spin_ownershipStrength");
+        for (auto& widget: widgets_spinbox)
+        {
+            widget->setEnabled(!m_options->m_ros2_topic);
+        }
     }
     QList<QComboBox*> widgets_combobox = parent()->findChildren<QComboBox*>("comboBox_ownership");
     for (auto& widget: widgets_combobox)

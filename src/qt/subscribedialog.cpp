@@ -160,14 +160,21 @@ void SubscribeDialog::on_buttonBox_accepted()
     }
 
     //OWNERSHIP
-    switch (this->ui->comboBox_ownership->currentIndex())
+    if (mp_sd->getOptions().m_ros2_topic)
     {
-        case 0: SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS; break;
-        case 1:
+        SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS;
+    }
+    else
+    {
+        switch (this->ui->comboBox_ownership->currentIndex())
         {
-            SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS;
-            SSub->m_shapeHistory.m_isExclusiveOwnership = true;
-            break;
+            case 0: SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS; break;
+            case 1:
+            {
+                SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS;
+                SSub->m_shapeHistory.m_isExclusiveOwnership = true;
+                break;
+            }
         }
     }
 
@@ -200,25 +207,28 @@ void SubscribeDialog::on_buttonBox_accepted()
     }
 
     //PARTITIONS
-    if (this->ui->checkBox_Asterisk->isChecked())
+    if (!mp_sd->getOptions().m_ros2_topic)
     {
-        SSub->m_sub_qos.partition().push_back("*");
-    }
-    if (this->ui->checkBox_A->isChecked())
-    {
-        SSub->m_sub_qos.partition().push_back("A");
-    }
-    if (this->ui->checkBox_B->isChecked())
-    {
-        SSub->m_sub_qos.partition().push_back("B");
-    }
-    if (this->ui->checkBox_C->isChecked())
-    {
-        SSub->m_sub_qos.partition().push_back("C");
-    }
-    if (this->ui->checkBox_D->isChecked())
-    {
-        SSub->m_sub_qos.partition().push_back("D");
+        if (this->ui->checkBox_Asterisk->isChecked())
+        {
+            SSub->m_sub_qos.partition().push_back("*");
+        }
+        if (this->ui->checkBox_A->isChecked())
+        {
+            SSub->m_sub_qos.partition().push_back("A");
+        }
+        if (this->ui->checkBox_B->isChecked())
+        {
+            SSub->m_sub_qos.partition().push_back("B");
+        }
+        if (this->ui->checkBox_C->isChecked())
+        {
+            SSub->m_sub_qos.partition().push_back("C");
+        }
+        if (this->ui->checkBox_D->isChecked())
+        {
+            SSub->m_sub_qos.partition().push_back("D");
+        }
     }
 
     //TIME FILTER
