@@ -53,7 +53,9 @@ ShapePublisher::~ShapePublisher()
             Duration_t wait_time(1, 0);
             rtps::InstanceHandle_t handle;
             if (mp_datawriter->get_type()->m_isGetKeyDefined)
+            {
                 mp_datawriter->dispose((void*)&this->m_shape.m_shape, handle);
+            }
             mp_datawriter->wait_for_acknowledgments(wait_time);
 
             if (ReturnCode_t::RETCODE_OK != mp_publisher->delete_datawriter(mp_datawriter))

@@ -456,6 +456,7 @@ Topic* ShapesDemo::getTopic(
                 m_ros_type.get_type_name(),
                 TOPIC_QOS_DEFAULT); // TODO check if default QoS is correct
 
+            // Add new topic to map
             m_topics[topic_name] = topic;
 
             return topic;
@@ -465,12 +466,12 @@ Topic* ShapesDemo::getTopic(
         {
             topic = mp_participant->create_topic(
                 topic_name,     // Topic name
-                "ShapeType",    // Alwaysa same type
+                "ShapeType",    // Always the same type
                 TOPIC_QOS_DEFAULT); // TODO check if default QoS is correct
 
+            // Add new topic to map
             m_topics[topic_name] = topic;
         }
-        // Add new topic to map
         return topic;
     }
 }

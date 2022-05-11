@@ -248,7 +248,6 @@ private:
     void getNewDirection(
             Shape* sh);
 
-    //    ShapeTypePubSubType m_shapeTopicDataType;
     ShapesDemoOptions m_options;
     MainWindow* m_mainWindow;
     QMutex m_mutex;

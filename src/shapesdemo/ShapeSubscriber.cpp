@@ -65,7 +65,7 @@ ShapeSubscriber::~ShapeSubscriber()
             // NOTE: don't return since we want to try and remove the subscriber
         }
     }
-    
+
     if (mp_sd->getParticipant() && mp_subscriber)
     {
         if (ReturnCode_t::RETCODE_OK != mp_sd->getParticipant()->delete_subscriber(mp_subscriber))
@@ -84,9 +84,9 @@ ShapeSubscriber::~ShapeSubscriber()
 bool ShapeSubscriber::initSubscriber()
 {
     mp_subscriber = mp_sd->getParticipant()->create_subscriber(m_sub_qos);
-    
+
     eprosima::fastdds::dds::TopicDescription* topic = mp_topic;
-    
+
     if (m_shapeHistory.m_filter.m_useContentFilter)
     {
         static uint64_t filter_index = 0;
@@ -96,7 +96,7 @@ bool ShapeSubscriber::initSubscriber()
         parameters.emplace_back(std::to_string(m_shapeHistory.m_filter.m_minY));
         parameters.emplace_back(std::to_string(m_shapeHistory.m_filter.m_maxY));
         mp_filtered_topic = mp_sd->getParticipant()->create_contentfilteredtopic(
-            std::to_string(filter_index), mp_topic,
+            std::to_string(filter_index++), mp_topic,
             "x > %0 AND x < %1 AND y > %2 AND y < %3", parameters);
         if (nullptr != mp_filtered_topic)
         {
@@ -104,7 +104,8 @@ bool ShapeSubscriber::initSubscriber()
         }
         else
         {
-            m_mainWindow->addMessageToOutput(QString("Error creating content filtered topic. Using application filtering."));
+            m_mainWindow->addMessageToOutput(QString(
+                        "Error creating content filtered topic. Using application filtering."));
         }
     }
 

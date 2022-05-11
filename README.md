@@ -353,3 +353,10 @@ When building eProsima Shapes Demo with ROS 2 capabilities enabled, a TypeSuppor
         publishing #1: shapes_demo_typesupport.idl.KeylessShapeType(color='BLUE', x=155, y=150, shapesize=30)
 
 
+---
+**NOTE**
+
+ROS 2 Topics enablement will disable some QOS that are not supported by ROS 2 at the moment, namely Ownership and Partitions.
+Their respective checkboxes will be disabled on the Publisher and Subscriber Dialogs.
+
+---

@@ -133,13 +133,13 @@ endif()
 eprosima_find_package(fastcdr)
 eprosima_find_package(fastrtps OPTION TINYXML2_FROM_SOURCE)
 
-# Required by ContentFilterTopic
+# Required by ContentFilteredTopic
 if (NOT fastrtps_FOUND OR fastrtps_VERSION LESS 2.5.1)
     message(FATAL_ERROR "Trying to use a version of Fast-DDS lower than 2.5.1. Please update your Fast-DDS installation.")
 endif()
 
 if(BUILD_ROS_COMPONENTS)
-    cmake_policy(SET CMP0057 NEW)
+    # cmake_policy(SET CMP0057 NEW)
     # If ROS environment is not set, disable ROS features.
     if (DEFINED ENV{ROS_VERSION})
         add_subdirectory(shapes_demo_typesupport)
@@ -231,9 +231,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE -D${SHAPESVERSION})
 target_include_directories(${PROJECT_NAME} PRIVATE include ${IU_HEADERS})
 
 if(BUILD_ROS_COMPONENTS)
-target_compile_definitions(${PROJECT_NAME} PRIVATE AFTER -DENABLE_ROS_COMPONENTS)
-#target_include_directories(${PROJECT_NAME} PRIVATE AFTER $ENV{VULCANEXUS_HOME}/include)
-
+target_compile_definitions(${PROJECT_NAME} PRIVATE -DENABLE_ROS_COMPONENTS)
 endif()
 
 target_link_libraries(${PROJECT_NAME} fastrtps fastcdr Qt5::Widgets Qt5::Core Qt5::Gui)
