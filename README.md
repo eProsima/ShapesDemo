@@ -356,7 +356,7 @@ When building eProsima Shapes Demo with ROS 2 capabilities enabled, a TypeSuppor
 ---
 **NOTE**
 
-ROS 2 Topics enablement will disable some QOS that are not supported by ROS 2 at the moment, namely Ownership and Partitions.
+ROS 2 Topics enablement will disable some QoS that are not supported by ROS 2 at the moment, namely Ownership and Partitions.
 Their respective checkboxes will be disabled on the Publisher and Subscriber Dialogs.
 
 ---

@@ -139,7 +139,6 @@ if (NOT fastrtps_FOUND OR fastrtps_VERSION LESS 2.5.1)
 endif()
 
 if(BUILD_ROS_COMPONENTS)
-    # cmake_policy(SET CMP0057 NEW)
     # If ROS environment is not set, disable ROS features.
     if (DEFINED ENV{ROS_VERSION})
         add_subdirectory(shapes_demo_typesupport)
