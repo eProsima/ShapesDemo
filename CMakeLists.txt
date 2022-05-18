@@ -133,6 +133,22 @@ endif()
 eprosima_find_package(fastcdr)
 eprosima_find_package(fastrtps OPTION TINYXML2_FROM_SOURCE)
 
+# Required by ContentFilteredTopic
+if (NOT fastrtps_FOUND OR fastrtps_VERSION LESS 2.5.1)
+    message(FATAL_ERROR "Trying to use a version of Fast-DDS lower than 2.5.1. Please update your Fast-DDS installation.")
+endif()
+
+if(BUILD_ROS_COMPONENTS)
+    # If ROS environment is not set, disable ROS features.
+    if (DEFINED ENV{ROS_VERSION})
+        add_subdirectory(shapes_demo_typesupport)
+    else()
+        message(WARNING "ROS environment not found. Disabling requested ROS 2 integration.")
+        set(BUILD_ROS_COMPONENTS OFF)
+    endif()
+
+endif()
+
 ###############################################################################
 # Compile
 ###############################################################################
@@ -191,6 +207,14 @@ set( SHAPESDEMO_SOURCES
     images/eprosima_icon.rc
     )
 
+if(BUILD_ROS_COMPONENTS)
+    list( APPEND SHAPESDEMO_SOURCES
+    src/shapesdemo/KeylessShape.cxx
+    src/shapesdemo/KeylessShapePubSubTypes.cxx
+    src/shapesdemo/KeylessShapeTypeObject.cxx
+    )
+endif()
+
 if(THIRDPARTY)
     set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
@@ -204,6 +228,11 @@ endif()
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE -D${SHAPESVERSION})
 target_include_directories(${PROJECT_NAME} PRIVATE include ${IU_HEADERS})
+
+if(BUILD_ROS_COMPONENTS)
+target_compile_definitions(${PROJECT_NAME} PRIVATE -DENABLE_ROS_COMPONENTS)
+endif()
+
 target_link_libraries(${PROJECT_NAME} fastrtps fastcdr Qt5::Widgets Qt5::Core Qt5::Gui)
 
 ###############################################################################

@@ -37,6 +37,26 @@ PublishDialog::PublishDialog(
 {
     setAttribute ( Qt::WA_DeleteOnClose, true );
     ui->setupUi(this);
+
+    if (mp_sd->getOptions().m_ros2_topic)
+    {
+        QRegularExpression checkbox_expression("checkBox_(A|B|C|D|Asterisk)");
+        QList<QCheckBox*> widgets = findChildren<QCheckBox*>(checkbox_expression);
+        for (auto& widget: widgets)
+        {
+            widget->setEnabled(false);
+        }
+        QList<QSpinBox*> widgets_spinbox = findChildren<QSpinBox*>("spin_ownershipStrength");
+        for (auto& widget: widgets_spinbox)
+        {
+            widget->setEnabled(false);
+        }
+        QList<QComboBox*> widgets_combobox = findChildren<QComboBox*>("comboBox_ownership");
+        for (auto& widget: widgets_combobox)
+        {
+            widget->setEnabled(false);
+        }
+    }
 }
 
 PublishDialog::~PublishDialog()
@@ -54,7 +74,17 @@ void PublishDialog::on_button_OkCancel_accepted()
     }
 
     // Get Topic if exist or add one
-    TopicDescription* topic_desc = this->mp_sd->getTopic(this->ui->combo_Shape->currentText().toUtf8().constData());
+    TopicDescription* topic_desc;
+    if (mp_sd->getOptions().m_ros2_topic)
+    {
+        std::string topicName("rt/");
+        topicName.append(this->ui->combo_Shape->currentText().toUtf8().constData());
+        topic_desc = this->mp_sd->getTopic(topicName);
+    }
+    else
+    {
+        topic_desc = this->mp_sd->getTopic(this->ui->combo_Shape->currentText().toUtf8().constData());
+    }
     Topic* topic = dynamic_cast<Topic*>(topic_desc);
 
     // Create ShapePublisher object with a Publisher and a DataWriter
@@ -116,7 +146,7 @@ void PublishDialog::on_button_OkCancel_accepted()
         if (lease_duration_value.toDouble() > 0)
         {
             SP->m_dw_qos.liveliness().lease_duration =
-                eprosima::fastrtps::Duration_t(lease_duration_value.toDouble() * 1e-3);
+                    eprosima::fastrtps::Duration_t(lease_duration_value.toDouble() * 1e-3);
         }
     }
 
@@ -129,7 +159,7 @@ void PublishDialog::on_button_OkCancel_accepted()
             SP->m_dw_qos.liveliness().lease_duration != c_TimeInfinite)
     {
         SP->m_dw_qos.liveliness().announcement_period =
-            eprosima::fastrtps::Duration_t(lease_duration_value.toDouble() * 1e-3);
+                eprosima::fastrtps::Duration_t(lease_duration_value.toDouble() * 1e-3);
     }
     else
     {
@@ -148,14 +178,22 @@ void PublishDialog::on_button_OkCancel_accepted()
     }
 
     //Ownership:
-    switch (this->ui->comboBox_ownership->currentIndex())
+    if (mp_sd->getOptions().m_ros2_topic)
     {
-        case 0: SP->m_dw_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS; break;
-        case 1: SP->m_dw_qos.ownership().kind = eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS; break;
+        SP->m_dw_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS;
+        SP->m_dw_qos.ownership_strength().value = 0;
     }
-    if (SP->m_dw_qos.ownership().kind == eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS)
+    else
     {
-        SP->m_dw_qos.ownership_strength().value = this->ui->spin_ownershipStrength->value();
+        switch (this->ui->comboBox_ownership->currentIndex())
+        {
+            case 0: SP->m_dw_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS; break;
+            case 1: SP->m_dw_qos.ownership().kind = eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS; break;
+        }
+        if (SP->m_dw_qos.ownership().kind == eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS)
+        {
+            SP->m_dw_qos.ownership_strength().value = this->ui->spin_ownershipStrength->value();
+        }
     }
 
     //DEADLINE
@@ -187,25 +225,28 @@ void PublishDialog::on_button_OkCancel_accepted()
     }
 
     //PARTITIONS
-    if (this->ui->checkBox_Asterisk->isChecked())
+    if (!mp_sd->getOptions().m_ros2_topic)
     {
-        SP->m_pub_qos.partition().push_back("*");
-    }
-    if (this->ui->checkBox_A->isChecked())
-    {
-        SP->m_pub_qos.partition().push_back("A");
-    }
-    if (this->ui->checkBox_B->isChecked())
-    {
-        SP->m_pub_qos.partition().push_back("B");
-    }
-    if (this->ui->checkBox_C->isChecked())
-    {
-        SP->m_pub_qos.partition().push_back("C");
-    }
-    if (this->ui->checkBox_D->isChecked())
-    {
-        SP->m_pub_qos.partition().push_back("D");
+        if (this->ui->checkBox_Asterisk->isChecked())
+        {
+            SP->m_pub_qos.partition().push_back("*");
+        }
+        if (this->ui->checkBox_A->isChecked())
+        {
+            SP->m_pub_qos.partition().push_back("A");
+        }
+        if (this->ui->checkBox_B->isChecked())
+        {
+            SP->m_pub_qos.partition().push_back("B");
+        }
+        if (this->ui->checkBox_C->isChecked())
+        {
+            SP->m_pub_qos.partition().push_back("C");
+        }
+        if (this->ui->checkBox_D->isChecked())
+        {
+            SP->m_pub_qos.partition().push_back("D");
+        }
     }
 
     // Data Sharing

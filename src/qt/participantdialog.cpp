@@ -50,6 +50,14 @@ ParticipantDialog::ParticipantDialog(
     // Statistics Button
     // Show if it is checked or not
     this->ui->statisticsCheckBox->setChecked(m_options->m_statistics);
+#ifdef ENABLE_ROS_COMPONENTS
+    this->ui->rosTopicCheckBox->setChecked(m_options->m_ros2_topic);
+#else
+    this->ui->line_5->setVisible(false);
+    this->ui->label_12->setVisible(false);
+    this->ui->rosTopicCheckBox->setVisible(false);
+#endif // ifdef ENABLE_ROS_COMPONENTS
+
 
     setEnableState();
     setAttribute ( Qt::WA_DeleteOnClose, true );
@@ -76,6 +84,9 @@ void ParticipantDialog::setEnableState()
     this->ui->pushButton_start->setEnabled(mb_started);
     this->ui->spin_domainId->setEnabled(mb_started);
     this->ui->statisticsCheckBox->setEnabled(mb_started);
+#ifdef ENABLE_ROS_COMPONENTS
+    this->ui->rosTopicCheckBox->setEnabled(mb_started);
+#endif // ifdef ENABLE_ROS_COMPONENTS
     this->ui->IntraprocesscheckBox->setEnabled(mb_started);
     this->ui->DataSharingcheckBox->setEnabled(mb_started);
     this->ui->SHMcheckBox->setEnabled(mb_started);
@@ -139,6 +150,35 @@ void ParticipantDialog::on_statisticsCheckBox_stateChanged(
 {
     m_options->m_statistics = arg1;
     mp_sd->setOptions(*m_options);
+}
+
+void ParticipantDialog::on_rosTopicCheckBox_stateChanged(
+        int arg1)
+{
+    m_options->m_ros2_topic = arg1;
+    mp_sd->setOptions(*m_options);
+
+    QRegularExpression checkbox_expression("checkBox_(A|B|C|D|Asterisk)");
+    QList<QCheckBox*> widgets = parent()->findChildren<QCheckBox*>(checkbox_expression);
+    for (auto& widget: widgets)
+    {
+        widget->setEnabled(!m_options->m_ros2_topic);
+        widget->setChecked(false);
+    }
+    QList<QWidget*> publisher_widget_list = parent()->findChildren<QWidget*>("PublishDialog");
+    for (auto& publisher_widget: publisher_widget_list)
+    {
+        QList<QSpinBox*> widgets_spinbox = publisher_widget->findChildren<QSpinBox*>("spin_ownershipStrength");
+        for (auto& widget: widgets_spinbox)
+        {
+            widget->setEnabled(!m_options->m_ros2_topic);
+        }
+    }
+    QList<QComboBox*> widgets_combobox = parent()->findChildren<QComboBox*>("comboBox_ownership");
+    for (auto& widget: widgets_combobox)
+    {
+        widget->setEnabled(!m_options->m_ros2_topic);
+    }
 }
 
 void ParticipantDialog::tcp_enable_buttons()

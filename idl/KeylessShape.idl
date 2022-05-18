@@ -1,0 +1,12 @@
+module shapes_demo_typesupport
+{
+    module idl
+    {
+        struct KeylessShapeType {
+            string color;
+        	long x;
+        	long y;
+        	long shapesize;
+        };
+    };
+};

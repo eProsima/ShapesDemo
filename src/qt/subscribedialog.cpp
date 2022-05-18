@@ -45,6 +45,26 @@ SubscribeDialog::SubscribeDialog(
     //    ui->lineEdit_minY->setValidator(new QIntValidator(this));
     ui->lineEdit_TimeBasedFilter->setValidator(new QIntValidator(this));
     setAttribute ( Qt::WA_DeleteOnClose, true );
+
+    if (mp_sd->getOptions().m_ros2_topic)
+    {
+        QRegularExpression checkbox_expression("checkBox_(A|B|C|D|Asterisk)");
+        QList<QCheckBox*> widgets = findChildren<QCheckBox*>(checkbox_expression);
+        for (auto& widget: widgets)
+        {
+            widget->setEnabled(false);
+        }
+        QList<QSpinBox*> widgets_spinbox = findChildren<QSpinBox*>("spin_ownershipStrength");
+        for (auto& widget: widgets_spinbox)
+        {
+            widget->setEnabled(false);
+        }
+        QList<QComboBox*> widgets_combobox = findChildren<QComboBox*>("comboBox_ownership");
+        for (auto& widget: widgets_combobox)
+        {
+            widget->setEnabled(false);
+        }
+    }
 }
 
 SubscribeDialog::~SubscribeDialog()
@@ -62,7 +82,17 @@ void SubscribeDialog::on_buttonBox_accepted()
     }
 
     // Get Topic if exist or add one
-    Topic* topic = this->mp_sd->getTopic(this->ui->combo_Shape->currentText().toUtf8().constData());
+    Topic* topic;
+    if (mp_sd->getOptions().m_ros2_topic)
+    {
+        std::string topicName("rt/");
+        topicName.append(this->ui->combo_Shape->currentText().toUtf8().constData());
+        topic = this->mp_sd->getTopic(topicName);
+    }
+    else
+    {
+        topic = this->mp_sd->getTopic(this->ui->combo_Shape->currentText().toUtf8().constData());
+    }
 
     ShapeSubscriber* SSub = new ShapeSubscriber((MainWindow*)mp_parent, this->mp_sd, topic);
 
@@ -130,14 +160,21 @@ void SubscribeDialog::on_buttonBox_accepted()
     }
 
     //OWNERSHIP
-    switch (this->ui->comboBox_ownership->currentIndex())
+    if (mp_sd->getOptions().m_ros2_topic)
     {
-        case 0: SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS; break;
-        case 1:
+        SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS;
+    }
+    else
+    {
+        switch (this->ui->comboBox_ownership->currentIndex())
         {
-            SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS;
-            SSub->m_shapeHistory.m_isExclusiveOwnership = true;
-            break;
+            case 0: SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS; break;
+            case 1:
+            {
+                SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS;
+                SSub->m_shapeHistory.m_isExclusiveOwnership = true;
+                break;
+            }
         }
     }
 
@@ -170,25 +207,28 @@ void SubscribeDialog::on_buttonBox_accepted()
     }
 
     //PARTITIONS
-    if (this->ui->checkBox_Asterisk->isChecked())
+    if (!mp_sd->getOptions().m_ros2_topic)
     {
-        SSub->m_sub_qos.partition().push_back("*");
-    }
-    if (this->ui->checkBox_A->isChecked())
-    {
-        SSub->m_sub_qos.partition().push_back("A");
-    }
-    if (this->ui->checkBox_B->isChecked())
-    {
-        SSub->m_sub_qos.partition().push_back("B");
-    }
-    if (this->ui->checkBox_C->isChecked())
-    {
-        SSub->m_sub_qos.partition().push_back("C");
-    }
-    if (this->ui->checkBox_D->isChecked())
-    {
-        SSub->m_sub_qos.partition().push_back("D");
+        if (this->ui->checkBox_Asterisk->isChecked())
+        {
+            SSub->m_sub_qos.partition().push_back("*");
+        }
+        if (this->ui->checkBox_A->isChecked())
+        {
+            SSub->m_sub_qos.partition().push_back("A");
+        }
+        if (this->ui->checkBox_B->isChecked())
+        {
+            SSub->m_sub_qos.partition().push_back("B");
+        }
+        if (this->ui->checkBox_C->isChecked())
+        {
+            SSub->m_sub_qos.partition().push_back("C");
+        }
+        if (this->ui->checkBox_D->isChecked())
+        {
+            SSub->m_sub_qos.partition().push_back("D");
+        }
     }
 
     //TIME FILTER
@@ -207,14 +247,14 @@ void SubscribeDialog::on_buttonBox_accepted()
             if (value.toInt() > 0)
             {
                 SSub->m_dr_qos.time_based_filter().minimum_separation =
-                    eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
+                        eprosima::fastrtps::Duration_t(value.toDouble() * 1e-3);
             }
 
         }
         SSub->m_shapeHistory.m_filter.m_minimumSeparation = SSub->m_dr_qos.time_based_filter().minimum_separation;
     }
 
-    //CONTENT FILTER
+    //CONTENT_FILTER
     if (this->ui->checkBox_contentBasedFilter->isChecked())
     {
         SSub->m_shapeHistory.m_filter.m_useContentFilter = true;

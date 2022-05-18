@@ -28,46 +28,53 @@ QT_BEGIN_NAMESPACE
 class Ui_OptionsDialog
 {
 public:
-    QGridLayout *gridLayout;
-    QDialogButtonBox *buttonBox;
-    QLabel *label_8;
-    QSpinBox *spin_updateInterval;
-    QPushButton *pushButton_udp;
-    QSlider *horizontalSlider_speed;
-    QLabel *label_5;
-    QSpinBox *spin_listen_port;
-    QPushButton *pushButton_tcp_client;
-    QPushButton *pushButton_tcp_server;
-    QSpinBox *spin_server_port;
-    QLabel *label_6;
-    QLabel *label_3;
-    QLineEdit *lineEdit_server_ip;
-    QLabel *label_7;
-    QPushButton *pushButton_tcp_WAN_server;
-    QLabel *label_2;
-    QLabel *label_4;
-    QFrame *line_2;
-    QComboBox *comboBox;
-    QFrame *line;
-    QLabel *label_9;
-    QFrame *line_3;
-    QCheckBox *statisticsCheckBox;
-    QSpinBox *spin_domainId;
-    QPushButton *pushButton_start;
-    QPushButton *pushButton_stop;
-    QLabel *label_10;
 
-    void setupUi(QDialog *OptionsDialog)
+    QGridLayout* gridLayout;
+    QDialogButtonBox* buttonBox;
+    QLabel* label_8;
+    QSpinBox* spin_updateInterval;
+    QPushButton* pushButton_udp;
+    QSlider* horizontalSlider_speed;
+    QLabel* label_5;
+    QSpinBox* spin_listen_port;
+    QPushButton* pushButton_tcp_client;
+    QPushButton* pushButton_tcp_server;
+    QSpinBox* spin_server_port;
+    QLabel* label_6;
+    QLabel* label_3;
+    QLineEdit* lineEdit_server_ip;
+    QLabel* label_7;
+    QPushButton* pushButton_tcp_WAN_server;
+    QLabel* label_2;
+    QLabel* label_4;
+    QFrame* line_2;
+    QComboBox* comboBox;
+    QFrame* line;
+    QLabel* label_9;
+    QFrame* line_3;
+    QCheckBox* statisticsCheckBox;
+    QFrame* line_5;
+    QLabel* label_12;
+    QCheckBox* rosTopicCheckBox;
+    QSpinBox* spin_domainId;
+    QPushButton* pushButton_start;
+    QPushButton* pushButton_stop;
+    QLabel* label_10;
+
+    void setupUi(
+            QDialog* OptionsDialog)
     {
         if (OptionsDialog->objectName().isEmpty())
+        {
             OptionsDialog->setObjectName(QString::fromUtf8("OptionsDialog"));
+        }
         OptionsDialog->resize(467, 335);
         gridLayout = new QGridLayout(OptionsDialog);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         buttonBox = new QDialogButtonBox(OptionsDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
-        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        buttonBox->setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
 
         gridLayout->addWidget(buttonBox, 15, 3, 1, 2);
 
@@ -212,6 +219,26 @@ public:
 
         gridLayout->addWidget(statisticsCheckBox, 9, 2, 1, 1);
 
+#ifdef ENABLE_ROS_COMPONENTS
+        line_5 = new QFrame(OptionsDialog);
+        line_5->setObjectName(QString::fromUtf8("line_5"));
+        line_5->setFrameShape(QFrame::HLine);
+        line_5->setFrameShadow(QFrame::Sunken);
+
+        gridLayout->addWidget(line_5, 11, 0, 1, 1);
+
+        label_12 = new QLabel(OptionsDialog);
+        label_12->setObjectName(QString::fromUtf8("label_12"));
+        label_12->setFont(font);
+
+        gridLayout->addWidget(label_4, 9, 0, 1, 1);
+
+        rosTopicCheckBox = new QCheckBox(OptionsDialog);
+        rosTopicCheckBox->setObjectName(QString::fromUtf8("rosTopicCheckBox"));
+
+        gridLayout->addWidget(rosTopicCheckBox, 9, 2, 1, 1);
+#endif
+
         spin_domainId = new QSpinBox(OptionsDialog);
         spin_domainId->setObjectName(QString::fromUtf8("spin_domainId"));
         spin_domainId->setValue(80);
@@ -252,7 +279,8 @@ public:
         QMetaObject::connectSlotsByName(OptionsDialog);
     } // setupUi
 
-    void retranslateUi(QDialog *OptionsDialog)
+    void retranslateUi(
+            QDialog* OptionsDialog)
     {
         OptionsDialog->setWindowTitle(QApplication::translate("OptionsDialog", "Options", nullptr));
         label_8->setText(QApplication::translate("OptionsDialog", "Listen Port:", nullptr));
@@ -274,6 +302,8 @@ public:
         label_4->setText(QApplication::translate("OptionsDialog", "Statistics", nullptr));
         label_9->setText(QApplication::translate("OptionsDialog", "Shape Movements", nullptr));
         statisticsCheckBox->setText(QApplication::translate("OptionsDialog", "Active Statistics", nullptr));
+        rosTopicCheckBox->setText(QApplication::translate("OptionsDialog", "Use ROS 2 Topics", nullptr));
+
         spin_domainId->setSpecialValueText(QString());
         spin_domainId->setSuffix(QString());
         pushButton_start->setText(QApplication::translate("OptionsDialog", "Start", nullptr));
@@ -284,7 +314,9 @@ public:
 };
 
 namespace Ui {
-    class OptionsDialog: public Ui_OptionsDialog {};
+class OptionsDialog : public Ui_OptionsDialog
+{
+};
 } // namespace Ui
 
 QT_END_NAMESPACE

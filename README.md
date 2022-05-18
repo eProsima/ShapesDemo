@@ -312,3 +312,51 @@ Two methods are provided:
 The other available tab in this section shows an output log:
 
 ![Output](docs/log.png)
+
+### ROS 2 Compatibility
+
+By default eProsima Shapes Demo can be built and used on a ROS 2 installation as long as an installation of Fast DDS version 2.5.1 or higher is available and the qt5-default package has been installed. 
+However, ROS 2 will not be able to interact with the Shapes Demo Topics in any way. 
+
+A CMake flag can be used to build eProsima Shapes Demo with ROS 2 support enabled.
+
+        $ colcon build --cmake-args -DBUILD_ROS_COMPONENTS=ON
+
+This will display an additional "Use ROS2 Topics" checkbox in the Participant configuration dialog.
+
+![Participant Windows With ROS Enabled](docs/participant_ros_enabled.png)
+
+When using eProsima Shapes Demo with this checkbox marked, ROS 2 will be aware of the Topics transmitted. 
+
+        $ ros2 topic list -t
+        /Square [shapes_demo_typesupport/idl/KeylessShapeType]
+        /parameter_events [rcl_interfaces/msg/ParameterEvent]
+        /rosout [rcl_interfaces/msg/Log]
+
+When building eProsima Shapes Demo with ROS 2 capabilities enabled, a TypeSupport will be built for KeylessShapeType. Sourcing the generated environment will make it available to ROS 2 applications, allowing the usage of ROS commands like the following.
+
+        $ source install/setup.bash
+        $ ros2 topic echo /Square
+        color: RED
+        x: 175
+        y: 215
+        shapesize: 30
+        ---
+        color: RED
+        x: 169
+        y: 210
+        shapesize: 30
+        ---
+
+        $ ros2 topic pub /Square shapes_demo_typesupport/idl/KeylessShapeType "{ color: BLUE, x: 155, y: 150, shapesize: 30}"
+        publisher: beginning loop
+        publishing #1: shapes_demo_typesupport.idl.KeylessShapeType(color='BLUE', x=155, y=150, shapesize=30)
+
+
+---
+**NOTE**
+
+ROS 2 Topics enablement will disable some QoS that are not supported by ROS 2 at the moment, namely Ownership and Partitions.
+Their respective checkboxes will be disabled on the Publisher and Subscriber Dialogs.
+
+---
