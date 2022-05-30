@@ -315,25 +315,21 @@ The other available tab in this section shows an output log:
 
 ### ROS 2 Compatibility
 
-By default eProsima Shapes Demo can be built and used on a ROS 2 installation as long as an installation of Fast DDS version 2.5.1 or higher is available and the qt5-default package has been installed. 
-However, ROS 2 will not be able to interact with the Shapes Demo Topics in any way. 
+By default eProsima Shapes Demo can be built and used on a ROS 2 installation as long as an installation of Fast DDS version 2.5.1 or higher is available and a QT5 installation is available.
+The build process will try to locate the [Shapes Demo TypeSupport](https://github.com/eProsima/ShapesDemo-TypeSupport) and, if present, will automatically enable ROS2 features. The provided shapes-demo-ros2.repos file can be used to download Shapes Demo and its dependencies, including this TypeSupport, to your workspace.
 
-A CMake flag can be used to build eProsima Shapes Demo with ROS 2 support enabled.
-
-        $ colcon build --cmake-args -DBUILD_ROS_COMPONENTS=ON
-
-This will display an additional "Use ROS2 Topics" checkbox in the Participant configuration dialog.
+With ROS 2 features enabled, an additional "Use ROS2 Topics" checkbox in the Participant configuration dialog will be shown.
 
 ![Participant Windows With ROS Enabled](docs/participant_ros_enabled.png)
 
-When using eProsima Shapes Demo with this checkbox marked, ROS 2 will be aware of the Topics transmitted. 
+When using eProsima Shapes Demo with this checkbox marked, ROS 2 will be aware of the Topics transmitted.
 
         $ ros2 topic list -t
         /Square [shapes_demo_typesupport/idl/KeylessShapeType]
         /parameter_events [rcl_interfaces/msg/ParameterEvent]
         /rosout [rcl_interfaces/msg/Log]
 
-When building eProsima Shapes Demo with ROS 2 capabilities enabled, a TypeSupport will be built for KeylessShapeType. Sourcing the generated environment will make it available to ROS 2 applications, allowing the usage of ROS commands like the following.
+Since there's a TypeSupport available for these messages, it can be used by ROS 2 to interact with the different Shape topics. For instance, assuming the Shapes Demo TypeSupport was built along with Shapes Demo and is currently available in the current installation folder, a subscription to a Topic could be made like so:
 
         $ source install/setup.bash
         $ ros2 topic echo /Square
@@ -348,6 +344,9 @@ When building eProsima Shapes Demo with ROS 2 capabilities enabled, a TypeSuppor
         shapesize: 30
         ---
 
+Analogously, a publication could be made like this:
+
+        $ source install/setup.bash
         $ ros2 topic pub /Square shapes_demo_typesupport/idl/KeylessShapeType "{ color: BLUE, x: 155, y: 150, shapesize: 30}"
         publisher: beginning loop
         publishing #1: shapes_demo_typesupport.idl.KeylessShapeType(color='BLUE', x=155, y=150, shapesize=30)
