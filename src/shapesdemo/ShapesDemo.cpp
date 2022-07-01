@@ -66,11 +66,11 @@ ShapesDemo::ShapesDemo(
     maxY = MAX_DRAW_AREA_Y;
 
     m_type->auto_fill_type_object(false);
-    m_type->auto_fill_type_information(false);
+    m_type->auto_fill_type_information(true);
 
 #ifdef ENABLE_ROS_COMPONENTS
     m_ros_type->auto_fill_type_object(false);
-    m_ros_type->auto_fill_type_information(false);
+    m_ros_type->auto_fill_type_information(true);
 
     registerKeylessShapeTypes();
 #endif // ifdef ENABLE_ROS_COMPONENTS
@@ -110,6 +110,7 @@ bool ShapesDemo::init()
 
         qos.name("Fast DDS ShapesDemo Participant");
         qos.transport().use_builtin_transports = false;
+        qos.wire_protocol().builtin.typelookup_config.use_server = true;
 
         // Intraprocess
         LibrarySettingsAttributes library_settings;
