@@ -124,10 +124,6 @@ void ShapeSubscriber::SubListener::on_data_available(
     while (reader->take_next_sample(&shape.m_shape, &info) == ReturnCode_t::RETCODE_OK)
     {
         shape.m_time = info.source_timestamp.to_duration_t();
-        shape.m_writerGuid = info.sample_identity.writer_guid();
-
-        shape.m_strength = parent_->mp_sd->writer_strength(
-            eprosima::fastrtps::rtps::iHandle2GUID(info.publication_handle));
 
         QMutexLocker locck(&parent_->m_mutex);
         if (info.instance_state == ALIVE_INSTANCE_STATE)
@@ -147,44 +143,6 @@ void ShapeSubscriber::SubListener::on_data_available(
                 parent_->m_shapeHistory.unregister(color);
             }
         }
-    }
-}
-
-void ShapeSubscriber::SubListener::on_subscription_matched(
-        DataReader* reader,
-        const eprosima::fastdds::dds::SubscriptionMatchedStatus& info)
-{
-    static_cast<void>(reader);
-    if (info.current_count_change > 1)
-    {
-        bool found = false;
-        for (std::vector<rtps::GUID_t>::iterator it = parent_->m_remoteWriters.begin();
-                it != parent_->m_remoteWriters.end(); ++it)
-        {
-            if (*it == iHandle2GUID(info.last_publication_handle))
-            {
-                found = true;
-
-                // Get ownership (to fake not implemented feature)
-                eprosima::fastdds::dds::builtin::PublicationBuiltinTopicData writer_data;
-
-                reader->get_matched_publication_data(
-                    writer_data,
-                    eprosima::fastrtps::rtps::iHandle2GUID(info.last_publication_handle));
-
-                break;
-            }
-        }
-        if (!found)
-        {
-            parent_->m_remoteWriters.push_back(iHandle2GUID(info.last_publication_handle));
-        }
-    }
-    else
-    {
-        parent_->m_mutex.lock();
-        parent_->m_shapeHistory.removedOwner(iHandle2GUID(info.last_publication_handle));
-        parent_->m_mutex.unlock();
     }
 }
 

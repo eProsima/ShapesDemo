@@ -172,7 +172,6 @@ void SubscribeDialog::on_buttonBox_accepted()
             case 1:
             {
                 SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS;
-                SSub->m_shapeHistory.m_isExclusiveOwnership = true;
                 break;
             }
         }

@@ -132,14 +132,11 @@ void DrawArea::drawShapes(
                 {
                     size_t total = vit->size();
                     int index = 0;
-                    if (vit->begin()->m_writerGuid != rtps::c_Guid_Unknown)
+                    for (std::list<Shape>::reverse_iterator sit = vit->rbegin();
+                            sit != vit->rend(); ++sit)
                     {
-                        for (std::list<Shape>::reverse_iterator sit = vit->rbegin();
-                                sit != vit->rend(); ++sit)
-                        {
-                            paintShape(painter, *sit, getAlpha(index, total), true);
-                            ++index;
-                        }
+                        paintShape(painter, *sit, getAlpha(index, total), true);
+                        ++index;
                     }
                 }
             }

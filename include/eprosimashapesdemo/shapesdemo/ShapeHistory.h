@@ -63,7 +63,6 @@ public:
 
     ShapeHistory()
         : m_history_depth(0)
-        , m_isExclusiveOwnership(false)
     {
     }
 
@@ -105,12 +104,9 @@ public:
             const SD_COLOR color);
     void adjustContentFilter(
             ShapeFilter& filter);
-    void removedOwner(
-            const rtps::GUID_t& guid);
 
     uint32_t m_history_depth;
     ShapeFilter m_filter;
-    bool m_isExclusiveOwnership;
 };
 
 #endif // SHAPEHISTORY_H

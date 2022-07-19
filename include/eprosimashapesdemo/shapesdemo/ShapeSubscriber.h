@@ -95,10 +95,6 @@ public:
         void on_data_available(
                 DataReader* reader) override;
 
-        void on_subscription_matched(
-                DataReader* reader,
-                const eprosima::fastdds::dds::SubscriptionMatchedStatus& info) override;
-
         void on_requested_deadline_missed(
                 DataReader* reader,
                 const eprosima::fastrtps::RequestedDeadlineMissedStatus& status) override;
@@ -121,7 +117,6 @@ public:
 
     bool hasReceived;
     QMutex m_mutex;
-    std::vector<rtps::GUID_t> m_remoteWriters;
     ShapeHistory m_shapeHistory;
     TYPESHAPE m_shapeType;
     ContentFilterSelector* mp_contentFilter;

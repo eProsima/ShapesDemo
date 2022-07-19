@@ -43,9 +43,7 @@ class Shape
 public:
 
     Shape()
-        : m_strength(0)
-        , m_hasOwner(true)
-        , m_dirX(0)
+        : m_dirX(0)
         , m_dirY(0)
         , m_changeDir(true)
         , m_max_speed_variance(0.1f)
@@ -66,15 +64,11 @@ public:
         m_shape.x(x);
         m_shape.y(y);
         m_shape.shapesize(size);
-        m_strength = 0;
     }
 
     ShapeType m_shape;
     TYPESHAPE m_type;
     Time_t m_time;
-    rtps::GUID_t m_writerGuid;
-    uint32_t m_strength;
-    bool m_hasOwner;
     float m_dirX;
     float m_dirY;
     bool m_changeDir;
