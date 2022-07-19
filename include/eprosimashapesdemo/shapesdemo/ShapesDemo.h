@@ -24,6 +24,7 @@
 #define SHAPESDEMO_H_
 
 #include <map>
+#include <string>
 
 #include <QMutex>
 
@@ -41,6 +42,9 @@
 #include <fastdds/rtps/writer/WriterDiscoveryInfo.h>
 
 using namespace eprosima::fastdds::dds;
+
+std::string qos_policy_id_to_string(
+        QosPolicyId_t policy_id);
 
 /**
  * @brief The ShapesDemoOptions class, used to transmit the options between the options menu and the ShapesDemo class.

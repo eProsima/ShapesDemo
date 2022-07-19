@@ -167,24 +167,40 @@ void ShapeSubscriber::SubListener::on_requested_deadline_missed(
         DataReader* reader,
         const eprosima::fastrtps::RequestedDeadlineMissedStatus& status)
 {
-    static_cast<void>(reader);
-    static_cast<void>(status);
-    parent_->m_mainWindow->addMessageToOutput(QString("Requested deadline missed"));
+    if (0 < status.total_count_change)
+    {
+        std::stringstream str;
+        str << "DataReader " << reader->guid() << " detects deadline missed";
+        parent_->m_mainWindow->addMessageToOutput(QString(str.str().c_str()));
+    }
 }
 
 void ShapeSubscriber::SubListener::on_liveliness_changed(
         DataReader* reader,
         const eprosima::fastrtps::LivelinessChangedStatus& status)
 {
-    static_cast<void>(reader);
-    if (status.alive_count_change == 1)
+    std::stringstream str;
+    if (0 < status.alive_count_change)
     {
-        parent_->m_mainWindow->addMessageToOutput(QString("Liveliness recovered"));
+        str << "DataReader " << reader->guid() << " detects liveliness recovered";
+        parent_->m_mainWindow->addMessageToOutput(QString(str.str().c_str()));
     }
-    else if (status.not_alive_count_change == 1)
+    if (0 < status.not_alive_count_change)
     {
-        parent_->m_mainWindow->addMessageToOutput(QString("Liveliness lost"));
+        str << "DataReader " << reader->guid() << " detects liveliness lost";
+        parent_->m_mainWindow->addMessageToOutput(QString(str.str().c_str()));
     }
 }
 
-//void ShapeSubscriber::removeSamplesFromWriter(GUID_t)
+void ShapeSubscriber::SubListener::on_requested_incompatible_qos(
+        DataReader* reader,
+        const RequestedIncompatibleQosStatus& status)
+{
+    if (0 < status.total_count_change)
+    {
+        std::stringstream str;
+        str << "DataReader " << reader->guid() << " detects incompatible QoS " << qos_policy_id_to_string(
+            status.last_policy_id);
+        parent_->m_mainWindow->addMessageToOutput(QString(str.str().c_str()));
+    }
+}

@@ -103,6 +103,10 @@ public:
                 DataReader* reader,
                 const eprosima::fastrtps::LivelinessChangedStatus& status) override;
 
+        void on_requested_incompatible_qos(
+                DataReader* reader,
+                const RequestedIncompatibleQosStatus& status) override;
+
     private:
 
         ShapeSubscriber* parent_;

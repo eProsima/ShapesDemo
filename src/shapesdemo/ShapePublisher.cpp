@@ -121,16 +121,35 @@ void ShapePublisher::PubListener::on_offered_deadline_missed(
         DataWriter* writer,
         const OfferedDeadlineMissedStatus& status)
 {
-    static_cast<void>(writer);
-    static_cast<void>(status);
-    parent_->m_mainWindow->addMessageToOutput(QString("Offered deadline missed"));
+    if (0 < status.total_count_change)
+    {
+        std::stringstream str;
+        str << "DataWriter " << writer->guid() << " detects deadline missed";
+        parent_->m_mainWindow->addMessageToOutput(QString(str.str().c_str()));
+    }
 }
 
 void ShapePublisher::PubListener::on_liveliness_lost(
         DataWriter* writer,
         const LivelinessLostStatus& status)
 {
-    static_cast<void>(writer);
-    static_cast<void>(status);
-    parent_->m_mainWindow->addMessageToOutput(QString("Publisher lost liveliness"));
+    if (0 < status.total_count_change)
+    {
+        std::stringstream str;
+        str << "DataWriter " << writer->guid() << " detects liveliness lost";
+        parent_->m_mainWindow->addMessageToOutput(QString(str.str().c_str()));
+    }
+}
+
+void ShapePublisher::PubListener::on_offered_incompatible_qos(
+        DataWriter* writer,
+        const OfferedIncompatibleQosStatus& status)
+{
+    if (0 < status.total_count_change)
+    {
+        std::stringstream str;
+        str << "DataWriter " << writer->guid() << " detects incompatible QoS " << qos_policy_id_to_string(
+            status.last_policy_id);
+        parent_->m_mainWindow->addMessageToOutput(QString(str.str().c_str()));
+    }
 }
