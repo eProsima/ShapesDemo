@@ -73,6 +73,8 @@ public:
     float m_dirY;
     bool m_changeDir;
     float m_max_speed_variance;
+
+    bool dispose = false;
 };
 
 typedef std::pair<SD_COLOR, rtps::InstanceHandle_t> colorPair;

@@ -164,7 +164,7 @@ void ShapeHistory::dispose(
     {
         if (it->front().m_shape.color() == getColorStr(color))
         {
-            //TODO(richiware) draw a X
+            it->front().dispose = true;
             return;
         }
     }
