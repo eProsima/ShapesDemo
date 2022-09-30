@@ -100,6 +100,10 @@ public:
                 DataWriter* writer,
                 const LivelinessLostStatus& status) override;
 
+        void on_offered_incompatible_qos(
+                DataWriter* writer,
+                const OfferedIncompatibleQosStatus& status) override;
+
     private:
 
         ShapePublisher* parent_;

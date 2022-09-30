@@ -57,7 +57,6 @@ ShapesDemo::ShapesDemo(
     , m_ros_type(new shapes_demo_typesupport::idl::KeylessShapeTypePubSubType())
 #endif // ifdef ENABLE_ROS_COMPONENTS
     , m_data_sharing_enable(false)
-    , m_listener(this)
 {
     srand (time(nullptr));
     minX = 0;
@@ -75,7 +74,6 @@ ShapesDemo::ShapesDemo(
     registerKeylessShapeTypes();
 #endif // ifdef ENABLE_ROS_COMPONENTS
 
-    std::cout << "Creating ShapesDemo : " << m_ownership_strength_map.size() << std::endl;
     registerShapeTypes();
 }
 
@@ -209,9 +207,7 @@ bool ShapesDemo::init()
 
         mp_participant = DomainParticipantFactory::get_instance()->create_participant(
             m_options.m_domainId,
-            qos,
-            &m_listener,
-            eprosima::fastdds::dds::StatusMask::none());
+            qos);
 
         if (nullptr == mp_participant)
         {
@@ -258,9 +254,6 @@ void ShapesDemo::stop()
             mp_participant->delete_topic(it.second);
         }
         m_topics.clear();
-
-        // Reset all ownerships from remote writers
-        m_ownership_strength_map.clear();
 
         // Remove Participant
         if (eprosima::fastrtps::types::ReturnCode_t::RETCODE_OK !=
@@ -477,27 +470,123 @@ Topic* ShapesDemo::getTopic(
     }
 }
 
-bool ShapesDemo::add_writer_strength(
-        const GUID_t& guid,
-        uint32_t strength)
+std::string qos_policy_id_to_string(
+        QosPolicyId_t policy_id)
 {
-    m_ownership_strength_map[guid] = strength;
-    return true;
-}
-
-bool ShapesDemo::remove_writer_strength(
-        GUID_t guid)
-{
-    return m_ownership_strength_map.erase(guid);
-}
-
-uint32_t ShapesDemo::writer_strength(
-        GUID_t guid)
-{
-    auto it = m_ownership_strength_map.find(guid);
-    if (it != m_ownership_strength_map.end())
+    std::string ret_val{"UnknownQoS"};
+    switch (policy_id)
     {
-        return it->second;
+        case USERDATA_QOS_POLICY_ID:
+            ret_val = "USERDATA_QOS";
+            break;
+        case DURABILITY_QOS_POLICY_ID:
+            ret_val = "DURABILITY_QOS";
+            break;
+        case PRESENTATION_QOS_POLICY_ID:
+            ret_val = "PRESENTATION_QOS";
+            break;
+        case DEADLINE_QOS_POLICY_ID:
+            ret_val = "DEADLINE_QOS";
+            break;
+        case LATENCYBUDGET_QOS_POLICY_ID:
+            ret_val = "LATENCYBUDGET_QOS";
+            break;
+        case OWNERSHIP_QOS_POLICY_ID:
+            ret_val = "OWNERSHIP_QOS";
+            break;
+        case OWNERSHIPSTRENGTH_QOS_POLICY_ID:
+            ret_val = "OWNERSHIPSTRENGTH_QOS";
+            break;
+        case LIVELINESS_QOS_POLICY_ID:
+            ret_val = "LIVELINESS_QOS";
+            break;
+        case TIMEBASEDFILTER_QOS_POLICY_ID:
+            ret_val = "TIMEBASEDFILTER_QOS";
+            break;
+        case PARTITION_QOS_POLICY_ID:
+            ret_val = "PARTITION_QOS";
+            break;
+        case RELIABILITY_QOS_POLICY_ID:
+            ret_val = "RELIABILITY_QOS";
+            break;
+        case DESTINATIONORDER_QOS_POLICY_ID:
+            ret_val = "DESTINATIONORDER_QOS";
+            break;
+        case HISTORY_QOS_POLICY_ID:
+            ret_val = "HISTORY_QOS";
+            break;
+        case RESOURCELIMITS_QOS_POLICY_ID:
+            ret_val = "RESOURCELIMITS_QOS";
+            break;
+        case ENTITYFACTORY_QOS_POLICY_ID:
+            ret_val = "ENTITYFACTORY_QOS";
+            break;
+        case WRITERDATALIFECYCLE_QOS_POLICY_ID:
+            ret_val = "WRITERDATALIVECYCLE_QOS";
+            break;
+        case READERDATALIFECYCLE_QOS_POLICY_ID:
+            ret_val = "READERDATALIFECYCLE_QOS";
+            break;
+        case TOPICDATA_QOS_POLICY_ID:
+            ret_val = "TOPICDATA_QOS";
+            break;
+        case GROUPDATA_QOS_POLICY_ID:
+            ret_val = "GROUPDATA_QOS";
+            break;
+        case TRANSPORTPRIORITY_QOS_POLICY_ID:
+            ret_val = "TRANSPORTPRIORITY_QOS";
+            break;
+        case LIFESPAN_QOS_POLICY_ID:
+            ret_val = "LIFESPAN_QOS";
+            break;
+        case DURABILITYSERVICE_QOS_POLICY_ID:
+            ret_val = "DURABILITYSERVICE_QOS";
+            break;
+        case DATAREPRESENTATION_QOS_POLICY_ID:
+            ret_val = "DATAREPRESENTATION_QOS";
+            break;
+        case TYPECONSISTENCYENFORCEMENT_QOS_POLICY_ID:
+            ret_val = "TYPECONSISTENCYENFORCEMENT_QOS";
+            break;
+        case DISABLEPOSITIVEACKS_QOS_POLICY_ID:
+            ret_val = "DISABLEPOSITIVEACKS_QOS";
+            break;
+        case PARTICIPANTRESOURCELIMITS_QOS_POLICY_ID:
+            ret_val = "PARTICIPANTRESOURCELIMITS_QOS";
+            break;
+        case PROPERTYPOLICY_QOS_POLICY_ID:
+            ret_val = "PROPERTYPOLICY_QOS";
+            break;
+        case PUBLISHMODE_QOS_POLICY_ID:
+            ret_val = "PUBLISHMODE_QOS";
+            break;
+        case READERRESOURCELIMITS_QOS_POLICY_ID:
+            ret_val = "READERRESOURCELIMITS_QOS";
+            break;
+        case RTPSENDPOINT_QOS_POLICY_ID:
+            ret_val = "RTPSENDPOINT_QOS";
+            break;
+        case RTPSRELIABLEREADER_QOS_POLICY_ID:
+            ret_val = "RTPSRELIABLEREADER_QOS";
+            break;
+        case RTPSRELIABLEWRITER_QOS_POLICY_ID:
+            ret_val = "RTPSRELIABLEWRITER_QOS";
+            break;
+        case TRANSPORTCONFIG_QOS_POLICY_ID:
+            ret_val = "TRANSPORTCONFIG_QOS";
+            break;
+        case TYPECONSISTENCY_QOS_POLICY_ID:
+            ret_val = "TYPECONSISTENCY_QOS";
+            break;
+        case WIREPROTOCOLCONFIG_QOS_POLICY_ID:
+            ret_val = "WIREPROTOCOLCONFIG_QOS";
+            break;
+        case WRITERRESOURCELIMITS_QOS_POLICY_ID:
+            ret_val = "WRITERRESOURCELIMITS_QOS";
+            break;
+        default:
+            break;
     }
-    return 0;
+
+    return ret_val;
 }

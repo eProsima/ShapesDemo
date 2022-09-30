@@ -24,6 +24,7 @@
 #define SHAPESDEMO_H_
 
 #include <map>
+#include <string>
 
 #include <QMutex>
 
@@ -41,6 +42,9 @@
 #include <fastdds/rtps/writer/WriterDiscoveryInfo.h>
 
 using namespace eprosima::fastdds::dds;
+
+std::string qos_policy_id_to_string(
+        QosPolicyId_t policy_id);
 
 /**
  * @brief The ShapesDemoOptions class, used to transmit the options between the options menu and the ShapesDemo class.
@@ -211,25 +215,7 @@ public:
         return m_data_sharing_enable;
     }
 
-    // NOTE: there is no other way to check ownership strength unless using DomainParticipant callback listener
-    // on_publisher_discovery and storing to a map
-
-    //! Add ownership strength to a writer
-    bool add_writer_strength(
-            const eprosima::fastrtps::rtps::GUID_t& guid,
-            uint32_t strength);
-
-    //! Erase ownership strength from a writer (When writer drops)
-    bool remove_writer_strength(
-            eprosima::fastrtps::rtps::GUID_t guid);
-
-    //! Get writer strength
-    uint32_t writer_strength(
-            eprosima::fastrtps::rtps::GUID_t guid);
-
 private:
-
-    std::map<eprosima::fastrtps::rtps::GUID_t, uint32_t> m_ownership_strength_map;
 
     std::vector<ShapePublisher*> m_publishers;
     std::vector<ShapeSubscriber*> m_subscribers;
@@ -257,40 +243,6 @@ private:
 #endif // ifdef ENABLE_ROS_COMPONENTS
     std::map<std::string, Topic*> m_topics;
     bool m_data_sharing_enable;
-
-    class Listener : public eprosima::fastdds::dds::DomainParticipantListener
-    {
-    public:
-
-        Listener(
-                ShapesDemo* participant)
-            : mp_parent_(participant)
-        {
-        }
-
-        /* Custom Callback on_publisher_discovery */
-        virtual void on_publisher_discovery(
-                eprosima::fastdds::dds::DomainParticipant*,
-                eprosima::fastrtps::rtps::WriterDiscoveryInfo&& info)
-        {
-            switch (info.status){
-                case eprosima::fastrtps::rtps::WriterDiscoveryInfo::DISCOVERED_WRITER:
-                case eprosima::fastrtps::rtps::WriterDiscoveryInfo::CHANGED_QOS_WRITER:
-                    // Add strength to Participant map
-                    mp_parent_->add_writer_strength(info.info.guid(), info.info.m_qos.m_ownershipStrength.value);
-                    break;
-                case eprosima::fastrtps::rtps::WriterDiscoveryInfo::REMOVED_WRITER:
-                    // Erase strength to Participant map
-                    mp_parent_->remove_writer_strength(info.info.guid());
-                    break;
-            }
-        }
-
-    private:
-
-        ShapesDemo* mp_parent_;
-    }
-    m_listener;
 };
 
 #endif /* SHAPESDEMO_H_ */

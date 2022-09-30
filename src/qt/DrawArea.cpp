@@ -132,14 +132,11 @@ void DrawArea::drawShapes(
                 {
                     size_t total = vit->size();
                     int index = 0;
-                    if (vit->begin()->m_writerGuid != rtps::c_Guid_Unknown)
+                    for (std::list<Shape>::reverse_iterator sit = vit->rbegin();
+                            sit != vit->rend(); ++sit)
                     {
-                        for (std::list<Shape>::reverse_iterator sit = vit->rbegin();
-                                sit != vit->rend(); ++sit)
-                        {
-                            paintShape(painter, *sit, getAlpha(index, total), true);
-                            ++index;
-                        }
+                        paintShape(painter, *sit, getAlpha(index, total), true);
+                        ++index;
                     }
                 }
             }
@@ -165,15 +162,27 @@ void DrawArea::paintShape(
     painter->save();
     m_pen.setColor(SD_QT_BLACK);
     m_pen.setStyle(isHistory ? Qt::DotLine : Qt::SolidLine);
-    painter->setPen(m_pen);
     QColor auxc = SD_QT_BLACK;
-    if (shape.m_shape.color().size() >= 3)
+    if (!shape.dispose)
     {
-        auxc = SD_COLOR2QColor(getColor(shape.m_shape.color().at(0), shape.m_shape.color().at(2)));
+        if (shape.m_shape.color().size() >= 3)
+        {
+            auxc = SD_COLOR2QColor(getColor(shape.m_shape.color().at(0), shape.m_shape.color().at(2)));
+        }
+        auxc.setAlpha(alpha);
+        m_brush.setColor(auxc);
     }
-    auxc.setAlpha(alpha);
-    m_brush.setColor(auxc);
+    else
+    {
+        auxc = SD_QT_WHITE;
+        m_brush.setColor(auxc);
+        if (shape.m_shape.color().size() >= 3)
+        {
+            m_pen.setColor(SD_COLOR2QColor(getColor(shape.m_shape.color().at(0), shape.m_shape.color().at(2))));
+        }
+    }
     m_brush.setStyle(Qt::SolidPattern);
+    painter->setPen(m_pen);
     painter->setBrush(m_brush);
     switch (shape.m_type)
     {
@@ -184,6 +193,19 @@ void DrawArea::paintShape(
                     shape.m_shape.shapesize(),
                     shape.m_shape.shapesize());
             painter->drawRect(rect);
+            if (shape.dispose)
+            {
+                QLine line(shape.m_shape.x() - shape.m_shape.shapesize() / 2,
+                        shape.m_shape.y() - shape.m_shape.shapesize() / 2,
+                        shape.m_shape.x() + shape.m_shape.shapesize() / 2,
+                        shape.m_shape.y() + shape.m_shape.shapesize() / 2);
+                painter->drawLine(line);
+                QLine line2(shape.m_shape.x() + shape.m_shape.shapesize() / 2,
+                        shape.m_shape.y() - shape.m_shape.shapesize() / 2,
+                        shape.m_shape.x() - shape.m_shape.shapesize() / 2,
+                        shape.m_shape.y() + shape.m_shape.shapesize() / 2);
+                painter->drawLine(line2);
+            }
             break;
         }
         case TRIANGLE:

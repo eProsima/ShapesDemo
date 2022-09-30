@@ -77,33 +77,6 @@ void ShapeHistory::addShapeToList(
 {
     if (passTimeFilter(sh, list.front()))
     {
-        if (this->m_isExclusiveOwnership)
-        {
-            addShapeExclusive(sh, list);
-        }
-        else
-        {
-            addShape(sh, list);
-        }
-    }
-}
-
-void ShapeHistory::addShapeExclusive(
-        Shape& sh,
-        std::list<Shape>& list)
-{
-    if (sh.m_strength > list.front().m_strength || list.front().m_hasOwner == false)
-    {
-        list.pop_front();
-        addShape(sh, list);
-    }
-    else if (sh.m_strength == list.front().m_strength && sh.m_writerGuid == list.front().m_writerGuid )
-    {
-        addShape(sh, list);
-    }
-    else if (sh.m_strength == list.front().m_strength &&
-            compareGUID(sh.m_writerGuid, list.front().m_writerGuid))
-    {
         addShape(sh, list);
     }
 }
@@ -191,7 +164,7 @@ void ShapeHistory::dispose(
     {
         if (it->front().m_shape.color() == getColorStr(color))
         {
-            it->front().m_hasOwner = false;
+            it->front().dispose = true;
             return;
         }
     }
@@ -223,19 +196,4 @@ void ShapeHistory::adjustContentFilter(
         m_filter.m_minX = filter.m_minX;
         m_filter.m_minY = filter.m_minY;
     }
-}
-
-void ShapeHistory::removedOwner(
-        const GUID_t& guid)
-{
-    for (std::vector<std::list<Shape>>::iterator it = m_history.begin();
-            it != m_history.end(); ++it)
-    {
-        if (it->front().m_writerGuid == guid)
-        {
-            it->front().m_hasOwner = false;
-            return;
-        }
-    }
-    return;
 }
