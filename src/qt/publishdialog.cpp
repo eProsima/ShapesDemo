@@ -37,26 +37,7 @@ PublishDialog::PublishDialog(
 {
     setAttribute ( Qt::WA_DeleteOnClose, true );
     ui->setupUi(this);
-
-    if (mp_sd->getOptions().m_ros2_topic)
-    {
-        QRegularExpression checkbox_expression("checkBox_(A|B|C|D|Asterisk)");
-        QList<QCheckBox*> widgets = findChildren<QCheckBox*>(checkbox_expression);
-        for (auto& widget: widgets)
-        {
-            widget->setEnabled(false);
-        }
-        QList<QSpinBox*> widgets_spinbox = findChildren<QSpinBox*>("spin_ownershipStrength");
-        for (auto& widget: widgets_spinbox)
-        {
-            widget->setEnabled(false);
-        }
-        QList<QComboBox*> widgets_combobox = findChildren<QComboBox*>("comboBox_ownership");
-        for (auto& widget: widgets_combobox)
-        {
-            widget->setEnabled(false);
-        }
-    }
+    this->ui->spin_ownershipStrength->setEnabled(false);
 }
 
 PublishDialog::~PublishDialog()
@@ -177,22 +158,15 @@ void PublishDialog::on_button_OkCancel_accepted()
         case 1: SP->m_dw_qos.durability().kind = eprosima::fastdds::dds::TRANSIENT_LOCAL_DURABILITY_QOS; break;
     }
 
-    //Ownership:
-    if (mp_sd->getOptions().m_ros2_topic)
+    //OWNERSHIP:
+    switch (this->ui->comboBox_ownership->currentIndex())
     {
-        SP->m_dw_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS;
-        SP->m_dw_qos.ownership_strength().value = 0;
-    }
-    else
-    {
-        switch (this->ui->comboBox_ownership->currentIndex())
+        case 0: SP->m_dw_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS; break;
+        case 1:
         {
-            case 0: SP->m_dw_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS; break;
-            case 1: SP->m_dw_qos.ownership().kind = eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS; break;
-        }
-        if (SP->m_dw_qos.ownership().kind == eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS)
-        {
+            SP->m_dw_qos.ownership().kind = eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS;
             SP->m_dw_qos.ownership_strength().value = this->ui->spin_ownershipStrength->value();
+            break;
         }
     }
 
@@ -225,28 +199,25 @@ void PublishDialog::on_button_OkCancel_accepted()
     }
 
     //PARTITIONS
-    if (!mp_sd->getOptions().m_ros2_topic)
+    if (this->ui->checkBox_Asterisk->isChecked())
     {
-        if (this->ui->checkBox_Asterisk->isChecked())
-        {
-            SP->m_pub_qos.partition().push_back("*");
-        }
-        if (this->ui->checkBox_A->isChecked())
-        {
-            SP->m_pub_qos.partition().push_back("A");
-        }
-        if (this->ui->checkBox_B->isChecked())
-        {
-            SP->m_pub_qos.partition().push_back("B");
-        }
-        if (this->ui->checkBox_C->isChecked())
-        {
-            SP->m_pub_qos.partition().push_back("C");
-        }
-        if (this->ui->checkBox_D->isChecked())
-        {
-            SP->m_pub_qos.partition().push_back("D");
-        }
+        SP->m_pub_qos.partition().push_back("*");
+    }
+    if (this->ui->checkBox_A->isChecked())
+    {
+        SP->m_pub_qos.partition().push_back("A");
+    }
+    if (this->ui->checkBox_B->isChecked())
+    {
+        SP->m_pub_qos.partition().push_back("B");
+    }
+    if (this->ui->checkBox_C->isChecked())
+    {
+        SP->m_pub_qos.partition().push_back("C");
+    }
+    if (this->ui->checkBox_D->isChecked())
+    {
+        SP->m_pub_qos.partition().push_back("D");
     }
 
     // Data Sharing
@@ -321,10 +292,33 @@ void PublishDialog::setShapeAttributes(
 void PublishDialog::on_comboBox_ownership_currentIndexChanged(
         int index)
 {
-    if (index == 1)
+    switch (index)
     {
-        this->ui->checkBox_reliable->setChecked(true);
+        case 0:
+        {
+            this->ui->spin_ownershipStrength->setEnabled(false);
+
+            if (this->ui->spin_ownershipStrength->isEnabled())
+            {
+                this->ui->spin_ownershipStrength->setEnabled(false);
+            }
+
+            break;
+        }
+        case 1: 
+        {
+            this->ui->checkBox_reliable->setChecked(true);
+
+            if (!this->ui->spin_ownershipStrength->isEnabled())
+            {
+                this->ui->spin_ownershipStrength->setEnabled(true);
+            }
+
+            break;
+        }
     }
+
+    update();
 }
 
 void PublishDialog::on_comboBox_liveliness_currentIndexChanged(

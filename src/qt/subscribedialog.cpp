@@ -45,26 +45,6 @@ SubscribeDialog::SubscribeDialog(
     //    ui->lineEdit_minY->setValidator(new QIntValidator(this));
     ui->lineEdit_TimeBasedFilter->setValidator(new QIntValidator(this));
     setAttribute ( Qt::WA_DeleteOnClose, true );
-
-    if (mp_sd->getOptions().m_ros2_topic)
-    {
-        QRegularExpression checkbox_expression("checkBox_(A|B|C|D|Asterisk)");
-        QList<QCheckBox*> widgets = findChildren<QCheckBox*>(checkbox_expression);
-        for (auto& widget: widgets)
-        {
-            widget->setEnabled(false);
-        }
-        QList<QSpinBox*> widgets_spinbox = findChildren<QSpinBox*>("spin_ownershipStrength");
-        for (auto& widget: widgets_spinbox)
-        {
-            widget->setEnabled(false);
-        }
-        QList<QComboBox*> widgets_combobox = findChildren<QComboBox*>("comboBox_ownership");
-        for (auto& widget: widgets_combobox)
-        {
-            widget->setEnabled(false);
-        }
-    }
 }
 
 SubscribeDialog::~SubscribeDialog()
@@ -160,20 +140,13 @@ void SubscribeDialog::on_buttonBox_accepted()
     }
 
     //OWNERSHIP
-    if (mp_sd->getOptions().m_ros2_topic)
+    switch (this->ui->comboBox_ownership->currentIndex())
     {
-        SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS;
-    }
-    else
-    {
-        switch (this->ui->comboBox_ownership->currentIndex())
+        case 0: SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS; break;
+        case 1:
         {
-            case 0: SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::SHARED_OWNERSHIP_QOS; break;
-            case 1:
-            {
-                SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS;
-                break;
-            }
+            SSub->m_dr_qos.ownership().kind = eprosima::fastdds::dds::EXCLUSIVE_OWNERSHIP_QOS;
+            break;
         }
     }
 
@@ -206,28 +179,25 @@ void SubscribeDialog::on_buttonBox_accepted()
     }
 
     //PARTITIONS
-    if (!mp_sd->getOptions().m_ros2_topic)
+    if (this->ui->checkBox_Asterisk->isChecked())
     {
-        if (this->ui->checkBox_Asterisk->isChecked())
-        {
-            SSub->m_sub_qos.partition().push_back("*");
-        }
-        if (this->ui->checkBox_A->isChecked())
-        {
-            SSub->m_sub_qos.partition().push_back("A");
-        }
-        if (this->ui->checkBox_B->isChecked())
-        {
-            SSub->m_sub_qos.partition().push_back("B");
-        }
-        if (this->ui->checkBox_C->isChecked())
-        {
-            SSub->m_sub_qos.partition().push_back("C");
-        }
-        if (this->ui->checkBox_D->isChecked())
-        {
-            SSub->m_sub_qos.partition().push_back("D");
-        }
+        SSub->m_sub_qos.partition().push_back("*");
+    }
+    if (this->ui->checkBox_A->isChecked())
+    {
+        SSub->m_sub_qos.partition().push_back("A");
+    }
+    if (this->ui->checkBox_B->isChecked())
+    {
+        SSub->m_sub_qos.partition().push_back("B");
+    }
+    if (this->ui->checkBox_C->isChecked())
+    {
+        SSub->m_sub_qos.partition().push_back("C");
+    }
+    if (this->ui->checkBox_D->isChecked())
+    {
+        SSub->m_sub_qos.partition().push_back("D");
     }
 
     //TIME FILTER

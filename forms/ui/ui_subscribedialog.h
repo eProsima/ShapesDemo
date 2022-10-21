@@ -65,8 +65,6 @@ public:
     QGridLayout* gridLayout_3;
     QLabel* label_11; //Ownership kind
     QComboBox* comboBox_ownership;
-    QLabel* label_12; //Ownership strength
-    QSpinBox* spin_ownershipStrength;
     QLabel* label_2; //Deadline
     QFrame* frame_4;
     QGridLayout* gridLayout_4;
@@ -289,21 +287,6 @@ public:
 
         gridLayout_3->addWidget(comboBox_ownership, 0, 1, 1, 2);
 
-        label_12 = new QLabel(frame_3);
-        label_12->setObjectName(QStringLiteral("label_12"));
-        label_12->setFont(font);
-        label_12->setTextFormat(Qt::AutoText);
-
-        gridLayout_3->addWidget(label_12, 2, 0, 1, 2);
-
-        spin_ownershipStrength = new QSpinBox(frame_3);
-        spin_ownershipStrength->setObjectName(QStringLiteral("spin_ownershipStrength"));
-        spin_ownershipStrength->setMinimum(0);
-        spin_ownershipStrength->setMaximum(10000);
-        spin_ownershipStrength->setValue(0);
-
-        gridLayout_3->addWidget(spin_ownershipStrength, 2, 2, 1, 1);
-
         outer_girdLayout->addWidget(gridLayout_3, 5, 0, 1, 3);
 
         label_2 = new QLabel(frame);
@@ -462,7 +445,6 @@ public:
         lineEdit_leaseDuration->setText(QApplication::translate("PublishDialog", "INF", 0));
         label_17->setText(QApplication::translate("PublishDialog", "Ownership", 0));
         label_11->setText(QApplication::translate("PublishDialog", "Kind:", 0));
-        label_12->setText(QApplication::translate("PublishDialog", "Ownership Strength:", 0));
         comboBox_ownership->clear();
         comboBox_ownership->insertItems(0, QStringList()
          << QApplication::translate("PublishDialog", "SHARED_OWNERSHIP", 0)
