@@ -157,28 +157,6 @@ void ParticipantDialog::on_rosTopicCheckBox_stateChanged(
 {
     m_options->m_ros2_topic = arg1;
     mp_sd->setOptions(*m_options);
-
-    QRegularExpression checkbox_expression("checkBox_(A|B|C|D|Asterisk)");
-    QList<QCheckBox*> widgets = parent()->findChildren<QCheckBox*>(checkbox_expression);
-    for (auto& widget: widgets)
-    {
-        widget->setEnabled(!m_options->m_ros2_topic);
-        widget->setChecked(false);
-    }
-    QList<QWidget*> publisher_widget_list = parent()->findChildren<QWidget*>("PublishDialog");
-    for (auto& publisher_widget: publisher_widget_list)
-    {
-        QList<QSpinBox*> widgets_spinbox = publisher_widget->findChildren<QSpinBox*>("spin_ownershipStrength");
-        for (auto& widget: widgets_spinbox)
-        {
-            widget->setEnabled(!m_options->m_ros2_topic);
-        }
-    }
-    QList<QComboBox*> widgets_combobox = parent()->findChildren<QComboBox*>("comboBox_ownership");
-    for (auto& widget: widgets_combobox)
-    {
-        widget->setEnabled(!m_options->m_ros2_topic);
-    }
 }
 
 void ParticipantDialog::tcp_enable_buttons()

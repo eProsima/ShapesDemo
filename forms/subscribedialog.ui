@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>485</width>
-    <height>725</height>
+    <height>692</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -52,7 +52,7 @@
    <property name="geometry">
     <rect>
      <x>300</x>
-     <y>690</y>
+     <y>656</y>
      <width>166</width>
      <height>25</height>
     </rect>
@@ -70,7 +70,7 @@
      <x>20</x>
      <y>110</y>
      <width>451</width>
-     <height>571</height>
+     <height>537</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -316,7 +316,7 @@
       <x>10</x>
       <y>220</y>
       <width>431</width>
-      <height>71</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -346,28 +346,6 @@
       <enum>Qt::AutoText</enum>
      </property>
     </widget>
-    <widget class="QSpinBox" name="spin_ownershipStrength">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>220</x>
-       <y>40</y>
-       <width>201</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="minimum">
-      <number>0</number>
-     </property>
-     <property name="maximum">
-      <number>50</number>
-     </property>
-     <property name="value">
-      <number>0</number>
-     </property>
-    </widget>
     <widget class="QComboBox" name="comboBox_ownership">
      <property name="geometry">
       <rect>
@@ -388,37 +366,14 @@
       </property>
      </item>
     </widget>
-    <widget class="QLabel" name="label_12">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>40</y>
-       <width>211</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>13</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Ownership Strength:</string>
-     </property>
-     <property name="textFormat">
-      <enum>Qt::AutoText</enum>
-     </property>
-    </widget>
-    <zorder>label_12</zorder>
     <zorder>label_11</zorder>
-    <zorder>spin_ownershipStrength</zorder>
     <zorder>comboBox_ownership</zorder>
    </widget>
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>380</y>
+      <y>346</y>
       <width>181</width>
       <height>20</height>
      </rect>
@@ -438,7 +393,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>300</y>
+      <y>266</y>
       <width>151</width>
       <height>20</height>
      </rect>
@@ -458,7 +413,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>330</y>
+      <y>296</y>
       <width>431</width>
       <height>41</height>
      </rect>
@@ -500,7 +455,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>410</y>
+      <y>376</y>
       <width>431</width>
       <height>41</height>
      </rect>
@@ -544,7 +499,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>460</y>
+      <y>426</y>
       <width>131</width>
       <height>20</height>
      </rect>
@@ -573,7 +528,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>490</y>
+      <y>456</y>
       <width>431</width>
       <height>71</height>
      </rect>
@@ -856,7 +811,6 @@
   <tabstop>comboBox_liveliness</tabstop>
   <tabstop>lineEdit_leaseDuration</tabstop>
   <tabstop>comboBox_ownership</tabstop>
-  <tabstop>spin_ownershipStrength</tabstop>
   <tabstop>lineEdit_Deadline</tabstop>
   <tabstop>lineEdit_Lifespan</tabstop>
   <tabstop>checkBox_timeBasedFilter</tabstop>
