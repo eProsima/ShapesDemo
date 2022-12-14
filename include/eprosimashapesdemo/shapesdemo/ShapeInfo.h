@@ -25,13 +25,13 @@
 #ifndef _SHAPEINFO_H_
 #define _SHAPEINFO_H_
 
-#include <fastrtps/rtps/common/Time_t.h>
+#include <cstdint>
+#include <QString>
+#include <sstream>
+
 #include <fastrtps/rtps/common/Guid.h>
 #include <fastrtps/rtps/common/InstanceHandle.h>
-
-#include <cstdint>
-#include <sstream>
-#include <QString>
+#include <fastrtps/rtps/common/Time_t.h>
 
 #include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
 #include "eprosimashapesdemo/shapesdemo/ShapePubSubTypes.h"
