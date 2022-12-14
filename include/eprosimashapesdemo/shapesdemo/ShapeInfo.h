@@ -129,13 +129,10 @@ public:
 
 };
 
-
-const ColorInstanceHandle c_ShapesHandles;
-
-
 inline SD_COLOR getColorFromInstanceHandle(
         rtps::InstanceHandle_t& iHandle)
 {
+    static const ColorInstanceHandle c_ShapesHandles;
     if (iHandle == c_ShapesHandles.BlueIH.second)
     {
         return SD_BLUE;
