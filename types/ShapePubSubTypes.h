@@ -26,7 +26,7 @@
 #include <fastdds/dds/topic/TopicDataType.hpp>
 #include <fastrtps/utils/md5.h>
 
-#include "eprosimashapesdemo/shapesdemo/Shape.h"
+#include "Shape.h"
 
 #if !defined(GEN_API_VER) || (GEN_API_VER != 1)
 #error \
@@ -45,7 +45,7 @@ public:
 
     eProsima_user_DllExport ShapeTypePubSubType();
 
-    eProsima_user_DllExport virtual ~ShapeTypePubSubType();
+    eProsima_user_DllExport virtual ~ShapeTypePubSubType() override;
 
     eProsima_user_DllExport virtual bool serialize(
             void* data,

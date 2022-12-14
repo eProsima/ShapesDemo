@@ -28,9 +28,6 @@
 
 #include <QMutex>
 
-#include "eprosimashapesdemo/shapesdemo/ShapePubSubTypes.h"
-#include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
-
 #include <fastdds/dds/domain/DomainParticipant.hpp>
 #include <fastdds/dds/domain/DomainParticipantFactory.hpp>
 #include <fastdds/dds/domain/DomainParticipantListener.hpp>
@@ -40,6 +37,9 @@
 #include <fastdds/dds/topic/TypeSupport.hpp>
 #include <fastdds/rtps/common/Guid.h>
 #include <fastdds/rtps/writer/WriterDiscoveryInfo.h>
+
+#include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
+#include "types/ShapePubSubTypes.h"
 
 using namespace eprosima::fastdds::dds;
 

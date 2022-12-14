@@ -15,28 +15,29 @@
 // You should have received a copy of the GNU General Public License
 // along with eProsima Fast DDS Shapes Demo. If not, see <https://www.gnu.org/licenses/>.
 
+#include <eprosimashapesdemo/shapesdemo/ShapesDemo.h>
+
+#include <ctime>
 #include <iostream>
 #include <sstream>
-#include <ctime>
-
-#include <eprosimashapesdemo/shapesdemo/ShapesDemo.h>
-#include <eprosimashapesdemo/shapesdemo/ShapePublisher.h>
-#include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
-#include <eprosimashapesdemo/shapesdemo/ShapeTypeObject.h>
-#include <eprosimashapesdemo/shapesdemo/ShapeInfo.h>
-#ifdef ENABLE_ROS_COMPONENTS
-#include <eprosimashapesdemo/shapesdemo/KeylessShapeTypeObject.h>
-#include <eprosimashapesdemo/shapesdemo/KeylessShapePubSubTypes.h>
-#endif // ifdef ENABLE_ROS_COMPONENTS
-#include <eprosimashapesdemo/qt/mainwindow.h>
 
 #include <fastdds/dds/domain/qos/DomainParticipantQos.hpp>
+#include <fastdds/rtps/transport/shared_mem/SharedMemTransportDescriptor.h>
 #include <fastdds/rtps/transport/TCPv4TransportDescriptor.h>
 #include <fastdds/rtps/transport/UDPv4TransportDescriptor.h>
-#include <fastdds/rtps/transport/shared_mem/SharedMemTransportDescriptor.h>
 #include <fastrtps/config.h> // FASTDDS_STATISTICS availability
 #include <fastrtps/utils/IPLocator.h>
 #include <fastrtps/xmlparser/XMLProfileManager.h>
+
+#include <eprosimashapesdemo/qt/mainwindow.h>
+#include <eprosimashapesdemo/shapesdemo/ShapeInfo.h>
+#include <eprosimashapesdemo/shapesdemo/ShapePublisher.h>
+#include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
+#include <types/ShapeTypeObject.h>
+#ifdef ENABLE_ROS_COMPONENTS
+#include <types/KeylessShapeTypePubSubTypes.h>
+#include <types/KeylessShapeTypeTypeObject.h>
+#endif // ifdef ENABLE_ROS_COMPONENTS
 
 using namespace eprosima::fastdds::dds;
 using namespace eprosima::fastdds::rtps;
@@ -71,7 +72,7 @@ ShapesDemo::ShapesDemo(
     m_ros_type->auto_fill_type_object(false);
     m_ros_type->auto_fill_type_information(true);
 
-    registerKeylessShapeTypes();
+    registerKeylessShapeTypeTypes();
 #endif // ifdef ENABLE_ROS_COMPONENTS
 
     registerShapeTypes();

@@ -25,16 +25,16 @@
 #ifndef _SHAPEINFO_H_
 #define _SHAPEINFO_H_
 
-#include <fastrtps/rtps/common/Time_t.h>
+#include <cstdint>
+#include <QString>
+#include <sstream>
+
 #include <fastrtps/rtps/common/Guid.h>
 #include <fastrtps/rtps/common/InstanceHandle.h>
-
-#include <cstdint>
-#include <sstream>
-#include <QString>
+#include <fastrtps/rtps/common/Time_t.h>
 
 #include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
-#include "eprosimashapesdemo/shapesdemo/ShapePubSubTypes.h"
+#include "types/ShapePubSubTypes.h"
 
 using namespace eprosima::fastrtps;
 
@@ -129,13 +129,10 @@ public:
 
 };
 
-
-const ColorInstanceHandle c_ShapesHandles;
-
-
 inline SD_COLOR getColorFromInstanceHandle(
         rtps::InstanceHandle_t& iHandle)
 {
+    static const ColorInstanceHandle c_ShapesHandles;
     if (iHandle == c_ShapesHandles.BlueIH.second)
     {
         return SD_BLUE;

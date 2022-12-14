@@ -23,6 +23,8 @@
 #define _FAST_DDS_GENERATED_SHAPE_H_
 
 
+#include <fastrtps/utils/fixed_size_string.hpp>
+
 #include <stdint.h>
 #include <array>
 #include <string>
@@ -91,7 +93,7 @@ public:
      * @param x Reference to the object ShapeType that will be copied.
      */
     eProsima_user_DllExport ShapeType(
-            ShapeType&& x);
+            ShapeType&& x) noexcept;
 
     /*!
      * @brief Copy assignment.
@@ -105,7 +107,7 @@ public:
      * @param x Reference to the object ShapeType that will be copied.
      */
     eProsima_user_DllExport ShapeType& operator =(
-            ShapeType&& x);
+            ShapeType&& x) noexcept;
 
     /*!
      * @brief Comparison operator.

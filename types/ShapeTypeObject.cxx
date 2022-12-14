@@ -24,8 +24,8 @@
 namespace { char dummy; }
 #endif
 
-#include "eprosimashapesdemo/shapesdemo/Shape.h"
-#include "eprosimashapesdemo/shapesdemo/ShapeTypeObject.h"
+#include "Shape.h"
+#include "ShapeTypeObject.h"
 #include <utility>
 #include <sstream>
 #include <fastrtps/rtps/common/SerializedPayload.h>
@@ -41,8 +41,11 @@ using namespace eprosima::fastrtps::rtps;
 void registerShapeTypes()
 {
     TypeObjectFactory *factory = TypeObjectFactory::get_instance();
-    factory->add_type_object("ShapeType", GetShapeTypeIdentifier(true), GetShapeTypeObject(true));
-    factory->add_type_object("ShapeType", GetShapeTypeIdentifier(false), GetShapeTypeObject(false));
+    factory->add_type_object("ShapeType", GetShapeTypeIdentifier(true),
+    GetShapeTypeObject(true));
+    factory->add_type_object("ShapeType", GetShapeTypeIdentifier(false),
+    GetShapeTypeObject(false));
+
 }
 
 const TypeIdentifier* GetShapeTypeIdentifier(bool complete)
