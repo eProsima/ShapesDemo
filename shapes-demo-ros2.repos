@@ -2,15 +2,15 @@ repositories:
     foonathan_memory_vendor:
         type: git
         url: https://github.com/eProsima/foonathan_memory_vendor.git
-        version: v1.2.1
+        version: v1.2.2
     fastcdr:
         type: git
         url: https://github.com/eProsima/Fast-CDR.git
-        version: v1.0.25
+        version: v1.0.26
     fastdds:
         type: git
         url: https://github.com/eProsima/Fast-DDS.git
-        version: v2.8.1
+        version: v2.9.0
     shapes-demo-typesupport:
         type: git
         url: https://github.com/eProsima/ShapesDemo-TypeSupport.git
@@ -18,4 +18,4 @@ repositories:
     shapes-demo:
         type: git
         url: https://github.com/eProsima/ShapesDemo.git
-        version: v2.8.1
+        version: v2.9.0
