@@ -194,30 +194,30 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS forms)
 
 message(STATUS "Configuring ShapesDemo...")
 set( SHAPESDEMO_SOURCES
+    images/eprosima_icon.rc
+    src/main.cpp
+    src/qt/ContentFilterSelector.cpp
     src/qt/DrawArea.cpp
     src/qt/mainwindow.cpp
-    src/qt/publishdialog.cpp
-    src/qt/subscribedialog.cpp
-    src/shapesdemo/Shape.cxx
-    src/shapesdemo/ShapesDemo.cpp
-    src/shapesdemo/ShapePubSubTypes.cxx
-    src/shapesdemo/ShapeTypeObject.cxx
-    src/main.cpp
-    src/shapesdemo/ShapePublisher.cpp
-    src/qt/UpdateThread.cpp
-    src/shapesdemo/ShapeSubscriber.cpp
     src/qt/optionsdialog.cpp
     src/qt/participantdialog.cpp
-    src/qt/ContentFilterSelector.cpp
+    src/qt/publishdialog.cpp
+    src/qt/subscribedialog.cpp
+    src/qt/UpdateThread.cpp
     src/shapesdemo/ShapeHistory.cpp
-    images/eprosima_icon.rc
+    src/shapesdemo/ShapePublisher.cpp
+    src/shapesdemo/ShapesDemo.cpp
+    src/shapesdemo/ShapeSubscriber.cpp
+    types/Shape.cxx
+    types/ShapePubSubTypes.cxx
+    types/ShapeTypeObject.cxx
     )
 
 if(BUILD_ROS_COMPONENTS)
     list( APPEND SHAPESDEMO_SOURCES
-    src/shapesdemo/KeylessShape.cxx
-    src/shapesdemo/KeylessShapePubSubTypes.cxx
-    src/shapesdemo/KeylessShapeTypeObject.cxx
+    types/KeylessShapeType.cxx
+    types/KeylessShapeTypePubSubTypes.cxx
+    types/KeylessShapeTypeTypeObject.cxx
     )
 endif()
 
@@ -233,7 +233,7 @@ else()
 endif()
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE -D${SHAPESVERSION})
-target_include_directories(${PROJECT_NAME} PRIVATE include ${IU_HEADERS})
+target_include_directories(${PROJECT_NAME} PRIVATE include types ${IU_HEADERS})
 
 if(BUILD_ROS_COMPONENTS)
 target_compile_definitions(${PROJECT_NAME} PRIVATE -DENABLE_ROS_COMPONENTS)

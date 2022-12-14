@@ -34,7 +34,7 @@
 #include <fastrtps/rtps/common/Time_t.h>
 
 #include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
-#include "eprosimashapesdemo/shapesdemo/ShapePubSubTypes.h"
+#include "types/ShapePubSubTypes.h"
 
 using namespace eprosima::fastrtps;
 

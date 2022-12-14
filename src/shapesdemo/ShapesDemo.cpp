@@ -33,10 +33,10 @@
 #include <eprosimashapesdemo/shapesdemo/ShapeInfo.h>
 #include <eprosimashapesdemo/shapesdemo/ShapePublisher.h>
 #include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
-#include <eprosimashapesdemo/shapesdemo/ShapeTypeObject.h>
+#include <types/ShapeTypeObject.h>
 #ifdef ENABLE_ROS_COMPONENTS
-#include <eprosimashapesdemo/shapesdemo/KeylessShapePubSubTypes.h>
-#include <eprosimashapesdemo/shapesdemo/KeylessShapeTypeObject.h>
+#include <types/KeylessShapeTypePubSubTypes.h>
+#include <types/KeylessShapeTypeTypeObject.h>
 #endif // ifdef ENABLE_ROS_COMPONENTS
 
 using namespace eprosima::fastdds::dds;
@@ -72,7 +72,7 @@ ShapesDemo::ShapesDemo(
     m_ros_type->auto_fill_type_object(false);
     m_ros_type->auto_fill_type_information(true);
 
-    registerKeylessShapeTypes();
+    registerKeylessShapeTypeTypes();
 #endif // ifdef ENABLE_ROS_COMPONENTS
 
     registerShapeTypes();

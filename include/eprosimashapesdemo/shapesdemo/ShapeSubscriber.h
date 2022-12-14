@@ -32,9 +32,9 @@
 #include <fastdds/dds/topic/ContentFilteredTopic.hpp>
 #include <fastdds/dds/topic/Topic.hpp>
 
-#include "eprosimashapesdemo/shapesdemo/Shape.h"
 #include "eprosimashapesdemo/shapesdemo/ShapeHistory.h"
 #include "eprosimashapesdemo/shapesdemo/ShapesDemo.h"
+#include "types/Shape.h"
 
 using namespace eprosima::fastdds::dds;
 
