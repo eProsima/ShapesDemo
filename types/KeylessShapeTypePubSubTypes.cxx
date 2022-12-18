@@ -32,7 +32,7 @@ namespace shapes_demo_typesupport {
     namespace idl {
         KeylessShapeTypePubSubType::KeylessShapeTypePubSubType()
         {
-            setName("shapes_demo_typesupport::idl::KeylessShapeType");
+            setName("shapes_demo_typesupport::idl::dds_::KeylessShapeType_");
             auto type_size = KeylessShapeType::getMaxCdrSerializedSize();
             type_size += eprosima::fastcdr::Cdr::alignment(type_size, 4); /* possible submessage alignment */
             m_typeSize = static_cast<uint32_t>(type_size) + 4; /*encapsulation*/
