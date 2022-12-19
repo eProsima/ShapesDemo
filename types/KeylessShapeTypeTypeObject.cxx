@@ -41,9 +41,9 @@ using namespace eprosima::fastrtps::rtps;
 void registerKeylessShapeTypeTypes()
 {
     TypeObjectFactory *factory = TypeObjectFactory::get_instance();
-    factory->add_type_object("shapes_demo_typesupport::idl::KeylessShapeType", shapes_demo_typesupport::idl::GetKeylessShapeTypeIdentifier(true),
+    factory->add_type_object("shapes_demo_typesupport::idl::dds_::KeylessShapeType_", shapes_demo_typesupport::idl::GetKeylessShapeTypeIdentifier(true),
             shapes_demo_typesupport::idl::GetKeylessShapeTypeObject(true));
-    factory->add_type_object("shapes_demo_typesupport::idl::KeylessShapeType", shapes_demo_typesupport::idl::GetKeylessShapeTypeIdentifier(false),
+    factory->add_type_object("shapes_demo_typesupport::idl::dds_::KeylessShapeType_", shapes_demo_typesupport::idl::GetKeylessShapeTypeIdentifier(false),
             shapes_demo_typesupport::idl::GetKeylessShapeTypeObject(false));
 
 
