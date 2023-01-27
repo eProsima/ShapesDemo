@@ -70,29 +70,6 @@ To install eProsima Shapes Demo using Colcon, please follow the steps below:
 
 ## Quick Demo
 
-### Linux
-
-The following explains how to launch the eProsima Shapes Demo application on Linux systems running Ubuntu OS without
-the need for compilation. To do this, a Docker image will be used.
-
-1.  Download and install Docker application. Open a terminal and type the following command:
-
-        $ sudo apt-get install docker.io
-
-2.  Download the Docker image file from https://eprosima.com/index.php/downloads-all.
-
-3.  Allow root to use graphical interface:
-
-        $ xhost local:root
-
-4.  Load the Docker image:
-
-        $ docker load -i ubuntu-fast-dds-shapesdemo_2.1.0.tar
-
-5.  Run the Docker image:
-
-        $ docker run -it --privileged -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix ubuntu-fast-dds-shapesdemo:v2.1.0
-
 ### Windows
 
 To install eProsima Shapes Demo from binaries just go to the [eProsima website](https://www.eprosima.com/) and
