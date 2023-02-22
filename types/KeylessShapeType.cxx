@@ -306,11 +306,6 @@ void shapes_demo_typesupport::idl::KeylessShapeType::serializeKey(
         eprosima::fastcdr::Cdr& scdr) const
 {
     (void) scdr;
-    scdr << m_color.c_str();
-     scdr << m_x;
-     scdr << m_y;
-     scdr << m_shapesize;
-     
 }
 
 

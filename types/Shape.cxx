@@ -306,6 +306,9 @@ void ShapeType::serializeKey(
         eprosima::fastcdr::Cdr& scdr) const
 {
     (void) scdr;
-      scdr << m_color.c_str();
-          
+   scdr << m_color.c_str();
+   
+ 
+ 
+  
 }
