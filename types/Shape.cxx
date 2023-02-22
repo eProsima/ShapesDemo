@@ -35,15 +35,18 @@ using namespace eprosima::fastcdr::exception;
 
 #include <utility>
 
+#define ShapeType_max_cdr_typesize 272ULL;
+#define ShapeType_max_key_cdr_typesize 260ULL;
+
 ShapeType::ShapeType()
 {
-    // m_color com.eprosima.idl.parser.typecode.StringTypeCode@33b37288
+    // string m_color
     m_color ="";
-    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@77a57272
+    // long m_x
     m_x = 0;
-    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@7181ae3f
+    // long m_y
     m_y = 0;
-    // m_shapesize com.eprosima.idl.parser.typecode.PrimitiveTypeCode@46238e3f
+    // long m_shapesize
     m_shapesize = 0;
 
     // Just to register all known types
@@ -116,22 +119,8 @@ bool ShapeType::operator !=(
 size_t ShapeType::getMaxCdrSerializedSize(
         size_t current_alignment)
 {
-    size_t initial_alignment = current_alignment;
-
-
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + 255 + 1;
-
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-
-
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-
-
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-
-
-
-    return current_alignment - initial_alignment;
+    static_cast<void>(current_alignment);
+    return ShapeType_max_cdr_typesize;
 }
 
 size_t ShapeType::getCdrSerializedSize(
@@ -300,19 +289,12 @@ int32_t& ShapeType::shapesize()
 }
 
 
+
 size_t ShapeType::getKeyMaxCdrSerializedSize(
         size_t current_alignment)
 {
-    size_t current_align = current_alignment;
-
-
-     current_align += 4 + eprosima::fastcdr::Cdr::alignment(current_align, 4) + 255 + 1;
-     
-
-
-
-
-    return current_align;
+    static_cast<void>(current_alignment);
+    return ShapeType_max_key_cdr_typesize;
 }
 
 bool ShapeType::isKeyDefined()
@@ -324,6 +306,6 @@ void ShapeType::serializeKey(
         eprosima::fastcdr::Cdr& scdr) const
 {
     (void) scdr;
-     scdr << m_color.c_str();
-         
+      scdr << m_color.c_str();
+          
 }
