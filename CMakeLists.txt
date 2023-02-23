@@ -130,17 +130,14 @@ if(EPROSIMA_BUILD)
     set(THIRDPARTY ON)
 endif()
 
-eprosima_find_package(fastcdr)
-eprosima_find_package(fastrtps OPTION TINYXML2_FROM_SOURCE)
+set(FASTDDS_MIN_VERSION "2.5.1")
 
-# Required by ContentFilteredTopic
-if (NOT fastrtps_FOUND OR fastrtps_VERSION LESS 2.5.1)
-    message(FATAL_ERROR "Trying to use a version of Fast-DDS lower than 2.5.1. Please update your Fast-DDS installation.")
-endif()
+find_package(fastcdr REQUIRED)
+find_package(fastrtps ${FASTDDS_MIN_VERSION} REQUIRED)
 
 # If ROS environment is not set, disable ROS features. If there's no TypeSupport for the ROS 2 type, disable them as well.
 if (DEFINED ENV{ROS_VERSION})
-    # Required by ament_cmake_core 
+    # Required by ament_cmake_core
     cmake_policy(SET CMP0057 NEW)
     find_package(shapes_demo_typesupport QUIET)
     if (shapes_demo_typesupport_FOUND)
