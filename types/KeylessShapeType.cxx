@@ -35,15 +35,18 @@ using namespace eprosima::fastcdr::exception;
 
 #include <utility>
 
+#define shapes_demo_typesupport_idl_KeylessShapeType_max_cdr_typesize 272ULL;
+#define shapes_demo_typesupport_idl_KeylessShapeType_max_key_cdr_typesize 0ULL;
+
 shapes_demo_typesupport::idl::KeylessShapeType::KeylessShapeType()
 {
-    // m_color com.eprosima.idl.parser.typecode.StringTypeCode@17d0685f
+    // string m_color
     m_color ="";
-    // m_x com.eprosima.idl.parser.typecode.PrimitiveTypeCode@3891771e
+    // long m_x
     m_x = 0;
-    // m_y com.eprosima.idl.parser.typecode.PrimitiveTypeCode@78ac1102
+    // long m_y
     m_y = 0;
-    // m_shapesize com.eprosima.idl.parser.typecode.PrimitiveTypeCode@2de8284b
+    // long m_shapesize
     m_shapesize = 0;
 
     // Just to register all known types
@@ -116,22 +119,8 @@ bool shapes_demo_typesupport::idl::KeylessShapeType::operator !=(
 size_t shapes_demo_typesupport::idl::KeylessShapeType::getMaxCdrSerializedSize(
         size_t current_alignment)
 {
-    size_t initial_alignment = current_alignment;
-
-
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + 255 + 1;
-
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-
-
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-
-
-    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
-
-
-
-    return current_alignment - initial_alignment;
+    static_cast<void>(current_alignment);
+    return shapes_demo_typesupport_idl_KeylessShapeType_max_cdr_typesize;
 }
 
 size_t shapes_demo_typesupport::idl::KeylessShapeType::getCdrSerializedSize(
@@ -300,18 +289,12 @@ int32_t& shapes_demo_typesupport::idl::KeylessShapeType::shapesize()
 }
 
 
+
 size_t shapes_demo_typesupport::idl::KeylessShapeType::getKeyMaxCdrSerializedSize(
         size_t current_alignment)
 {
-    size_t current_align = current_alignment;
-
-
-
-
-
-
-
-    return current_align;
+    static_cast<void>(current_alignment);
+    return shapes_demo_typesupport_idl_KeylessShapeType_max_key_cdr_typesize;
 }
 
 bool shapes_demo_typesupport::idl::KeylessShapeType::isKeyDefined()
@@ -323,7 +306,6 @@ void shapes_demo_typesupport::idl::KeylessShapeType::serializeKey(
         eprosima::fastcdr::Cdr& scdr) const
 {
     (void) scdr;
-        
 }
 
 
