@@ -123,13 +123,6 @@ option(EPROSIMA_BUILD "Activate internal building" OFF)
 ###############################################################################
 # Load external eProsima projects.
 ###############################################################################
-include(${PROJECT_SOURCE_DIR}/cmake/common/eprosima_libraries.cmake)
-option(THIRDPARTY "Activate the build of thirdparties" OFF)
-
-if(EPROSIMA_BUILD)
-    set(THIRDPARTY ON)
-endif()
-
 set(FASTDDS_MIN_VERSION "2.5.1")
 
 find_package(fastcdr REQUIRED)
@@ -218,11 +211,6 @@ if(BUILD_ROS_COMPONENTS)
     )
 endif()
 
-if(THIRDPARTY)
-    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
-    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-endif()
-
 if(WIN32)
     add_executable(${PROJECT_NAME} WIN32 ${SHAPESDEMO_SOURCES} ${MOC_SRCS} ${UI_HEADERS} ${RSCS} )
 else()
@@ -233,7 +221,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE -D${SHAPESVERSION})
 target_include_directories(${PROJECT_NAME} PRIVATE include types ${IU_HEADERS})
 
 if(BUILD_ROS_COMPONENTS)
-target_compile_definitions(${PROJECT_NAME} PRIVATE -DENABLE_ROS_COMPONENTS)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE -DENABLE_ROS_COMPONENTS)
 endif()
 
 target_link_libraries(${PROJECT_NAME} fastrtps fastcdr Qt5::Widgets Qt5::Core Qt5::Gui)
@@ -241,31 +229,9 @@ target_link_libraries(${PROJECT_NAME} fastrtps fastcdr Qt5::Widgets Qt5::Core Qt
 ###############################################################################
 # Install
 ###############################################################################
-if(THIRDPARTY)
-    if(NOT WIN32)
-        # Install libraries
-        install(DIRECTORY ${PROJECT_BINARY_DIR}/external/install/${LIB_INSTALL_DIR}/
-            DESTINATION ${LIB_INSTALL_DIR}
-            USE_SOURCE_PERMISSIONS
-            COMPONENT libraries
-            )
-    endif()
-
-    # Install licenses
-    install(DIRECTORY ${PROJECT_BINARY_DIR}/external/install/licenses/
-        DESTINATION ${LICENSE_INSTALL_DIR}
-        COMPONENT licenses
-        OPTIONAL
-        )
-endif()
-
 install(TARGETS ${PROJECT_NAME}
     RUNTIME DESTINATION ${BIN_INSTALL_DIR}
     LIBRARY DESTINATION ${BIN_INSTALL_DIR}
     ARCHIVE DESTINATION ${BIN_INSTALL_DIR}
     COMPONENT binaries
     )
-
-# Install dependecies
-include(${PROJECT_SOURCE_DIR}/cmake/dev/install_prerequisites.cmake)
-install_prerequisites(${PROJECT_NAME})
