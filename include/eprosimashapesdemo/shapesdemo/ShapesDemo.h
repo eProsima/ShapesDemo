@@ -46,6 +46,10 @@ using namespace eprosima::fastdds::dds;
 std::string qos_policy_id_to_string(
         QosPolicyId_t policy_id);
 
+#ifdef ENABLE_ROS_COMPONENTS
+    bool detect_ros_2_installation();
+#endif // ifdef ENABLE_ROS_COMPONENTS
+
 /**
  * @brief The ShapesDemoOptions class, used to transmit the options between the options menu and the ShapesDemo class.
  */
@@ -75,11 +79,6 @@ public:
         m_datasharing_transport = true;
         m_shm_transport = true;
         m_statistics = false;
-#if ENABLE_ROS_COMPONENTS
-        m_ros2_topic = true;
-#else
-        m_ros2_topic = false;
-#endif
         m_listenPort = 5100;
         m_serverPort = 5100;
         m_serverIp = "127.0.0.1";
@@ -87,6 +86,11 @@ public:
         m_movementSpeed = 7;
         m_domainId = 0;
         m_tcp_type = QString("TCP LAN Server");
+#ifdef ENABLE_ROS_COMPONENTS
+        m_ros2_topic = detect_ros_2_installation();
+#else
+        m_ros2_topic = false;
+#endif
     }
 
     bool tcp_lan()

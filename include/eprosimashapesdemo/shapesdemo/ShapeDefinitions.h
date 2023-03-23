@@ -126,4 +126,8 @@ inline SD_COLOR getColor(
     return SD_BLACK;
 }
 
+#ifdef ENABLE_ROS_COMPONENTS
+    constexpr const char* const ROS_2_ENVIRONMENT_VAR = "ROS_DISTRO";
+#endif // ifdef ENABLE_ROS_COMPONENTS
+
 #endif // SHAPEDEFINITIONS_H
