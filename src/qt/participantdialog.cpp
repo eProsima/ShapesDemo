@@ -85,7 +85,14 @@ void ParticipantDialog::setEnableState()
     this->ui->spin_domainId->setEnabled(mb_started);
     this->ui->statisticsCheckBox->setEnabled(mb_started);
 #ifdef ENABLE_ROS_COMPONENTS
-    this->ui->rosTopicCheckBox->setEnabled(mb_started);
+    if (!detect_ros_2_installation())
+    {
+        this->ui->rosTopicCheckBox->setDisabled(true);
+    }
+    else
+    {
+        this->ui->rosTopicCheckBox->setEnabled(mb_started);
+    }
 #endif // ifdef ENABLE_ROS_COMPONENTS
     this->ui->IntraprocesscheckBox->setEnabled(mb_started);
     this->ui->DataSharingcheckBox->setEnabled(mb_started);
