@@ -87,6 +87,7 @@ void ParticipantDialog::setEnableState()
 #ifdef ENABLE_ROS_COMPONENTS
     if (!detect_ros_2_installation())
     {
+        this->ui->rosTopicCheckBox->setToolTip("Only available when a valid ROS 2 installation is detected");
         this->ui->rosTopicCheckBox->setDisabled(true);
     }
     else

@@ -183,9 +183,6 @@
    </item>
    <item row="23" column="1">
     <widget class="QCheckBox" name="rosTopicCheckBox">
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Only available when a valid ROS 2 installation is detected&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
      <property name="text">
       <string>Use ROS 2 Topics</string>
      </property>
