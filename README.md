@@ -316,11 +316,11 @@ The other available tab in this section shows an output log:
 ### ROS 2 Compatibility
 
 By default eProsima Shapes Demo can be built and used on a ROS 2 installation as long as an installation of Fast DDS version 2.5.1 or higher is available and a QT5 installation is available.
-The build process will try to locate the [Shapes Demo TypeSupport](https://github.com/eProsima/ShapesDemo-TypeSupport) and, if present, will automatically enable ROS2 features.
+The build process will try to locate the [Shapes Demo TypeSupport](https://github.com/eProsima/ShapesDemo-TypeSupport) and, if present, will automatically enable ROS 2 features.
 
 The provided [shapes-demo-ros2.repos](shapes-demo-ros2.repos) file can be used to download Shapes Demo and its dependencies, including this TypeSupport, to your workspace.
 
-With ROS 2 features enabled, an additional "Use ROS2 Topics" checkbox in the Participant configuration dialog will be shown.
+With ROS 2 features enabled, an additional "Use ROS 2 Topics" checkbox in the Participant configuration dialog will be shown.
 
 ![Participant Windows With ROS Enabled](docs/participant_ros_enabled.png)
 
