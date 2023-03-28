@@ -591,3 +591,18 @@ std::string qos_policy_id_to_string(
 
     return ret_val;
 }
+
+#ifdef ENABLE_ROS_COMPONENTS
+bool detect_ros_2_installation()
+{
+    char* distro = nullptr;
+    distro = getenv(ROS_2_ENVIRONMENT_VAR);
+
+    if (nullptr != distro)
+    {
+        return true;
+    }
+
+    return false;
+}
+#endif // ifdef ENABLE_ROS_COMPONENTS
