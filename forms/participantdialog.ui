@@ -74,14 +74,14 @@
     </widget>
    </item>
    <item row="8" column="3">
-    <widget class="QLabel" name="label_6">
+    <widget class="QLabel" name="serverIP_label">
      <property name="text">
       <string>Server IP:</string>
      </property>
     </widget>
    </item>
    <item row="6" column="3">
-    <widget class="QLabel" name="label_8">
+    <widget class="QLabel" name="listeningPort_label">
      <property name="text">
       <string>Listen Port:</string>
      </property>
@@ -95,7 +95,7 @@
     </widget>
    </item>
    <item row="9" column="3">
-    <widget class="QLabel" name="label_7">
+    <widget class="QLabel" name="serverPort_label">
      <property name="text">
       <string>Server Port:</string>
      </property>
