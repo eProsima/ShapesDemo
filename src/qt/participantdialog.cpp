@@ -190,6 +190,8 @@ void ParticipantDialog::tcp_enable_buttons()
     {
         this->ui->spin_listen_port->setEnabled(false);
     }
+
+    this->ui->TCPcomboBox->setCurrentText(m_options->m_tcp_type);
 }
 
 void ParticipantDialog::on_IntraprocesscheckBox_stateChanged(
