@@ -177,19 +177,30 @@ void ParticipantDialog::tcp_enable_buttons()
     this->ui->spin_server_port->setEnabled(m_options->m_tcp_transport && mb_started);
     this->ui->lineEdit_server_ip->setEnabled(m_options->m_tcp_transport && mb_started);
 
+    // Enable/Disable labels depending on transport
+    this->ui->listeningPort_label->setEnabled(m_options->m_tcp_transport && mb_started);
+    this->ui->serverPort_label->setEnabled(m_options->m_tcp_transport && mb_started);
+    this->ui->serverIP_label->setEnabled(m_options->m_tcp_transport && mb_started);
+
     if (QString("TCP LAN Server") == m_options->m_tcp_type)
     {
         this->ui->spin_server_port->setEnabled(false);
         this->ui->lineEdit_server_ip->setEnabled(false);
+        this->ui->serverIP_label->setEnabled(false);
+        this->ui->serverPort_label->setEnabled(false);
     }
     if (QString("TCP WAN Server") == m_options->m_tcp_type)
     {
         this->ui->spin_server_port->setEnabled(false);
+        this->ui->serverPort_label->setEnabled(false);
     }
     if (QString("TCP Client") == m_options->m_tcp_type)
     {
         this->ui->spin_listen_port->setEnabled(false);
+        this->ui->listeningPort_label->setEnabled(false);
     }
+
+    this->ui->TCPcomboBox->setCurrentText(m_options->m_tcp_type);
 }
 
 void ParticipantDialog::on_IntraprocesscheckBox_stateChanged(

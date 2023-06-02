@@ -31,7 +31,7 @@ public:
 
     QGridLayout* gridLayout;
     QDialogButtonBox* buttonBox;
-    QLabel* label_8;
+    QLabel* listeningPort_label;
     QSpinBox* spin_updateInterval;
     QPushButton* pushButton_udp;
     QSlider* horizontalSlider_speed;
@@ -40,10 +40,10 @@ public:
     QPushButton* pushButton_tcp_client;
     QPushButton* pushButton_tcp_server;
     QSpinBox* spin_server_port;
-    QLabel* label_6;
+    QLabel* serverIP_label;
     QLabel* label_3;
     QLineEdit* lineEdit_server_ip;
-    QLabel* label_7;
+    QLabel* serverPort_label;
     QPushButton* pushButton_tcp_WAN_server;
     QLabel* label_2;
     QLabel* label_4;
@@ -78,10 +78,10 @@ public:
 
         gridLayout->addWidget(buttonBox, 15, 3, 1, 2);
 
-        label_8 = new QLabel(OptionsDialog);
-        label_8->setObjectName(QString::fromUtf8("label_8"));
+        listeningPort_label = new QLabel(OptionsDialog);
+        listeningPort_label->setObjectName(QString::fromUtf8("listeningPort_label"));
 
-        gridLayout->addWidget(label_8, 2, 3, 1, 1);
+        gridLayout->addWidget(listeningPort_label, 2, 3, 1, 1);
 
         spin_updateInterval = new QSpinBox(OptionsDialog);
         spin_updateInterval->setObjectName(QString::fromUtf8("spin_updateInterval"));
@@ -144,10 +144,10 @@ public:
 
         gridLayout->addWidget(spin_server_port, 4, 4, 1, 1);
 
-        label_6 = new QLabel(OptionsDialog);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
+        serverIP_label = new QLabel(OptionsDialog);
+        serverIP_label->setObjectName(QString::fromUtf8("serverIP_label"));
 
-        gridLayout->addWidget(label_6, 3, 3, 1, 1);
+        gridLayout->addWidget(serverIP_label, 3, 3, 1, 1);
 
         label_3 = new QLabel(OptionsDialog);
         label_3->setObjectName(QString::fromUtf8("label_3"));
@@ -159,10 +159,10 @@ public:
 
         gridLayout->addWidget(lineEdit_server_ip, 3, 4, 1, 1);
 
-        label_7 = new QLabel(OptionsDialog);
-        label_7->setObjectName(QString::fromUtf8("label_7"));
+        serverPort_label = new QLabel(OptionsDialog);
+        serverPort_label->setObjectName(QString::fromUtf8("serverPort_label"));
 
-        gridLayout->addWidget(label_7, 4, 3, 1, 1);
+        gridLayout->addWidget(serverPort_label, 4, 3, 1, 1);
 
         pushButton_tcp_WAN_server = new QPushButton(OptionsDialog);
         pushButton_tcp_WAN_server->setObjectName(QString::fromUtf8("pushButton_tcp_WAN_server"));
@@ -283,7 +283,7 @@ public:
             QDialog* OptionsDialog)
     {
         OptionsDialog->setWindowTitle(QApplication::translate("OptionsDialog", "Options", nullptr));
-        label_8->setText(QApplication::translate("OptionsDialog", "Listen Port:", nullptr));
+        listeningPort_label->setText(QApplication::translate("OptionsDialog", "Listen Port:", nullptr));
         spin_updateInterval->setSpecialValueText(QString());
         spin_updateInterval->setSuffix(QString());
         pushButton_udp->setText(QApplication::translate("OptionsDialog", "UDP", nullptr));
@@ -294,9 +294,9 @@ public:
         pushButton_tcp_server->setText(QApplication::translate("OptionsDialog", "TCP LAN Server", nullptr));
         spin_server_port->setSpecialValueText(QString());
         spin_server_port->setSuffix(QString());
-        label_6->setText(QApplication::translate("OptionsDialog", "Server IP:", nullptr));
+        serverIP_label->setText(QApplication::translate("OptionsDialog", "Server IP:", nullptr));
         label_3->setText(QApplication::translate("OptionsDialog", "Speed:", nullptr));
-        label_7->setText(QApplication::translate("OptionsDialog", "Server Port:", nullptr));
+        serverPort_label->setText(QApplication::translate("OptionsDialog", "Server Port:", nullptr));
         pushButton_tcp_WAN_server->setText(QApplication::translate("OptionsDialog", "TCP WAN Server", nullptr));
         label_2->setText(QApplication::translate("OptionsDialog", "Update interval (ms):", nullptr));
         label_4->setText(QApplication::translate("OptionsDialog", "Statistics", nullptr));
