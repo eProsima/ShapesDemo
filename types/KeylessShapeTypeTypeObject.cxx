@@ -26,6 +26,7 @@ namespace { char dummy; }
 
 #include "KeylessShapeType.h"
 #include "KeylessShapeTypeTypeObject.h"
+#include <mutex>
 #include <utility>
 #include <sstream>
 #include <fastrtps/rtps/common/SerializedPayload.h>
@@ -40,14 +41,18 @@ using namespace eprosima::fastrtps::rtps;
 
 void registerKeylessShapeTypeTypes()
 {
-    TypeObjectFactory *factory = TypeObjectFactory::get_instance();
-    factory->add_type_object("shapes_demo_typesupport::idl::dds_::KeylessShapeType", shapes_demo_typesupport::idl::GetKeylessShapeTypeIdentifier(true),
-            shapes_demo_typesupport::idl::GetKeylessShapeTypeObject(true));
-    factory->add_type_object("shapes_demo_typesupport::idl::dds_::KeylessShapeType", shapes_demo_typesupport::idl::GetKeylessShapeTypeIdentifier(false),
-            shapes_demo_typesupport::idl::GetKeylessShapeTypeObject(false));
+    static std::once_flag once_flag;
+    std::call_once(once_flag, []()
+            {
+                TypeObjectFactory *factory = TypeObjectFactory::get_instance();
+                factory->add_type_object("shapes_demo_typesupport::idl::dds_::KeylessShapeType_", shapes_demo_typesupport::idl::GetKeylessShapeTypeIdentifier(true),
+                        shapes_demo_typesupport::idl::GetKeylessShapeTypeObject(true));
+                factory->add_type_object("shapes_demo_typesupport::idl::dds_::KeylessShapeType_", shapes_demo_typesupport::idl::GetKeylessShapeTypeIdentifier(false),
+                        shapes_demo_typesupport::idl::GetKeylessShapeTypeObject(false));
 
 
 
+            });
 }
 
 namespace shapes_demo_typesupport {

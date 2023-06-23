@@ -31,7 +31,6 @@
 
 #if !defined(GEN_API_VER) || (GEN_API_VER != 1)
 #error \
-
     Generated KeylessShapeType is not compatible with current installed Fast DDS. Please, regenerate it with fastddsgen.
 #endif  // GEN_API_VER
 
@@ -42,7 +41,7 @@ namespace shapes_demo_typesupport
 
         /*!
          * @brief This class represents the TopicDataType of the type KeylessShapeType defined by the user in the IDL file.
-         * @ingroup KEYLESSSHAPETYPE
+         * @ingroup KeylessShapeType
          */
         class KeylessShapeTypePubSubType : public eprosima::fastdds::dds::TopicDataType
         {
@@ -109,3 +108,4 @@ namespace shapes_demo_typesupport
 }
 
 #endif // _FAST_DDS_GENERATED_SHAPES_DEMO_TYPESUPPORT_IDL_KEYLESSSHAPETYPE_PUBSUBTYPES_H_
+
