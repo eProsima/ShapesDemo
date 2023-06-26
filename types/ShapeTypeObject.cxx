@@ -26,6 +26,7 @@ namespace { char dummy; }
 
 #include "Shape.h"
 #include "ShapeTypeObject.h"
+#include <mutex>
 #include <utility>
 #include <sstream>
 #include <fastrtps/rtps/common/SerializedPayload.h>
@@ -40,12 +41,16 @@ using namespace eprosima::fastrtps::rtps;
 
 void registerShapeTypes()
 {
-    TypeObjectFactory *factory = TypeObjectFactory::get_instance();
-    factory->add_type_object("ShapeType", GetShapeTypeIdentifier(true),
-    GetShapeTypeObject(true));
-    factory->add_type_object("ShapeType", GetShapeTypeIdentifier(false),
-    GetShapeTypeObject(false));
+    static std::once_flag once_flag;
+    std::call_once(once_flag, []()
+            {
+                TypeObjectFactory *factory = TypeObjectFactory::get_instance();
+                factory->add_type_object("ShapeType", GetShapeTypeIdentifier(true),
+                GetShapeTypeObject(true));
+                factory->add_type_object("ShapeType", GetShapeTypeIdentifier(false),
+                GetShapeTypeObject(false));
 
+            });
 }
 
 const TypeIdentifier* GetShapeTypeIdentifier(bool complete)

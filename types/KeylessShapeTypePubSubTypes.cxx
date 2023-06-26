@@ -62,15 +62,15 @@ namespace shapes_demo_typesupport {
             // Object that serializes the data.
             eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::DEFAULT_ENDIAN, eprosima::fastcdr::Cdr::DDS_CDR);
             payload->encapsulation = ser.endianness() == eprosima::fastcdr::Cdr::BIG_ENDIANNESS ? CDR_BE : CDR_LE;
-            // Serialize encapsulation
-            ser.serialize_encapsulation();
 
             try
             {
+                // Serialize encapsulation
+                ser.serialize_encapsulation();
                 // Serialize the object.
                 p_type->serialize(ser);
             }
-            catch (eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
+            catch (eprosima::fastcdr::exception::Exception& /*exception*/)
             {
                 return false;
             }
@@ -86,7 +86,7 @@ namespace shapes_demo_typesupport {
         {
             try
             {
-                //Convert DATA to pointer of your type
+                // Convert DATA to pointer of your type
                 KeylessShapeType* p_type = static_cast<KeylessShapeType*>(data);
 
                 // Object that manages the raw buffer.
@@ -102,7 +102,7 @@ namespace shapes_demo_typesupport {
                 // Deserialize the object.
                 p_type->deserialize(deser);
             }
-            catch (eprosima::fastcdr::exception::NotEnoughMemoryException& /*exception*/)
+            catch (eprosima::fastcdr::exception::Exception& /*exception*/)
             {
                 return false;
             }
@@ -173,4 +173,6 @@ namespace shapes_demo_typesupport {
 
     } //End of namespace idl
 
+
 } //End of namespace shapes_demo_typesupport
+

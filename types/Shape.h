@@ -44,16 +44,16 @@
 
 #if defined(_WIN32)
 #if defined(EPROSIMA_USER_DLL_EXPORT)
-#if defined(Shape_SOURCE)
-#define Shape_DllAPI __declspec( dllexport )
+#if defined(SHAPE_SOURCE)
+#define SHAPE_DllAPI __declspec( dllexport )
 #else
-#define Shape_DllAPI __declspec( dllimport )
-#endif // Shape_SOURCE
+#define SHAPE_DllAPI __declspec( dllimport )
+#endif // SHAPE_SOURCE
 #else
-#define Shape_DllAPI
+#define SHAPE_DllAPI
 #endif  // EPROSIMA_USER_DLL_EXPORT
 #else
-#define Shape_DllAPI
+#define SHAPE_DllAPI
 #endif // _WIN32
 
 namespace eprosima {
@@ -65,7 +65,7 @@ class Cdr;
 
 /*!
  * @brief This class represents the structure ShapeType defined by the user in the IDL file.
- * @ingroup SHAPE
+ * @ingroup Shape
  */
 class ShapeType
 {
@@ -273,3 +273,4 @@ private:
 };
 
 #endif // _FAST_DDS_GENERATED_SHAPE_H_
+

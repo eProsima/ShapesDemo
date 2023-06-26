@@ -44,16 +44,16 @@
 
 #if defined(_WIN32)
 #if defined(EPROSIMA_USER_DLL_EXPORT)
-#if defined(KeylessShapeType_SOURCE)
-#define KeylessShapeType_DllAPI __declspec( dllexport )
+#if defined(KEYLESSSHAPETYPE_SOURCE)
+#define KEYLESSSHAPETYPE_DllAPI __declspec( dllexport )
 #else
-#define KeylessShapeType_DllAPI __declspec( dllimport )
-#endif // KeylessShapeType_SOURCE
+#define KEYLESSSHAPETYPE_DllAPI __declspec( dllimport )
+#endif // KEYLESSSHAPETYPE_SOURCE
 #else
-#define KeylessShapeType_DllAPI
+#define KEYLESSSHAPETYPE_DllAPI
 #endif  // EPROSIMA_USER_DLL_EXPORT
 #else
-#define KeylessShapeType_DllAPI
+#define KEYLESSSHAPETYPE_DllAPI
 #endif // _WIN32
 
 namespace eprosima {
@@ -67,7 +67,7 @@ namespace shapes_demo_typesupport {
     namespace idl {
         /*!
          * @brief This class represents the structure KeylessShapeType defined by the user in the IDL file.
-         * @ingroup KEYLESSSHAPETYPE
+         * @ingroup KeylessShapeType
          */
         class KeylessShapeType
         {
@@ -277,3 +277,4 @@ namespace shapes_demo_typesupport {
 } // namespace shapes_demo_typesupport
 
 #endif // _FAST_DDS_GENERATED_SHAPES_DEMO_TYPESUPPORT_IDL_KEYLESSSHAPETYPE_H_
+
