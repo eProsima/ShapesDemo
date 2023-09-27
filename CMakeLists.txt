@@ -123,9 +123,10 @@ option(EPROSIMA_BUILD "Activate internal building" OFF)
 ###############################################################################
 # Load external eProsima projects.
 ###############################################################################
-set(FASTDDS_MIN_VERSION "2.5.1")
+set(FASTDDS_MIN_VERSION "2.12.0")
+set(FASTCDR_MIN_VERSION "2.0.0")
 
-find_package(fastcdr REQUIRED)
+find_package(fastcdr ${FASTCDR_MIN_VERSION} REQUIRED)
 find_package(fastrtps ${FASTDDS_MIN_VERSION} REQUIRED)
 
 # If ROS environment is not set, disable ROS features. If there's no TypeSupport for the ROS 2 type, disable them as well.
