@@ -29,8 +29,13 @@
 #include <string>
 #include <vector>
 
+#include <fastcdr/config.h>
+#if FASTCDR_VERSION_MAJOR == 1
+#include <fastdds/rtps/common/CdrSerialization.hpp>
+#else
 #include <fastcdr/cdr/fixed_size_string.hpp>
 #include <fastcdr/xcdr/optional.hpp>
+#endif // FASTCDR_VERSION_MAJOR == 1
 
 
 
@@ -68,162 +73,183 @@ class CdrSizeCalculator;
 
 
 namespace shapes_demo_typesupport {
-    namespace idl {
-        /*!
-         * @brief This class represents the structure KeylessShapeType defined by the user in the IDL file.
-         * @ingroup KeylessShapeType
-         */
-        class KeylessShapeType
-        {
-        public:
 
-            /*!
-             * @brief Default constructor.
-             */
-            eProsima_user_DllExport KeylessShapeType();
+namespace idl {
 
-            /*!
-             * @brief Default destructor.
-             */
-            eProsima_user_DllExport ~KeylessShapeType();
+/*!
+ * @brief This class represents the structure KeylessShapeType defined by the user in the IDL file.
+ * @ingroup KeylessShapeType
+ */
+class KeylessShapeType
+{
+public:
 
-            /*!
-             * @brief Copy constructor.
-             * @param x Reference to the object shapes_demo_typesupport::idl::KeylessShapeType that will be copied.
-             */
-            eProsima_user_DllExport KeylessShapeType(
-                    const KeylessShapeType& x);
+    /*!
+     * @brief Default constructor.
+     */
+    eProsima_user_DllExport KeylessShapeType();
 
-            /*!
-             * @brief Move constructor.
-             * @param x Reference to the object shapes_demo_typesupport::idl::KeylessShapeType that will be copied.
-             */
-            eProsima_user_DllExport KeylessShapeType(
-                    KeylessShapeType&& x) noexcept;
+    /*!
+     * @brief Default destructor.
+     */
+    eProsima_user_DllExport ~KeylessShapeType();
 
-            /*!
-             * @brief Copy assignment.
-             * @param x Reference to the object shapes_demo_typesupport::idl::KeylessShapeType that will be copied.
-             */
-            eProsima_user_DllExport KeylessShapeType& operator =(
-                    const KeylessShapeType& x);
+    /*!
+     * @brief Copy constructor.
+     * @param x Reference to the object shapes_demo_typesupport::idl::KeylessShapeType that will be copied.
+     */
+    eProsima_user_DllExport KeylessShapeType(
+            const KeylessShapeType& x);
 
-            /*!
-             * @brief Move assignment.
-             * @param x Reference to the object shapes_demo_typesupport::idl::KeylessShapeType that will be copied.
-             */
-            eProsima_user_DllExport KeylessShapeType& operator =(
-                    KeylessShapeType&& x) noexcept;
+    /*!
+     * @brief Move constructor.
+     * @param x Reference to the object shapes_demo_typesupport::idl::KeylessShapeType that will be copied.
+     */
+    eProsima_user_DllExport KeylessShapeType(
+            KeylessShapeType&& x) noexcept;
 
-            /*!
-             * @brief Comparison operator.
-             * @param x shapes_demo_typesupport::idl::KeylessShapeType object to compare.
-             */
-            eProsima_user_DllExport bool operator ==(
-                    const KeylessShapeType& x) const;
+    /*!
+     * @brief Copy assignment.
+     * @param x Reference to the object shapes_demo_typesupport::idl::KeylessShapeType that will be copied.
+     */
+    eProsima_user_DllExport KeylessShapeType& operator =(
+            const KeylessShapeType& x);
 
-            /*!
-             * @brief Comparison operator.
-             * @param x shapes_demo_typesupport::idl::KeylessShapeType object to compare.
-             */
-            eProsima_user_DllExport bool operator !=(
-                    const KeylessShapeType& x) const;
+    /*!
+     * @brief Move assignment.
+     * @param x Reference to the object shapes_demo_typesupport::idl::KeylessShapeType that will be copied.
+     */
+    eProsima_user_DllExport KeylessShapeType& operator =(
+            KeylessShapeType&& x) noexcept;
 
-            /*!
-             * @brief This function copies the value in member color
-             * @param _color New value to be copied in member color
-             */
-            eProsima_user_DllExport void color(
-                    const std::string& _color);
+    /*!
+     * @brief Comparison operator.
+     * @param x shapes_demo_typesupport::idl::KeylessShapeType object to compare.
+     */
+    eProsima_user_DllExport bool operator ==(
+            const KeylessShapeType& x) const;
 
-            /*!
-             * @brief This function moves the value in member color
-             * @param _color New value to be moved in member color
-             */
-            eProsima_user_DllExport void color(
-                    std::string&& _color);
+    /*!
+     * @brief Comparison operator.
+     * @param x shapes_demo_typesupport::idl::KeylessShapeType object to compare.
+     */
+    eProsima_user_DllExport bool operator !=(
+            const KeylessShapeType& x) const;
 
-            /*!
-             * @brief This function returns a constant reference to member color
-             * @return Constant reference to member color
-             */
-            eProsima_user_DllExport const std::string& color() const;
+    /*!
+     * @brief This function copies the value in member color
+     * @param _color New value to be copied in member color
+     */
+    eProsima_user_DllExport void color(
+            const std::string& _color);
 
-            /*!
-             * @brief This function returns a reference to member color
-             * @return Reference to member color
-             */
-            eProsima_user_DllExport std::string& color();
+    /*!
+     * @brief This function moves the value in member color
+     * @param _color New value to be moved in member color
+     */
+    eProsima_user_DllExport void color(
+            std::string&& _color);
 
+    /*!
+     * @brief This function returns a constant reference to member color
+     * @return Constant reference to member color
+     */
+    eProsima_user_DllExport const std::string& color() const;
 
-            /*!
-             * @brief This function sets a value in member x
-             * @param _x New value for member x
-             */
-            eProsima_user_DllExport void x(
-                    int32_t _x);
-
-            /*!
-             * @brief This function returns the value of member x
-             * @return Value of member x
-             */
-            eProsima_user_DllExport int32_t x() const;
-
-            /*!
-             * @brief This function returns a reference to member x
-             * @return Reference to member x
-             */
-            eProsima_user_DllExport int32_t& x();
+    /*!
+     * @brief This function returns a reference to member color
+     * @return Reference to member color
+     */
+    eProsima_user_DllExport std::string& color();
 
 
-            /*!
-             * @brief This function sets a value in member y
-             * @param _y New value for member y
-             */
-            eProsima_user_DllExport void y(
-                    int32_t _y);
+    /*!
+     * @brief This function sets a value in member x
+     * @param _x New value for member x
+     */
+    eProsima_user_DllExport void x(
+            int32_t _x);
 
-            /*!
-             * @brief This function returns the value of member y
-             * @return Value of member y
-             */
-            eProsima_user_DllExport int32_t y() const;
+    /*!
+     * @brief This function returns the value of member x
+     * @return Value of member x
+     */
+    eProsima_user_DllExport int32_t x() const;
 
-            /*!
-             * @brief This function returns a reference to member y
-             * @return Reference to member y
-             */
-            eProsima_user_DllExport int32_t& y();
+    /*!
+     * @brief This function returns a reference to member x
+     * @return Reference to member x
+     */
+    eProsima_user_DllExport int32_t& x();
 
 
-            /*!
-             * @brief This function sets a value in member shapesize
-             * @param _shapesize New value for member shapesize
-             */
-            eProsima_user_DllExport void shapesize(
-                    int32_t _shapesize);
+    /*!
+     * @brief This function sets a value in member y
+     * @param _y New value for member y
+     */
+    eProsima_user_DllExport void y(
+            int32_t _y);
 
-            /*!
-             * @brief This function returns the value of member shapesize
-             * @return Value of member shapesize
-             */
-            eProsima_user_DllExport int32_t shapesize() const;
+    /*!
+     * @brief This function returns the value of member y
+     * @return Value of member y
+     */
+    eProsima_user_DllExport int32_t y() const;
 
-            /*!
-             * @brief This function returns a reference to member shapesize
-             * @return Reference to member shapesize
-             */
-            eProsima_user_DllExport int32_t& shapesize();
+    /*!
+     * @brief This function returns a reference to member y
+     * @return Reference to member y
+     */
+    eProsima_user_DllExport int32_t& y();
 
-        private:
 
-            std::string m_color;
-            int32_t m_x{0};
-            int32_t m_y{0};
-            int32_t m_shapesize{0};
+    /*!
+     * @brief This function sets a value in member shapesize
+     * @param _shapesize New value for member shapesize
+     */
+    eProsima_user_DllExport void shapesize(
+            int32_t _shapesize);
 
-        };
-    } // namespace idl
+    /*!
+     * @brief This function returns the value of member shapesize
+     * @return Value of member shapesize
+     */
+    eProsima_user_DllExport int32_t shapesize() const;
+
+    /*!
+     * @brief This function returns a reference to member shapesize
+     * @return Reference to member shapesize
+     */
+    eProsima_user_DllExport int32_t& shapesize();
+
+
+    /*!
+     * @brief This function serializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void serialize(
+            eprosima::fastcdr::Cdr& cdr) const;
+
+    /*!
+     * @brief This function deserializes an object using CDR serialization.
+     * @param cdr CDR serialization object.
+     */
+    eProsima_user_DllExport void deserialize(
+            eprosima::fastcdr::Cdr& cdr);
+
+
+
+private:
+
+    std::string m_color;
+    int32_t m_x{0};
+    int32_t m_y{0};
+    int32_t m_shapesize{0};
+
+};
+
+} // namespace idl
+
 } // namespace shapes_demo_typesupport
 
 #endif // _FAST_DDS_GENERATED_SHAPES_DEMO_TYPESUPPORT_IDL_KEYLESSSHAPETYPE_H_

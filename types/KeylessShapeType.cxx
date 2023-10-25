@@ -29,14 +29,19 @@ char dummy;
 #include "KeylessShapeType.h"
 #include "KeylessShapeTypeTypeObject.h"
 
-#include <fastcdr/Cdr.h>
-
-
-#include <fastcdr/exceptions/BadParamException.h>
-using namespace eprosima::fastcdr::exception;
+#include <fastdds/rtps/common/CdrSerialization.hpp>
 
 #include <utility>
 
+// Include auxiliary functions like for serializing/deserializing.
+#include "KeylessShapeTypeCdrAux.ipp"
+
+using namespace eprosima::fastcdr::exception;
+
+
+namespace shapes_demo_typesupport {
+
+namespace idl {
 
 shapes_demo_typesupport::idl::KeylessShapeType::KeylessShapeType()
 {
@@ -75,7 +80,6 @@ shapes_demo_typesupport::idl::KeylessShapeType& shapes_demo_typesupport::idl::Ke
     m_x = x.m_x;
     m_y = x.m_y;
     m_shapesize = x.m_shapesize;
-
     return *this;
 }
 
@@ -87,7 +91,6 @@ shapes_demo_typesupport::idl::KeylessShapeType& shapes_demo_typesupport::idl::Ke
     m_x = x.m_x;
     m_y = x.m_y;
     m_shapesize = x.m_shapesize;
-
     return *this;
 }
 
@@ -105,6 +108,19 @@ bool shapes_demo_typesupport::idl::KeylessShapeType::operator !=(
 {
     return !(*this == x);
 }
+
+void shapes_demo_typesupport::idl::KeylessShapeType::serialize(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+    eprosima::fastcdr::serialize(scdr, *this);
+}
+
+void shapes_demo_typesupport::idl::KeylessShapeType::deserialize(
+        eprosima::fastcdr::Cdr& dcdr)
+{
+    eprosima::fastcdr::deserialize(dcdr, *this);
+}
+
 
 /*!
  * @brief This function copies the value in member color
@@ -234,5 +250,7 @@ int32_t& shapes_demo_typesupport::idl::KeylessShapeType::shapesize()
 
 
 
-// Include auxiliary functions like for serializing/deserializing.
-#include "KeylessShapeTypeCdrAux.ipp"
+} // namespace idl
+
+
+} // namespace shapes_demo_typesupport

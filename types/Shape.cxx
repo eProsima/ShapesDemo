@@ -29,13 +29,14 @@ char dummy;
 #include "Shape.h"
 #include "ShapeTypeObject.h"
 
-#include <fastcdr/Cdr.h>
-
-
-#include <fastcdr/exceptions/BadParamException.h>
-using namespace eprosima::fastcdr::exception;
+#include <fastdds/rtps/common/CdrSerialization.hpp>
 
 #include <utility>
+
+// Include auxiliary functions like for serializing/deserializing.
+#include "ShapeCdrAux.ipp"
+
+using namespace eprosima::fastcdr::exception;
 
 
 ShapeType::ShapeType()
@@ -75,7 +76,6 @@ ShapeType& ShapeType::operator =(
     m_x = x.m_x;
     m_y = x.m_y;
     m_shapesize = x.m_shapesize;
-
     return *this;
 }
 
@@ -87,7 +87,6 @@ ShapeType& ShapeType::operator =(
     m_x = x.m_x;
     m_y = x.m_y;
     m_shapesize = x.m_shapesize;
-
     return *this;
 }
 
@@ -105,6 +104,19 @@ bool ShapeType::operator !=(
 {
     return !(*this == x);
 }
+
+void ShapeType::serialize(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+    eprosima::fastcdr::serialize(scdr, *this);
+}
+
+void ShapeType::deserialize(
+        eprosima::fastcdr::Cdr& dcdr)
+{
+    eprosima::fastcdr::deserialize(dcdr, *this);
+}
+
 
 /*!
  * @brief This function copies the value in member color
@@ -231,6 +243,3 @@ int32_t& ShapeType::shapesize()
     return m_shapesize;
 }
 
-
-// Include auxiliary functions like for serializing/deserializing.
-#include "ShapeCdrAux.ipp"

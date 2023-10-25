@@ -124,7 +124,7 @@ option(EPROSIMA_BUILD "Activate internal building" OFF)
 # Load external eProsima projects.
 ###############################################################################
 set(FASTDDS_MIN_VERSION "2.12.0")
-set(FASTCDR_MIN_VERSION "2.0.0")
+set(FASTCDR_MIN_VERSION "1.0.0")
 
 find_package(fastcdr ${FASTCDR_MIN_VERSION} REQUIRED)
 find_package(fastrtps ${FASTDDS_MIN_VERSION} REQUIRED)
