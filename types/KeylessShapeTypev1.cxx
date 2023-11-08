@@ -28,7 +28,7 @@ char dummy;
 
 #include "KeylessShapeType.h"
 
-#if FASTCDR_VERSION_MAJOR > 1
+#if FASTCDR_VERSION_MAJOR == 1
 
 #include <fastcdr/Cdr.h>
 
@@ -37,6 +37,53 @@ char dummy;
 using namespace eprosima::fastcdr::exception;
 
 #include <utility>
+
+namespace helper { namespace internal {
+
+enum class Size {
+    UInt8,
+    UInt16,
+    UInt32,
+    UInt64,
+};
+
+constexpr Size get_size(int s) {
+    return (s <= 8 ) ? Size::UInt8:
+           (s <= 16) ? Size::UInt16:
+           (s <= 32) ? Size::UInt32: Size::UInt64;
+}
+
+template<Size s>
+struct FindTypeH;
+
+template<>
+struct FindTypeH<Size::UInt8> {
+    using type = std::uint8_t;
+};
+
+template<>
+struct FindTypeH<Size::UInt16> {
+    using type = std::uint16_t;
+};
+
+template<>
+struct FindTypeH<Size::UInt32> {
+    using type = std::uint32_t;
+};
+
+template<>
+struct FindTypeH<Size::UInt64> {
+    using type = std::uint64_t;
+};
+}
+
+template<int S>
+struct FindType {
+    using type = typename internal::FindTypeH<internal::get_size(S)>::type;
+};
+}
+
+#define shapes_demo_typesupport_idl_KeylessShapeType_max_cdr_typesize 276ULL;
 
 
 namespace shapes_demo_typesupport {
@@ -47,6 +94,15 @@ namespace idl {
 
 KeylessShapeType::KeylessShapeType()
 {
+    // /type_d() m_color
+
+    // long m_x
+    m_x = 0;
+    // long m_y
+    m_y = 0;
+    // long m_shapesize
+    m_shapesize = 0;
+
 }
 
 KeylessShapeType::~KeylessShapeType()
@@ -57,39 +113,65 @@ KeylessShapeType::KeylessShapeType(
         const KeylessShapeType& x)
 {
     m_color = x.m_color;
+
+
     m_x = x.m_x;
+
+
     m_y = x.m_y;
+
+
     m_shapesize = x.m_shapesize;
+
 }
 
 KeylessShapeType::KeylessShapeType(
         KeylessShapeType&& x) noexcept
 {
     m_color = std::move(x.m_color);
+
+
     m_x = x.m_x;
+
+
     m_y = x.m_y;
+
+
     m_shapesize = x.m_shapesize;
+
 }
 
 KeylessShapeType& KeylessShapeType::operator =(
         const KeylessShapeType& x)
 {
-
     m_color = x.m_color;
+
+
     m_x = x.m_x;
+
+
     m_y = x.m_y;
+
+
     m_shapesize = x.m_shapesize;
+
     return *this;
 }
 
 KeylessShapeType& KeylessShapeType::operator =(
         KeylessShapeType&& x) noexcept
 {
-
     m_color = std::move(x.m_color);
+
+
     m_x = x.m_x;
+
+
     m_y = x.m_y;
+
+
     m_shapesize = x.m_shapesize;
+
     return *this;
 }
 
@@ -106,6 +188,81 @@ bool KeylessShapeType::operator !=(
         const KeylessShapeType& x) const
 {
     return !(*this == x);
+}
+
+size_t KeylessShapeType::getMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    static_cast<void>(current_alignment);
+    return shapes_demo_typesupport_idl_KeylessShapeType_max_cdr_typesize;
+}
+
+size_t KeylessShapeType::getCdrSerializedSize(
+        const KeylessShapeType& data,
+        size_t current_alignment)
+{
+    (void)data;
+    size_t initial_alignment = current_alignment;
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + data.color().size() + 1;
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    return current_alignment - initial_alignment;
+}
+
+
+void KeylessShapeType::serialize(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+    scdr << m_color.c_str();
+
+    scdr << m_x;
+
+    scdr << m_y;
+
+    scdr << m_shapesize;
+
+}
+
+void KeylessShapeType::deserialize(
+        eprosima::fastcdr::Cdr& dcdr)
+{
+    dcdr >> m_color;
+
+
+
+    dcdr >> m_x;
+
+
+
+    dcdr >> m_y;
+
+
+
+    dcdr >> m_shapesize;
+
+
+}
+
+
+bool KeylessShapeType::isKeyDefined()
+{
+    return false;
+}
+
+void KeylessShapeType::serializeKey(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+    (void) scdr;
 }
 
 /*!
@@ -236,11 +393,10 @@ int32_t& KeylessShapeType::shapesize()
 
 
 
+
 } // namespace idl
 
 
 } // namespace shapes_demo_typesupport
-// Include auxiliary functions like for serializing/deserializing.
-#include "KeylessShapeTypeCdrAux.ipp"
 
-#endif // FASTCDR_VERSION_MAJOR > 1
+#endif // FASTCDR_VERSION_MAJOR == 1

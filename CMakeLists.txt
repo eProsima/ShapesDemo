@@ -200,6 +200,7 @@ set( SHAPESDEMO_SOURCES
     src/shapesdemo/ShapesDemo.cpp
     src/shapesdemo/ShapeSubscriber.cpp
     types/Shape.cxx
+    types/Shapev1.cxx
     types/ShapePubSubTypes.cxx
     types/ShapeTypeObject.cxx
     )
@@ -207,6 +208,7 @@ set( SHAPESDEMO_SOURCES
 if(BUILD_ROS_COMPONENTS)
     list( APPEND SHAPESDEMO_SOURCES
     types/KeylessShapeType.cxx
+    types/KeylessShapeTypev1.cxx
     types/KeylessShapeTypePubSubTypes.cxx
     types/KeylessShapeTypeTypeObject.cxx
     )
