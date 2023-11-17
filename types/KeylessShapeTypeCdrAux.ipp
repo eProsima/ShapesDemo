@@ -34,12 +34,16 @@ using namespace eprosima::fastcdr::exception;
 namespace eprosima {
 namespace fastcdr {
 
+
+
 template<>
 eProsima_user_DllExport size_t calculate_serialized_size(
         eprosima::fastcdr::CdrSizeCalculator& calculator,
         const shapes_demo_typesupport::idl::KeylessShapeType& data,
         size_t& current_alignment)
 {
+    using namespace shapes_demo_typesupport::idl;
+
     static_cast<void>(data);
 
     eprosima::fastcdr::EncodingAlgorithmFlag previous_encoding = calculator.get_encoding();
@@ -73,6 +77,8 @@ eProsima_user_DllExport void serialize(
         eprosima::fastcdr::Cdr& scdr,
         const shapes_demo_typesupport::idl::KeylessShapeType& data)
 {
+    using namespace shapes_demo_typesupport::idl;
+
     eprosima::fastcdr::Cdr::state current_state(scdr);
     scdr.begin_serialize_type(current_state,
             eprosima::fastcdr::CdrVersion::XCDRv2 == scdr.get_cdr_version() ?
@@ -85,7 +91,6 @@ eProsima_user_DllExport void serialize(
         << eprosima::fastcdr::MemberId(2) << data.y()
         << eprosima::fastcdr::MemberId(3) << data.shapesize()
 ;
-
     scdr.end_serialize_type(current_state);
 }
 
@@ -94,6 +99,8 @@ eProsima_user_DllExport void deserialize(
         eprosima::fastcdr::Cdr& cdr,
         shapes_demo_typesupport::idl::KeylessShapeType& data)
 {
+    using namespace shapes_demo_typesupport::idl;
+
     cdr.deserialize_type(eprosima::fastcdr::CdrVersion::XCDRv2 == cdr.get_cdr_version() ?
             eprosima::fastcdr::EncodingAlgorithmFlag::DELIMIT_CDR2 :
             eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR,
@@ -130,6 +137,8 @@ void serialize_key(
         eprosima::fastcdr::Cdr& scdr,
         const shapes_demo_typesupport::idl::KeylessShapeType& data)
 {
+    using namespace shapes_demo_typesupport::idl;
+
     static_cast<void>(scdr);
     static_cast<void>(data);
 }

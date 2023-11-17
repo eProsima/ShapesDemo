@@ -123,10 +123,9 @@ option(EPROSIMA_BUILD "Activate internal building" OFF)
 ###############################################################################
 # Load external eProsima projects.
 ###############################################################################
-set(FASTDDS_MIN_VERSION "2.12.0")
-set(FASTCDR_MIN_VERSION "2.0.0")
+set(FASTDDS_MIN_VERSION "2.12.1")
 
-find_package(fastcdr ${FASTCDR_MIN_VERSION} REQUIRED)
+find_package(fastcdr REQUIRED)
 find_package(fastrtps ${FASTDDS_MIN_VERSION} REQUIRED)
 
 # If ROS environment is not set, disable ROS features. If there's no TypeSupport for the ROS 2 type, disable them as well.
@@ -200,6 +199,7 @@ set( SHAPESDEMO_SOURCES
     src/shapesdemo/ShapesDemo.cpp
     src/shapesdemo/ShapeSubscriber.cpp
     types/Shape.cxx
+    types/Shapev1.cxx
     types/ShapePubSubTypes.cxx
     types/ShapeTypeObject.cxx
     )
@@ -207,6 +207,7 @@ set( SHAPESDEMO_SOURCES
 if(BUILD_ROS_COMPONENTS)
     list( APPEND SHAPESDEMO_SOURCES
     types/KeylessShapeType.cxx
+    types/KeylessShapeTypev1.cxx
     types/KeylessShapeTypePubSubTypes.cxx
     types/KeylessShapeTypeTypeObject.cxx
     )

@@ -28,7 +28,7 @@ char dummy;
 
 #include "Shape.h"
 
-#if FASTCDR_VERSION_MAJOR > 1
+#if FASTCDR_VERSION_MAJOR == 1
 
 #include <fastcdr/Cdr.h>
 
@@ -38,11 +38,67 @@ using namespace eprosima::fastcdr::exception;
 
 #include <utility>
 
+namespace helper { namespace internal {
+
+enum class Size {
+    UInt8,
+    UInt16,
+    UInt32,
+    UInt64,
+};
+
+constexpr Size get_size(int s) {
+    return (s <= 8 ) ? Size::UInt8:
+           (s <= 16) ? Size::UInt16:
+           (s <= 32) ? Size::UInt32: Size::UInt64;
+}
+
+template<Size s>
+struct FindTypeH;
+
+template<>
+struct FindTypeH<Size::UInt8> {
+    using type = std::uint8_t;
+};
+
+template<>
+struct FindTypeH<Size::UInt16> {
+    using type = std::uint16_t;
+};
+
+template<>
+struct FindTypeH<Size::UInt32> {
+    using type = std::uint32_t;
+};
+
+template<>
+struct FindTypeH<Size::UInt64> {
+    using type = std::uint64_t;
+};
+}
+
+template<int S>
+struct FindType {
+    using type = typename internal::FindTypeH<internal::get_size(S)>::type;
+};
+}
+
+#define ShapeType_max_cdr_typesize 276ULL;
+
 
 
 
 ShapeType::ShapeType()
 {
+    // /type_d() m_color
+
+    // long m_x
+    m_x = 0;
+    // long m_y
+    m_y = 0;
+    // long m_shapesize
+    m_shapesize = 0;
+
 }
 
 ShapeType::~ShapeType()
@@ -53,39 +109,65 @@ ShapeType::ShapeType(
         const ShapeType& x)
 {
     m_color = x.m_color;
+
+
     m_x = x.m_x;
+
+
     m_y = x.m_y;
+
+
     m_shapesize = x.m_shapesize;
+
 }
 
 ShapeType::ShapeType(
         ShapeType&& x) noexcept
 {
     m_color = std::move(x.m_color);
+
+
     m_x = x.m_x;
+
+
     m_y = x.m_y;
+
+
     m_shapesize = x.m_shapesize;
+
 }
 
 ShapeType& ShapeType::operator =(
         const ShapeType& x)
 {
-
     m_color = x.m_color;
+
+
     m_x = x.m_x;
+
+
     m_y = x.m_y;
+
+
     m_shapesize = x.m_shapesize;
+
     return *this;
 }
 
 ShapeType& ShapeType::operator =(
         ShapeType&& x) noexcept
 {
-
     m_color = std::move(x.m_color);
+
+
     m_x = x.m_x;
+
+
     m_y = x.m_y;
+
+
     m_shapesize = x.m_shapesize;
+
     return *this;
 }
 
@@ -102,6 +184,87 @@ bool ShapeType::operator !=(
         const ShapeType& x) const
 {
     return !(*this == x);
+}
+
+size_t ShapeType::getMaxCdrSerializedSize(
+        size_t current_alignment)
+{
+    static_cast<void>(current_alignment);
+    return ShapeType_max_cdr_typesize;
+}
+
+size_t ShapeType::getCdrSerializedSize(
+        const ShapeType& data,
+        size_t current_alignment)
+{
+    (void)data;
+    size_t initial_alignment = current_alignment;
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4) + data.color().size() + 1;
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    current_alignment += 4 + eprosima::fastcdr::Cdr::alignment(current_alignment, 4);
+
+
+    return current_alignment - initial_alignment;
+}
+
+
+void ShapeType::serialize(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+    scdr << m_color.c_str();
+
+    scdr << m_x;
+
+    scdr << m_y;
+
+    scdr << m_shapesize;
+
+}
+
+void ShapeType::deserialize(
+        eprosima::fastcdr::Cdr& dcdr)
+{
+    dcdr >> m_color;
+
+
+
+    dcdr >> m_x;
+
+
+
+    dcdr >> m_y;
+
+
+
+    dcdr >> m_shapesize;
+
+
+}
+
+
+bool ShapeType::isKeyDefined()
+{
+    return true;
+}
+
+void ShapeType::serializeKey(
+        eprosima::fastcdr::Cdr& scdr) const
+{
+    (void) scdr;
+       
+    scdr << m_color.c_str();
+       
+     
+     
+      
 }
 
 /*!
@@ -230,7 +393,6 @@ int32_t& ShapeType::shapesize()
 }
 
 
-// Include auxiliary functions like for serializing/deserializing.
-#include "ShapeCdrAux.ipp"
 
-#endif // FASTCDR_VERSION_MAJOR > 1
+
+#endif // FASTCDR_VERSION_MAJOR == 1

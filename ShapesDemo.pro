@@ -98,6 +98,7 @@ SOURCES += \
     src/qt/ContentFilterSelector.cpp \
     src/shapesdemo/ShapeHistory.cpp \
     src/shapesdemo/Shape.cxx \
+    src/shapesdemo/Shapev1.cxx \
     src/shapesdemo/ShapePubSubTypes.cxx
 
 

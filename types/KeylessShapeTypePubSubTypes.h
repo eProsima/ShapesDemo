@@ -42,6 +42,8 @@ namespace shapes_demo_typesupport
     namespace idl
     {
 
+
+
         /*!
          * @brief This class represents the TopicDataType of the type KeylessShapeType defined by the user in the IDL file.
          * @ingroup KeylessShapeType
