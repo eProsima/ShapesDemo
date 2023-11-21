@@ -25,6 +25,7 @@
 #include <fastdds/rtps/transport/shared_mem/SharedMemTransportDescriptor.h>
 #include <fastdds/rtps/transport/TCPv4TransportDescriptor.h>
 #include <fastdds/rtps/transport/UDPv4TransportDescriptor.h>
+#include <fastdds/rtps/transport/test_UDPv4TransportDescriptor.h>
 #include <fastrtps/config.h> // FASTDDS_STATISTICS availability
 #include <fastrtps/utils/IPLocator.h>
 #include <fastrtps/xmlparser/XMLProfileManager.h>
@@ -111,6 +112,10 @@ bool ShapesDemo::init()
         qos.transport().use_builtin_transports = false;
         qos.wire_protocol().builtin.typelookup_config.use_server = true;
 
+        qos.properties().properties().emplace_back(
+                "fastdds.enable_monitor_service",
+                "true");
+
         // Intraprocess
         LibrarySettingsAttributes library_settings;
         library_settings.intraprocess_delivery = m_options.m_intraprocess_transport ?
@@ -133,8 +138,22 @@ bool ShapesDemo::init()
         if (m_options.m_udp_transport)
         {
             // Configure UDP Transport
-            std::shared_ptr<UDPv4TransportDescriptor> descriptor = std::make_shared<UDPv4TransportDescriptor>();
-            qos.transport().user_transports.push_back(descriptor);
+            // std::shared_ptr<UDPv4TransportDescriptor> descriptor = std::make_shared<UDPv4TransportDescriptor>();
+            // qos.transport().user_transports.push_back(descriptor);
+
+            auto udp_lossy_descriptor = std::make_shared<eprosima::fastdds::rtps::test_UDPv4TransportDescriptor>();
+            udp_lossy_descriptor->dropDataMessagesPercentage = 30;
+            qos.transport().user_transports.push_back(udp_lossy_descriptor);
+        }
+
+        // UDP Lossy
+        if (m_options.m_udp_lossy_transport)
+        {
+            // Configure UDP Transport with package drop
+            std::cout << "Lossy transport configured..." << std::endl;
+            auto udp_lossy_descriptor = std::make_shared<eprosima::fastdds::rtps::test_UDPv4TransportDescriptor>();
+            udp_lossy_descriptor->dropDataMessagesPercentage = 30;
+            qos.transport().user_transports.push_back(udp_lossy_descriptor);
         }
 
         // TCP
@@ -170,6 +189,7 @@ bool ShapesDemo::init()
 
         if (!m_options.m_shm_transport &&
                 !m_options.m_udp_transport &&
+                !m_options.m_udp_lossy_transport &&
                 !m_options.m_tcp_transport)
         {
             m_mainWindow->addMessageToOutput(
@@ -198,8 +218,8 @@ bool ShapesDemo::init()
                 "PDP_PACKETS_TOPIC;" \
                 "EDP_PACKETS_TOPIC;" \
                 "DISCOVERY_TOPIC;" \
-                "PHYSICAL_DATA_TOPIC");
-
+                "PHYSICAL_DATA_TOPIC;" \
+                "MONITOR_SERVICE_TOPIC");
             // In case the Statistics are not compiled, show an error
 #ifndef FASTDDS_STATISTICS
             std::cerr << "Statistics Module is not available" << std::endl;

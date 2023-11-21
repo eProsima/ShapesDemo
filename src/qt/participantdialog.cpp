@@ -45,6 +45,7 @@ ParticipantDialog::ParticipantDialog(
     this->ui->DataSharingcheckBox->setChecked(m_options->m_datasharing_transport);
     this->ui->SHMcheckBox->setChecked(m_options->m_shm_transport);
     this->ui->UDPcheckBox->setChecked(m_options->m_udp_transport);
+    this->ui->UDPLossycheckBox->setChecked(m_options->m_udp_lossy_transport);
     this->ui->TCPcheckBox->setChecked(m_options->m_tcp_transport);
 
     // Statistics Button
@@ -228,6 +229,13 @@ void ParticipantDialog::on_UDPcheckBox_stateChanged(
         int arg1)
 {
     m_options->m_udp_transport = arg1;
+    mp_sd->setOptions(*m_options);
+}
+
+void ParticipantDialog::on_UDPLossycheckBox_stateChanged(
+        int arg1)
+{
+    m_options->m_udp_lossy_transport = arg1;
     mp_sd->setOptions(*m_options);
 }
 

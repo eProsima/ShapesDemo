@@ -58,6 +58,7 @@ class ShapesDemoOptions
 public:
 
     bool m_udp_transport;
+    bool m_udp_lossy_transport;
     bool m_tcp_transport;
     bool m_intraprocess_transport;
     bool m_datasharing_transport;
@@ -74,17 +75,18 @@ public:
     ShapesDemoOptions()
     {
         m_udp_transport = true;
+        m_udp_lossy_transport = false;
         m_tcp_transport = false;
-        m_intraprocess_transport = true;
-        m_datasharing_transport = true;
-        m_shm_transport = true;
+        m_intraprocess_transport = false;
+        m_datasharing_transport = false;
+        m_shm_transport = false;
         m_statistics = false;
         m_listenPort = 5100;
         m_serverPort = 5100;
         m_serverIp = "127.0.0.1";
         m_updateIntervalMs = INITIAL_INTERVAL_MS;
         m_movementSpeed = 7;
-        m_domainId = 0;
+        m_domainId = 7;
         m_tcp_type = QString("TCP LAN Server");
 #ifdef ENABLE_ROS_COMPONENTS
         m_ros2_topic = detect_ros_2_installation();

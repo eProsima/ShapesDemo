@@ -68,6 +68,9 @@ private slots:
     void on_UDPcheckBox_stateChanged(
             int arg1);
 
+    void on_UDPLossycheckBox_stateChanged(
+            int arg1);
+
     void on_TCPcheckBox_stateChanged(
             int arg1);
 
