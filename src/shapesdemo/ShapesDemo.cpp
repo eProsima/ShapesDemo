@@ -111,6 +111,10 @@ bool ShapesDemo::init()
         qos.transport().use_builtin_transports = false;
         qos.wire_protocol().builtin.typelookup_config.use_server = true;
 
+        // Set Participant properties
+        qos.properties().properties().emplace_back("fastdds.application.id", "SHAPES_DEMO", true);
+        qos.properties().properties().emplace_back("fastdds.application.metadata", "", true);
+
         // Intraprocess
         LibrarySettingsAttributes library_settings;
         library_settings.intraprocess_delivery = m_options.m_intraprocess_transport ?
