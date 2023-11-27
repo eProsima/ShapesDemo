@@ -115,6 +115,12 @@ bool ShapesDemo::init()
         qos.properties().properties().emplace_back("fastdds.application.id", "SHAPES_DEMO", true);
         qos.properties().properties().emplace_back("fastdds.application.metadata", "", true);
 
+        if (m_options.m_monitor_service)
+        {
+            qos.properties().properties().emplace_back(
+                "fastdds.enable_monitor_service",
+                "true");
+        }
         // Intraprocess
         LibrarySettingsAttributes library_settings;
         library_settings.intraprocess_delivery = m_options.m_intraprocess_transport ?
@@ -609,4 +615,5 @@ bool detect_ros_2_installation()
 
     return false;
 }
+
 #endif // ifdef ENABLE_ROS_COMPONENTS

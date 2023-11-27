@@ -47,7 +47,7 @@ std::string qos_policy_id_to_string(
         QosPolicyId_t policy_id);
 
 #ifdef ENABLE_ROS_COMPONENTS
-    bool detect_ros_2_installation();
+bool detect_ros_2_installation();
 #endif // ifdef ENABLE_ROS_COMPONENTS
 
 /**
@@ -64,6 +64,7 @@ public:
     bool m_shm_transport;
     bool m_statistics;
     bool m_ros2_topic;
+    bool m_monitor_service;
     QString m_tcp_type;
     uint16_t m_listenPort;
     uint16_t m_serverPort;
@@ -86,11 +87,12 @@ public:
         m_movementSpeed = 7;
         m_domainId = 0;
         m_tcp_type = QString("TCP LAN Server");
+        m_monitor_service = false;
 #ifdef ENABLE_ROS_COMPONENTS
         m_ros2_topic = detect_ros_2_installation();
 #else
         m_ros2_topic = false;
-#endif
+#endif // ifdef ENABLE_ROS_COMPONENTS
     }
 
     bool tcp_lan()

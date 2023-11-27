@@ -76,6 +76,9 @@ private slots:
 
     void tcp_enable_buttons();
 
+    void on_monitorServiceCheckBox_stateChanged(
+            int arg1);
+
 private:
 
     ShapesDemoOptions* m_options;
