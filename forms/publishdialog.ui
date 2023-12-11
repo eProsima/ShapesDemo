@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>481</width>
-    <height>680</height>
+    <height>724</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>9</x>
-     <y>79</y>
+     <y>90</y>
      <width>191</width>
      <height>20</height>
     </rect>
@@ -40,7 +40,7 @@
    <property name="geometry">
     <rect>
      <x>310</x>
-     <y>640</y>
+     <y>690</y>
      <width>166</width>
      <height>25</height>
     </rect>
@@ -56,9 +56,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>110</y>
+     <y>120</y>
      <width>461</width>
-     <height>521</height>
+     <height>561</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -70,8 +70,8 @@
    <widget class="QComboBox" name="comboBox_durability">
     <property name="geometry">
      <rect>
-      <x>154</x>
-      <y>42</y>
+      <x>180</x>
+      <y>47</y>
       <width>162</width>
       <height>21</height>
      </rect>
@@ -90,11 +90,34 @@
      </property>
     </item>
    </widget>
+   <widget class="QComboBox" name="comboBox_representation">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>80</y>
+      <width>162</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <item>
+     <property name="text">
+      <string>XCDR</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>XCDR2</string>
+     </property>
+    </item>
+   </widget>
    <widget class="QLabel" name="label_15">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>430</y>
+      <y>464</y>
       <width>201</width>
       <height>20</height>
      </rect>
@@ -114,7 +137,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>106</y>
+      <y>140</y>
       <width>441</width>
       <height>101</height>
      </rect>
@@ -242,7 +265,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>80</y>
+      <y>114</y>
       <width>191</width>
       <height>20</height>
      </rect>
@@ -264,7 +287,7 @@
    <widget class="QSpinBox" name="spin_HistoryQos">
     <property name="geometry">
      <rect>
-      <x>154</x>
+      <x>180</x>
       <y>10</y>
       <width>161</width>
       <height>21</height>
@@ -284,7 +307,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>369</y>
+      <y>403</y>
       <width>441</width>
       <height>50</height>
      </rect>
@@ -334,7 +357,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>220</y>
+      <y>254</y>
       <width>181</width>
       <height>20</height>
      </rect>
@@ -357,7 +380,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>460</y>
+      <y>494</y>
       <width>441</width>
       <height>50</height>
      </rect>
@@ -406,9 +429,9 @@
    <widget class="QCheckBox" name="checkBox_reliable">
     <property name="geometry">
      <rect>
-      <x>340</x>
+      <x>360</x>
       <y>10</y>
-      <width>111</width>
+      <width>91</width>
       <height>26</height>
      </rect>
     </property>
@@ -428,7 +451,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>340</y>
+      <y>374</y>
       <width>211</width>
       <height>20</height>
      </rect>
@@ -486,11 +509,32 @@
      <enum>Qt::AutoText</enum>
     </property>
    </widget>
+   <widget class="QLabel" name="label_17">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>171</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Data representation:</string>
+    </property>
+    <property name="textFormat">
+     <enum>Qt::AutoText</enum>
+    </property>
+   </widget>
    <widget class="QFrame" name="frame_3">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>250</y>
+      <y>284</y>
       <width>441</width>
       <height>71</height>
      </rect>
@@ -587,8 +631,10 @@
     <zorder>spin_ownershipStrength</zorder>
     <zorder>comboBox_ownership</zorder>
    </widget>
+   <zorder>comboBox_representation</zorder>
    <zorder>label_6</zorder>
    <zorder>label_10</zorder>
+   <zorder>label_17</zorder>
    <zorder>spin_HistoryQos</zorder>
    <zorder>checkBox_reliable</zorder>
    <zorder>label_7</zorder>
