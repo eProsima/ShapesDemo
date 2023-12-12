@@ -50,6 +50,7 @@ ParticipantDialog::ParticipantDialog(
     // Statistics Button
     // Show if it is checked or not
     this->ui->statisticsCheckBox->setChecked(m_options->m_statistics);
+    this->ui->monitorServiceCheckBox->setChecked(m_options->m_monitor_service);
 #ifdef ENABLE_ROS_COMPONENTS
     this->ui->rosTopicCheckBox->setChecked(m_options->m_ros2_topic);
 #else
@@ -84,6 +85,7 @@ void ParticipantDialog::setEnableState()
     this->ui->pushButton_start->setEnabled(mb_started);
     this->ui->spin_domainId->setEnabled(mb_started);
     this->ui->statisticsCheckBox->setEnabled(mb_started);
+    this->ui->monitorServiceCheckBox->setEnabled(mb_started);
 #ifdef ENABLE_ROS_COMPONENTS
     if (!detect_ros_2_installation())
     {
@@ -247,4 +249,11 @@ void ParticipantDialog::on_TCPcomboBox_currentTextChanged(
     mp_sd->setOptions(*m_options);
 
     tcp_enable_buttons();
+}
+
+void ParticipantDialog::on_monitorServiceCheckBox_stateChanged(
+        int arg1)
+{
+    m_options->m_monitor_service = arg1;
+    mp_sd->setOptions(*m_options);
 }
