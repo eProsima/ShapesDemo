@@ -65,8 +65,8 @@ MainWindow::MainWindow(
     m_pubsub->setHorizontalHeaderItem(7, new QStandardItem(QString("Ownership")));
     m_pubsub->setHorizontalHeaderItem(8, new QStandardItem(QString("Durability")));
     m_pubsub->setHorizontalHeaderItem(9, new QStandardItem(QString("Liveliness")));
-    m_pubsub->setHorizontalHeaderItem(10, new QStandardItem(QString("Data Representation")));
-    ui->tableEndpoint->setModel(m_pubsub);
+    m_pubsub->setHorizontalHeaderItem(10, new QStandardItem(QString("Data Repr.")));
+    ui->tableEndpoint->setModel(70);
 
 
 
@@ -364,7 +364,7 @@ void MainWindow::addSubscriberToTable(
         items.append(new QStandardItem("MAN_TOPIC"));
     }
 
-    items.append(new QStandardItem("XCDR & XCDR2"));
+    items.append(new QStandardItem("XCDR1&2"));
 
     m_pubsub->appendRow(items);
     SD_Endpoint sdend;

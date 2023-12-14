@@ -164,13 +164,13 @@ void PublishDialog::on_button_OkCancel_accepted()
         case 0:
         {
             SP->m_dw_qos.representation().m_value.push_back(eprosima::fastdds::dds::XCDR_DATA_REPRESENTATION);
+            break;
         }
-        break;
         case 1:
         {
             SP->m_dw_qos.representation().m_value.push_back(eprosima::fastdds::dds::XCDR2_DATA_REPRESENTATION);
+            break;
         }
-        break;
     }
 
 
