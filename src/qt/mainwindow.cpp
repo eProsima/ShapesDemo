@@ -66,13 +66,13 @@ MainWindow::MainWindow(
     m_pubsub->setHorizontalHeaderItem(8, new QStandardItem(QString("Durability")));
     m_pubsub->setHorizontalHeaderItem(9, new QStandardItem(QString("Liveliness")));
     m_pubsub->setHorizontalHeaderItem(10, new QStandardItem(QString("Data Repr.")));
-    ui->tableEndpoint->setModel(70);
+    ui->tableEndpoint->setModel(m_pubsub);
 
 
 
     QHeaderView* header = ui->tableEndpoint->horizontalHeader();
     header->setSectionResizeMode(QHeaderView::Stretch);
-    header->setMinimumSectionSize(130);
+    header->setMinimumSectionSize(70);
 
     //    ui->tableEndpoint->setColumnWidth(0,60); //Topic
     //    ui->tableEndpoint->setColumnWidth(1,65); //Color
