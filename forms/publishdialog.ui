@@ -71,7 +71,7 @@
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>47</y>
+      <y>44</y>
       <width>162</width>
       <height>21</height>
      </rect>
@@ -94,7 +94,7 @@
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>80</y>
+      <y>78</y>
       <width>162</width>
       <height>21</height>
      </rect>
@@ -492,7 +492,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>42</y>
+      <y>44</y>
       <width>131</width>
       <height>20</height>
      </rect>
@@ -513,7 +513,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>80</y>
+      <y>78</y>
       <width>171</width>
       <height>20</height>
      </rect>
@@ -524,7 +524,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Data representation:</string>
+     <string>Data Representation:</string>
     </property>
     <property name="textFormat">
      <enum>Qt::AutoText</enum>

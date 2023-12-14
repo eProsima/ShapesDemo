@@ -54,7 +54,7 @@ MainWindow::MainWindow(
     mp_writeThread = new UpdateThread(this, 1);
     mp_writeThread->setMainW(this);
 
-    m_pubsub = new QStandardItemModel(0, 9, this); //2 Rows and 3 Columns
+    m_pubsub = new QStandardItemModel(0, 10, this); //2 Rows and 3 Columns
     m_pubsub->setHorizontalHeaderItem(0, new QStandardItem(QString("Topic")));
     m_pubsub->setHorizontalHeaderItem(1, new QStandardItem(QString("Color")));
     m_pubsub->setHorizontalHeaderItem(2, new QStandardItem(QString("Size")));
@@ -65,13 +65,14 @@ MainWindow::MainWindow(
     m_pubsub->setHorizontalHeaderItem(7, new QStandardItem(QString("Ownership")));
     m_pubsub->setHorizontalHeaderItem(8, new QStandardItem(QString("Durability")));
     m_pubsub->setHorizontalHeaderItem(9, new QStandardItem(QString("Liveliness")));
-
+    m_pubsub->setHorizontalHeaderItem(10, new QStandardItem(QString("Data Representation")));
     ui->tableEndpoint->setModel(m_pubsub);
+
 
 
     QHeaderView* header = ui->tableEndpoint->horizontalHeader();
     header->setSectionResizeMode(QHeaderView::Stretch);
-    header->setMinimumSectionSize(70);
+    header->setMinimumSectionSize(130);
 
     //    ui->tableEndpoint->setColumnWidth(0,60); //Topic
     //    ui->tableEndpoint->setColumnWidth(1,65); //Color
@@ -88,7 +89,7 @@ MainWindow::MainWindow(
     ui->widget_contentFilter->setVisible(false);
 
     // The Participant is created when Start is pressed or when an Endpoint is created
-    
+
     ShapesDemoLogConsumer::register_new_consumer(this);
 }
 
@@ -270,6 +271,15 @@ void MainWindow::addPublisherToTable(
         items.append(new QStandardItem("MAN_TOPIC"));
     }
 
+    //DATA REPRESENTATION
+    if (spub->m_dw_qos.representation().m_value.at(0) == eprosima::fastdds::dds::XCDR_DATA_REPRESENTATION)
+    {
+        items.append(new QStandardItem("XCDR"));
+    }
+    else if (spub->m_dw_qos.representation().m_value.at(0) == eprosima::fastdds::dds::XCDR2_DATA_REPRESENTATION)
+    {
+        items.append(new QStandardItem("XCDR2"));
+    }
 
     m_pubsub->appendRow(items);
     SD_Endpoint sdend;
@@ -353,6 +363,8 @@ void MainWindow::addSubscriberToTable(
     {
         items.append(new QStandardItem("MAN_TOPIC"));
     }
+
+    items.append(new QStandardItem("XCDR & XCDR2"));
 
     m_pubsub->appendRow(items);
     SD_Endpoint sdend;
@@ -471,7 +483,8 @@ void MainWindow::on_actionUser_Manual_triggered()
 void MainWindow::on_actionInteroperability_Troubleshooting_triggered()
 {
     //QDesktopServices::openUrl(QUrl("file:///C:/Program Files/eProsima/FastRTPS/doc/pdf/FastRTPS_ShapesDemo_Interoperability_Troubleshooting.pdf"));
-    QDesktopServices::openUrl(QUrl("https://eprosima-shapes-demo.readthedocs.io/en/latest/troubleshooting/troubleshooting.html"));
+    QDesktopServices::openUrl(QUrl(
+                "https://eprosima-shapes-demo.readthedocs.io/en/latest/troubleshooting/troubleshooting.html"));
 
     //QString str(QDir::currentPath());
 
