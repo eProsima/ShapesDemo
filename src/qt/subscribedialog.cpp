@@ -111,6 +111,10 @@ void SubscribeDialog::on_buttonBox_accepted()
         case 1: SSub->m_dr_qos.durability().kind = eprosima::fastdds::dds::TRANSIENT_LOCAL_DURABILITY_QOS; break;
     }
 
+    //DATA REPRESENTATION
+    SSub->m_dr_qos.type_consistency().representation.m_value.push_back(eprosima::fastdds::dds::XCDR_DATA_REPRESENTATION) ;
+    SSub->m_dr_qos.type_consistency().representation.m_value.push_back(eprosima::fastdds::dds::XCDR2_DATA_REPRESENTATION) ;
+
     //LIVELINESS
     if (this->ui->comboBox_liveliness->currentIndex() == 0)
     {

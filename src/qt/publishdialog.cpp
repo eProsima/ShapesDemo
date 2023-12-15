@@ -158,6 +158,22 @@ void PublishDialog::on_button_OkCancel_accepted()
         case 1: SP->m_dw_qos.durability().kind = eprosima::fastdds::dds::TRANSIENT_LOCAL_DURABILITY_QOS; break;
     }
 
+    //DATA REPRESENTATION
+    switch (this->ui->comboBox_representation->currentIndex())
+    {
+        case 0:
+        {
+            SP->m_dw_qos.representation().m_value.push_back(eprosima::fastdds::dds::XCDR_DATA_REPRESENTATION);
+            break;
+        }
+        case 1:
+        {
+            SP->m_dw_qos.representation().m_value.push_back(eprosima::fastdds::dds::XCDR2_DATA_REPRESENTATION);
+            break;
+        }
+    }
+
+
     //OWNERSHIP:
     switch (this->ui->comboBox_ownership->currentIndex())
     {
@@ -305,7 +321,7 @@ void PublishDialog::on_comboBox_ownership_currentIndexChanged(
 
             break;
         }
-        case 1: 
+        case 1:
         {
             this->ui->checkBox_reliable->setChecked(true);
 
