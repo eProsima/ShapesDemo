@@ -59,6 +59,11 @@ ParticipantDialog::ParticipantDialog(
     this->ui->rosTopicCheckBox->setVisible(false);
 #endif // ifdef ENABLE_ROS_COMPONENTS
 
+    // Percentage loss Configuration
+    this->ui->lossSpin->setEnabled(m_options->m_lossSampleEnabled);
+    this->ui->lossSpin->setValue(m_options->m_lossPerc);
+    this->ui->label_7->setEnabled(false);
+
 
     setEnableState();
     setAttribute ( Qt::WA_DeleteOnClose, true );
@@ -102,6 +107,9 @@ void ParticipantDialog::setEnableState()
     this->ui->SHMcheckBox->setEnabled(mb_started);
     this->ui->UDPcheckBox->setEnabled(mb_started);
     this->ui->TCPcheckBox->setEnabled(mb_started);
+    this->ui->lossCheckBox->setEnabled(mb_started);
+    this->ui->lossSpin->setEnabled(this->ui->lossCheckBox->isChecked());
+    this->ui->label_7->setEnabled(this->ui->lossCheckBox->isChecked());
 
     // Enable in Running
     this->ui->pushButton_stop->setEnabled(!mb_started);
@@ -256,4 +264,84 @@ void ParticipantDialog::on_monitorServiceCheckBox_stateChanged(
 {
     m_options->m_monitor_service = arg1;
     mp_sd->setOptions(*m_options);
+}
+
+void ParticipantDialog::on_lossSpin_valueChanged(
+        int arg1)
+{
+    m_options->m_lossPerc = arg1;
+    mp_sd->setOptions(*m_options);
+    std::cout<<"perc "<<m_options->m_lossPerc<<std::endl;
+}
+
+void ParticipantDialog::on_lossCheckBox_stateChanged(
+        int arg1)
+{
+   if(arg1)
+   {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Warning");
+        msgBox.setText("Enabling this modality results in sample loss! Do you want to continue?");
+        msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Cancel);
+        int out_ = msgBox.exec();
+        switch (out_) {
+            case QMessageBox::Ok:
+            {
+                // Transport Configurations
+                this->ui->IntraprocesscheckBox->setEnabled(!arg1);
+                this->ui->DataSharingcheckBox->setEnabled(!arg1);
+                this->ui->SHMcheckBox->setEnabled(!arg1);
+                this->ui->UDPcheckBox->setEnabled(!arg1);
+                this->ui->TCPcheckBox->setEnabled(!arg1);
+                this->ui->IntraprocesscheckBox->setChecked(true && !arg1);
+                this->ui->DataSharingcheckBox->setChecked(true && !arg1);
+                this->ui->SHMcheckBox->setChecked(true && !arg1);
+                this->ui->UDPcheckBox->setChecked(true && !arg1);
+                this->ui->TCPcheckBox->setChecked(false && !arg1);
+                m_options->m_intraprocess_transport = (true && !arg1);
+                m_options->m_datasharing_transport = (true && !arg1);
+                m_options->m_shm_transport = (true && !arg1);
+                m_options->m_udp_transport = (true && !arg1);
+                m_options->m_tcp_transport = (false && !arg1);
+
+                this->ui->lossSpin->setEnabled(arg1);
+                this->ui->label_7->setEnabled(arg1);
+                m_options->m_lossSampleEnabled = true;
+                mp_sd->setOptions(*m_options);
+            }
+                break;
+            case QMessageBox::Cancel:
+            {
+                this->ui->lossCheckBox->setCheckState(Qt::Unchecked);
+                m_options->m_lossSampleEnabled = false;
+            }
+                break;
+            default:
+                // should never be reached
+                break;
+        }
+    }
+    else{
+        this->ui->IntraprocesscheckBox->setEnabled(!arg1);
+        this->ui->DataSharingcheckBox->setEnabled(!arg1);
+        this->ui->SHMcheckBox->setEnabled(!arg1);
+        this->ui->UDPcheckBox->setEnabled(!arg1);
+        this->ui->TCPcheckBox->setEnabled(!arg1);
+        this->ui->IntraprocesscheckBox->setChecked(true && !arg1);
+        this->ui->DataSharingcheckBox->setChecked(true && !arg1);
+        this->ui->SHMcheckBox->setChecked(true && !arg1);
+        this->ui->UDPcheckBox->setChecked(true && !arg1);
+        this->ui->TCPcheckBox->setChecked(false && !arg1);
+        m_options->m_intraprocess_transport = (true && !arg1);
+        m_options->m_datasharing_transport = (true && !arg1);
+        m_options->m_shm_transport = (true && !arg1);
+        m_options->m_udp_transport = (true && !arg1);
+        m_options->m_tcp_transport = (false && !arg1);
+
+        this->ui->lossSpin->setEnabled(arg1);
+        this->ui->label_7->setEnabled(arg1);
+        m_options->m_lossSampleEnabled = false;
+        mp_sd->setOptions(*m_options);
+    }
 }

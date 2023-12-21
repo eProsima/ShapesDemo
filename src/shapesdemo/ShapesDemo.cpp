@@ -25,6 +25,7 @@
 #include <fastdds/rtps/transport/shared_mem/SharedMemTransportDescriptor.h>
 #include <fastdds/rtps/transport/TCPv4TransportDescriptor.h>
 #include <fastdds/rtps/transport/UDPv4TransportDescriptor.h>
+#include <fastdds/rtps/transport/test_UDPv4TransportDescriptor.h>
 #include <fastrtps/config.h> // FASTDDS_STATISTICS availability
 #include <fastrtps/utils/IPLocator.h>
 #include <fastrtps/xmlparser/XMLProfileManager.h>
@@ -145,6 +146,17 @@ bool ShapesDemo::init()
             // Configure UDP Transport
             std::shared_ptr<UDPv4TransportDescriptor> descriptor = std::make_shared<UDPv4TransportDescriptor>();
             qos.transport().user_transports.push_back(descriptor);
+        }
+        else if (m_options.m_lossSampleEnabled)
+        {
+            std::shared_ptr<UDPv4TransportDescriptor> descriptor = std::make_shared<UDPv4TransportDescriptor>();
+            qos.transport().user_transports.push_back(descriptor);
+            // Configure UDP Transport with Sample Loss
+            auto udp_lossy_descriptor = std::make_shared<test_UDPv4TransportDescriptor>();
+            udp_lossy_descriptor->dropDataMessagesPercentage = m_options.m_lossPerc;
+            qos.transport().use_builtin_transports = false;
+            qos.transport().user_transports.push_back(udp_lossy_descriptor);
+            std::cout<<"sample loss "<<m_options.m_lossPerc<<std::endl;
         }
 
         // TCP
