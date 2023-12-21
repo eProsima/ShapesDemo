@@ -79,7 +79,7 @@ public:
         m_intraprocess_transport = true;
         m_datasharing_transport = true;
         m_shm_transport = true;
-        m_statistics = false;
+        m_statistics = true;
         m_listenPort = 5100;
         m_serverPort = 5100;
         m_serverIp = "127.0.0.1";
@@ -87,7 +87,7 @@ public:
         m_movementSpeed = 7;
         m_domainId = 0;
         m_tcp_type = QString("TCP LAN Server");
-        m_monitor_service = false;
+        m_monitor_service = true;
 #ifdef ENABLE_ROS_COMPONENTS
         m_ros2_topic = detect_ros_2_installation();
 #else
