@@ -147,16 +147,14 @@ bool ShapesDemo::init()
             std::shared_ptr<UDPv4TransportDescriptor> descriptor = std::make_shared<UDPv4TransportDescriptor>();
             qos.transport().user_transports.push_back(descriptor);
         }
-        else if (m_options.m_lossSampleEnabled)
+
+        // UDP SAMPLE LOSS
+        if (m_options.m_lossSampleEnabled)
         {
-            std::shared_ptr<UDPv4TransportDescriptor> descriptor = std::make_shared<UDPv4TransportDescriptor>();
-            qos.transport().user_transports.push_back(descriptor);
             // Configure UDP Transport with Sample Loss
             auto udp_lossy_descriptor = std::make_shared<test_UDPv4TransportDescriptor>();
             udp_lossy_descriptor->dropDataMessagesPercentage = m_options.m_lossPerc;
-            qos.transport().use_builtin_transports = false;
             qos.transport().user_transports.push_back(udp_lossy_descriptor);
-            std::cout<<"sample loss "<<m_options.m_lossPerc<<std::endl;
         }
 
         // TCP
@@ -192,7 +190,8 @@ bool ShapesDemo::init()
 
         if (!m_options.m_shm_transport &&
                 !m_options.m_udp_transport &&
-                !m_options.m_tcp_transport)
+                !m_options.m_tcp_transport &&
+                !m_options.m_lossSampleEnabled)
         {
             m_mainWindow->addMessageToOutput(
                 QString("No Transport configured, using Fast DDS transports by default"), true);
@@ -220,7 +219,8 @@ bool ShapesDemo::init()
                 "PDP_PACKETS_TOPIC;" \
                 "EDP_PACKETS_TOPIC;" \
                 "DISCOVERY_TOPIC;" \
-                "PHYSICAL_DATA_TOPIC");
+                "PHYSICAL_DATA_TOPIC;" \
+                "MONITOR_SERVICE_TOPIC");
 
             // In case the Statistics are not compiled, show an error
 #ifndef FASTDDS_STATISTICS

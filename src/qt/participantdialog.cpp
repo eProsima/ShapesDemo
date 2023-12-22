@@ -60,10 +60,7 @@ ParticipantDialog::ParticipantDialog(
 #endif // ifdef ENABLE_ROS_COMPONENTS
 
     // Percentage loss Configuration
-    this->ui->lossSpin->setEnabled(m_options->m_lossSampleEnabled);
     this->ui->lossSpin->setValue(m_options->m_lossPerc);
-    this->ui->label_7->setEnabled(false);
-
 
     setEnableState();
     setAttribute ( Qt::WA_DeleteOnClose, true );
@@ -132,6 +129,7 @@ void ParticipantDialog::on_pushButton_start_clicked()
 void ParticipantDialog::on_pushButton_stop_clicked()
 {
     this->mp_mw->on_actionStop_triggered();
+    m_options->m_lossSampleEnabled = false;
     setEnableState();
 }
 
@@ -271,73 +269,74 @@ void ParticipantDialog::on_lossSpin_valueChanged(
 {
     m_options->m_lossPerc = arg1;
     mp_sd->setOptions(*m_options);
-    std::cout<<"perc "<<m_options->m_lossPerc<<std::endl;
+    std::cout << "perc " << m_options->m_lossPerc << std::endl;
 }
 
 void ParticipantDialog::on_lossCheckBox_stateChanged(
         int arg1)
 {
-   if(arg1)
-   {
+    if (arg1)
+    {
         QMessageBox msgBox;
         msgBox.setWindowTitle("Warning");
         msgBox.setText("Enabling this modality results in sample loss! Do you want to continue?");
         msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
         msgBox.setDefaultButton(QMessageBox::Cancel);
         int out_ = msgBox.exec();
-        switch (out_) {
+        switch (out_){
             case QMessageBox::Ok:
             {
                 // Transport Configurations
-                this->ui->IntraprocesscheckBox->setEnabled(!arg1);
-                this->ui->DataSharingcheckBox->setEnabled(!arg1);
-                this->ui->SHMcheckBox->setEnabled(!arg1);
-                this->ui->UDPcheckBox->setEnabled(!arg1);
-                this->ui->TCPcheckBox->setEnabled(!arg1);
-                this->ui->IntraprocesscheckBox->setChecked(true && !arg1);
-                this->ui->DataSharingcheckBox->setChecked(true && !arg1);
-                this->ui->SHMcheckBox->setChecked(true && !arg1);
-                this->ui->UDPcheckBox->setChecked(true && !arg1);
-                this->ui->TCPcheckBox->setChecked(false && !arg1);
-                m_options->m_intraprocess_transport = (true && !arg1);
-                m_options->m_datasharing_transport = (true && !arg1);
-                m_options->m_shm_transport = (true && !arg1);
-                m_options->m_udp_transport = (true && !arg1);
-                m_options->m_tcp_transport = (false && !arg1);
+                this->ui->IntraprocesscheckBox->setEnabled(false);
+                this->ui->DataSharingcheckBox->setEnabled(false);
+                this->ui->SHMcheckBox->setEnabled(false);
+                this->ui->UDPcheckBox->setEnabled(false);
+                this->ui->TCPcheckBox->setEnabled(false);
+                this->ui->IntraprocesscheckBox->setChecked(false);
+                this->ui->DataSharingcheckBox->setChecked(false);
+                this->ui->SHMcheckBox->setChecked(false);
+                this->ui->UDPcheckBox->setChecked(false);
+                this->ui->TCPcheckBox->setChecked(false);
+                m_options->m_intraprocess_transport = (false);
+                m_options->m_datasharing_transport = (false);
+                m_options->m_shm_transport = (false);
+                m_options->m_udp_transport = (false);
+                m_options->m_tcp_transport = (false);
 
-                this->ui->lossSpin->setEnabled(arg1);
-                this->ui->label_7->setEnabled(arg1);
+                this->ui->lossSpin->setEnabled(true);
+                this->ui->label_7->setEnabled(true);
                 m_options->m_lossSampleEnabled = true;
                 mp_sd->setOptions(*m_options);
             }
-                break;
+            break;
             case QMessageBox::Cancel:
             {
                 this->ui->lossCheckBox->setCheckState(Qt::Unchecked);
                 m_options->m_lossSampleEnabled = false;
             }
-                break;
+            break;
             default:
                 // should never be reached
                 break;
         }
     }
-    else{
-        this->ui->IntraprocesscheckBox->setEnabled(!arg1);
-        this->ui->DataSharingcheckBox->setEnabled(!arg1);
-        this->ui->SHMcheckBox->setEnabled(!arg1);
-        this->ui->UDPcheckBox->setEnabled(!arg1);
-        this->ui->TCPcheckBox->setEnabled(!arg1);
-        this->ui->IntraprocesscheckBox->setChecked(true && !arg1);
-        this->ui->DataSharingcheckBox->setChecked(true && !arg1);
-        this->ui->SHMcheckBox->setChecked(true && !arg1);
-        this->ui->UDPcheckBox->setChecked(true && !arg1);
-        this->ui->TCPcheckBox->setChecked(false && !arg1);
-        m_options->m_intraprocess_transport = (true && !arg1);
-        m_options->m_datasharing_transport = (true && !arg1);
-        m_options->m_shm_transport = (true && !arg1);
-        m_options->m_udp_transport = (true && !arg1);
-        m_options->m_tcp_transport = (false && !arg1);
+    else
+    {
+        this->ui->IntraprocesscheckBox->setEnabled(true);
+        this->ui->DataSharingcheckBox->setEnabled(true);
+        this->ui->SHMcheckBox->setEnabled(true);
+        this->ui->UDPcheckBox->setEnabled(true);
+        this->ui->TCPcheckBox->setEnabled(true);
+        this->ui->IntraprocesscheckBox->setChecked(true);
+        this->ui->DataSharingcheckBox->setChecked(true);
+        this->ui->SHMcheckBox->setChecked(true);
+        this->ui->UDPcheckBox->setChecked(true);
+        this->ui->TCPcheckBox->setChecked(false);
+        m_options->m_intraprocess_transport = (true);
+        m_options->m_datasharing_transport = (true);
+        m_options->m_shm_transport = (true);
+        m_options->m_udp_transport = (true);
+        m_options->m_tcp_transport = (false);
 
         this->ui->lossSpin->setEnabled(arg1);
         this->ui->label_7->setEnabled(arg1);
