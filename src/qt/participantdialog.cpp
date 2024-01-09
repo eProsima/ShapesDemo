@@ -269,7 +269,6 @@ void ParticipantDialog::on_lossSpin_valueChanged(
 {
     m_options->m_lossPerc = arg1;
     mp_sd->setOptions(*m_options);
-    std::cout << "perc " << m_options->m_lossPerc << std::endl;
 }
 
 void ParticipantDialog::on_lossCheckBox_stateChanged(
