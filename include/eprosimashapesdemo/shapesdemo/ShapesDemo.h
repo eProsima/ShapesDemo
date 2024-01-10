@@ -90,7 +90,7 @@ public:
         m_domainId = 0;
         m_tcp_type = QString("TCP LAN Server");
         m_monitor_service = true;
-        m_lossPerc = 30;
+        m_lossPerc = 1;
         m_lossSampleEnabled = false;
 
 #ifdef ENABLE_ROS_COMPONENTS
