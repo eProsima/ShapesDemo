@@ -16,7 +16,7 @@
 #define PARTICIPANTDIALOG_H
 
 #include <QDialog>
-
+#include <QMessageBox>
 namespace Ui {
 class ParticipantDialog;
 } // namespace Ui
@@ -79,6 +79,11 @@ private slots:
     void on_monitorServiceCheckBox_stateChanged(
             int arg1);
 
+    void on_lossCheckBox_stateChanged(
+            int arg1);
+
+    void on_lossSpin_valueChanged(
+        int arg1);
 private:
 
     ShapesDemoOptions* m_options;

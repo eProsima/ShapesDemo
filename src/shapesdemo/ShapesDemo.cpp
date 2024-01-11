@@ -25,6 +25,7 @@
 #include <fastdds/rtps/transport/shared_mem/SharedMemTransportDescriptor.h>
 #include <fastdds/rtps/transport/TCPv4TransportDescriptor.h>
 #include <fastdds/rtps/transport/UDPv4TransportDescriptor.h>
+#include <fastdds/rtps/transport/test_UDPv4TransportDescriptor.h>
 #include <fastrtps/config.h> // FASTDDS_STATISTICS availability
 #include <fastrtps/utils/IPLocator.h>
 #include <fastrtps/xmlparser/XMLProfileManager.h>
@@ -147,6 +148,15 @@ bool ShapesDemo::init()
             qos.transport().user_transports.push_back(descriptor);
         }
 
+        // UDP SAMPLE LOSS
+        if (m_options.m_lossSampleEnabled)
+        {
+            // Configure UDP Transport with Sample Loss
+            auto udp_lossy_descriptor = std::make_shared<test_UDPv4TransportDescriptor>();
+            udp_lossy_descriptor->dropDataMessagesPercentage = m_options.m_lossPerc;
+            qos.transport().user_transports.push_back(udp_lossy_descriptor);
+        }
+
         // TCP
         if (m_options.m_tcp_transport)
         {
@@ -180,7 +190,8 @@ bool ShapesDemo::init()
 
         if (!m_options.m_shm_transport &&
                 !m_options.m_udp_transport &&
-                !m_options.m_tcp_transport)
+                !m_options.m_tcp_transport &&
+                !m_options.m_lossSampleEnabled)
         {
             m_mainWindow->addMessageToOutput(
                 QString("No Transport configured, using Fast DDS transports by default"), true);
@@ -208,7 +219,8 @@ bool ShapesDemo::init()
                 "PDP_PACKETS_TOPIC;" \
                 "EDP_PACKETS_TOPIC;" \
                 "DISCOVERY_TOPIC;" \
-                "PHYSICAL_DATA_TOPIC");
+                "PHYSICAL_DATA_TOPIC;" \
+                "MONITOR_SERVICE_TOPIC");
 
             // In case the Statistics are not compiled, show an error
 #ifndef FASTDDS_STATISTICS

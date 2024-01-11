@@ -72,6 +72,8 @@ public:
     uint32_t m_updateIntervalMs;
     uint32_t m_movementSpeed;
     uint32_t m_domainId;
+    uint32_t m_lossPerc;
+    bool m_lossSampleEnabled;
     ShapesDemoOptions()
     {
         m_udp_transport = true;
@@ -88,6 +90,9 @@ public:
         m_domainId = 0;
         m_tcp_type = QString("TCP LAN Server");
         m_monitor_service = true;
+        m_lossPerc = 1;
+        m_lossSampleEnabled = false;
+
 #ifdef ENABLE_ROS_COMPONENTS
         m_ros2_topic = detect_ros_2_installation();
 #else
