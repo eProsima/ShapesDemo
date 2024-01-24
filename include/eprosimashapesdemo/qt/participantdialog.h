@@ -79,6 +79,9 @@ private slots:
     void on_monitorServiceCheckBox_stateChanged(
             int arg1);
 
+    void on_typeinformationCheckBox_stateChanged(
+            int arg1);
+
     void on_lossCheckBox_stateChanged(
             int arg1);
 
