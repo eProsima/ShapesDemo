@@ -219,6 +219,8 @@ bool ShapesDemo::init()
 
         // If the creation has been correct, register type
         m_isInitialized = true;
+        m_type->auto_fill_type_information(m_options.m_auto_fill_type_information);
+        m_type->auto_fill_type_object(false);
         m_type.register_type(mp_participant);
 #ifdef ENABLE_ROS_COMPONENTS
         m_ros_type.register_type(mp_participant);
