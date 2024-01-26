@@ -76,20 +76,9 @@ private slots:
 
     void tcp_enable_buttons();
 
-<<<<<<< HEAD
-=======
-    void on_monitorServiceCheckBox_stateChanged(
-            int arg1);
-
     void on_typeinformationCheckBox_stateChanged(
             int arg1);
 
-    void on_lossCheckBox_stateChanged(
-            int arg1);
-
-    void on_lossSpin_valueChanged(
-        int arg1);
->>>>>>> a002fdb (Add an auto fill type information check (#107))
 private:
 
     ShapesDemoOptions* m_options;
