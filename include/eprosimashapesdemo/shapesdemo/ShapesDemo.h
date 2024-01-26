@@ -71,6 +71,13 @@ public:
     uint32_t m_updateIntervalMs;
     uint32_t m_movementSpeed;
     uint32_t m_domainId;
+<<<<<<< HEAD
+=======
+    uint32_t m_lossPerc;
+    bool m_lossSampleEnabled;
+    bool m_auto_fill_type_information;
+
+>>>>>>> a002fdb (Add an auto fill type information check (#107))
     ShapesDemoOptions()
     {
         m_udp_transport = true;
@@ -86,6 +93,14 @@ public:
         m_movementSpeed = 7;
         m_domainId = 0;
         m_tcp_type = QString("TCP LAN Server");
+<<<<<<< HEAD
+=======
+        m_monitor_service = true;
+        m_lossPerc = 1;
+        m_lossSampleEnabled = false;
+        m_auto_fill_type_information = true;
+
+>>>>>>> a002fdb (Add an auto fill type information check (#107))
 #ifdef ENABLE_ROS_COMPONENTS
         m_ros2_topic = detect_ros_2_installation();
 #else
