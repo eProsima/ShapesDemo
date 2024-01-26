@@ -59,6 +59,8 @@ ParticipantDialog::ParticipantDialog(
     this->ui->rosTopicCheckBox->setVisible(false);
 #endif // ifdef ENABLE_ROS_COMPONENTS
 
+    this->ui->typeinformationCheckBox->setChecked(m_options->m_auto_fill_type_information);
+
     // Percentage loss Configuration
     this->ui->lossSpin->setValue(m_options->m_lossPerc);
 
@@ -104,6 +106,7 @@ void ParticipantDialog::setEnableState()
     this->ui->SHMcheckBox->setEnabled(mb_started);
     this->ui->UDPcheckBox->setEnabled(mb_started);
     this->ui->TCPcheckBox->setEnabled(mb_started);
+    this->ui->typeinformationCheckBox->setEnabled(mb_started);
     this->ui->lossCheckBox->setEnabled(mb_started);
     this->ui->lossSpin->setEnabled(this->ui->lossCheckBox->isChecked());
     this->ui->label_7->setEnabled(this->ui->lossCheckBox->isChecked());
@@ -268,6 +271,13 @@ void ParticipantDialog::on_lossSpin_valueChanged(
         int arg1)
 {
     m_options->m_lossPerc = arg1;
+    mp_sd->setOptions(*m_options);
+}
+
+void ParticipantDialog::on_typeinformationCheckBox_stateChanged(
+        int arg1)
+{
+    m_options->m_auto_fill_type_information = arg1;
     mp_sd->setOptions(*m_options);
 }
 

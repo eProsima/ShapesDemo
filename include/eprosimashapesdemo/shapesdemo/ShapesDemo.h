@@ -74,6 +74,8 @@ public:
     uint32_t m_domainId;
     uint32_t m_lossPerc;
     bool m_lossSampleEnabled;
+    bool m_auto_fill_type_information;
+
     ShapesDemoOptions()
     {
         m_udp_transport = true;
@@ -92,6 +94,7 @@ public:
         m_monitor_service = true;
         m_lossPerc = 1;
         m_lossSampleEnabled = false;
+        m_auto_fill_type_information = true;
 
 #ifdef ENABLE_ROS_COMPONENTS
         m_ros2_topic = detect_ros_2_installation();
