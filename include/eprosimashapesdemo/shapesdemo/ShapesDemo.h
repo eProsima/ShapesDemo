@@ -71,6 +71,8 @@ public:
     uint32_t m_updateIntervalMs;
     uint32_t m_movementSpeed;
     uint32_t m_domainId;
+    bool m_auto_fill_type_information;
+
     ShapesDemoOptions()
     {
         m_udp_transport = true;
@@ -86,6 +88,8 @@ public:
         m_movementSpeed = 7;
         m_domainId = 0;
         m_tcp_type = QString("TCP LAN Server");
+        m_auto_fill_type_information = true;
+
 #ifdef ENABLE_ROS_COMPONENTS
         m_ros2_topic = detect_ros_2_installation();
 #else

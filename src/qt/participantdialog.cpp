@@ -58,6 +58,7 @@ ParticipantDialog::ParticipantDialog(
     this->ui->rosTopicCheckBox->setVisible(false);
 #endif // ifdef ENABLE_ROS_COMPONENTS
 
+    this->ui->typeinformationCheckBox->setChecked(m_options->m_auto_fill_type_information);
 
     setEnableState();
     setAttribute ( Qt::WA_DeleteOnClose, true );
@@ -100,6 +101,7 @@ void ParticipantDialog::setEnableState()
     this->ui->SHMcheckBox->setEnabled(mb_started);
     this->ui->UDPcheckBox->setEnabled(mb_started);
     this->ui->TCPcheckBox->setEnabled(mb_started);
+    this->ui->typeinformationCheckBox->setEnabled(mb_started);
 
     // Enable in Running
     this->ui->pushButton_stop->setEnabled(!mb_started);
@@ -236,4 +238,11 @@ void ParticipantDialog::on_TCPcomboBox_currentTextChanged(
     mp_sd->setOptions(*m_options);
 
     tcp_enable_buttons();
+}
+
+void ParticipantDialog::on_typeinformationCheckBox_stateChanged(
+        int arg1)
+{
+    m_options->m_auto_fill_type_information = arg1;
+    mp_sd->setOptions(*m_options);
 }
