@@ -256,13 +256,6 @@
      </property>
     </widget>
    </item>
-   <item row="12" column="3">
-    <widget class="QCheckBox" name="DataSharingcheckBox">
-     <property name="text">
-      <string>Data Sharing</string>
-     </property>
-    </widget>
-   </item>
    <item row="6" column="1">
     <widget class="QCheckBox" name="SHMcheckBox">
      <property name="text">
