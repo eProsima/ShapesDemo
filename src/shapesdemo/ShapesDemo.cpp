@@ -155,20 +155,19 @@ bool ShapesDemo::init()
             // Configure UDP Transport with Sample Loss
             auto udp_lossy_descriptor = std::make_shared<test_UDPv4TransportDescriptor>();
             // Lambda function as a filter to drop only user data samples
-            udp_lossy_descriptor->messages_filter_ = [this, &writer_id](CDRMessage_t& cdrMessage) -> bool {
+            udp_lossy_descriptor->drop_data_messages_filter_ = [this, &writer_id](CDRMessage_t& cdrMessage) -> bool {
                 CDRMessage::readEntityId(&cdrMessage, &writer_id);
-                unsigned char first_digit = writer_id.value[0];
-                uint8_t user_mask = 0x0F;
-                if ((first_digit & user_mask) == 0) // User writers have an IdentityId of the form 0xXXXXXX0X
+                // Drop only user data messages
+                if (writer_id.value[3] < 0x10)
                 {
-                    return false;
+                    uint32_t random_number = rand() % 100;
+                    return random_number < m_options.m_lossPerc;
                 }
                 else
                 {
-                    return true;
+                    return false;
                 }
             };
-            udp_lossy_descriptor->dropDataMessagesPercentage = m_options.m_lossPerc;
             qos.transport().user_transports.push_back(udp_lossy_descriptor);
         }
 
