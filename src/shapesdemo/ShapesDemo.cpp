@@ -153,7 +153,34 @@ bool ShapesDemo::init()
         {
             // Configure UDP Transport with Sample Loss
             auto udp_lossy_descriptor = std::make_shared<test_UDPv4TransportDescriptor>();
-            udp_lossy_descriptor->dropDataMessagesPercentage = m_options.m_lossPerc;
+            // Lambda function as a filter to drop only user data samples
+            udp_lossy_descriptor->drop_data_messages_filter_ = [this](CDRMessage_t& msg) -> bool {
+
+                uint32_t old_pos = msg.pos;
+
+                // See RTPS DDS 9.4.5.3 Data Submessage
+                EntityId_t writer_id;
+                SequenceNumber_t sn;
+
+                msg.pos += 2; // Flags
+                msg.pos += 2; // Octets to inline quos
+                msg.pos += 4; // ReaderEntityId
+                CDRMessage::readEntityId(&msg, &writer_id);
+
+                // Restore buffer pos
+                msg.pos = old_pos;
+
+                // Drop only user data messages
+                if ((writer_id.value[3] & 0xC0) == 0)
+                {
+                    uint32_t random_number = rand() % 100;
+                    return random_number < m_options.m_lossPerc;
+                }
+                else
+                {
+                    return false;
+                }
+            };
             qos.transport().user_transports.push_back(udp_lossy_descriptor);
         }
 
