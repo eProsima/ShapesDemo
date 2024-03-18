@@ -59,9 +59,6 @@ private slots:
     void on_IntraprocesscheckBox_stateChanged(
             int arg1);
 
-    void on_DataSharingcheckBox_stateChanged(
-            int arg1);
-
     void on_SHMcheckBox_stateChanged(
             int arg1);
 
