@@ -42,7 +42,6 @@ ParticipantDialog::ParticipantDialog(
 
     // Transport Configurations
     this->ui->IntraprocesscheckBox->setChecked(m_options->m_intraprocess_transport);
-    this->ui->DataSharingcheckBox->setChecked(m_options->m_datasharing_transport);
     this->ui->SHMcheckBox->setChecked(m_options->m_shm_transport);
     this->ui->UDPcheckBox->setChecked(m_options->m_udp_transport);
     this->ui->TCPcheckBox->setChecked(m_options->m_tcp_transport);
@@ -89,7 +88,6 @@ void ParticipantDialog::setEnableState()
     this->ui->rosTopicCheckBox->setEnabled(mb_started);
 #endif // ifdef ENABLE_ROS_COMPONENTS
     this->ui->IntraprocesscheckBox->setEnabled(mb_started);
-    this->ui->DataSharingcheckBox->setEnabled(mb_started);
     this->ui->SHMcheckBox->setEnabled(mb_started);
     this->ui->UDPcheckBox->setEnabled(mb_started);
     this->ui->TCPcheckBox->setEnabled(mb_started);
@@ -215,13 +213,6 @@ void ParticipantDialog::on_IntraprocesscheckBox_stateChanged(
     mp_sd->setOptions(*m_options);
 }
 
-void ParticipantDialog::on_DataSharingcheckBox_stateChanged(
-        int arg1)
-{
-    m_options->m_datasharing_transport = arg1;
-    mp_sd->setOptions(*m_options);
-}
-
 void ParticipantDialog::on_SHMcheckBox_stateChanged(
         int arg1)
 {
@@ -260,3 +251,73 @@ void ParticipantDialog::on_typeinformationCheckBox_stateChanged(
     m_options->m_auto_fill_type_information = arg1;
     mp_sd->setOptions(*m_options);
 }
+<<<<<<< HEAD
+=======
+
+void ParticipantDialog::on_lossCheckBox_stateChanged(
+        int arg1)
+{
+    if (arg1)
+    {
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Warning");
+        msgBox.setText("Enabling this modality results in sample loss! Do you want to continue?");
+        msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Cancel);
+        int out_ = msgBox.exec();
+        switch (out_){
+            case QMessageBox::Ok:
+            {
+                // Transport Configurations
+                this->ui->IntraprocesscheckBox->setEnabled(false);
+                this->ui->SHMcheckBox->setEnabled(false);
+                this->ui->UDPcheckBox->setEnabled(false);
+                this->ui->TCPcheckBox->setEnabled(false);
+                this->ui->IntraprocesscheckBox->setChecked(false);
+                this->ui->SHMcheckBox->setChecked(false);
+                this->ui->UDPcheckBox->setChecked(false);
+                this->ui->TCPcheckBox->setChecked(false);
+                m_options->m_intraprocess_transport = (false);
+                m_options->m_shm_transport = (false);
+                m_options->m_udp_transport = (false);
+                m_options->m_tcp_transport = (false);
+
+                this->ui->lossSpin->setEnabled(true);
+                this->ui->label_7->setEnabled(true);
+                m_options->m_lossSampleEnabled = true;
+                mp_sd->setOptions(*m_options);
+            }
+            break;
+            case QMessageBox::Cancel:
+            {
+                this->ui->lossCheckBox->setCheckState(Qt::Unchecked);
+                m_options->m_lossSampleEnabled = false;
+            }
+            break;
+            default:
+                // should never be reached
+                break;
+        }
+    }
+    else
+    {
+        this->ui->IntraprocesscheckBox->setEnabled(true);
+        this->ui->SHMcheckBox->setEnabled(true);
+        this->ui->UDPcheckBox->setEnabled(true);
+        this->ui->TCPcheckBox->setEnabled(true);
+        this->ui->IntraprocesscheckBox->setChecked(true);
+        this->ui->SHMcheckBox->setChecked(true);
+        this->ui->UDPcheckBox->setChecked(true);
+        this->ui->TCPcheckBox->setChecked(false);
+        m_options->m_intraprocess_transport = (true);
+        m_options->m_shm_transport = (true);
+        m_options->m_udp_transport = (true);
+        m_options->m_tcp_transport = (false);
+
+        this->ui->lossSpin->setEnabled(arg1);
+        this->ui->label_7->setEnabled(arg1);
+        m_options->m_lossSampleEnabled = false;
+        mp_sd->setOptions(*m_options);
+    }
+}
+>>>>>>> 0fc2837 (Remove Data-Sharing option from ShapesDemo (#113))

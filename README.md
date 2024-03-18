@@ -272,7 +272,6 @@ You can modify the following settings:
 - **Same host delivery:**  *Fast DDS* has some features that allow Participants running in the same host or process
   to share resources in order to improve the communication:
   - **Intraprocess:** Allow using Intraprocess delivery when both Endpoints are running in the same process.
-  - **Data Sharing:** Allow using Data Sharing delivery when both Endpoints are running in the same host.
 
 - **Domain:** The user can select different Domain IDs.
   Shapes Demo instances using different Domain IDs will not communicate.

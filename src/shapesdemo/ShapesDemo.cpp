@@ -56,8 +56,11 @@ ShapesDemo::ShapesDemo(
 #ifdef ENABLE_ROS_COMPONENTS
     , m_ros_type(new shapes_demo_typesupport::idl::KeylessShapeTypePubSubType())
 #endif // ifdef ENABLE_ROS_COMPONENTS
+<<<<<<< HEAD
     , m_data_sharing_enable(false)
     , m_listener(this)
+=======
+>>>>>>> 0fc2837 (Remove Data-Sharing option from ShapesDemo (#113))
 {
     srand (time(nullptr));
     minX = 0;
@@ -116,9 +119,6 @@ bool ShapesDemo::init()
         library_settings.intraprocess_delivery = m_options.m_intraprocess_transport ?
                 IntraprocessDeliveryType::INTRAPROCESS_FULL : IntraprocessDeliveryType::INTRAPROCESS_OFF;
         xmlparser::XMLProfileManager::library_settings(library_settings);
-
-        // Data Sharing
-        m_data_sharing_enable = m_options.m_datasharing_transport;
 
         // Shared Memory
         if (m_options.m_shm_transport)

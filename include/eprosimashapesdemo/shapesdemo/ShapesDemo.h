@@ -52,7 +52,6 @@ public:
     bool m_udp_transport;
     bool m_tcp_transport;
     bool m_intraprocess_transport;
-    bool m_datasharing_transport;
     bool m_shm_transport;
     bool m_statistics;
     bool m_ros2_topic;
@@ -70,7 +69,6 @@ public:
         m_udp_transport = true;
         m_tcp_transport = false;
         m_intraprocess_transport = true;
-        m_datasharing_transport = true;
         m_shm_transport = true;
         m_statistics = false;
         m_ros2_topic = false;
@@ -209,6 +207,7 @@ public:
     Topic* getTopic(
             std::string topic_name);
 
+<<<<<<< HEAD
     bool data_sharing_enable ()
     {
         return m_data_sharing_enable;
@@ -230,6 +229,8 @@ public:
     uint32_t writer_strength(
             eprosima::fastrtps::rtps::GUID_t guid);
 
+=======
+>>>>>>> 0fc2837 (Remove Data-Sharing option from ShapesDemo (#113))
 private:
 
     std::map<eprosima::fastrtps::rtps::GUID_t, uint32_t> m_ownership_strength_map;
@@ -259,6 +260,7 @@ private:
     TypeSupport m_ros_type;
 #endif // ifdef ENABLE_ROS_COMPONENTS
     std::map<std::string, Topic*> m_topics;
+<<<<<<< HEAD
     bool m_data_sharing_enable;
 
     class Listener : public eprosima::fastdds::dds::DomainParticipantListener
@@ -294,6 +296,8 @@ private:
         ShapesDemo* mp_parent_;
     }
     m_listener;
+=======
+>>>>>>> 0fc2837 (Remove Data-Sharing option from ShapesDemo (#113))
 };
 
 #endif /* SHAPESDEMO_H_ */

@@ -260,16 +260,6 @@ void SubscribeDialog::on_buttonBox_accepted()
         SSub->m_shapeHistory.m_filter.m_useContentFilter = true;
     }
 
-    // Data Sharing
-    if (this->mp_sd->data_sharing_enable())
-    {
-        SSub->m_dr_qos.data_sharing().automatic();
-    }
-    else
-    {
-        SSub->m_dr_qos.data_sharing().off();
-    }
-
     // Create Subscriber
     if (SSub->initSubscriber())
     {
