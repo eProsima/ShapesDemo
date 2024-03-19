@@ -30,6 +30,8 @@ char dummy;
 
 #if FASTCDR_VERSION_MAJOR > 1
 
+#include "ShapeTypeObject.h"
+
 #include <fastcdr/Cdr.h>
 
 
@@ -43,6 +45,8 @@ using namespace eprosima::fastcdr::exception;
 
 ShapeType::ShapeType()
 {
+    // Just to register all known types
+    registerShapeTypes();
 }
 
 ShapeType::~ShapeType()

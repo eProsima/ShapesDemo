@@ -30,6 +30,8 @@ char dummy;
 
 #if FASTCDR_VERSION_MAJOR == 1
 
+#include "ShapeTypeObject.h"
+
 #include <fastcdr/Cdr.h>
 
 
@@ -99,6 +101,8 @@ ShapeType::ShapeType()
     // long m_shapesize
     m_shapesize = 0;
 
+    // Just to register all known types
+    registerShapeTypes();
 }
 
 ShapeType::~ShapeType()

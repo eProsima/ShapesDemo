@@ -56,6 +56,8 @@ eProsima_user_DllExport void registerKeylessShapeTypeTypes();
 
 namespace shapes_demo_typesupport {
     namespace idl {
+
+
         eProsima_user_DllExport const TypeIdentifier* GetKeylessShapeTypeIdentifier(bool complete = false);
         eProsima_user_DllExport const TypeObject* GetKeylessShapeTypeObject(bool complete = false);
         eProsima_user_DllExport const TypeObject* GetMinimalKeylessShapeTypeObject();

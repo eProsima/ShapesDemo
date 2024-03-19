@@ -52,6 +52,8 @@ void registerShapeTypes()
             });
 }
 
+
+
 const TypeIdentifier* GetShapeTypeIdentifier(bool complete)
 {
     const TypeIdentifier * c_identifier = TypeObjectFactory::get_instance()->get_type_identifier("ShapeType", complete);
@@ -178,7 +180,6 @@ const TypeObject* GetMinimalShapeTypeObject()
     // TODO Inheritance
     //type_object->minimal().struct_type().header().base_type()._d(EK_MINIMAL);
     //type_object->minimal().struct_type().header().base_type().equivalence_hash()[0..13];
-
     TypeIdentifier identifier;
     identifier._d(EK_MINIMAL);
 
@@ -320,7 +321,6 @@ const TypeObject* GetCompleteShapeTypeObject()
     // Header
     type_object->complete().struct_type().header().detail().type_name("ShapeType");
     // TODO inheritance
-
     TypeIdentifier identifier;
     identifier._d(EK_COMPLETE);
 
