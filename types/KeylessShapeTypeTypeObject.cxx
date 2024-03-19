@@ -44,9 +44,9 @@ void registerKeylessShapeTypeTypes()
     std::call_once(once_flag, []()
             {
                 TypeObjectFactory *factory = TypeObjectFactory::get_instance();
-                factory->add_type_object("shapes_demo_typesupport::idl::KeylessShapeType", shapes_demo_typesupport::idl::GetKeylessShapeTypeIdentifier(true),
+                factory->add_type_object("shapes_demo_typesupport::idl::dds_::KeylessShapeType_", shapes_demo_typesupport::idl::GetKeylessShapeTypeIdentifier(true),
                         shapes_demo_typesupport::idl::GetKeylessShapeTypeObject(true));
-                factory->add_type_object("shapes_demo_typesupport::idl::KeylessShapeType", shapes_demo_typesupport::idl::GetKeylessShapeTypeIdentifier(false),
+                factory->add_type_object("shapes_demo_typesupport::idl::dds_::KeylessShapeType_", shapes_demo_typesupport::idl::GetKeylessShapeTypeIdentifier(false),
                         shapes_demo_typesupport::idl::GetKeylessShapeTypeObject(false));
 
 
@@ -56,6 +56,8 @@ void registerKeylessShapeTypeTypes()
 
 namespace shapes_demo_typesupport {
     namespace idl {
+
+
         const TypeIdentifier* GetKeylessShapeTypeIdentifier(bool complete)
         {
             const TypeIdentifier * c_identifier = TypeObjectFactory::get_instance()->get_type_identifier("KeylessShapeType", complete);
@@ -182,7 +184,6 @@ namespace shapes_demo_typesupport {
             // TODO Inheritance
             //type_object->minimal().struct_type().header().base_type()._d(EK_MINIMAL);
             //type_object->minimal().struct_type().header().base_type().equivalence_hash()[0..13];
-
             TypeIdentifier identifier;
             identifier._d(EK_MINIMAL);
 
@@ -302,7 +303,6 @@ namespace shapes_demo_typesupport {
             // Header
             type_object->complete().struct_type().header().detail().type_name("KeylessShapeType");
             // TODO inheritance
-
             TypeIdentifier identifier;
             identifier._d(EK_COMPLETE);
 

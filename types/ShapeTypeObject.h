@@ -54,6 +54,8 @@ using namespace eprosima::fastrtps::types;
 
 eProsima_user_DllExport void registerShapeTypes();
 
+
+
 eProsima_user_DllExport const TypeIdentifier* GetShapeTypeIdentifier(bool complete = false);
 eProsima_user_DllExport const TypeObject* GetShapeTypeObject(bool complete = false);
 eProsima_user_DllExport const TypeObject* GetMinimalShapeTypeObject();

@@ -30,6 +30,8 @@ char dummy;
 
 #if FASTCDR_VERSION_MAJOR == 1
 
+#include "KeylessShapeTypeTypeObject.h"
+
 #include <fastcdr/Cdr.h>
 
 
@@ -103,6 +105,8 @@ KeylessShapeType::KeylessShapeType()
     // long m_shapesize
     m_shapesize = 0;
 
+    // Just to register all known types
+    registerKeylessShapeTypeTypes();
 }
 
 KeylessShapeType::~KeylessShapeType()
