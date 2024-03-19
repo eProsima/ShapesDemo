@@ -1,12 +1,6 @@
-{
-    "names":
-    {
-        "fastrtps" :
-        {
-            "cmake-args": [
-                "-DNO_TLS=ON",
-                "-DSECURITY=OFF"
-            ]
-        }
-    }
-}
+names:
+    fastrtps:
+        cmake-args:
+            - "-DNO_TLS=ON"
+            - "-DSECURITY=OFF"
+
