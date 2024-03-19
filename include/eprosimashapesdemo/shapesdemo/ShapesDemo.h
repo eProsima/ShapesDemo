@@ -60,7 +60,6 @@ public:
     bool m_udp_transport;
     bool m_tcp_transport;
     bool m_intraprocess_transport;
-    bool m_datasharing_transport;
     bool m_shm_transport;
     bool m_statistics;
     bool m_ros2_topic;
@@ -78,7 +77,6 @@ public:
         m_udp_transport = true;
         m_tcp_transport = false;
         m_intraprocess_transport = true;
-        m_datasharing_transport = true;
         m_shm_transport = true;
         m_statistics = false;
         m_listenPort = 5100;
@@ -222,11 +220,6 @@ public:
     Topic* getTopic(
             std::string topic_name);
 
-    bool data_sharing_enable ()
-    {
-        return m_data_sharing_enable;
-    }
-
 private:
 
     std::vector<ShapePublisher*> m_publishers;
@@ -254,7 +247,6 @@ private:
     TypeSupport m_ros_type;
 #endif // ifdef ENABLE_ROS_COMPONENTS
     std::map<std::string, Topic*> m_topics;
-    bool m_data_sharing_enable;
 };
 
 #endif /* SHAPESDEMO_H_ */
