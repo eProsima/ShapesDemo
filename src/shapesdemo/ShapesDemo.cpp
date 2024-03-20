@@ -56,11 +56,7 @@ ShapesDemo::ShapesDemo(
 #ifdef ENABLE_ROS_COMPONENTS
     , m_ros_type(new shapes_demo_typesupport::idl::KeylessShapeTypePubSubType())
 #endif // ifdef ENABLE_ROS_COMPONENTS
-<<<<<<< HEAD
-    , m_data_sharing_enable(false)
     , m_listener(this)
-=======
->>>>>>> 0fc2837 (Remove Data-Sharing option from ShapesDemo (#113))
 {
     srand (time(nullptr));
     minX = 0;

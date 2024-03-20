@@ -207,12 +207,6 @@ public:
     Topic* getTopic(
             std::string topic_name);
 
-<<<<<<< HEAD
-    bool data_sharing_enable ()
-    {
-        return m_data_sharing_enable;
-    }
-
     // NOTE: there is no other way to check ownership strength unless using DomainParticipant callback listener
     // on_publisher_discovery and storing to a map
 
@@ -229,8 +223,6 @@ public:
     uint32_t writer_strength(
             eprosima::fastrtps::rtps::GUID_t guid);
 
-=======
->>>>>>> 0fc2837 (Remove Data-Sharing option from ShapesDemo (#113))
 private:
 
     std::map<eprosima::fastrtps::rtps::GUID_t, uint32_t> m_ownership_strength_map;
@@ -260,8 +252,6 @@ private:
     TypeSupport m_ros_type;
 #endif // ifdef ENABLE_ROS_COMPONENTS
     std::map<std::string, Topic*> m_topics;
-<<<<<<< HEAD
-    bool m_data_sharing_enable;
 
     class Listener : public eprosima::fastdds::dds::DomainParticipantListener
     {
@@ -296,8 +286,6 @@ private:
         ShapesDemo* mp_parent_;
     }
     m_listener;
-=======
->>>>>>> 0fc2837 (Remove Data-Sharing option from ShapesDemo (#113))
 };
 
 #endif /* SHAPESDEMO_H_ */
