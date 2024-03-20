@@ -42,7 +42,6 @@ ParticipantDialog::ParticipantDialog(
 
     // Transport Configurations
     this->ui->IntraprocesscheckBox->setChecked(m_options->m_intraprocess_transport);
-    this->ui->DataSharingcheckBox->setChecked(m_options->m_datasharing_transport);
     this->ui->SHMcheckBox->setChecked(m_options->m_shm_transport);
     this->ui->UDPcheckBox->setChecked(m_options->m_udp_transport);
     this->ui->TCPcheckBox->setChecked(m_options->m_tcp_transport);
@@ -97,7 +96,6 @@ void ParticipantDialog::setEnableState()
     }
 #endif // ifdef ENABLE_ROS_COMPONENTS
     this->ui->IntraprocesscheckBox->setEnabled(mb_started);
-    this->ui->DataSharingcheckBox->setEnabled(mb_started);
     this->ui->SHMcheckBox->setEnabled(mb_started);
     this->ui->UDPcheckBox->setEnabled(mb_started);
     this->ui->TCPcheckBox->setEnabled(mb_started);
@@ -198,13 +196,6 @@ void ParticipantDialog::on_IntraprocesscheckBox_stateChanged(
         int arg1)
 {
     m_options->m_intraprocess_transport = arg1;
-    mp_sd->setOptions(*m_options);
-}
-
-void ParticipantDialog::on_DataSharingcheckBox_stateChanged(
-        int arg1)
-{
-    m_options->m_datasharing_transport = arg1;
     mp_sd->setOptions(*m_options);
 }
 

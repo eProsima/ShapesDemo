@@ -220,16 +220,6 @@ void PublishDialog::on_button_OkCancel_accepted()
         SP->m_pub_qos.partition().push_back("D");
     }
 
-    // Data Sharing
-    if (this->mp_sd->data_sharing_enable())
-    {
-        SP->m_dw_qos.data_sharing().automatic();
-    }
-    else
-    {
-        SP->m_dw_qos.data_sharing().off();
-    }
-
     // Create Publisher
     if (SP->initPublisher())
     {
