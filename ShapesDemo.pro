@@ -46,16 +46,16 @@ FORMS    +=   forms/mainwindow.ui \
               forms/subscribedialog.ui \
               forms/optionsdialog.ui
 
-unix: CONFIG(release, debug|release):LIBS += -Lusr/lib/ -lfastrtps
-else:unix: CONFIG(debug, debug|release):LIBS += -Lusr/lib/ -lfastrtpsd
+unix: CONFIG(release, debug|release):LIBS += -Lusr/lib/ -lfastdds
+else:unix: CONFIG(debug, debug|release):LIBS += -Lusr/lib/ -lfastddsd
 
 INCLUDEPATH += $$PWD/include
 INCLUDEPATH += $$PWD/thirdparty/eprosima-common-code
 #DEPENDPATH += $$PWD/include
 #DEPENDPATH += $$PWD/thirdparty/eprosima-common-code
 
-#unix: CONFIG(debug, debug|release): PRE_TARGETDEPS += usr/lib/libfastrtpsd.a
-#else:unix: CONFIG(release, debug|release): PRE_TARGETDEPS += usr/lib/libfastrtps.a
+#unix: CONFIG(debug, debug|release): PRE_TARGETDEPS += usr/lib/libfastddsd.a
+#else:unix: CONFIG(release, debug|release): PRE_TARGETDEPS += usr/lib/libfastdds.a
 
 
 
@@ -104,14 +104,14 @@ SOURCES += \
 
 
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../lib/i86Win32VS2010 -llibfastrtps-1.0.0 -L"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Lib" -lShlwapi -lIphlpapi
-win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../lib/i86Win32VS2010 -llibfastrtpsd-1.0.0 -L"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Lib" -lShlwapi -lIphlpapi
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../lib/i86Win32VS2010 -llibfastdds-1.0.0 -L"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Lib" -lShlwapi -lIphlpapi
+win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../lib/i86Win32VS2010 -llibfastddsd-1.0.0 -L"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Lib" -lShlwapi -lIphlpapi
 
 
 
 
-#win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../lib/i86Win32VS2010/libfastrtps-1.0.0.lib
-#win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../lib/i86Win32VS2010/libfastrtpsd-1.0.0.lib
+#win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../lib/i86Win32VS2010/libfastdds-1.0.0.lib
+#win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../lib/i86Win32VS2010/libfastddsd-1.0.0.lib
 
 
 
@@ -119,8 +119,8 @@ win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../lib/i86Win32VS2010 -ll
 #win32:DEPENDPATH += $$PWD/../../lib/i86Win32VS2010 C:\Windows\System32
 
 
-#win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../lib/i86Win32VS2010/libfastrtps-0.5.1.lib Shlwapi.lib Iphlpapi.lib
-#win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../lib/i86Win32VS2010/libfastrtpsd-0.5.1.lib Shlwapi.lib Iphlpapi.lib
+#win32:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../lib/i86Win32VS2010/libfastdds-0.5.1.lib Shlwapi.lib Iphlpapi.lib
+#win32:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../lib/i86Win32VS2010/libfastddsd-0.5.1.lib Shlwapi.lib Iphlpapi.lib
 
 RESOURCES += \
     images/eprosimalogo.qrc

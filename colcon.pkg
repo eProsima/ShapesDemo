@@ -1,5 +1,5 @@
 {
     "name": "ShapesDemo",
     "type": "cmake",
-    "dependencies" : ["fastrtps", "fastcdr", "shapes_demo_typesupport"]
+    "dependencies" : ["fastdds", "fastcdr", "shapes_demo_typesupport"]
 }

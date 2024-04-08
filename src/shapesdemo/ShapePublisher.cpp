@@ -20,8 +20,6 @@
  */
 
 #include "eprosimashapesdemo/shapesdemo/ShapePublisher.h"
-#include "fastrtps/Domain.h"
-#include "fastrtps/publisher/Publisher.h"
 
 #include <eprosimashapesdemo/qt/mainwindow.h>
 #include <thread>
@@ -58,7 +56,7 @@ ShapePublisher::~ShapePublisher()
             }
             mp_datawriter->wait_for_acknowledgments(wait_time);
 
-            if (ReturnCode_t::RETCODE_OK != mp_publisher->delete_datawriter(mp_datawriter))
+            if (RETCODE_OK != mp_publisher->delete_datawriter(mp_datawriter))
             {
                 std::cerr << "Error deleting datawriter: " << mp_datawriter->guid() << std::endl;
                 return;
@@ -67,7 +65,7 @@ ShapePublisher::~ShapePublisher()
 
         if (mp_sd->getParticipant() && mp_publisher)
         {
-            if (ReturnCode_t::RETCODE_OK != mp_sd->getParticipant()->delete_publisher(mp_publisher))
+            if (RETCODE_OK != mp_sd->getParticipant()->delete_publisher(mp_publisher))
             {
                 std::cerr << "Error deleting publisher: " << std::endl;
                 return;

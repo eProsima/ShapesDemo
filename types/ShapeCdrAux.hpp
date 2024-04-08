@@ -22,9 +22,9 @@
 #ifndef _FAST_DDS_GENERATED_SHAPECDRAUX_HPP_
 #define _FAST_DDS_GENERATED_SHAPECDRAUX_HPP_
 
-#include "Shape.h"
+#include "Shape.hpp"
 
-constexpr uint32_t ShapeType_max_cdr_typesize {276UL};
+constexpr uint32_t ShapeType_max_cdr_typesize {272UL};
 constexpr uint32_t ShapeType_max_key_cdr_typesize {260UL};
 
 
@@ -33,8 +33,6 @@ namespace fastcdr {
 
 class Cdr;
 class CdrSizeCalculator;
-
-
 
 eProsima_user_DllExport void serialize_key(
         eprosima::fastcdr::Cdr& scdr,

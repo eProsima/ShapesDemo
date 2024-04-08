@@ -15,27 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with eProsima Fast DDS Shapes Demo. If not, see <https://www.gnu.org/licenses/>.
 
-#include <eprosimashapesdemo/qt/mainwindow.h>
-#include <fastrtps/log/Log.h>
 #include <QApplication>
-#include <eprosimashapesdemo/utils/md5.h>
-#include <fastrtps/Domain.h>
+
+#include <eprosimashapesdemo/qt/mainwindow.h>
 
 #ifdef WIN32
 int __stdcall WinMain(
-    _In_ HINSTANCE   /*hInstance*/,
-    _In_ HINSTANCE   /*hPrevInstance*/,
-    _In_ char* /*lpCmdLine*/,
-    _In_ int         /*nCmdShow*/
-)
+        _In_ HINSTANCE /*hInstance*/,
+        _In_ HINSTANCE /*hPrevInstance*/,
+        _In_ char* /*lpCmdLine*/,
+        _In_ int     /*nCmdShow*/
+        )
 {
     int argc = 0;
     QApplication a(argc, NULL);
 #else
-int main(int argc, char *argv[])
+int main(
+        int argc,
+        char* argv[])
 {
     QApplication a(argc, argv);
-#endif
+#endif // ifdef WIN32
     MainWindow w;
     w.show();
 

@@ -18,10 +18,11 @@
 #ifndef SHAPEHISTORY_H
 #define SHAPEHISTORY_H
 
-#include "eprosimashapesdemo/shapesdemo/ShapeInfo.h"
+#include <cstdint>
 #include <vector>
 #include <list>
-#include <cstdint>
+
+#include "eprosimashapesdemo/shapesdemo/ShapeInfo.h"
 
 /**
  * @brief The ShapeFilter class, represents a filter.
