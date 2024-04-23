@@ -51,7 +51,7 @@ void register_Shape_type_objects()
 void register_ShapeType_type_identifier()
 {
     {
-        StructTypeFlag struct_flags_ShapeType = TypeObjectUtils::build_struct_type_flag(eprosima::fastdds::dds::xtypes::ExtensibilityKind::FINAL,
+        StructTypeFlag struct_flags_ShapeType = TypeObjectUtils::build_struct_type_flag(eprosima::fastdds::dds::xtypes::ExtensibilityKind::APPENDABLE,
                 false, false);
         ReturnCode_t return_code_ShapeType;
         TypeIdentifierPair type_ids_ShapeType;

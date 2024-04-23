@@ -24,7 +24,7 @@
 
 #include "Shape.hpp"
 
-constexpr uint32_t ShapeType_max_cdr_typesize {272UL};
+constexpr uint32_t ShapeType_max_cdr_typesize {276UL};
 constexpr uint32_t ShapeType_max_key_cdr_typesize {260UL};
 
 
