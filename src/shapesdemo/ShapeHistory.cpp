@@ -15,14 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // along with eProsima Fast DDS Shapes Demo. If not, see <https://www.gnu.org/licenses/>.
 
-#include <eprosimashapesdemo/shapesdemo/ShapeHistory.h>
-#include <fastrtps/utils/TimeConversion.h>
+#include <cmath>
 
-using namespace eprosima::fastrtps::rtps;
+#include <fastdds/rtps/common/Guid.h>
+#include <fastdds/rtps/common/Time_t.h>
+
+#include <eprosimashapesdemo/shapesdemo/ShapeHistory.h>
+
+using namespace eprosima::fastdds::rtps;
 
 inline bool compareGUID(
-        GUID_t& g1,
-        GUID_t& g2)
+        eprosima::fastrtps::rtps::GUID_t& g1,
+        eprosima::fastrtps::rtps::GUID_t& g2)
 {
     for (uint8_t i = 0; i < 16; ++i)
     {
@@ -50,6 +54,22 @@ inline bool compareGUID(
         }
     }
     return false;
+}
+
+inline double Time_tAbsDiff2DoubleMillisec(
+        const Time_t& t1,
+        const Time_t& t2)
+{
+    double result = 0;
+    result += (double)abs((t2.seconds - t1.seconds) * 1000);
+    result += (double)std::abs((t2.fraction() - t1.fraction()) / pow(2.0, 32) * 1000);
+    return result;
+}
+
+inline double Time_t2MilliSecondsDouble(
+        const Time_t& t)
+{
+    return ((double)t.fraction() / pow(2.0, 32) * pow(10.0, 3)) + (double)t.seconds * pow(10.0, 3);
 }
 
 bool ShapeHistory::addToHistory(
@@ -102,8 +122,8 @@ bool ShapeHistory::passTimeFilter(
     }
     else
     {
-        if (TimeConv::Time_tAbsDiff2DoubleMillisec(sh_in.m_time, sh_last.m_time)
-                >= TimeConv::Time_t2MilliSecondsDouble(m_filter.m_minimumSeparation))
+        if (Time_tAbsDiff2DoubleMillisec(sh_in.m_time, sh_last.m_time)
+                >= Time_t2MilliSecondsDouble(m_filter.m_minimumSeparation))
         {
             return true;
         }

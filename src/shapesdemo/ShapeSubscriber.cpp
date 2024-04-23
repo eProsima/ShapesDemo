@@ -23,7 +23,6 @@
 #include <fastdds/dds/builtin/topic/PublicationBuiltinTopicData.hpp>
 #include <fastdds/dds/subscriber/SampleInfo.hpp>
 #include <fastdds/rtps/common/InstanceHandle.h>
-#include <fastrtps/utils/TimeConversion.h>
 
 #include <eprosimashapesdemo/qt/ContentFilterSelector.h>
 #include <eprosimashapesdemo/qt/mainwindow.h>
@@ -50,7 +49,7 @@ ShapeSubscriber::~ShapeSubscriber()
 {
     if (mp_sd->getParticipant() && mp_subscriber && mp_datareader)
     {
-        if (ReturnCode_t::RETCODE_OK != mp_subscriber->delete_datareader(mp_datareader))
+        if (RETCODE_OK != mp_subscriber->delete_datareader(mp_datareader))
         {
             std::cerr << "Error deleting datareader: " << mp_datareader->guid() << std::endl;
             return;
@@ -59,7 +58,7 @@ ShapeSubscriber::~ShapeSubscriber()
 
     if (mp_sd->getParticipant() && mp_filtered_topic)
     {
-        if (ReturnCode_t::RETCODE_OK != mp_sd->getParticipant()->delete_contentfilteredtopic(mp_filtered_topic))
+        if (RETCODE_OK != mp_sd->getParticipant()->delete_contentfilteredtopic(mp_filtered_topic))
         {
             std::cerr << "Error deleting filtered topic" << std::endl;
             // NOTE: don't return since we want to try and remove the subscriber
@@ -68,7 +67,7 @@ ShapeSubscriber::~ShapeSubscriber()
 
     if (mp_sd->getParticipant() && mp_subscriber)
     {
-        if (ReturnCode_t::RETCODE_OK != mp_sd->getParticipant()->delete_subscriber(mp_subscriber))
+        if (RETCODE_OK != mp_sd->getParticipant()->delete_subscriber(mp_subscriber))
         {
             std::cerr << "Error deleting subscriber: " << std::endl;
             return;
@@ -121,7 +120,7 @@ void ShapeSubscriber::SubListener::on_data_available(
     shape.m_type = parent_->m_shapeType;
     eprosima::fastdds::dds::SampleInfo info;
 
-    while (reader->take_next_sample(&shape.m_shape, &info) == ReturnCode_t::RETCODE_OK)
+    while (reader->take_next_sample(&shape.m_shape, &info) == RETCODE_OK)
     {
         shape.m_time = info.source_timestamp.to_duration_t();
 
@@ -165,7 +164,7 @@ void ShapeSubscriber::adjustContentFilter(
 
 void ShapeSubscriber::SubListener::on_requested_deadline_missed(
         DataReader* reader,
-        const eprosima::fastrtps::RequestedDeadlineMissedStatus& status)
+        const RequestedDeadlineMissedStatus& status)
 {
     if (0 < status.total_count_change)
     {
@@ -177,7 +176,7 @@ void ShapeSubscriber::SubListener::on_requested_deadline_missed(
 
 void ShapeSubscriber::SubListener::on_liveliness_changed(
         DataReader* reader,
-        const eprosima::fastrtps::LivelinessChangedStatus& status)
+        const LivelinessChangedStatus& status)
 {
     std::stringstream str;
     if (0 < status.alive_count_change)

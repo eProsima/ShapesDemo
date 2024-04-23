@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include <fastdds/config.h> // FASTDDS_STATISTICS availability
+
 #include "eprosimashapesdemo/qt/participantdialog.h"
 #include "ui_participantdialog.h"
 #include "eprosimashapesdemo/shapesdemo/ShapesDemo.h"
 #include "eprosimashapesdemo/qt/mainwindow.h"
-
-#include <fastrtps/config.h> // FASTDDS_STATISTICS availability
 
 ParticipantDialog::ParticipantDialog(
         MainWindow* mw,
