@@ -34,7 +34,7 @@
 
 #include "eprosimashapesdemo/shapesdemo/ShapeHistory.h"
 #include "eprosimashapesdemo/shapesdemo/ShapesDemo.h"
-#include "types/Shape.h"
+#include "types/Shape.hpp"
 
 using namespace eprosima::fastdds::dds;
 
@@ -97,11 +97,11 @@ public:
 
         void on_requested_deadline_missed(
                 DataReader* reader,
-                const eprosima::fastrtps::RequestedDeadlineMissedStatus& status) override;
+                const RequestedDeadlineMissedStatus& status) override;
 
         void on_liveliness_changed(
                 DataReader* reader,
-                const eprosima::fastrtps::LivelinessChangedStatus& status) override;
+                const LivelinessChangedStatus& status) override;
 
         void on_requested_incompatible_qos(
                 DataReader* reader,

@@ -21,23 +21,20 @@
 #include <iostream>
 #include <sstream>
 
+#include <fastdds/config.h> // FASTDDS_STATISTICS availability
 #include <fastdds/dds/domain/qos/DomainParticipantQos.hpp>
 #include <fastdds/rtps/transport/shared_mem/SharedMemTransportDescriptor.h>
 #include <fastdds/rtps/transport/TCPv4TransportDescriptor.h>
 #include <fastdds/rtps/transport/UDPv4TransportDescriptor.h>
 #include <fastdds/rtps/transport/test_UDPv4TransportDescriptor.h>
-#include <fastrtps/config.h> // FASTDDS_STATISTICS availability
-#include <fastrtps/utils/IPLocator.h>
-#include <fastrtps/xmlparser/XMLProfileManager.h>
+#include <fastdds/utils/IPLocator.h>
 
 #include <eprosimashapesdemo/qt/mainwindow.h>
 #include <eprosimashapesdemo/shapesdemo/ShapeInfo.h>
 #include <eprosimashapesdemo/shapesdemo/ShapePublisher.h>
 #include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
-#include <types/ShapeTypeObject.h>
 #ifdef ENABLE_ROS_COMPONENTS
 #include <types/KeylessShapeTypePubSubTypes.h>
-#include <types/KeylessShapeTypeTypeObject.h>
 #endif // ifdef ENABLE_ROS_COMPONENTS
 
 using namespace eprosima::fastdds::dds;
@@ -65,17 +62,12 @@ ShapesDemo::ShapesDemo(
     maxX = MAX_DRAW_AREA_X;
     maxY = MAX_DRAW_AREA_Y;
 
-    m_type->auto_fill_type_object(false);
-    m_type->auto_fill_type_information(true);
-
 #ifdef ENABLE_ROS_COMPONENTS
     m_ros_type->auto_fill_type_object(false);
     m_ros_type->auto_fill_type_information(true);
 
     registerKeylessShapeTypeTypes();
 #endif // ifdef ENABLE_ROS_COMPONENTS
-
-    registerShapeTypes();
 }
 
 ShapesDemo::~ShapesDemo()
@@ -109,7 +101,6 @@ bool ShapesDemo::init()
 
         qos.name("Fast DDS ShapesDemo Participant");
         qos.transport().use_builtin_transports = false;
-        qos.wire_protocol().builtin.typelookup_config.use_server = true;
 
         // Set Participant properties
         qos.properties().properties().emplace_back("fastdds.application.id", "SHAPES_DEMO", true);
@@ -122,10 +113,11 @@ bool ShapesDemo::init()
                 "true");
         }
         // Intraprocess
-        LibrarySettingsAttributes library_settings;
+        eprosima::fastdds::LibrarySettings library_settings;
         library_settings.intraprocess_delivery = m_options.m_intraprocess_transport ?
-                IntraprocessDeliveryType::INTRAPROCESS_FULL : IntraprocessDeliveryType::INTRAPROCESS_OFF;
-        xmlparser::XMLProfileManager::library_settings(library_settings);
+                eprosima::fastdds::IntraprocessDeliveryType::INTRAPROCESS_FULL :
+                eprosima::fastdds::IntraprocessDeliveryType::INTRAPROCESS_OFF;
+        eprosima::fastdds::dds::DomainParticipantFactory::get_instance()->set_library_settings(library_settings);
 
         // Shared Memory
         if (m_options.m_shm_transport)
@@ -185,7 +177,6 @@ bool ShapesDemo::init()
         {
             std::shared_ptr<TCPv4TransportDescriptor> descriptor = std::make_shared<TCPv4TransportDescriptor>();
 
-            descriptor->wait_for_tcp_negotiation = false;
             descriptor->maxInitialPeersRange = 20;
 
             if (m_options.tcp_lan() || m_options.tcp_wan())
@@ -263,7 +254,6 @@ bool ShapesDemo::init()
         // If the creation has been correct, register type
         m_isInitialized = true;
         m_type->auto_fill_type_information(m_options.m_auto_fill_type_information);
-        m_type->auto_fill_type_object(false);
         m_type.register_type(mp_participant);
 #ifdef ENABLE_ROS_COMPONENTS
         m_ros_type.register_type(mp_participant);
@@ -304,8 +294,7 @@ void ShapesDemo::stop()
         m_topics.clear();
 
         // Remove Participant
-        if (eprosima::fastrtps::types::ReturnCode_t::RETCODE_OK !=
-                DomainParticipantFactory::get_instance()->delete_participant(mp_participant))
+        if (RETCODE_OK != DomainParticipantFactory::get_instance()->delete_participant(mp_participant))
         {
             std::cerr << "Error deleting Participant" << std::endl;
             return;
