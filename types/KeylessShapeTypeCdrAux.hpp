@@ -22,7 +22,7 @@
 #ifndef _FAST_DDS_GENERATED_SHAPES_DEMO_TYPESUPPORT_IDL_KEYLESSSHAPETYPECDRAUX_HPP_
 #define _FAST_DDS_GENERATED_SHAPES_DEMO_TYPESUPPORT_IDL_KEYLESSSHAPETYPECDRAUX_HPP_
 
-#include "KeylessShapeType.h"
+#include "KeylessShapeType.hpp"
 
 constexpr uint32_t shapes_demo_typesupport_idl_KeylessShapeType_max_cdr_typesize {276UL};
 constexpr uint32_t shapes_demo_typesupport_idl_KeylessShapeType_max_key_cdr_typesize {0UL};
@@ -34,13 +34,9 @@ namespace fastcdr {
 class Cdr;
 class CdrSizeCalculator;
 
-
-
 eProsima_user_DllExport void serialize_key(
         eprosima::fastcdr::Cdr& scdr,
         const shapes_demo_typesupport::idl::KeylessShapeType& data);
-
-
 
 
 } // namespace fastcdr
