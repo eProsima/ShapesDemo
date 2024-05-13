@@ -14,11 +14,11 @@ on:
       fastdds_branch:
         description: 'Fast-DDS branch to be used'
         required: false
-        default: '3.0.x-devel'
+        default: 'master'
   pull_request:
   push:
     branches:
-      - 3.0.x-devel
+      - master
   schedule:
     - cron: '0 0 * * *'
 
@@ -61,7 +61,7 @@ jobs:
         with:
           foonathan-memory-vendor-branch: ${{ github.event.inputs.foonathan_memory_vendor_branch || 'master' }}
           fastcdr-branch: ${{ matrix.fastcdr_version }}
-          fastdds-branch: ${{ github.event.inputs.fastdds_branch || '3.0.x-devel' }}
+          fastdds-branch: ${{ github.event.inputs.fastdds_branch || 'master' }}
 
       - uses: eProsima/eProsima-CI/external/get-cmake@v0
         with:
@@ -126,7 +126,7 @@ jobs:
         with:
           foonathan-memory-vendor-branch: ${{ github.event.inputs.foonathan_memory_vendor_branch || 'master' }}
           fastcdr-branch: ${{ matrix.fastcdr_version }}
-          fastdds-branch: ${{ github.event.inputs.fastdds_branch || '3.0.x-devel' }}
+          fastdds-branch: ${{ github.event.inputs.fastdds_branch || 'master' }}
 
       - uses: eProsima/eProsima-CI/external/get-cmake@v0
         with:
