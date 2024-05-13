@@ -1,5 +1,10 @@
 # eProsima Fast DDS Shapes Demo
 
+<!-- TODO(eduponz): Remove this before releasing v3.0.0 -->
+> [!WARNING]
+> **In preparation for v3.0.0, Fast DDS' master branch is undergoing major changes entailing API breaks.**
+> **Until Fast DDS v3.0.0 is released, it is strongly advisable to use the latest stable branch, [2.14.x](https://github.com/eProsima/Fast-DDS/tree/2.14.x)**
+
 eProsima Shapes Demo is an application in which Publishers and Subscribers are shapes of different colors and sizes
 moving on a board.
 Each shape refers to its own topic: Square, Triangle or Circle.
