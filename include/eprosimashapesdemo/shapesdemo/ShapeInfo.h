@@ -29,9 +29,9 @@
 #include <QString>
 #include <sstream>
 
-#include <fastrtps/rtps/common/Guid.h>
-#include <fastrtps/rtps/common/InstanceHandle.h>
-#include <fastrtps/rtps/common/Time_t.h>
+#include <fastdds/rtps/common/Guid.h>
+#include <fastdds/rtps/common/InstanceHandle.h>
+#include <fastdds/rtps/common/Time_t.h>
 
 #include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
 #include "types/ShapePubSubTypes.h"
