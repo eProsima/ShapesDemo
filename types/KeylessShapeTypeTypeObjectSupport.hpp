@@ -22,6 +22,8 @@
 #ifndef _FAST_DDS_GENERATED_SHAPES_DEMO_TYPESUPPORT_IDL_KEYLESSSHAPETYPE_TYPE_OBJECT_SUPPORT_HPP_
 #define _FAST_DDS_GENERATED_SHAPES_DEMO_TYPESUPPORT_IDL_KEYLESSSHAPETYPE_TYPE_OBJECT_SUPPORT_HPP_
 
+#include <fastdds/dds/xtypes/type_representation/TypeObject.hpp>
+
 
 #if defined(_WIN32)
 #if defined(EPROSIMA_USER_DLL_EXPORT)
@@ -47,8 +49,13 @@ namespace idl {
  *        Fully-descriptive TypeIdentifiers are directly registered.
  *        Hash TypeIdentifiers require to fill the TypeObject information and hash it, consequently, the TypeObject is
  *        indirectly registered as well.
+ *
+ * @param[out] TypeIdentifier of the registered type.
+ *             The returned TypeIdentifier corresponds to the complete TypeIdentifier in case of hashed TypeIdentifiers.
+ *             Invalid TypeIdentifier is returned in case of error.
  */
-eProsima_user_DllExport void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier();
+eProsima_user_DllExport void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier(
+        eprosima::fastdds::dds::xtypes::TypeIdentifier& type_id);
 
 } // namespace idl
 

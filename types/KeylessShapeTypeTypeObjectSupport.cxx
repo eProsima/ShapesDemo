@@ -43,14 +43,17 @@ void register_KeylessShapeType_type_objects()
     static std::once_flag once_flag;
     std::call_once(once_flag, []()
             {
-                shapes_demo_typesupport::idl::register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier();
+                TypeIdentifier type_id;
+                shapes_demo_typesupport::idl::register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier(type_id);
 
             });
 }
 
 namespace shapes_demo_typesupport {
 namespace idl {
-void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier()
+// TypeIdentifier is returned by reference: dependent structures/unions are registered in this same method
+void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier(
+        TypeIdentifier& type_id)
 {
     {
         StructTypeFlag struct_flags_KeylessShapeType = TypeObjectUtils::build_struct_type_flag(eprosima::fastdds::dds::xtypes::ExtensibilityKind::NOT_APPLIED,
@@ -71,8 +74,6 @@ void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier()
 
             if (return_code_KeylessShapeType != eprosima::fastdds::dds::RETCODE_OK)
             {
-                std::string type_id_kind_anonymous_string_unbounded("TI_STRING8_SMALL");
-                if (type_id_kind_anonymous_string_unbounded == "TI_STRING8_SMALL")
                 {
                     SBound bound = 0;
                     StringSTypeDefn string_sdefn = TypeObjectUtils::build_string_s_type_defn(bound);
@@ -84,24 +85,6 @@ void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier()
                             "anonymous_string_unbounded already registered in TypeObjectRegistry for a different type.");
                     }
                 }
-                else if (type_id_kind_anonymous_string_unbounded == "TI_STRING8_LARGE")
-                {
-                    LBound bound = 255;
-                    StringLTypeDefn string_ldefn = TypeObjectUtils::build_string_l_type_defn(bound);
-                    if (eprosima::fastdds::dds::RETCODE_BAD_PARAMETER ==
-                            TypeObjectUtils::build_and_register_l_string_type_identifier(string_ldefn,
-                            "anonymous_string_unbounded"))
-                    {
-                        EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
-                            "anonymous_string_unbounded already registered in TypeObjectRegistry for a different type.");
-                    }
-                }
-                else
-                {
-                    EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
-                                "anonymous_string_unbounded: Unknown String kind.");
-                    return;
-                }
                 return_code_KeylessShapeType =
                     eprosima::fastdds::dds::DomainParticipantFactory::get_instance()->type_object_registry().get_type_identifiers(
                     "anonymous_string_unbounded", type_ids_KeylessShapeType);
@@ -109,6 +92,7 @@ void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier()
                 {
                     EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                                 "anonymous_string_unbounded: Given String TypeIdentifier unknown to TypeObjectRegistry.");
+                    type_id = TypeIdentifier();
                     return;
                 }
             }
@@ -156,6 +140,7 @@ void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier()
             {
                 EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                         "Structure color member TypeIdentifier inconsistent.");
+                type_id = TypeIdentifier();
                 return;
             }
             MemberName name_color = "color";
@@ -174,6 +159,7 @@ void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier()
             {
                 EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                         "x Structure member TypeIdentifier unknown to TypeObjectRegistry.");
+                type_id = TypeIdentifier();
                 return;
             }
             StructMemberFlag member_flags_x = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructKind::NOT_APPLIED,
@@ -220,6 +206,7 @@ void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier()
             {
                 EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                         "Structure x member TypeIdentifier inconsistent.");
+                type_id = TypeIdentifier();
                 return;
             }
             MemberName name_x = "x";
@@ -238,6 +225,7 @@ void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier()
             {
                 EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                         "y Structure member TypeIdentifier unknown to TypeObjectRegistry.");
+                type_id = TypeIdentifier();
                 return;
             }
             StructMemberFlag member_flags_y = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructKind::NOT_APPLIED,
@@ -284,6 +272,7 @@ void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier()
             {
                 EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                         "Structure y member TypeIdentifier inconsistent.");
+                type_id = TypeIdentifier();
                 return;
             }
             MemberName name_y = "y";
@@ -302,6 +291,7 @@ void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier()
             {
                 EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                         "shapesize Structure member TypeIdentifier unknown to TypeObjectRegistry.");
+                type_id = TypeIdentifier();
                 return;
             }
             StructMemberFlag member_flags_shapesize = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructKind::NOT_APPLIED,
@@ -348,6 +338,7 @@ void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier()
             {
                 EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                         "Structure shapesize member TypeIdentifier inconsistent.");
+                type_id = TypeIdentifier();
                 return;
             }
             MemberName name_shapesize = "shapesize";
@@ -359,7 +350,7 @@ void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier()
         }
         CompleteStructType struct_type_KeylessShapeType = TypeObjectUtils::build_complete_struct_type(struct_flags_KeylessShapeType, header_KeylessShapeType, member_seq_KeylessShapeType);
         if (eprosima::fastdds::dds::RETCODE_BAD_PARAMETER ==
-                TypeObjectUtils::build_and_register_struct_type_object(struct_type_KeylessShapeType, type_name_KeylessShapeType.to_string()))
+                TypeObjectUtils::build_and_register_struct_type_object(struct_type_KeylessShapeType, type_name_KeylessShapeType.to_string(), type_id))
         {
             EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                     "shapes_demo_typesupport::idl::KeylessShapeType already registered in TypeObjectRegistry for a different type.");
@@ -371,6 +362,7 @@ void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier()
         {
             EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                         "shapes_demo_typesupport::idl::KeylessShapeType: Given Struct TypeIdentifier unknown to TypeObjectRegistry.");
+            type_id = TypeIdentifier();
             return;
         }
     }
