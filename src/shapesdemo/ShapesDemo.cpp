@@ -153,7 +153,8 @@ bool ShapesDemo::init()
                 msg.pos += 2; // Flags
                 msg.pos += 2; // Octets to inline quos
                 msg.pos += 4; // ReaderEntityId
-                CDRMessage::readEntityId(&msg, &writer_id);
+
+                memcpy(writer_id.value, &msg.buffer[msg.pos], writer_id.size);
 
                 // Restore buffer pos
                 msg.pos = old_pos;
