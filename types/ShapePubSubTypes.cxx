@@ -219,9 +219,9 @@ bool ShapeTypePubSubType::getKey(
     return true;
 }
 
-void ShapeTypePubSubType::register_type_object_representation() const
+void ShapeTypePubSubType::register_type_object_representation()
 {
-    register_Shape_type_objects();
+    register_ShapeType_type_identifier(type_identifiers_);
 }
 
 

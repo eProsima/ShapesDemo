@@ -38,26 +38,19 @@
 
 using namespace eprosima::fastdds::dds::xtypes;
 
-void register_Shape_type_objects()
-{
-    static std::once_flag once_flag;
-    std::call_once(once_flag, []()
-            {
-                TypeIdentifier type_id;
-                register_ShapeType_type_identifier(type_id);
-
-            });
-}
-
 // TypeIdentifier is returned by reference: dependent structures/unions are registered in this same method
 void register_ShapeType_type_identifier(
-        TypeIdentifier& type_id)
+        TypeIdentifierPair& type_ids_ShapeType)
 {
+
+    ReturnCode_t return_code_ShapeType {eprosima::fastdds::dds::RETCODE_OK};
+    return_code_ShapeType =
+        eprosima::fastdds::dds::DomainParticipantFactory::get_instance()->type_object_registry().get_type_identifiers(
+        "ShapeType", type_ids_ShapeType);
+    if (eprosima::fastdds::dds::RETCODE_OK != return_code_ShapeType)
     {
         StructTypeFlag struct_flags_ShapeType = TypeObjectUtils::build_struct_type_flag(eprosima::fastdds::dds::xtypes::ExtensibilityKind::APPENDABLE,
                 false, false);
-        ReturnCode_t return_code_ShapeType;
-        TypeIdentifierPair type_ids_ShapeType;
         QualifiedTypeName type_name_ShapeType = "ShapeType";
         eprosima::fastcdr::optional<AppliedBuiltinTypeAnnotations> type_ann_builtin_ShapeType;
         eprosima::fastcdr::optional<AppliedAnnotationSeq> ann_custom_ShapeType;
@@ -73,79 +66,34 @@ void register_ShapeType_type_identifier(
         header_ShapeType = TypeObjectUtils::build_complete_struct_header(TypeIdentifier(), detail_ShapeType);
         CompleteStructMemberSeq member_seq_ShapeType;
         {
-            return_code_ShapeType =
+            TypeIdentifierPair type_ids_color;
+            ReturnCode_t return_code_color {eprosima::fastdds::dds::RETCODE_OK};
+            return_code_color =
                 eprosima::fastdds::dds::DomainParticipantFactory::get_instance()->type_object_registry().get_type_identifiers(
-                "anonymous_string_unbounded", type_ids_ShapeType);
+                "anonymous_string_unbounded", type_ids_color);
 
-            if (return_code_ShapeType != eprosima::fastdds::dds::RETCODE_OK)
+            if (eprosima::fastdds::dds::RETCODE_OK != return_code_color)
             {
                 {
                     SBound bound = 0;
                     StringSTypeDefn string_sdefn = TypeObjectUtils::build_string_s_type_defn(bound);
                     if (eprosima::fastdds::dds::RETCODE_BAD_PARAMETER ==
                             TypeObjectUtils::build_and_register_s_string_type_identifier(string_sdefn,
-                            "anonymous_string_unbounded"))
+                            "anonymous_string_unbounded", type_ids_color))
                     {
                         EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                             "anonymous_string_unbounded already registered in TypeObjectRegistry for a different type.");
                     }
                 }
-                return_code_ShapeType =
-                    eprosima::fastdds::dds::DomainParticipantFactory::get_instance()->type_object_registry().get_type_identifiers(
-                    "anonymous_string_unbounded", type_ids_ShapeType);
-                if (return_code_ShapeType != eprosima::fastdds::dds::RETCODE_OK)
-                {
-                    EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
-                                "anonymous_string_unbounded: Given String TypeIdentifier unknown to TypeObjectRegistry.");
-                    type_id = TypeIdentifier();
-                    return;
-                }
             }
             StructMemberFlag member_flags_color = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructKind::NOT_APPLIED,
                     false, false, true, false);
-            CommonStructMember common_color;
             MemberId member_id_color = 0x00000000;
-            if (EK_COMPLETE == type_ids_ShapeType.type_identifier1()._d() || TK_NONE == type_ids_ShapeType.type_identifier2()._d() ||
-                    (TI_PLAIN_SEQUENCE_SMALL == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().seq_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_SEQUENCE_LARGE == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().seq_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_SMALL == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().array_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_LARGE == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().array_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_MAP_SMALL == type_ids_ShapeType.type_identifier1()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_sdefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_sdefn().key_identifier()->_d())) ||
-                    (TI_PLAIN_MAP_LARGE == type_ids_ShapeType.type_identifier1()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_ldefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_ldefn().key_identifier()->_d())))
+            bool common_color_ec {false};
+            CommonStructMember common_color {TypeObjectUtils::build_common_struct_member(member_id_color, member_flags_color, TypeObjectUtils::retrieve_complete_type_identifier(type_ids_color, common_color_ec))};
+            if (!common_color_ec)
             {
-                common_color = TypeObjectUtils::build_common_struct_member(member_id_color, member_flags_color, type_ids_ShapeType.type_identifier1());
-            }
-            else if (EK_COMPLETE == type_ids_ShapeType.type_identifier2()._d() ||
-                    (TI_PLAIN_SEQUENCE_SMALL == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().seq_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_SEQUENCE_LARGE == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().seq_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_SMALL == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().array_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_LARGE == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().array_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_MAP_SMALL == type_ids_ShapeType.type_identifier2()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_sdefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_sdefn().key_identifier()->_d())) ||
-                    (TI_PLAIN_MAP_LARGE == type_ids_ShapeType.type_identifier2()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_ldefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_ldefn().key_identifier()->_d())))
-            {
-                common_color = TypeObjectUtils::build_common_struct_member(member_id_color, member_flags_color, type_ids_ShapeType.type_identifier2());
-            }
-            else
-            {
-                EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
-                        "Structure color member TypeIdentifier inconsistent.");
-                type_id = TypeIdentifier();
+                EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION, "Structure color member TypeIdentifier inconsistent.");
                 return;
             }
             MemberName name_color = "color";
@@ -169,62 +117,26 @@ void register_ShapeType_type_identifier(
             TypeObjectUtils::add_complete_struct_member(member_seq_ShapeType, member_color);
         }
         {
-            return_code_ShapeType =
+            TypeIdentifierPair type_ids_x;
+            ReturnCode_t return_code_x {eprosima::fastdds::dds::RETCODE_OK};
+            return_code_x =
                 eprosima::fastdds::dds::DomainParticipantFactory::get_instance()->type_object_registry().get_type_identifiers(
-                "_int32_t", type_ids_ShapeType);
+                "_int32_t", type_ids_x);
 
-            if (return_code_ShapeType != eprosima::fastdds::dds::RETCODE_OK)
+            if (eprosima::fastdds::dds::RETCODE_OK != return_code_x)
             {
                 EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                         "x Structure member TypeIdentifier unknown to TypeObjectRegistry.");
-                type_id = TypeIdentifier();
                 return;
             }
             StructMemberFlag member_flags_x = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructKind::NOT_APPLIED,
                     false, false, false, false);
-            CommonStructMember common_x;
             MemberId member_id_x = 0x00000001;
-            if (EK_COMPLETE == type_ids_ShapeType.type_identifier1()._d() || TK_NONE == type_ids_ShapeType.type_identifier2()._d() ||
-                    (TI_PLAIN_SEQUENCE_SMALL == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().seq_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_SEQUENCE_LARGE == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().seq_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_SMALL == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().array_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_LARGE == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().array_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_MAP_SMALL == type_ids_ShapeType.type_identifier1()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_sdefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_sdefn().key_identifier()->_d())) ||
-                    (TI_PLAIN_MAP_LARGE == type_ids_ShapeType.type_identifier1()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_ldefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_ldefn().key_identifier()->_d())))
+            bool common_x_ec {false};
+            CommonStructMember common_x {TypeObjectUtils::build_common_struct_member(member_id_x, member_flags_x, TypeObjectUtils::retrieve_complete_type_identifier(type_ids_x, common_x_ec))};
+            if (!common_x_ec)
             {
-                common_x = TypeObjectUtils::build_common_struct_member(member_id_x, member_flags_x, type_ids_ShapeType.type_identifier1());
-            }
-            else if (EK_COMPLETE == type_ids_ShapeType.type_identifier2()._d() ||
-                    (TI_PLAIN_SEQUENCE_SMALL == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().seq_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_SEQUENCE_LARGE == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().seq_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_SMALL == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().array_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_LARGE == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().array_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_MAP_SMALL == type_ids_ShapeType.type_identifier2()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_sdefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_sdefn().key_identifier()->_d())) ||
-                    (TI_PLAIN_MAP_LARGE == type_ids_ShapeType.type_identifier2()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_ldefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_ldefn().key_identifier()->_d())))
-            {
-                common_x = TypeObjectUtils::build_common_struct_member(member_id_x, member_flags_x, type_ids_ShapeType.type_identifier2());
-            }
-            else
-            {
-                EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
-                        "Structure x member TypeIdentifier inconsistent.");
-                type_id = TypeIdentifier();
+                EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION, "Structure x member TypeIdentifier inconsistent.");
                 return;
             }
             MemberName name_x = "x";
@@ -235,62 +147,26 @@ void register_ShapeType_type_identifier(
             TypeObjectUtils::add_complete_struct_member(member_seq_ShapeType, member_x);
         }
         {
-            return_code_ShapeType =
+            TypeIdentifierPair type_ids_y;
+            ReturnCode_t return_code_y {eprosima::fastdds::dds::RETCODE_OK};
+            return_code_y =
                 eprosima::fastdds::dds::DomainParticipantFactory::get_instance()->type_object_registry().get_type_identifiers(
-                "_int32_t", type_ids_ShapeType);
+                "_int32_t", type_ids_y);
 
-            if (return_code_ShapeType != eprosima::fastdds::dds::RETCODE_OK)
+            if (eprosima::fastdds::dds::RETCODE_OK != return_code_y)
             {
                 EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                         "y Structure member TypeIdentifier unknown to TypeObjectRegistry.");
-                type_id = TypeIdentifier();
                 return;
             }
             StructMemberFlag member_flags_y = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructKind::NOT_APPLIED,
                     false, false, false, false);
-            CommonStructMember common_y;
             MemberId member_id_y = 0x00000002;
-            if (EK_COMPLETE == type_ids_ShapeType.type_identifier1()._d() || TK_NONE == type_ids_ShapeType.type_identifier2()._d() ||
-                    (TI_PLAIN_SEQUENCE_SMALL == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().seq_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_SEQUENCE_LARGE == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().seq_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_SMALL == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().array_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_LARGE == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().array_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_MAP_SMALL == type_ids_ShapeType.type_identifier1()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_sdefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_sdefn().key_identifier()->_d())) ||
-                    (TI_PLAIN_MAP_LARGE == type_ids_ShapeType.type_identifier1()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_ldefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_ldefn().key_identifier()->_d())))
+            bool common_y_ec {false};
+            CommonStructMember common_y {TypeObjectUtils::build_common_struct_member(member_id_y, member_flags_y, TypeObjectUtils::retrieve_complete_type_identifier(type_ids_y, common_y_ec))};
+            if (!common_y_ec)
             {
-                common_y = TypeObjectUtils::build_common_struct_member(member_id_y, member_flags_y, type_ids_ShapeType.type_identifier1());
-            }
-            else if (EK_COMPLETE == type_ids_ShapeType.type_identifier2()._d() ||
-                    (TI_PLAIN_SEQUENCE_SMALL == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().seq_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_SEQUENCE_LARGE == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().seq_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_SMALL == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().array_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_LARGE == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().array_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_MAP_SMALL == type_ids_ShapeType.type_identifier2()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_sdefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_sdefn().key_identifier()->_d())) ||
-                    (TI_PLAIN_MAP_LARGE == type_ids_ShapeType.type_identifier2()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_ldefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_ldefn().key_identifier()->_d())))
-            {
-                common_y = TypeObjectUtils::build_common_struct_member(member_id_y, member_flags_y, type_ids_ShapeType.type_identifier2());
-            }
-            else
-            {
-                EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
-                        "Structure y member TypeIdentifier inconsistent.");
-                type_id = TypeIdentifier();
+                EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION, "Structure y member TypeIdentifier inconsistent.");
                 return;
             }
             MemberName name_y = "y";
@@ -301,62 +177,26 @@ void register_ShapeType_type_identifier(
             TypeObjectUtils::add_complete_struct_member(member_seq_ShapeType, member_y);
         }
         {
-            return_code_ShapeType =
+            TypeIdentifierPair type_ids_shapesize;
+            ReturnCode_t return_code_shapesize {eprosima::fastdds::dds::RETCODE_OK};
+            return_code_shapesize =
                 eprosima::fastdds::dds::DomainParticipantFactory::get_instance()->type_object_registry().get_type_identifiers(
-                "_int32_t", type_ids_ShapeType);
+                "_int32_t", type_ids_shapesize);
 
-            if (return_code_ShapeType != eprosima::fastdds::dds::RETCODE_OK)
+            if (eprosima::fastdds::dds::RETCODE_OK != return_code_shapesize)
             {
                 EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                         "shapesize Structure member TypeIdentifier unknown to TypeObjectRegistry.");
-                type_id = TypeIdentifier();
                 return;
             }
             StructMemberFlag member_flags_shapesize = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructKind::NOT_APPLIED,
                     false, false, false, false);
-            CommonStructMember common_shapesize;
             MemberId member_id_shapesize = 0x00000003;
-            if (EK_COMPLETE == type_ids_ShapeType.type_identifier1()._d() || TK_NONE == type_ids_ShapeType.type_identifier2()._d() ||
-                    (TI_PLAIN_SEQUENCE_SMALL == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().seq_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_SEQUENCE_LARGE == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().seq_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_SMALL == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().array_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_LARGE == type_ids_ShapeType.type_identifier1()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().array_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_MAP_SMALL == type_ids_ShapeType.type_identifier1()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_sdefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_sdefn().key_identifier()->_d())) ||
-                    (TI_PLAIN_MAP_LARGE == type_ids_ShapeType.type_identifier1()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_ldefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier1().map_ldefn().key_identifier()->_d())))
+            bool common_shapesize_ec {false};
+            CommonStructMember common_shapesize {TypeObjectUtils::build_common_struct_member(member_id_shapesize, member_flags_shapesize, TypeObjectUtils::retrieve_complete_type_identifier(type_ids_shapesize, common_shapesize_ec))};
+            if (!common_shapesize_ec)
             {
-                common_shapesize = TypeObjectUtils::build_common_struct_member(member_id_shapesize, member_flags_shapesize, type_ids_ShapeType.type_identifier1());
-            }
-            else if (EK_COMPLETE == type_ids_ShapeType.type_identifier2()._d() ||
-                    (TI_PLAIN_SEQUENCE_SMALL == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().seq_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_SEQUENCE_LARGE == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().seq_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_SMALL == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().array_sdefn().header().equiv_kind()) ||
-                    (TI_PLAIN_ARRAY_LARGE == type_ids_ShapeType.type_identifier2()._d() &&
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().array_ldefn().header().equiv_kind()) ||
-                    (TI_PLAIN_MAP_SMALL == type_ids_ShapeType.type_identifier2()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_sdefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_sdefn().key_identifier()->_d())) ||
-                    (TI_PLAIN_MAP_LARGE == type_ids_ShapeType.type_identifier2()._d() &&
-                    (EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_ldefn().header().equiv_kind() ||
-                    EK_COMPLETE == type_ids_ShapeType.type_identifier2().map_ldefn().key_identifier()->_d())))
-            {
-                common_shapesize = TypeObjectUtils::build_common_struct_member(member_id_shapesize, member_flags_shapesize, type_ids_ShapeType.type_identifier2());
-            }
-            else
-            {
-                EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
-                        "Structure shapesize member TypeIdentifier inconsistent.");
-                type_id = TypeIdentifier();
+                EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION, "Structure shapesize member TypeIdentifier inconsistent.");
                 return;
             }
             MemberName name_shapesize = "shapesize";
@@ -368,20 +208,10 @@ void register_ShapeType_type_identifier(
         }
         CompleteStructType struct_type_ShapeType = TypeObjectUtils::build_complete_struct_type(struct_flags_ShapeType, header_ShapeType, member_seq_ShapeType);
         if (eprosima::fastdds::dds::RETCODE_BAD_PARAMETER ==
-                TypeObjectUtils::build_and_register_struct_type_object(struct_type_ShapeType, type_name_ShapeType.to_string(), type_id))
+                TypeObjectUtils::build_and_register_struct_type_object(struct_type_ShapeType, type_name_ShapeType.to_string(), type_ids_ShapeType))
         {
             EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
                     "ShapeType already registered in TypeObjectRegistry for a different type.");
-        }
-        return_code_ShapeType =
-            eprosima::fastdds::dds::DomainParticipantFactory::get_instance()->type_object_registry().get_type_identifiers(
-            "ShapeType", type_ids_ShapeType);
-        if (return_code_ShapeType != eprosima::fastdds::dds::RETCODE_OK)
-        {
-            EPROSIMA_LOG_ERROR(XTYPES_TYPE_REPRESENTATION,
-                        "ShapeType: Given Struct TypeIdentifier unknown to TypeObjectRegistry.");
-            type_id = TypeIdentifier();
-            return;
         }
     }
 }

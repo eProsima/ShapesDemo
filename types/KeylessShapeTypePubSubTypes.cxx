@@ -221,9 +221,9 @@ namespace shapes_demo_typesupport {
             return true;
         }
 
-        void KeylessShapeTypePubSubType::register_type_object_representation() const
+        void KeylessShapeTypePubSubType::register_type_object_representation()
         {
-            register_KeylessShapeType_type_objects();
+            register_KeylessShapeType_type_identifier(type_identifiers_);
         }
 
     } // namespace idl
