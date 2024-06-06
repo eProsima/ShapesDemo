@@ -51,7 +51,7 @@ void register_KeylessShapeType_type_identifier(
         "shapes_demo_typesupport::idl::KeylessShapeType", type_ids_KeylessShapeType);
     if (eprosima::fastdds::dds::RETCODE_OK != return_code_KeylessShapeType)
     {
-        StructTypeFlag struct_flags_KeylessShapeType = TypeObjectUtils::build_struct_type_flag(eprosima::fastdds::dds::xtypes::ExtensibilityKind::NOT_APPLIED,
+        StructTypeFlag struct_flags_KeylessShapeType = TypeObjectUtils::build_struct_type_flag(eprosima::fastdds::dds::xtypes::ExtensibilityKind::APPENDABLE,
                 false, false);
         QualifiedTypeName type_name_KeylessShapeType = "shapes_demo_typesupport::idl::KeylessShapeType";
         eprosima::fastcdr::optional<AppliedBuiltinTypeAnnotations> type_ann_builtin_KeylessShapeType;
@@ -81,7 +81,7 @@ void register_KeylessShapeType_type_identifier(
                     }
                 }
             }
-            StructMemberFlag member_flags_color = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructKind::NOT_APPLIED,
+            StructMemberFlag member_flags_color = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructFailAction::DISCARD,
                     false, false, false, false);
             MemberId member_id_color = 0x00000000;
             bool common_color_ec {false};
@@ -111,7 +111,7 @@ void register_KeylessShapeType_type_identifier(
                         "x Structure member TypeIdentifier unknown to TypeObjectRegistry.");
                 return;
             }
-            StructMemberFlag member_flags_x = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructKind::NOT_APPLIED,
+            StructMemberFlag member_flags_x = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructFailAction::DISCARD,
                     false, false, false, false);
             MemberId member_id_x = 0x00000001;
             bool common_x_ec {false};
@@ -141,7 +141,7 @@ void register_KeylessShapeType_type_identifier(
                         "y Structure member TypeIdentifier unknown to TypeObjectRegistry.");
                 return;
             }
-            StructMemberFlag member_flags_y = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructKind::NOT_APPLIED,
+            StructMemberFlag member_flags_y = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructFailAction::DISCARD,
                     false, false, false, false);
             MemberId member_id_y = 0x00000002;
             bool common_y_ec {false};
@@ -171,7 +171,7 @@ void register_KeylessShapeType_type_identifier(
                         "shapesize Structure member TypeIdentifier unknown to TypeObjectRegistry.");
                 return;
             }
-            StructMemberFlag member_flags_shapesize = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructKind::NOT_APPLIED,
+            StructMemberFlag member_flags_shapesize = TypeObjectUtils::build_struct_member_flag(eprosima::fastdds::dds::xtypes::TryConstructFailAction::DISCARD,
                     false, false, false, false);
             MemberId member_id_shapesize = 0x00000003;
             bool common_shapesize_ec {false};
