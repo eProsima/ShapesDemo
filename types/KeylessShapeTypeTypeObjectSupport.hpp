@@ -35,17 +35,12 @@
 #define eProsima_user_DllExport
 #endif  // _WIN32
 
-/**
- * @brief Register every TypeObject representation defined in the IDL file in Fast DDS TypeObjectRegistry.
- */
-eProsima_user_DllExport void register_KeylessShapeType_type_objects();
-
 #ifndef DOXYGEN_SHOULD_SKIP_THIS_PUBLIC
 
 namespace shapes_demo_typesupport {
 namespace idl {
 /**
- * @brief Register shapes_demo_typesupport_idl_KeylessShapeType related TypeIdentifier.
+ * @brief Register KeylessShapeType related TypeIdentifier.
  *        Fully-descriptive TypeIdentifiers are directly registered.
  *        Hash TypeIdentifiers require to fill the TypeObject information and hash it, consequently, the TypeObject is
  *        indirectly registered as well.
@@ -54,8 +49,8 @@ namespace idl {
  *             The returned TypeIdentifier corresponds to the complete TypeIdentifier in case of hashed TypeIdentifiers.
  *             Invalid TypeIdentifier is returned in case of error.
  */
-eProsima_user_DllExport void register_shapes_demo_typesupport_idl_KeylessShapeType_type_identifier(
-        eprosima::fastdds::dds::xtypes::TypeIdentifier& type_id);
+eProsima_user_DllExport void register_KeylessShapeType_type_identifier(
+        eprosima::fastdds::dds::xtypes::TypeIdentifierPair& type_ids);
 
 } // namespace idl
 
