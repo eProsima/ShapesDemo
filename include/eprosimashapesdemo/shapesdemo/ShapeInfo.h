@@ -36,7 +36,7 @@
 #include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
 #include "types/ShapePubSubTypes.h"
 
-using namespace eprosima::fastrtps;
+using namespace eprosima::fastdds;
 
 class Shape
 {

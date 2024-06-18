@@ -40,7 +40,6 @@
 
 using namespace eprosima::fastdds::dds;
 using namespace eprosima::fastdds::rtps;
-using namespace eprosima::fastrtps::rtps;
 
 ShapesDemo::ShapesDemo(
         MainWindow* mw)
