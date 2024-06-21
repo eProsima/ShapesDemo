@@ -34,7 +34,7 @@
 #include <fastdds/rtps/common/Time_t.hpp>
 
 #include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
-#include "types/ShapePubSubTypes.h"
+#include "types/ShapePubSubTypes.hpp"
 
 using namespace eprosima::fastdds;
 

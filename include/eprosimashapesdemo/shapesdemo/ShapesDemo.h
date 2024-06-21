@@ -39,7 +39,7 @@
 #include <fastdds/rtps/writer/WriterDiscoveryInfo.hpp>
 
 #include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
-#include "types/ShapePubSubTypes.h"
+#include "types/ShapePubSubTypes.hpp"
 
 using namespace eprosima::fastdds::dds;
 

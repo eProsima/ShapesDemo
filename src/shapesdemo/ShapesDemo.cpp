@@ -35,7 +35,7 @@
 #include <eprosimashapesdemo/shapesdemo/ShapePublisher.h>
 #include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
 #ifdef ENABLE_ROS_COMPONENTS
-#include <types/KeylessShapeTypePubSubTypes.h>
+#include <types/KeylessShapeTypePubSubTypes.hpp>
 #endif // ifdef ENABLE_ROS_COMPONENTS
 
 using namespace eprosima::fastdds::dds;
