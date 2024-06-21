@@ -21,14 +21,14 @@
 #include <iostream>
 #include <sstream>
 
-#include <fastdds/config.h> // FASTDDS_STATISTICS availability
+#include <fastdds/config.hpp> // FASTDDS_STATISTICS availability
 #include <fastdds/dds/domain/qos/DomainParticipantQos.hpp>
-#include <fastdds/rtps/common/CDRMessage_t.h>
-#include <fastdds/rtps/transport/shared_mem/SharedMemTransportDescriptor.h>
-#include <fastdds/rtps/transport/TCPv4TransportDescriptor.h>
-#include <fastdds/rtps/transport/UDPv4TransportDescriptor.h>
-#include <fastdds/rtps/transport/test_UDPv4TransportDescriptor.h>
-#include <fastdds/utils/IPLocator.h>
+#include <fastdds/rtps/common/CDRMessage_t.hpp>
+#include <fastdds/rtps/transport/shared_mem/SharedMemTransportDescriptor.hpp>
+#include <fastdds/rtps/transport/TCPv4TransportDescriptor.hpp>
+#include <fastdds/rtps/transport/UDPv4TransportDescriptor.hpp>
+#include <fastdds/rtps/transport/test_UDPv4TransportDescriptor.hpp>
+#include <fastdds/utils/IPLocator.hpp>
 
 #include <eprosimashapesdemo/qt/mainwindow.h>
 #include <eprosimashapesdemo/shapesdemo/ShapeInfo.h>

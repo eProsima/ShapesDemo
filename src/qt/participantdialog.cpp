@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include <fastdds/config.h> // FASTDDS_STATISTICS availability
+#include <fastdds/config.hpp> // FASTDDS_STATISTICS availability
 
 #include "eprosimashapesdemo/qt/participantdialog.h"
 #include "ui_participantdialog.h"
