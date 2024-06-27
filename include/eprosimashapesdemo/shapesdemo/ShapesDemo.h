@@ -35,11 +35,11 @@
 #include <fastdds/dds/subscriber/Subscriber.hpp>
 #include <fastdds/dds/topic/TopicDescription.hpp>
 #include <fastdds/dds/topic/TypeSupport.hpp>
-#include <fastdds/rtps/common/Guid.h>
-#include <fastdds/rtps/writer/WriterDiscoveryInfo.h>
+#include <fastdds/rtps/common/Guid.hpp>
+#include <fastdds/rtps/writer/WriterDiscoveryInfo.hpp>
 
 #include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
-#include "types/ShapePubSubTypes.h"
+#include "types/ShapePubSubTypes.hpp"
 
 using namespace eprosima::fastdds::dds;
 

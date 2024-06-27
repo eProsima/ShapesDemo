@@ -22,7 +22,7 @@
 
 #include <fastdds/dds/builtin/topic/PublicationBuiltinTopicData.hpp>
 #include <fastdds/dds/subscriber/SampleInfo.hpp>
-#include <fastdds/rtps/common/InstanceHandle.h>
+#include <fastdds/rtps/common/InstanceHandle.hpp>
 
 #include <eprosimashapesdemo/qt/ContentFilterSelector.h>
 #include <eprosimashapesdemo/qt/mainwindow.h>

@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with eProsima Fast DDS Shapes Demo. If not, see <https://www.gnu.org/licenses/>.
 
-#include <fastdds/config.h> // FASTDDS_STATISTICS availability
+#include <fastdds/config.hpp> // FASTDDS_STATISTICS availability
 
 #include "eprosimashapesdemo/qt/optionsdialog.h"
 #include "ui_optionsdialog.h"
