@@ -1,0 +1,61 @@
+name: Shapes Demo Windows CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      os-version:
+        description: 'OS version to run the workflow'
+        required: false
+        default: 'windows-2019'
+        type: string
+      vs-toolset:
+        description: 'The VS toolset to use for the build'
+        required: false
+        default: 'v142'
+        type: string
+      colcon-args:
+        description: 'Extra arguments for colcon cli'
+        required: false
+        type: string
+      cmake-args:
+        description: 'Extra arguments for cmake cli'
+        required: false
+        type: string
+      ctest-args:
+        description: 'Extra arguments for ctest cli'
+        required: false
+        type: string
+      shapes-demo-branch:
+        description: 'Branch or tag of Shapes Demo repository'
+        required: true
+        type: string
+      fastdds-branch:
+        description: 'Branch or tag of Fast DDS repository'
+        type: string
+        required: true
+
+  pull_request:
+    types:
+      - review_requested
+    paths-ignore:
+      - '**.md'
+      - '**.txt'
+      - '!**/CMakeLists.txt'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows-ci:
+    uses: ./.github/workflows/reusable-windows-ci.yml
+    with:
+      os-version: ${{ inputs.os-version || 'windows-2019' }}
+      vs-toolset: ${{ inputs.vs-toolset || 'v142' }}
+      label: '${{ inputs.os-version }}-${{ inputs.vs-toolset }}-ci'
+      colcon-args: ${{ inputs.colcon-args }}
+      cmake-args: ${{ inputs.cmake-args }}
+      ctest-args: ${{ inputs.ctest-args }}
+      shapes-demo-branch: ${{ inputs.shapes-demo-branch || github.ref || 'master' }}
+      fastdds-branch: ${{ inputs.fastdds-branch || 'master' }}
+      run-build: ${{ !(github.event_name == 'pull_request') && true || (!contains(github.event.pull_request.labels.*.name, 'skip-ci') && !contains(github.event.pull_request.labels.*.name, 'conflicts')) && true || false }}
