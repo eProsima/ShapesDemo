@@ -33,7 +33,7 @@ on:
         required: true
         type: string
       run-build:
-        description: 'Build Fast DDS Docs (CI skipped otherwise)'
+        description: 'Build Shapes Demo (CI skipped otherwise)'
         required: false
         type: boolean
         default: true

@@ -38,7 +38,7 @@ on:
         required: true
         type: string
       run-build:
-        description: 'Build Fast DDS Python (CI skipped otherwise)'
+        description: 'Build Shapes Demo (CI skipped otherwise)'
         required: false
         type: boolean
         default: true
@@ -130,7 +130,7 @@ jobs:
 
       - name: Get Fast DDS branch
         id: get_fastdds_branch
-        uses: eProsima/eProsima-CI/multiplatform/get_related_branch_from_repo@feature/21228
+        uses: eProsima/eProsima-CI/multiplatform/get_related_branch_from_repo@v0
         with:
           remote_repository: eProsima/Fast-DDS
           fallback_branch: ${{ inputs.fastdds-branch }}

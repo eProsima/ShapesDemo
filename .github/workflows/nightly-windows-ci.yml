@@ -10,15 +10,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os-version:
-          - 'windows-2019'
         vs-toolset:
           - 'v142'
     uses: eProsima/ShapesDemo/.github/workflows/reusable-windows-ci.yml@master
     with:
-      os-version: ${{ matrix.os-version }}
+      os-version: 'windows-2019'
       vs.toolset: ${{ matrix.vs-toolset }}
-      label: 'nightly-${{ matrix.os-version }}-${{ matrix.vs-toolset }}-ci-master'
+      label: 'nightly-windows-${{ matrix.vs-toolset }}-ci-master'
       shapes-demo-branch: 'master'
       fastdds-branch: 'master'
       run-build: true
@@ -27,16 +25,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os-version:
-          - 'windows-2019'
         vs-toolset:
           - 'v141'
           - 'v142'
     uses: eProsima/ShapesDemo/.github/workflows/reusable-windows-ci.yml@2.14.x
     with:
-      os-version: ${{ matrix.os-version }}
+      os-version: 'windows-2019'
       vs.toolset: ${{ matrix.vs-toolset }}
-      label: 'nightly-${{ matrix.os-version }}-${{ matrix.vs-toolset }}-ci-2.14.x'
+      label: 'nightly-windows-${{ matrix.vs-toolset }}-ci-2.14.x'
       shapes-demo-branch: '2.14.x'
       fastdds-branch: '2.14.x'
       run-build: true
@@ -45,16 +41,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os-version:
-          - 'windows-2019'
         vs-toolset:
           - 'v141'
           - 'v142'
     uses: eProsima/ShapesDemo/.github/workflows/reusable-windows-ci.yml@2.13.x
     with:
-      os-version: ${{ matrix.os-version }}
+      os-version: 'windows-2019'
       vs.toolset: ${{ matrix.vs-toolset }}
-      label: 'nightly-${{ matrix.os-version }}-${{ matrix.vs-toolset }}-ci-2.13.x'
+      label: 'nightly-windows-${{ matrix.vs-toolset }}-ci-2.13.x'
       shapes-demo-branch: '2.13.x'
       fastdds-branch: '2.13.x'
       run-build: true
@@ -63,16 +57,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os-version:
-          - 'windows-2019'
         vs-toolset:
           - 'v141'
           - 'v142'
     uses: eProsima/ShapesDemo/.github/workflows/reusable-windows-ci.yml@2.10.x
     with:
-      os-version: ${{ matrix.os-version }}
+      os-version: 'windows-2019'
       vs.toolset: ${{ matrix.vs-toolset }}
-      label: 'nightly-${{ matrix.os-version }}-${{ matrix.vs-toolset }}-ci-2.10.x'
+      label: 'nightly-windows-${{ matrix.vs-toolset }}-ci-2.10.x'
       shapes-demo-branch: '2.10.x'
       fastdds-branch: '2.10.x'
       run-build: true
@@ -81,16 +73,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os-version:
-          - 'windows-2019'
         vs-toolset:
           - 'v141'
           - 'v142'
     uses: eProsima/ShapesDemo/.github/workflows/reusable-windows-ci.yml@2.6.x
     with:
-      os-version: ${{ matrix.os-version }}
+      os-version: 'windows-2019'
       vs.toolset: ${{ matrix.vs-toolset }}
-      label: 'nightly-${{ matrix.os-version }}-${{ matrix.vs-toolset }}-ci-2.6.x'
+      label: 'nightly-windows-${{ matrix.vs-toolset }}-ci-2.6.x'
       shapes-demo-branch: '2.6.x'
       fastdds-branch: '2.6.x'
-      run-build: false
+      run-build: true

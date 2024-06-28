@@ -1,4 +1,3 @@
-
 name: Shapes Demo Ubuntu CI
 
 on:
@@ -49,14 +48,17 @@ concurrency:
 
 jobs:
   ubuntu-ci:
+    if: ${{ !(github.event_name == 'pull_request') || !contains(github.event.pull_request.labels.*.name, 'conflicts') }}
     uses: ./.github/workflows/reusable-ubuntu-ci.yml
     with:
+      # It would be desirable to have a matrix of ubuntu OS for this job, but due to the issue opened in this ticket:
+      # https://github.com/orgs/community/discussions/128118 , it has been set as a single OS job.
       os-version: ${{ inputs.os-version || 'ubuntu-22.04' }}
-      label: 'ubuntu-ci'
+      label: 'ubuntu-ci-master'
       colcon-args: ${{ inputs.colcon-args }}
       cmake-args: ${{ inputs.cmake-args }}
       ctest-args: ${{ inputs.ctest-args }}
-      shapes-demo-branch: ${{ inputs.shapes-demo-branch || github.ref || 'master' }}
+      shapes-demo-branch: ${{ inputs.shapes-demo-branch || github.ref }}
       fastdds-branch: ${{ inputs.fastdds-branch || 'master' }}
-      run-build: ${{ !(github.event_name == 'pull_request') && true || (!contains(github.event.pull_request.labels.*.name, 'skip-ci') && !contains(github.event.pull_request.labels.*.name, 'conflicts')) && true || false }}
+      run-build: ${{ !(github.event_name == 'pull_request') || !contains(github.event.pull_request.labels.*.name, 'skip-ci') }}
       use-ccache: ${{ inputs.use-ccache || false }}
