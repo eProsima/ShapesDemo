@@ -68,5 +68,3 @@ jobs:
       shapes-demo-branch: '2.10.x'
       fastdds-branch: '2.10.x'
       run-build: true
-
-  # There is no job for windows in 2.6.x
