@@ -9,7 +9,7 @@ jobs:
   nightly-ubuntu-ci-master:
     uses: eProsima/ShapesDemo/.github/workflows/reusable-ubuntu-ci.yml@master
     with:
-      os-image: 'ubuntu-22.04'
+      os-version: 'ubuntu-22.04'
       label: 'nightly-ubuntu-ci-master'
       shapes-demo-branch: 'master'
       fastdds-branch: 'master'
@@ -19,7 +19,7 @@ jobs:
   nightly-ubuntu-ci-2_14_x:
     uses: eProsima/ShapesDemo/.github/workflows/reusable-ubuntu-ci.yml@2.14.x
     with:
-      os-image: 'ubuntu-22.04'
+      os-version: 'ubuntu-22.04'
       label: 'nightly-ubuntu-ci-2.14.x'
       shapes-demo-branch: '2.14.x'
       fastdds-branch: '2.14.x'
@@ -29,7 +29,7 @@ jobs:
   nightly-ubuntu-ci-2_13_x:
     uses: eProsima/ShapesDemo/.github/workflows/reusable-ubuntu-ci.yml@2.13.x
     with:
-      os-image: 'ubuntu-22.04'
+      os-version: 'ubuntu-22.04'
       label: 'nightly-ubuntu-ci-2.13.x'
       shapes-demo-branch: '2.13.x'
       fastdds-branch: '2.13.x'
@@ -39,7 +39,7 @@ jobs:
   nightly-ubuntu-ci-2_10_x:
     uses: eProsima/ShapesDemo/.github/workflows/reusable-ubuntu-ci.yml@2.10.x
     with:
-      os-image: 'ubuntu-22.04'
+      os-version: 'ubuntu-22.04'
       label: 'nightly-ubuntu-ci-2.10.x'
       shapes-demo-branch: '2.10.x'
       fastdds-branch: '2.10.x'
@@ -49,7 +49,7 @@ jobs:
   nightly-ubuntu-ci-2_6_x:
     uses: eProsima/ShapesDemo/.github/workflows/reusable-ubuntu-ci.yml@2.6.x
     with:
-      os-image: 'ubuntu-20.04'
+      os-version: 'ubuntu-20.04'
       label: 'nightly-ubuntu-ci-2.6.x'
       shapes-demo-branch: '2.6.x'
       fastdds-branch: '2.6.x'
