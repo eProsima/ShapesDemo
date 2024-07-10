@@ -78,8 +78,8 @@ bool ShapePublisher::initPublisher()
 {
     mp_publisher = mp_sd->getParticipant()->create_publisher(m_pub_qos);
 
-    m_dw_qos.reliable_writer_qos().times.heartbeatPeriod.seconds = 0;
-    m_dw_qos.reliable_writer_qos().times.heartbeatPeriod.nanosec = 500000000;
+    m_dw_qos.reliable_writer_qos().times.heartbeat_period.seconds = 0;
+    m_dw_qos.reliable_writer_qos().times.heartbeat_period.nanosec = 500 * 1000 * 1000;
 
     mp_datawriter = mp_publisher->create_datawriter(mp_topic, m_dw_qos, &listener_);
 
