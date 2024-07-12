@@ -26,16 +26,6 @@ jobs:
       run-build: true
       use-ccache: false
 
-  nightly-ubuntu-ci-2_13_x:
-    uses: eProsima/ShapesDemo/.github/workflows/reusable-ubuntu-ci.yml@2.13.x
-    with:
-      os-version: 'ubuntu-22.04'
-      label: 'nightly-ubuntu-ci-2.13.x'
-      shapes-demo-branch: '2.13.x'
-      fastdds-branch: '2.13.x'
-      run-build: true
-      use-ccache: false
-
   nightly-ubuntu-ci-2_10_x:
     uses: eProsima/ShapesDemo/.github/workflows/reusable-ubuntu-ci.yml@2.10.x
     with:
