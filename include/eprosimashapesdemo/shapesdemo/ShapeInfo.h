@@ -68,7 +68,7 @@ public:
 
     ShapeType m_shape;
     TYPESHAPE m_type;
-    Time_t m_time;
+    eprosima::fastdds::dds::Time_t m_time;
     float m_dirX;
     float m_dirY;
     bool m_changeDir;

@@ -50,7 +50,7 @@ public:
     int32_t m_minX;
     int32_t m_maxY;
     int32_t m_minY;
-    Duration_t m_minimumSeparation;
+    eprosima::fastdds::dds::Duration_t m_minimumSeparation;
     bool m_useContentFilter;
     bool m_useTimeFilter;
 

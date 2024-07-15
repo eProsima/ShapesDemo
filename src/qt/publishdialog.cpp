@@ -127,7 +127,7 @@ void PublishDialog::on_button_OkCancel_accepted()
         if (lease_duration_value.toDouble() > 0)
         {
             SP->m_dw_qos.liveliness().lease_duration =
-                    eprosima::fastdds::Duration_t(lease_duration_value.toDouble() * 1e-3);
+                    eprosima::fastdds::dds::Duration_t(lease_duration_value.toDouble() * 1e-3);
         }
     }
 
@@ -140,14 +140,14 @@ void PublishDialog::on_button_OkCancel_accepted()
             SP->m_dw_qos.liveliness().lease_duration != c_TimeInfinite)
     {
         SP->m_dw_qos.liveliness().announcement_period =
-                eprosima::fastdds::Duration_t(lease_duration_value.toDouble() * 1e-3);
+                eprosima::fastdds::dds::Duration_t(lease_duration_value.toDouble() * 1e-3);
     }
     else
     {
         QString value = this->ui->lineEdit_announcementPeriod->text();
         if (value.toDouble() > 0)
         {
-            SP->m_dw_qos.liveliness().announcement_period = eprosima::fastdds::Duration_t(value.toDouble() * 1e-3);
+            SP->m_dw_qos.liveliness().announcement_period = eprosima::fastdds::dds::Duration_t(value.toDouble() * 1e-3);
         }
     }
 
@@ -196,7 +196,7 @@ void PublishDialog::on_button_OkCancel_accepted()
         QString value = this->ui->lineEdit_Deadline->text();
         if (value.toDouble() > 0)
         {
-            SP->m_dw_qos.deadline().period = eprosima::fastdds::Duration_t(value.toDouble() * 1e-3);
+            SP->m_dw_qos.deadline().period = eprosima::fastdds::dds::Duration_t(value.toDouble() * 1e-3);
         }
     }
 
@@ -210,7 +210,7 @@ void PublishDialog::on_button_OkCancel_accepted()
         QString value = this->ui->lineEdit_Lifespan->text();
         if (value.toDouble() > 0)
         {
-            SP->m_dw_qos.lifespan().duration = eprosima::fastdds::Duration_t(value.toDouble() * 1e-3);
+            SP->m_dw_qos.lifespan().duration = eprosima::fastdds::dds::Duration_t(value.toDouble() * 1e-3);
         }
     }
 
