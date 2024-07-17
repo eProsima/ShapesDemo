@@ -50,7 +50,7 @@ ShapePublisher::~ShapePublisher()
         {
             Duration_t wait_time(1, 0);
             rtps::InstanceHandle_t handle;
-            if (mp_datawriter->get_type()->m_isGetKeyDefined)
+            if (mp_datawriter->get_type()->is_compute_key_provided)
             {
                 mp_datawriter->dispose((void*)&this->m_shape.m_shape, handle);
             }
