@@ -57,8 +57,8 @@ inline bool compareGUID(
 }
 
 inline double Time_tAbsDiff2DoubleMillisec(
-        const eprosima::fastdds::Time_t& t1,
-        const eprosima::fastdds::Time_t& t2)
+        const eprosima::fastdds::dds::Time_t& t1,
+        const eprosima::fastdds::dds::Time_t& t2)
 {
     double result = 0;
     result += (double)abs((t2.seconds - t1.seconds) * 1000);
@@ -67,7 +67,7 @@ inline double Time_tAbsDiff2DoubleMillisec(
 }
 
 inline double Time_t2MilliSecondsDouble(
-        const eprosima::fastdds::Time_t& t)
+        const eprosima::fastdds::dds::Time_t& t)
 {
     return ((double)t.fraction() / pow(2.0, 32) * pow(10.0, 3)) + (double)t.seconds * pow(10.0, 3);
 }
