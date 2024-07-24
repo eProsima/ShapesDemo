@@ -29,14 +29,12 @@
 #include <QString>
 #include <sstream>
 
+#include <fastdds/dds/core/Time_t.hpp>
 #include <fastdds/rtps/common/Guid.hpp>
 #include <fastdds/rtps/common/InstanceHandle.hpp>
-#include <fastdds/rtps/common/Time_t.hpp>
 
 #include "eprosimashapesdemo/shapesdemo/ShapeDefinitions.h"
 #include "types/ShapePubSubTypes.hpp"
-
-using namespace eprosima::fastdds;
 
 class Shape
 {
@@ -77,7 +75,7 @@ public:
     bool dispose = false;
 };
 
-typedef std::pair<SD_COLOR, rtps::InstanceHandle_t> colorPair;
+typedef std::pair<SD_COLOR, eprosima::fastdds::rtps::InstanceHandle_t> colorPair;
 
 class ColorInstanceHandle
 {
@@ -130,7 +128,7 @@ public:
 };
 
 inline SD_COLOR getColorFromInstanceHandle(
-        rtps::InstanceHandle_t& iHandle)
+        eprosima::fastdds::rtps::InstanceHandle_t& iHandle)
 {
     static const ColorInstanceHandle c_ShapesHandles;
     if (iHandle == c_ShapesHandles.BlueIH.second)

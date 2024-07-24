@@ -11,6 +11,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
+
+#include <algorithm>
 
 #include <fastdds/config.hpp> // FASTDDS_STATISTICS availability
 
@@ -24,52 +27,55 @@ ParticipantDialog::ParticipantDialog(
         ShapesDemo* psd,
         QWidget* parent)
     : QDialog(parent)
+    , m_options(psd->getOptions())
     , ui(new Ui::ParticipantDialog)
     , mp_sd(psd)
     , mp_mw(mw)
     , mb_started(true)
 {
     ui->setupUi(this);
-    m_options = new ShapesDemoOptions(this->mp_sd->getOptions());
-
     // Domain ID Configuration
-    this->ui->spin_domainId->setValue(m_options->m_domainId);
+    this->ui->spin_domainId->setValue(m_options.m_domainId);
 
     // TCP Configuration
-    this->ui->spin_server_port->setValue(m_options->m_serverPort);
-    this->ui->spin_listen_port->setValue(m_options->m_listenPort);
-    this->ui->lineEdit_server_ip->setText(QString::fromStdString(m_options->m_serverIp));
+    this->ui->spin_server_port->setValue(m_options.m_serverPort);
+    this->ui->spin_listen_port->setValue(m_options.m_listenPort);
+    this->ui->lineEdit_server_ip->setText(QString::fromStdString(m_options.m_serverIp));
 
     // Transport Configurations
-    this->ui->IntraprocesscheckBox->setChecked(m_options->m_intraprocess_transport);
-    this->ui->SHMcheckBox->setChecked(m_options->m_shm_transport);
-    this->ui->UDPcheckBox->setChecked(m_options->m_udp_transport);
-    this->ui->TCPcheckBox->setChecked(m_options->m_tcp_transport);
+    this->ui->IntraprocesscheckBox->setChecked(m_options.m_intraprocess_transport);
+    this->ui->SHMcheckBox->setChecked(m_options.m_shm_transport);
+    this->ui->UDPcheckBox->setChecked(m_options.m_udp_transport);
+    this->ui->TCPcheckBox->setChecked(m_options.m_tcp_transport);
 
     // Statistics Button
     // Show if it is checked or not
-    this->ui->statisticsCheckBox->setChecked(m_options->m_statistics);
-    this->ui->monitorServiceCheckBox->setChecked(m_options->m_monitor_service);
+    this->ui->statisticsCheckBox->setChecked(m_options.m_statistics);
+    this->ui->monitorServiceCheckBox->setChecked(m_options.m_monitor_service);
 #ifdef ENABLE_ROS_COMPONENTS
-    this->ui->rosTopicCheckBox->setChecked(m_options->m_ros2_topic);
+    this->ui->rosTopicCheckBox->setChecked(m_options.m_ros2_topic);
 #else
     this->ui->line_5->setVisible(false);
     this->ui->label_12->setVisible(false);
     this->ui->rosTopicCheckBox->setVisible(false);
 #endif // ifdef ENABLE_ROS_COMPONENTS
 
-    this->ui->typeinformationCheckBox->setChecked(m_options->m_auto_fill_type_information);
+    for (auto& it : ShapesDemoOptions::TYPE_PROPAGATION_VALUES)
+    {
+        this->ui->type_propagation_combo->addItem(QString(it.first.c_str()));
+    }
+    this->ui->type_propagation_combo->setCurrentText(QString(m_options.type_propagation.first.c_str()));
 
     // Percentage loss Configuration
-    this->ui->lossSpin->setValue(m_options->m_lossPerc);
+    this->ui->lossSpin->setValue(m_options.m_lossPerc);
 
     setEnableState();
     setAttribute ( Qt::WA_DeleteOnClose, true );
+    initializing_form_ = false;
 }
 
 ParticipantDialog::~ParticipantDialog()
 {
-    delete m_options;
     delete ui;
 }
 
@@ -104,7 +110,7 @@ void ParticipantDialog::setEnableState()
     this->ui->SHMcheckBox->setEnabled(mb_started);
     this->ui->UDPcheckBox->setEnabled(mb_started);
     this->ui->TCPcheckBox->setEnabled(mb_started);
-    this->ui->typeinformationCheckBox->setEnabled(mb_started);
+    this->ui->type_propagation_combo->setEnabled(mb_started);
     this->ui->lossCheckBox->setEnabled(mb_started);
     this->ui->lossSpin->setEnabled(this->ui->lossCheckBox->isChecked());
     this->ui->label_7->setEnabled(this->ui->lossCheckBox->isChecked());
@@ -130,114 +136,114 @@ void ParticipantDialog::on_pushButton_start_clicked()
 void ParticipantDialog::on_pushButton_stop_clicked()
 {
     this->mp_mw->on_actionStop_triggered();
-    m_options->m_lossSampleEnabled = false;
+    m_options.m_lossSampleEnabled = false;
     setEnableState();
 }
 
 void ParticipantDialog::on_spin_domainId_valueChanged(
         int arg1)
 {
-    m_options->m_domainId = arg1;
-    mp_sd->setOptions(*m_options);
+    m_options.m_domainId = arg1;
+    mp_sd->setOptions(m_options);
 }
 
 void ParticipantDialog::on_spin_server_port_valueChanged(
         int arg1)
 {
-    m_options->m_serverPort = arg1;
-    mp_sd->setOptions(*m_options);
+    m_options.m_serverPort = arg1;
+    mp_sd->setOptions(m_options);
 }
 
 void ParticipantDialog::on_spin_listen_port_valueChanged(
         int arg1)
 {
-    m_options->m_listenPort = arg1;
-    mp_sd->setOptions(*m_options);
+    m_options.m_listenPort = arg1;
+    mp_sd->setOptions(m_options);
 }
 
 void ParticipantDialog::on_lineEdit_server_ip_textChanged(
         const QString& arg1)
 {
-    m_options->m_serverIp = arg1.toStdString();
-    mp_sd->setOptions(*m_options);
+    m_options.m_serverIp = arg1.toStdString();
+    mp_sd->setOptions(m_options);
 }
 
 void ParticipantDialog::on_statisticsCheckBox_stateChanged(
         int arg1)
 {
-    m_options->m_statistics = arg1;
-    mp_sd->setOptions(*m_options);
+    m_options.m_statistics = arg1;
+    mp_sd->setOptions(m_options);
 }
 
 void ParticipantDialog::on_rosTopicCheckBox_stateChanged(
         int arg1)
 {
-    m_options->m_ros2_topic = arg1;
-    mp_sd->setOptions(*m_options);
+    m_options.m_ros2_topic = arg1;
+    mp_sd->setOptions(m_options);
 }
 
 void ParticipantDialog::tcp_enable_buttons()
 {
     // Enable Combo Box
-    this->ui->TCPcomboBox->setEnabled(m_options->m_tcp_transport && mb_started);
+    this->ui->TCPcomboBox->setEnabled(m_options.m_tcp_transport && mb_started);
 
     // Enable/Disable buttons depending on transport
-    this->ui->spin_listen_port->setEnabled(m_options->m_tcp_transport && mb_started);
-    this->ui->spin_server_port->setEnabled(m_options->m_tcp_transport && mb_started);
-    this->ui->lineEdit_server_ip->setEnabled(m_options->m_tcp_transport && mb_started);
+    this->ui->spin_listen_port->setEnabled(m_options.m_tcp_transport && mb_started);
+    this->ui->spin_server_port->setEnabled(m_options.m_tcp_transport && mb_started);
+    this->ui->lineEdit_server_ip->setEnabled(m_options.m_tcp_transport && mb_started);
 
     // Enable/Disable labels depending on transport
-    this->ui->listeningPort_label->setEnabled(m_options->m_tcp_transport && mb_started);
-    this->ui->serverPort_label->setEnabled(m_options->m_tcp_transport && mb_started);
-    this->ui->serverIP_label->setEnabled(m_options->m_tcp_transport && mb_started);
+    this->ui->listeningPort_label->setEnabled(m_options.m_tcp_transport && mb_started);
+    this->ui->serverPort_label->setEnabled(m_options.m_tcp_transport && mb_started);
+    this->ui->serverIP_label->setEnabled(m_options.m_tcp_transport && mb_started);
 
-    if (QString("TCP LAN Server") == m_options->m_tcp_type)
+    if (QString("TCP LAN Server") == m_options.m_tcp_type)
     {
         this->ui->spin_server_port->setEnabled(false);
         this->ui->lineEdit_server_ip->setEnabled(false);
         this->ui->serverIP_label->setEnabled(false);
         this->ui->serverPort_label->setEnabled(false);
     }
-    if (QString("TCP WAN Server") == m_options->m_tcp_type)
+    if (QString("TCP WAN Server") == m_options.m_tcp_type)
     {
         this->ui->spin_server_port->setEnabled(false);
         this->ui->serverPort_label->setEnabled(false);
     }
-    if (QString("TCP Client") == m_options->m_tcp_type)
+    if (QString("TCP Client") == m_options.m_tcp_type)
     {
         this->ui->spin_listen_port->setEnabled(false);
         this->ui->listeningPort_label->setEnabled(false);
     }
 
-    this->ui->TCPcomboBox->setCurrentText(m_options->m_tcp_type);
+    this->ui->TCPcomboBox->setCurrentText(m_options.m_tcp_type);
 }
 
 void ParticipantDialog::on_IntraprocesscheckBox_stateChanged(
         int arg1)
 {
-    m_options->m_intraprocess_transport = arg1;
-    mp_sd->setOptions(*m_options);
+    m_options.m_intraprocess_transport = arg1;
+    mp_sd->setOptions(m_options);
 }
 
 void ParticipantDialog::on_SHMcheckBox_stateChanged(
         int arg1)
 {
-    m_options->m_shm_transport = arg1;
-    mp_sd->setOptions(*m_options);
+    m_options.m_shm_transport = arg1;
+    mp_sd->setOptions(m_options);
 }
 
 void ParticipantDialog::on_UDPcheckBox_stateChanged(
         int arg1)
 {
-    m_options->m_udp_transport = arg1;
-    mp_sd->setOptions(*m_options);
+    m_options.m_udp_transport = arg1;
+    mp_sd->setOptions(m_options);
 }
 
 void ParticipantDialog::on_TCPcheckBox_stateChanged(
         int arg1)
 {
-    m_options->m_tcp_transport = arg1;
-    mp_sd->setOptions(*m_options);
+    m_options.m_tcp_transport = arg1;
+    mp_sd->setOptions(m_options);
 
     tcp_enable_buttons();
 }
@@ -245,8 +251,8 @@ void ParticipantDialog::on_TCPcheckBox_stateChanged(
 void ParticipantDialog::on_TCPcomboBox_currentTextChanged(
         const QString& arg1)
 {
-    m_options->m_tcp_type = arg1;
-    mp_sd->setOptions(*m_options);
+    m_options.m_tcp_type = arg1;
+    mp_sd->setOptions(m_options);
 
     tcp_enable_buttons();
 }
@@ -254,22 +260,30 @@ void ParticipantDialog::on_TCPcomboBox_currentTextChanged(
 void ParticipantDialog::on_monitorServiceCheckBox_stateChanged(
         int arg1)
 {
-    m_options->m_monitor_service = arg1;
-    mp_sd->setOptions(*m_options);
+    m_options.m_monitor_service = arg1;
+    mp_sd->setOptions(m_options);
 }
 
 void ParticipantDialog::on_lossSpin_valueChanged(
         int arg1)
 {
-    m_options->m_lossPerc = arg1;
-    mp_sd->setOptions(*m_options);
+    m_options.m_lossPerc = arg1;
+    mp_sd->setOptions(m_options);
 }
 
-void ParticipantDialog::on_typeinformationCheckBox_stateChanged(
-        int arg1)
+void ParticipantDialog::on_type_propagation_combo_currentTextChanged(
+        const QString& arg1)
 {
-    m_options->m_auto_fill_type_information = arg1;
-    mp_sd->setOptions(*m_options);
+    if (!initializing_form_)
+    {
+        m_options.type_propagation = *std::find_if(ShapesDemoOptions::TYPE_PROPAGATION_VALUES.begin(),
+                        ShapesDemoOptions::TYPE_PROPAGATION_VALUES.end(),
+                        [&arg1](const std::pair<std::string, std::string>& element)
+                        {
+                            return element.first == arg1.toStdString();
+                        });
+        mp_sd->setOptions(m_options);
+    }
 }
 
 void ParticipantDialog::on_lossCheckBox_stateChanged(
@@ -295,21 +309,21 @@ void ParticipantDialog::on_lossCheckBox_stateChanged(
                 this->ui->SHMcheckBox->setChecked(false);
                 this->ui->UDPcheckBox->setChecked(false);
                 this->ui->TCPcheckBox->setChecked(false);
-                m_options->m_intraprocess_transport = (false);
-                m_options->m_shm_transport = (false);
-                m_options->m_udp_transport = (false);
-                m_options->m_tcp_transport = (false);
+                m_options.m_intraprocess_transport = (false);
+                m_options.m_shm_transport = (false);
+                m_options.m_udp_transport = (false);
+                m_options.m_tcp_transport = (false);
 
                 this->ui->lossSpin->setEnabled(true);
                 this->ui->label_7->setEnabled(true);
-                m_options->m_lossSampleEnabled = true;
-                mp_sd->setOptions(*m_options);
+                m_options.m_lossSampleEnabled = true;
+                mp_sd->setOptions(m_options);
             }
             break;
             case QMessageBox::Cancel:
             {
                 this->ui->lossCheckBox->setCheckState(Qt::Unchecked);
-                m_options->m_lossSampleEnabled = false;
+                m_options.m_lossSampleEnabled = false;
             }
             break;
             default:
@@ -327,14 +341,14 @@ void ParticipantDialog::on_lossCheckBox_stateChanged(
         this->ui->SHMcheckBox->setChecked(true);
         this->ui->UDPcheckBox->setChecked(true);
         this->ui->TCPcheckBox->setChecked(false);
-        m_options->m_intraprocess_transport = (true);
-        m_options->m_shm_transport = (true);
-        m_options->m_udp_transport = (true);
-        m_options->m_tcp_transport = (false);
+        m_options.m_intraprocess_transport = (true);
+        m_options.m_shm_transport = (true);
+        m_options.m_udp_transport = (true);
+        m_options.m_tcp_transport = (false);
 
         this->ui->lossSpin->setEnabled(arg1);
         this->ui->label_7->setEnabled(arg1);
-        m_options->m_lossSampleEnabled = false;
-        mp_sd->setOptions(*m_options);
+        m_options.m_lossSampleEnabled = false;
+        mp_sd->setOptions(m_options);
     }
 }

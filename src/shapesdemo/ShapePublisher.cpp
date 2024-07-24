@@ -49,7 +49,7 @@ ShapePublisher::~ShapePublisher()
         if (mp_sd->getParticipant() && mp_publisher && mp_datawriter)
         {
             Duration_t wait_time(1, 0);
-            rtps::InstanceHandle_t handle;
+            eprosima::fastdds::rtps::InstanceHandle_t handle;
             if (mp_datawriter->get_type()->is_compute_key_provided)
             {
                 mp_datawriter->dispose((void*)&this->m_shape.m_shape, handle);

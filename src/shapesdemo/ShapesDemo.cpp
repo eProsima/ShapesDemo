@@ -17,6 +17,7 @@
 
 #include <eprosimashapesdemo/shapesdemo/ShapesDemo.h>
 
+#include <array>
 #include <ctime>
 #include <iostream>
 #include <sstream>
@@ -40,6 +41,12 @@
 
 using namespace eprosima::fastdds::dds;
 using namespace eprosima::fastdds::rtps;
+
+std::array<std::pair<std::string, std::string>, 3> ShapesDemoOptions::TYPE_PROPAGATION_VALUES {{
+    {"ENABLED", "enabled"},
+    {"DISABLED", "disabled"},
+    {"MINIMAL_BANDWIDTH", "minimal_bandwidth"},
+}};
 
 ShapesDemo::ShapesDemo(
         MainWindow* mw)
@@ -142,34 +149,35 @@ bool ShapesDemo::init()
             // Configure UDP Transport with Sample Loss
             auto udp_lossy_descriptor = std::make_shared<test_UDPv4TransportDescriptor>();
             // Lambda function as a filter to drop only user data samples
-            udp_lossy_descriptor->drop_data_messages_filter_ = [this](CDRMessage_t& msg) -> bool {
+            udp_lossy_descriptor->drop_data_messages_filter_ = [this](CDRMessage_t& msg) -> bool
+                    {
 
-                uint32_t old_pos = msg.pos;
+                        uint32_t old_pos = msg.pos;
 
-                // See RTPS DDS 9.4.5.3 Data Submessage
-                EntityId_t writer_id;
-                SequenceNumber_t sn;
+                        // See RTPS DDS 9.4.5.3 Data Submessage
+                        EntityId_t writer_id;
+                        SequenceNumber_t sn;
 
-                msg.pos += 2; // Flags
-                msg.pos += 2; // Octets to inline quos
-                msg.pos += 4; // ReaderEntityId
+                        msg.pos += 2; // Flags
+                        msg.pos += 2; // Octets to inline quos
+                        msg.pos += 4; // ReaderEntityId
 
-                memcpy(writer_id.value, &msg.buffer[msg.pos], writer_id.size);
+                        memcpy(writer_id.value, &msg.buffer[msg.pos], writer_id.size);
 
-                // Restore buffer pos
-                msg.pos = old_pos;
+                        // Restore buffer pos
+                        msg.pos = old_pos;
 
-                // Drop only user data messages
-                if ((writer_id.value[3] & 0xC0) == 0)
-                {
-                    uint32_t random_number = rand() % 100;
-                    return random_number < m_options.m_lossPerc;
-                }
-                else
-                {
-                    return false;
-                }
-            };
+                        // Drop only user data messages
+                        if ((writer_id.value[3] & 0xC0) == 0)
+                        {
+                            uint32_t random_number = rand() % 100;
+                            return random_number < m_options.m_lossPerc;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    };
             qos.transport().user_transports.push_back(udp_lossy_descriptor);
         }
 
@@ -243,6 +251,9 @@ bool ShapesDemo::init()
 #endif // #ifndef FASTDDS_STATISTICS
         }
 
+        // Set type propagation.
+        qos.properties().properties().emplace_back("fastdds.type_propagation", m_options.type_propagation.second);
+
         mp_participant = DomainParticipantFactory::get_instance()->create_participant(
             m_options.m_domainId,
             qos);
@@ -254,7 +265,6 @@ bool ShapesDemo::init()
 
         // If the creation has been correct, register type
         m_isInitialized = true;
-        m_type->auto_fill_type_information(m_options.m_auto_fill_type_information);
         m_type.register_type(mp_participant);
 #ifdef ENABLE_ROS_COMPONENTS
         m_ros_type.register_type(mp_participant);
@@ -408,14 +418,14 @@ void ShapesDemo::writeAll()
 }
 
 void ShapesDemo::setOptions(
-        ShapesDemoOptions& opt)
+        const ShapesDemoOptions& opt)
 {
     m_options = opt;
     m_mainWindow->updateInterval(m_options.m_updateIntervalMs);
 
 }
 
-ShapesDemoOptions ShapesDemo::getOptions()
+const ShapesDemoOptions& ShapesDemo::getOptions() const
 {
     return m_options;
 }

@@ -22,6 +22,8 @@
 #include <vector>
 #include <list>
 
+#include <fastdds/dds/core/Time_t.hpp>
+
 #include "eprosimashapesdemo/shapesdemo/ShapeInfo.h"
 
 /**

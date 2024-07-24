@@ -112,8 +112,8 @@ void SubscribeDialog::on_buttonBox_accepted()
     }
 
     //DATA REPRESENTATION
-    SSub->m_dr_qos.representation().m_value.push_back(eprosima::fastdds::dds::XCDR_DATA_REPRESENTATION) ;
-    SSub->m_dr_qos.representation().m_value.push_back(eprosima::fastdds::dds::XCDR2_DATA_REPRESENTATION) ;
+    SSub->m_dr_qos.representation().m_value.push_back(eprosima::fastdds::dds::XCDR_DATA_REPRESENTATION);
+    SSub->m_dr_qos.representation().m_value.push_back(eprosima::fastdds::dds::XCDR2_DATA_REPRESENTATION);
 
     //LIVELINESS
     if (this->ui->comboBox_liveliness->currentIndex() == 0)
