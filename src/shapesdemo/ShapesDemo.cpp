@@ -68,13 +68,6 @@ ShapesDemo::ShapesDemo(
     minY = 0;
     maxX = MAX_DRAW_AREA_X;
     maxY = MAX_DRAW_AREA_Y;
-
-#ifdef ENABLE_ROS_COMPONENTS
-    m_ros_type->auto_fill_type_object(false);
-    m_ros_type->auto_fill_type_information(true);
-
-    registerKeylessShapeTypeTypes();
-#endif // ifdef ENABLE_ROS_COMPONENTS
 }
 
 ShapesDemo::~ShapesDemo()
