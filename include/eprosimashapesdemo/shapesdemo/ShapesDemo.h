@@ -23,6 +23,7 @@
 #ifndef SHAPESDEMO_H_
 #define SHAPESDEMO_H_
 
+#include <array>
 #include <map>
 #include <string>
 
@@ -55,43 +56,27 @@ class ShapesDemoOptions
 {
 public:
 
-    bool m_udp_transport;
-    bool m_tcp_transport;
-    bool m_intraprocess_transport;
-    bool m_shm_transport;
-    bool m_statistics;
+    bool m_udp_transport {true};
+    bool m_tcp_transport {false};
+    bool m_intraprocess_transport {true};
+    bool m_shm_transport {true};
+    bool m_statistics {true};
     bool m_ros2_topic;
-    bool m_monitor_service;
-    QString m_tcp_type;
-    uint16_t m_listenPort;
-    uint16_t m_serverPort;
-    std::string m_serverIp;
-    uint32_t m_updateIntervalMs;
-    uint32_t m_movementSpeed;
-    uint32_t m_domainId;
-    uint32_t m_lossPerc;
-    bool m_lossSampleEnabled;
-    bool m_auto_fill_type_information;
+    bool m_monitor_service {true};
+    QString m_tcp_type {"TCP LAN Server"};
+    uint16_t m_listenPort {5100};
+    uint16_t m_serverPort {5100};
+    std::string m_serverIp {"127.0.0.1"};
+    uint32_t m_updateIntervalMs {INITIAL_INTERVAL_MS};
+    uint32_t m_movementSpeed {7};
+    uint32_t m_domainId {0};
+    uint32_t m_lossPerc {1};
+    bool m_lossSampleEnabled {false};
+    static std::array<std::pair<std::string, std::string>, 3> TYPE_PROPAGATION_VALUES;
+    std::pair<std::string, std::string> type_propagation {TYPE_PROPAGATION_VALUES.at(0)};
 
     ShapesDemoOptions()
     {
-        m_udp_transport = true;
-        m_tcp_transport = false;
-        m_intraprocess_transport = true;
-        m_shm_transport = true;
-        m_statistics = true;
-        m_listenPort = 5100;
-        m_serverPort = 5100;
-        m_serverIp = "127.0.0.1";
-        m_updateIntervalMs = INITIAL_INTERVAL_MS;
-        m_movementSpeed = 7;
-        m_domainId = 0;
-        m_tcp_type = QString("TCP LAN Server");
-        m_monitor_service = true;
-        m_lossPerc = 1;
-        m_lossSampleEnabled = false;
-        m_auto_fill_type_information = true;
-
 #ifdef ENABLE_ROS_COMPONENTS
         m_ros2_topic = detect_ros_2_installation();
 #else
@@ -206,12 +191,12 @@ public:
      * @param opt Reference to the ShapesDemoOptions object.
      */
     void setOptions(
-            ShapesDemoOptions& opt);
+            const ShapesDemoOptions& opt);
     /**
      * @brief Get Options.
      * @return
      */
-    ShapesDemoOptions getOptions();
+    const ShapesDemoOptions& getOptions() const;
     /**
      * @brief Tells if the demo is initialized.
      * @return

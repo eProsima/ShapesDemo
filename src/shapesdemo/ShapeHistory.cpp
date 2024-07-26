@@ -17,8 +17,8 @@
 
 #include <cmath>
 
+#include <fastdds/dds/core/Time_t.hpp>
 #include <fastdds/rtps/common/Guid.hpp>
-#include <fastdds/rtps/common/Time_t.hpp>
 
 #include <eprosimashapesdemo/shapesdemo/ShapeHistory.h>
 

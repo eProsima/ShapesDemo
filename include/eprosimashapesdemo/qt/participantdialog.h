@@ -17,6 +17,9 @@
 
 #include <QDialog>
 #include <QMessageBox>
+
+#include "eprosimashapesdemo/shapesdemo/ShapesDemo.h"
+
 namespace Ui {
 class ParticipantDialog;
 } // namespace Ui
@@ -76,21 +79,23 @@ private slots:
     void on_monitorServiceCheckBox_stateChanged(
             int arg1);
 
-    void on_typeinformationCheckBox_stateChanged(
-            int arg1);
+    void on_type_propagation_combo_currentTextChanged(
+            const QString& arg1);
 
     void on_lossCheckBox_stateChanged(
             int arg1);
 
     void on_lossSpin_valueChanged(
-        int arg1);
+            int arg1);
+
 private:
 
-    ShapesDemoOptions* m_options;
+    ShapesDemoOptions m_options;
     Ui::ParticipantDialog* ui;
     ShapesDemo* mp_sd;
     MainWindow* mp_mw;
     bool mb_started;
+    bool initializing_form_ {true};
 
     void setEnableState();
 };

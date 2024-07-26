@@ -20,6 +20,8 @@
 
 #include <QDialog>
 
+#include "eprosimashapesdemo/shapesdemo/ShapesDemo.h"
+
 namespace Ui {
 class OptionsDialog;
 } // namespace Ui
@@ -51,7 +53,7 @@ private slots:
 
 private:
 
-    ShapesDemoOptions* m_options;
+    ShapesDemoOptions m_options;
     Ui::OptionsDialog* ui;
     ShapesDemo* mp_sd;
     MainWindow* mp_mw;

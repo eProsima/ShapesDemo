@@ -19,7 +19,6 @@
 
 #include "eprosimashapesdemo/qt/optionsdialog.h"
 #include "ui_optionsdialog.h"
-#include "eprosimashapesdemo/shapesdemo/ShapesDemo.h"
 #include "eprosimashapesdemo/qt/mainwindow.h"
 
 OptionsDialog::OptionsDialog(
@@ -27,39 +26,38 @@ OptionsDialog::OptionsDialog(
         ShapesDemo* psd,
         QWidget* parent)
     : QDialog(parent)
+    , m_options(psd->getOptions())
     , ui(new Ui::OptionsDialog)
     , mp_sd(psd)
     , mp_mw(mw)
     , mb_started(true)
 {
     ui->setupUi(this);
-    m_options = new ShapesDemoOptions(this->mp_sd->getOptions());
 
     // Running Congiguration
-    this->ui->spin_updateInterval->setValue(m_options->m_updateIntervalMs);
-    this->ui->horizontalSlider_speed->setValue(m_options->m_movementSpeed);
+    this->ui->spin_updateInterval->setValue(m_options.m_updateIntervalMs);
+    this->ui->horizontalSlider_speed->setValue(m_options.m_movementSpeed);
 
     setAttribute ( Qt::WA_DeleteOnClose, true );
 }
 
 OptionsDialog::~OptionsDialog()
 {
-    delete m_options;
     delete ui;
 }
 
 void OptionsDialog::on_spin_updateInterval_valueChanged(
         int arg1)
 {
-    m_options->m_updateIntervalMs = arg1;
-    mp_sd->setOptions(*m_options);
+    m_options.m_updateIntervalMs = arg1;
+    mp_sd->setOptions(m_options);
 }
 
 void OptionsDialog::on_horizontalSlider_speed_valueChanged(
         int arg1)
 {
-    m_options->m_movementSpeed = arg1;
-    mp_sd->setOptions(*m_options);
+    m_options.m_movementSpeed = arg1;
+    mp_sd->setOptions(m_options);
 }
 
 void OptionsDialog::on_pushButton_stop_clicked()
