@@ -23,6 +23,8 @@ cmake_minimum_required(VERSION 3.20)
 
 file(READ version.pri SHAPESVERSION)
 
+# Remove EOF new line character
+string(REPLACE "\n" "" SHAPESVERSION ${SHAPESVERSION})
 
 set(IS_TOP_LEVEL TRUE)
 if(PROJECT_SOURCE_DIR)
@@ -44,7 +46,7 @@ project("ShapesDemo")
 set(PROJECT_NAME_STYLED "ShapesDemo")
 set(PROJECT_NAME_LARGE "Shapes Demo")
 string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
-set(${PROJECT_NAME}_DESCRIPTION_SUMMARY "Shapes Demo for eProsima Fast RTPS")
+set(${PROJECT_NAME}_DESCRIPTION_SUMMARY "Shapes Demo for eProsima Fast DDS")
 set(${PROJECT_NAME}_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} library provides publication/subscription communication using RTPS protocol.")
 
 message(STATUS "Configuring ${PROJECT_NAME_LAGE}")
