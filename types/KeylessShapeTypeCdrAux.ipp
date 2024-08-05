@@ -139,6 +139,14 @@ void serialize_key(
 
     static_cast<void>(scdr);
     static_cast<void>(data);
+                        scdr << data.color();
+
+                        scdr << data.x();
+
+                        scdr << data.y();
+
+                        scdr << data.shapesize();
+
 }
 
 
