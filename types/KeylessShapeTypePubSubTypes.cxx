@@ -35,7 +35,7 @@ namespace shapes_demo_typesupport {
     namespace idl {
         KeylessShapeTypePubSubType::KeylessShapeTypePubSubType()
         {
-            set_name("shapes_demo_typesupport::idl::KeylessShapeType");
+            set_name("shapes_demo_typesupport::idl::dds_::KeylessShapeType_");
             uint32_t type_size = shapes_demo_typesupport_idl_KeylessShapeType_max_cdr_typesize;
             type_size += static_cast<uint32_t>(eprosima::fastcdr::Cdr::alignment(type_size, 4)); /* possible submessage alignment */
             max_serialized_type_size = type_size + 4; /*encapsulation*/
@@ -186,7 +186,8 @@ namespace shapes_demo_typesupport {
                     shapes_demo_typesupport_idl_KeylessShapeType_max_key_cdr_typesize);
 
             // Object that serializes the data.
-            eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::BIG_ENDIANNESS, eprosima::fastcdr::CdrVersion::XCDRv1);
+            eprosima::fastcdr::Cdr ser(fastbuffer, eprosima::fastcdr::Cdr::BIG_ENDIANNESS, eprosima::fastcdr::CdrVersion::XCDRv2);
+            ser.set_encoding_flag(eprosima::fastcdr::EncodingAlgorithmFlag::PLAIN_CDR2);
             eprosima::fastcdr::serialize_key(ser, *p_type);
             if (force_md5 || shapes_demo_typesupport_idl_KeylessShapeType_max_key_cdr_typesize > 16)
             {
