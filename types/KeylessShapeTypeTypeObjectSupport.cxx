@@ -51,7 +51,7 @@ void register_KeylessShapeType_type_identifier(
         "shapes_demo_typesupport::idl::KeylessShapeType", type_ids_KeylessShapeType);
     if (eprosima::fastdds::dds::RETCODE_OK != return_code_KeylessShapeType)
     {
-        StructTypeFlag struct_flags_KeylessShapeType = TypeObjectUtils::build_struct_type_flag(eprosima::fastdds::dds::xtypes::ExtensibilityKind::APPENDABLE,
+        StructTypeFlag struct_flags_KeylessShapeType = TypeObjectUtils::build_struct_type_flag(eprosima::fastdds::dds::xtypes::ExtensibilityKind::FINAL,
                 false, false);
         QualifiedTypeName type_name_KeylessShapeType = "shapes_demo_typesupport::idl::KeylessShapeType";
         eprosima::fastcdr::optional<AppliedBuiltinTypeAnnotations> type_ann_builtin_KeylessShapeType;

@@ -24,7 +24,7 @@
 
 #include "KeylessShapeType.hpp"
 
-constexpr uint32_t shapes_demo_typesupport_idl_KeylessShapeType_max_cdr_typesize {276UL};
+constexpr uint32_t shapes_demo_typesupport_idl_KeylessShapeType_max_cdr_typesize {272UL};
 constexpr uint32_t shapes_demo_typesupport_idl_KeylessShapeType_max_key_cdr_typesize {0UL};
 
 
