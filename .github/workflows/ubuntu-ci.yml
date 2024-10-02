@@ -54,11 +54,11 @@ jobs:
       # It would be desirable to have a matrix of ubuntu OS for this job, but due to the issue opened in this ticket:
       # https://github.com/orgs/community/discussions/128118 , it has been set as a single OS job.
       os-version: ${{ inputs.os-version || 'ubuntu-22.04' }}
-      label: 'ubuntu-ci-master'
+      label: 'ubuntu-ci-3.0.x'
       colcon-args: ${{ inputs.colcon-args }}
       cmake-args: ${{ inputs.cmake-args }}
       ctest-args: ${{ inputs.ctest-args }}
       shapes-demo-branch: ${{ inputs.shapes-demo-branch || github.ref }}
-      fastdds-branch: ${{ inputs.fastdds-branch || 'master' }}
+      fastdds-branch: ${{ inputs.fastdds-branch || '3.0.x' }}
       run-build: ${{ !(github.event_name == 'pull_request') || !contains(github.event.pull_request.labels.*.name, 'skip-ci') }}
       use-ccache: ${{ inputs.use-ccache || false }}

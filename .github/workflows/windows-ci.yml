@@ -55,10 +55,10 @@ jobs:
       # https://github.com/orgs/community/discussions/128118 , it has been set as a single OS job.
       os-version: ${{ inputs.os-version || 'windows-2019' }}
       vs-toolset: ${{ inputs.vs-toolset || 'v142' }}
-      label: 'windows-v142-ci-master'
+      label: 'windows-v142-ci-3.0.x'
       colcon-args: ${{ inputs.colcon-args }}
       cmake-args: ${{ inputs.cmake-args }}
       ctest-args: ${{ inputs.ctest-args }}
       shapes-demo-branch: ${{ inputs.shapes-demo-branch || github.ref }}
-      fastdds-branch: ${{ inputs.fastdds-branch || 'master' }}
+      fastdds-branch: ${{ inputs.fastdds-branch || '3.0.x' }}
       run-build: ${{ !(github.event_name == 'pull_request') || !contains(github.event.pull_request.labels.*.name, 'skip-ci') }}
