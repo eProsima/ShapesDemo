@@ -8,6 +8,11 @@ A single instance of the eProsima Shapes Demo can publish on or subscribe to sev
 It can be used to demonstrate the capabilities of eProsima *Fast DDS* or as a proof of interoperability with other
 DDS/RTPS-compliant implementations.
 
+## Commercial support
+
+Looking for commercial support? Write us to info@eprosima.com
+
+Find more about us at [eProsima’s webpage](https://eprosima.com/).
 
 ## Installation from sources
 
