@@ -18,7 +18,7 @@ Find more about us at [eProsima’s webpage](https://eprosima.com/).
 
 For simplicity, the eProsima Shapes Demo installation manual follows the Colcon installation, since eProsima *Fast DDS*
 and *Fast CDR* dependencies are downloaded and installed at the same time that eProsima Shapes Demo is built.
-However, the user must assure that **Qt5** is installed, since it is a requirement for eProsima Shapes Demo.
+However, the user must assure that **Qt5** (minimum version required: 5.9) is installed, since it is a requirement for eProsima Shapes Demo. Link to official website [here](https://download.qt.io/new_archive/qt/).
 To install eProsima Shapes Demo using Colcon, please follow the steps below:
 
 1.  Install the eProsima *Fast DDS* dependencies and verify that the system meets the installation  requirements.
@@ -38,15 +38,24 @@ To install eProsima Shapes Demo using Colcon, please follow the steps below:
 
     **Windows**: To build and run the application on Windows, add the path to the ``vcs`` executable to the ``PATH``
     from the *Edit the system environment variables* control panel. Moreover, set the *CMAKE_PREFIX_PATH* environmental
-    variable to the Qt folder for the Visual Studio version you are compiling against (C:\Qt\5.7\msvc2015_64 for
-    example). You will also need to add the /bin/ folder to the path (C:\Qt\5.7\msvc2015_64\bin for example).
+    variable to the Qt folder for the Visual Studio version you are compiling against (C:\Qt\5.9\msvc2015_64 for
+    example). You will also need to add the /bin/ folder to the path (C:\Qt\5.9\msvc2015_64\bin for example).
 
 3.  Create a `ShapesDemo` directory and download the repos file that will be used to install
     eProsima Shapes Demo and its dependencies:
 
+### Linux
+
         $ mkdir -p ShapesDemo/src && cd ShapesDemo
         $ wget https://raw.githubusercontent.com/eProsima/ShapesDemo/master/shapes-demo.repos
         $ vcs import src < shapes-demo.repos
+
+### Windows
+	
+        $ mkdir -p ShapesDemo/src 
+        $ cd ShapesDemo
+        $ wget -O shapes-demo.repos https://raw.githubusercontent.com/eProsima/ShapesDemo/master/shapes-demo.repos		
+        $ vcs import src --input .\shapes-demo.repos
 
 4.  Build the packages:
 
@@ -70,7 +79,7 @@ To install eProsima Shapes Demo using Colcon, please follow the steps below:
 
 6.  Run eProsima Shapes Demo:
 
-        $ ShapesDemo
+        $ build\ShapesDemo\Release\ShapesDemo.exe
 
 
 ## Quick Demo
