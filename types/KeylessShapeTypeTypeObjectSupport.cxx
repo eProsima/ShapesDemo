@@ -48,12 +48,12 @@ void register_KeylessShapeType_type_identifier(
     ReturnCode_t return_code_KeylessShapeType {eprosima::fastdds::dds::RETCODE_OK};
     return_code_KeylessShapeType =
         eprosima::fastdds::dds::DomainParticipantFactory::get_instance()->type_object_registry().get_type_identifiers(
-        "shapes_demo_typesupport::idl::KeylessShapeType", type_ids_KeylessShapeType);
+        "shapes_demo_typesupport::idl::dds_::KeylessShapeType_", type_ids_KeylessShapeType);
     if (eprosima::fastdds::dds::RETCODE_OK != return_code_KeylessShapeType)
     {
         StructTypeFlag struct_flags_KeylessShapeType = TypeObjectUtils::build_struct_type_flag(eprosima::fastdds::dds::xtypes::ExtensibilityKind::FINAL,
                 false, false);
-        QualifiedTypeName type_name_KeylessShapeType = "shapes_demo_typesupport::idl::KeylessShapeType";
+        QualifiedTypeName type_name_KeylessShapeType = "shapes_demo_typesupport::idl::dds_::KeylessShapeType_";
         eprosima::fastcdr::optional<AppliedBuiltinTypeAnnotations> type_ann_builtin_KeylessShapeType;
         eprosima::fastcdr::optional<AppliedAnnotationSeq> ann_custom_KeylessShapeType;
         CompleteTypeDetail detail_KeylessShapeType = TypeObjectUtils::build_complete_type_detail(type_ann_builtin_KeylessShapeType, ann_custom_KeylessShapeType, type_name_KeylessShapeType.to_string());
