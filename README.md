@@ -1,4 +1,36 @@
-# eProsima Fast DDS Shapes Demo
+[![DDS Router](images/github_banner_shapesdemo.png)](https://www.eprosima.com/middleware/tools/shapes-demo)
+
+<br>
+
+<div class="menu" align="center">
+    <strong>
+        <a href="https://eprosima.com/index.php/downloads-all">Download</a>
+        <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+        <a href="https://eprosima-shapes-demo.readthedocs.io/en/latest/">Docs</a>
+        <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+        <a href="https://eprosima.com/index.php/company-all/news">News</a>
+        <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+        <a href="https://x.com/EProsima">X</a>
+        <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+        <a href="mailto:info@eprosima.com">Contact Us</a>
+    </strong>
+</div>
+
+<br><br>
+
+<div class="badges" align="center">
+    <a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img alt="License" src="https://img.shields.io/github/license/eProsima/ShapesDemo.svg"/></a>
+    <a href="https://github.com/eProsima/ShapesDemo/releases"><img alt="Releases" src="https://img.shields.io/github/v/release/eProsima/ShapesDemo?sort=semver"/></a>
+    <a href="https://github.com/eProsima/ShapesDemo/issues"><img alt="Issues" src="https://img.shields.io/github/issues/eProsima/ShapesDemo.svg"/></a>
+    <a href="https://github.com/eProsima/ShapesDemo/network/members"><img alt="Forks" src="https://img.shields.io/github/forks/eProsima/ShapesDemo.svg"/></a>
+    <a href="https://github.com/eProsima/ShapesDemo/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/eProsima/ShapesDemo.svg"/></a>
+    <br>
+    <a href="https://eprosima-shapes-demo.readthedocs.io"><img alt="Documentation badge" src="https://img.shields.io/readthedocs/eprosima-shapes-demo.svg"/></a>
+    <a href="https://github.com/eProsima/ShapesDemo/actions/workflows/nightly-ubuntu-ci.yml"><img alt="Ubuntu CI" src="https://img.shields.io/github/actions/workflow/status/eProsima/ShapesDemo/nightly-ubuntu-ci.yml?label=Ubuntu%20CI"></a>
+    <a href="https://github.com/eProsima/ShapesDemo/actions/workflows/nightly-windows-ci.yml"><img alt="Windows CI" src="https://img.shields.io/github/actions/workflow/status/eProsima/ShapesDemo/nightly-windows-ci.yml?label=Windows%20CI"></a>
+</div>
+
+<br><br>
 
 eProsima Shapes Demo is an application in which Publishers and Subscribers are shapes of different colors and sizes
 moving on a board.
@@ -7,6 +39,8 @@ A single instance of the eProsima Shapes Demo can publish on or subscribe to sev
 
 It can be used to demonstrate the capabilities of eProsima *Fast DDS* or as a proof of interoperability with other
 DDS/RTPS-compliant implementations.
+
+![shapes_demo](images/shapes_demo.gif)
 
 ## Commercial support
 
