@@ -40,7 +40,10 @@ A single instance of the eProsima Shapes Demo can publish on or subscribe to sev
 It can be used to demonstrate the capabilities of eProsima *Fast DDS* or as a proof of interoperability with other
 DDS/RTPS-compliant implementations.
 
-![shapes_demo](images/shapes_demo.gif)
+<p align="center">
+  <img height="400" src="./images/shapes_demo.gif">
+</p>
+
 
 ## Commercial support
 
