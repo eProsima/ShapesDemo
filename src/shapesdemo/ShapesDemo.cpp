@@ -242,8 +242,7 @@ bool ShapesDemo::init()
                 "PDP_PACKETS_TOPIC;" \
                 "EDP_PACKETS_TOPIC;" \
                 "DISCOVERY_TOPIC;" \
-                "PHYSICAL_DATA_TOPIC;" \
-                "MONITOR_SERVICE_TOPIC");
+                "PHYSICAL_DATA_TOPIC;");
 
             // In case the Statistics are not compiled, show an error
 #ifndef FASTDDS_STATISTICS
