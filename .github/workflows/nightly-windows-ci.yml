@@ -21,36 +21,6 @@ jobs:
       fastdds-branch: 'master'
       run-build: true
 
-  nightly-windows-ci-3_1_x:
-    strategy:
-      fail-fast: false
-      matrix:
-        vs-toolset:
-          - 'v142'
-    uses: eProsima/ShapesDemo/.github/workflows/reusable-windows-ci.yml@3.1.x
-    with:
-      os-version: 'windows-2019'
-      vs-toolset: ${{ matrix.vs-toolset }}
-      label: 'nightly-windows-${{ matrix.vs-toolset }}-ci-3.1.x'
-      shapes-demo-branch: '3.1.x'
-      fastdds-branch: '3.1.x'
-      run-build: true
-
-  nightly-windows-ci-3_0_x:
-    strategy:
-      fail-fast: false
-      matrix:
-        vs-toolset:
-          - 'v142'
-    uses: eProsima/ShapesDemo/.github/workflows/reusable-windows-ci.yml@3.0.x
-    with:
-      os-version: 'windows-2019'
-      vs-toolset: ${{ matrix.vs-toolset }}
-      label: 'nightly-windows-${{ matrix.vs-toolset }}-ci-3.0.x'
-      shapes-demo-branch: '3.0.x'
-      fastdds-branch: '3.0.x'
-      run-build: true
-
   nightly-windows-ci-2_14_x:
     strategy:
       fail-fast: false
@@ -67,18 +37,3 @@ jobs:
       fastdds-branch: '2.14.x'
       run-build: true
 
-  nightly-windows-ci-2_10_x:
-    strategy:
-      fail-fast: false
-      matrix:
-        vs-toolset:
-          - 'v141'
-          - 'v142'
-    uses: eProsima/ShapesDemo/.github/workflows/reusable-windows-ci.yml@2.10.x
-    with:
-      os-version: 'windows-2019'
-      vs-toolset: ${{ matrix.vs-toolset }}
-      label: 'nightly-windows-${{ matrix.vs-toolset }}-ci-2.10.x'
-      shapes-demo-branch: '2.10.x'
-      fastdds-branch: '2.10.x'
-      run-build: true
