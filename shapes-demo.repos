@@ -10,8 +10,8 @@ repositories:
     fastdds:
         type: git
         url: https://github.com/eProsima/Fast-DDS.git
-        version: 3.1.x
+        version: v3.1.3
     shapes-demo:
         type: git
         url: https://github.com/eProsima/ShapesDemo.git
-        version: 3.1.x
+        version: v3.1.3
