@@ -21,6 +21,21 @@ jobs:
       fastdds-branch: 'master'
       run-build: true
 
+  nightly-windows-ci-3_2_x:
+    strategy:
+      fail-fast: false
+      matrix:
+        vs-toolset:
+          - 'v142'
+    uses: eProsima/ShapesDemo/.github/workflows/reusable-windows-ci.yml@3.2.x
+    with:
+      os-version: 'windows-2019'
+      vs-toolset: ${{ matrix.vs-toolset }}
+      label: 'nightly-windows-${{ matrix.vs-toolset }}-ci-3.2.x'
+      shapes-demo-branch: '3.2.x'
+      fastdds-branch: '3.2.x'
+      run-build: true
+
   nightly-windows-ci-2_14_x:
     strategy:
       fail-fast: false
