@@ -47,28 +47,16 @@ jobs:
       fail-fast: false
       matrix:
         vs-toolset:
-          - 'v141'
-          - 'v142'
-    if: ${{ !(github.event_name == 'pull_request') || !contains(github.event.pull_request.labels.*.name, 'conflicts') }}
-    strategy:
-      fail-fast: false
-      matrix:
-        vs-toolset:
           - 'v142'
           - 'v143'
+    if: ${{ !(github.event_name == 'pull_request') || !contains(github.event.pull_request.labels.*.name, 'conflicts') }}
     uses: ./.github/workflows/reusable-windows-ci.yml
     with:
       # It would be desirable to have a matrix of ubuntu OS for this job, but due to the issue opened in this ticket:
       # https://github.com/orgs/community/discussions/128118 , it has been set as a single OS job.
-<<<<<<< HEAD
-      os-version: ${{ inputs.os-version || 'windows-2019' }}
-      vs-toolset: ${{ inputs.vs-toolset || matrix.vs-toolset }}
-      label: 'windows-${{ matrix.vs-toolset }}-ci-2.14.x'
-=======
       os-version: ${{ inputs.os-version || 'windows-2022' }}
       vs-toolset: ${{ matrix.vs-toolset }}
-      label: 'windows-v142-ci-master'
->>>>>>> 653bb92 (Remove deprecated windows-2019 runner (#211))
+      label: 'windows-${{ matrix.vs-toolset }}-ci-2.14.x'
       colcon-args: ${{ inputs.colcon-args }}
       cmake-args: ${{ inputs.cmake-args }}
       ctest-args: ${{ inputs.ctest-args }}
