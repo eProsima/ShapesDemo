@@ -56,7 +56,7 @@ jobs:
       # https://github.com/orgs/community/discussions/128118 , it has been set as a single OS job.
       os-version: ${{ inputs.os-version || 'windows-2022' }}
       vs-toolset: ${{ matrix.vs-toolset }}
-      label: 'windows-v142-ci-3.2.x'
+      label: 'windows-${{ matrix.vs-toolset }}-ci-3.2.x'
       colcon-args: ${{ inputs.colcon-args }}
       cmake-args: ${{ inputs.cmake-args }}
       ctest-args: ${{ inputs.ctest-args }}
