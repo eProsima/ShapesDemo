@@ -43,13 +43,19 @@ else()
 endif()
 
 project("ShapesDemo")
+
+# Qt6 requires C++17 - set this early but will be enforced on target
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 set(PROJECT_NAME_STYLED "ShapesDemo")
 set(PROJECT_NAME_LARGE "Shapes Demo")
 string(TOUPPER "${PROJECT_NAME}" PROJECT_NAME_UPPER)
 set(${PROJECT_NAME}_DESCRIPTION_SUMMARY "Shapes Demo for eProsima Fast DDS")
 set(${PROJECT_NAME}_DESCRIPTION "eProsima ${PROJECT_NAME_LARGE} library provides publication/subscription communication using RTPS protocol.")
 
-message(STATUS "Configuring ${PROJECT_NAME_LAGE}")
+message(STATUS "Configuring ${PROJECT_NAME_LARGE}")
 
 ###############################################################################
 # Warning level
@@ -130,6 +136,11 @@ set(FASTDDS_MIN_VERSION "3.0.0")
 find_package(fastcdr REQUIRED)
 find_package(fastdds ${FASTDDS_MIN_VERSION} REQUIRED)
 
+# Force C++17 after finding Fast DDS to ensure Qt6 compatibility
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 # If ROS environment is not set, disable ROS features. If there's no TypeSupport for the ROS 2 type, disable them as well.
 if (DEFINED ENV{ROS_VERSION})
     # Required by ament_cmake_core
@@ -150,9 +161,11 @@ endif()
 ###############################################################################
 # Compile
 ###############################################################################
-find_package(Qt5Core 5.9 REQUIRED)
-find_package(Qt5Gui REQUIRED)
-find_package(Qt5Widgets REQUIRED)
+find_package(Qt6 6.10.1 REQUIRED COMPONENTS Core Gui Widgets)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
 set( MOC_HEADERS
     include/eprosimashapesdemo/qt/DrawArea.h
@@ -176,11 +189,6 @@ set( RESOURCES
     images/eprosimalogo.qrc
     )
 
-
-QT5_WRAP_UI( UI_HEADERS ${UIS} )
-QT5_WRAP_CPP( MOC_SRCS ${MOC_HEADERS} )
-QT5_ADD_RESOURCES( RSCS ${RESOURCES} )
-
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS forms)
 
@@ -202,6 +210,9 @@ set( SHAPESDEMO_SOURCES
     src/shapesdemo/ShapeSubscriber.cpp
     types/ShapePubSubTypes.cxx
     types/ShapeTypeObjectSupport.cxx
+    ${MOC_HEADERS}
+    ${UIS}
+    ${RESOURCES}
     )
 
 if(BUILD_ROS_COMPONENTS)
@@ -212,10 +223,22 @@ if(BUILD_ROS_COMPONENTS)
 endif()
 
 if(WIN32)
-    add_executable(${PROJECT_NAME} WIN32 ${SHAPESDEMO_SOURCES} ${MOC_SRCS} ${UI_HEADERS} ${RSCS} )
+    add_executable(${PROJECT_NAME} WIN32 ${SHAPESDEMO_SOURCES})
 else()
-    add_executable(${PROJECT_NAME} ${SHAPESDEMO_SOURCES} ${MOC_SRCS} ${UI_HEADERS} ${RSCS} )
+    add_executable(${PROJECT_NAME} ${SHAPESDEMO_SOURCES})
 endif()
+
+# Explicitly enforce C++17 on the target to override any inherited C++14 from Fast DDS
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+)
+
+# Force C++17 compile flag to appear after any inherited C++14 flags
+target_compile_options(${PROJECT_NAME} PRIVATE
+    $<$<COMPILE_LANGUAGE:CXX>:-std=c++17>
+)
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE -D${SHAPESVERSION})
 target_include_directories(${PROJECT_NAME} PRIVATE include types ${IU_HEADERS})
@@ -227,9 +250,9 @@ endif()
 target_link_libraries(${PROJECT_NAME}
     fastcdr
     fastdds
-    Qt5::Core
-    Qt5::Widgets
-    Qt5::Gui)
+    Qt6::Core
+    Qt6::Widgets
+    Qt6::Gui)
 
 ###############################################################################
 # Install

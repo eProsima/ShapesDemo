@@ -33,7 +33,7 @@ ShapePublisher::ShapePublisher(
     , mp_publisher(nullptr)
     , mp_topic(topic)
     , listener_(this)
-    , m_mutex(QMutex::Recursive)
+    , m_mutex()
     , isInitialized(false)
     , hasWritten(false)
     , m_mainWindow(win)

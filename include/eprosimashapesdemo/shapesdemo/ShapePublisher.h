@@ -117,7 +117,7 @@ public:
     }
 
     Shape m_shape;
-    QMutex m_mutex;
+    QRecursiveMutex m_mutex;
     bool isInitialized;
     bool hasWritten;
     MainWindow* m_mainWindow;

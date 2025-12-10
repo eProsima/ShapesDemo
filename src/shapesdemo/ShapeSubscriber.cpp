@@ -38,7 +38,7 @@ ShapeSubscriber::ShapeSubscriber(
     , mp_topic(topic)
     , listener_(this)
     , hasReceived(false)
-    , m_mutex(QMutex::Recursive)
+    , m_mutex()
     , mp_contentFilter(nullptr)
     , m_mainWindow(win)
 {

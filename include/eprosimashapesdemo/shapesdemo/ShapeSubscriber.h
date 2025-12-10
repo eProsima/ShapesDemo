@@ -120,7 +120,7 @@ public:
     }
 
     bool hasReceived;
-    QMutex m_mutex;
+    QRecursiveMutex m_mutex;
     ShapeHistory m_shapeHistory;
     TYPESHAPE m_shapeType;
     ContentFilterSelector* mp_contentFilter;

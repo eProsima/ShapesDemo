@@ -103,7 +103,8 @@ jobs:
       - name: Install Qt
         uses: eProsima/eProsima-CI/external/install_qt@v0
         with:
-          version: '5.15.2'
+          version: '6.10.1'
+          arch: 'linux_gcc_64'
           dir: '${{ github.workspace }}/qt_installation/'
           modules: 'qtcharts'
           setup-python: 'false'
