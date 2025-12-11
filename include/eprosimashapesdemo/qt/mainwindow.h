@@ -54,6 +54,9 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+signals:
+    void messageReady(QString str, bool addtostatus);
+
 public:
 
     explicit MainWindow(
@@ -135,6 +138,7 @@ private slots:
     void on_actionInteroperability_Troubleshooting_triggered();
 
 public slots:
+    void addMessageToOutputThreadSafe(const QString& str, bool addtostatus = false);
 
     void on_actionStart_triggered();
 

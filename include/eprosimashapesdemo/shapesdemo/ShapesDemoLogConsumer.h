@@ -59,8 +59,8 @@ public:
         print_message(stream_, entry, false);
         print_context(stream_, entry, false);
         
-        // Add message to Output tab
-        main_window_->addMessageToOutput(QString(stream_.str().c_str()));
+        // Add thread-safe message to Output tab
+        main_window_->addMessageToOutputThreadSafe(QString:: fromStdString(stream_.str()), false);
         
         // Clear stringstream
         stream_.str("");

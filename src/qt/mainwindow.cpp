@@ -85,7 +85,9 @@ MainWindow::MainWindow(
     //    ui->tableEndpoint->setColumnWidth(8,75); //Durability
     //    ui->tableEndpoint->setColumnWidth(9,75); //Livleiness
 
-
+    // Connect signal to slot with queued connection for thread safety
+    connect(this, &MainWindow::messageReady, this, &MainWindow::addMessageToOutput, Qt::QueuedConnection);
+    
     ui->widget_contentFilter->setVisible(false);
 
     // The Participant is created when Start is pressed or when an Endpoint is created
@@ -122,6 +124,12 @@ void MainWindow::addMessageToOutput(
     QDateTime current = QDateTime::currentDateTime();
     QString time = current.toString("hh:mm:ss.zzz");
     this->ui->text_Output->append(QString("[%1]: %2").arg(time).arg(str));
+}
+
+void MainWindow::addMessageToOutputThreadSafe(const QString& str, bool addtostatus)
+{
+    // Emit signal - will be queued if called from another thread
+    emit messageReady(str, addtostatus);
 }
 
 void MainWindow::on_bt_subscribe_clicked()
