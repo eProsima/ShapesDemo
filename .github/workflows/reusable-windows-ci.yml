@@ -122,7 +122,7 @@ jobs:
       - name: Install Qt
         uses: eProsima/eProsima-CI/external/install_qt@v0
         with:
-          version: '6.10.1'
+          version: '6.8.3'
           dir: '/opt/qt_installation/'
           arch: 'win64_msvc2022_64'
           modules: 'qtcharts'

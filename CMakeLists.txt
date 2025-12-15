@@ -151,7 +151,7 @@ endif()
 ###############################################################################
 # Compile
 ###############################################################################
-find_package(Qt6 6.10.1 REQUIRED COMPONENTS Core Gui Widgets)
+find_package(Qt6 6.8.3 REQUIRED COMPONENTS Core Gui Widgets)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
