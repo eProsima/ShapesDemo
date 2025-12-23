@@ -33,7 +33,7 @@ ShapePublisher::ShapePublisher(
     , mp_publisher(nullptr)
     , mp_topic(topic)
     , listener_(this)
-    , m_mutex(QMutex::Recursive)
+    , m_mutex()
     , isInitialized(false)
     , hasWritten(false)
     , m_mainWindow(win)
@@ -123,7 +123,7 @@ void ShapePublisher::PubListener::on_offered_deadline_missed(
     {
         std::stringstream str;
         str << "DataWriter " << writer->guid() << " detects deadline missed";
-        parent_->m_mainWindow->addMessageToOutput(QString(str.str().c_str()));
+        parent_->m_mainWindow->addMessageToOutputThreadSafe(QString::fromStdString(str.str()));
     }
 }
 
@@ -135,7 +135,7 @@ void ShapePublisher::PubListener::on_liveliness_lost(
     {
         std::stringstream str;
         str << "DataWriter " << writer->guid() << " detects liveliness lost";
-        parent_->m_mainWindow->addMessageToOutput(QString(str.str().c_str()));
+        parent_->m_mainWindow->addMessageToOutputThreadSafe(QString::fromStdString(str.str()));
     }
 }
 
@@ -148,6 +148,6 @@ void ShapePublisher::PubListener::on_offered_incompatible_qos(
         std::stringstream str;
         str << "DataWriter " << writer->guid() << " detects incompatible QoS " << qos_policy_id_to_string(
             status.last_policy_id);
-        parent_->m_mainWindow->addMessageToOutput(QString(str.str().c_str()));
+        parent_->m_mainWindow->addMessageToOutputThreadSafe(QString::fromStdString(str.str()));
     }
 }

@@ -57,7 +57,7 @@ ShapesDemo::ShapesDemo(
     , maxX(0)
     , maxY(0)
     , m_mainWindow(mw)
-    , m_mutex(QMutex::Recursive)
+    , m_mutex()
     , m_type(new ShapeTypePubSubType())
 #ifdef ENABLE_ROS_COMPONENTS
     , m_ros_type(new shapes_demo_typesupport::idl::KeylessShapeTypePubSubType())

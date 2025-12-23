@@ -38,7 +38,7 @@ ShapeSubscriber::ShapeSubscriber(
     , mp_topic(topic)
     , listener_(this)
     , hasReceived(false)
-    , m_mutex(QMutex::Recursive)
+    , m_mutex()
     , mp_contentFilter(nullptr)
     , m_mainWindow(win)
 {
@@ -170,7 +170,7 @@ void ShapeSubscriber::SubListener::on_requested_deadline_missed(
     {
         std::stringstream str;
         str << "DataReader " << reader->guid() << " detects deadline missed";
-        parent_->m_mainWindow->addMessageToOutput(QString(str.str().c_str()));
+        parent_->m_mainWindow->addMessageToOutputThreadSafe(QString::fromStdString(str.str()));
     }
 }
 
@@ -182,12 +182,12 @@ void ShapeSubscriber::SubListener::on_liveliness_changed(
     if (0 < status.alive_count_change)
     {
         str << "DataReader " << reader->guid() << " detects liveliness recovered";
-        parent_->m_mainWindow->addMessageToOutput(QString(str.str().c_str()));
+        parent_->m_mainWindow->addMessageToOutputThreadSafe(QString::fromStdString(str.str()));
     }
     if (0 < status.not_alive_count_change)
     {
         str << "DataReader " << reader->guid() << " detects liveliness lost";
-        parent_->m_mainWindow->addMessageToOutput(QString(str.str().c_str()));
+        parent_->m_mainWindow->addMessageToOutputThreadSafe(QString::fromStdString(str.str()));
     }
 }
 
@@ -200,6 +200,6 @@ void ShapeSubscriber::SubListener::on_requested_incompatible_qos(
         std::stringstream str;
         str << "DataReader " << reader->guid() << " detects incompatible QoS " << qos_policy_id_to_string(
             status.last_policy_id);
-        parent_->m_mainWindow->addMessageToOutput(QString(str.str().c_str()));
+        parent_->m_mainWindow->addMessageToOutputThreadSafe(QString::fromStdString(str. str()));
     }
 }

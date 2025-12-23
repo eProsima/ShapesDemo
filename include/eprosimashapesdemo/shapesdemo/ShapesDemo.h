@@ -230,7 +230,7 @@ private:
 
     ShapesDemoOptions m_options;
     MainWindow* m_mainWindow;
-    QMutex m_mutex;
+    QRecursiveMutex m_mutex;
     TypeSupport m_type;
 #ifdef ENABLE_ROS_COMPONENTS
     TypeSupport m_ros_type;
