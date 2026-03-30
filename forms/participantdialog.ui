@@ -215,6 +215,9 @@
      <property name="suffix">
       <string/>
      </property>
+     <property name="maximum">
+      <number>232</number>
+     </property>
      <property name="value">
       <number>80</number>
      </property>
