@@ -69,6 +69,7 @@ public:
     std::string m_serverIp {"127.0.0.1"};
     uint32_t m_updateIntervalMs {INITIAL_INTERVAL_MS};
     uint32_t m_movementSpeed {7};
+    bool m_invertYAxis {false};
     uint32_t m_domainId {0};
     uint32_t m_lossPerc {1};
     bool m_lossSampleEnabled {false};

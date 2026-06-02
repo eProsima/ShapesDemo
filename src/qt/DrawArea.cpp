@@ -184,26 +184,30 @@ void DrawArea::paintShape(
     m_brush.setStyle(Qt::SolidPattern);
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
+    // Apply the Y axis inversion option, mirroring the shape around the draw area center.
+    int32_t shape_y = mp_SD->m_options.m_invertYAxis
+            ? MAX_DRAW_AREA_Y - shape.m_shape.y()
+            : shape.m_shape.y();
     switch (shape.m_type)
     {
         case SQUARE:
         {
             QRect rect(shape.m_shape.x() - shape.m_shape.shapesize() / 2,
-                    shape.m_shape.y() - shape.m_shape.shapesize() / 2,
+                    shape_y - shape.m_shape.shapesize() / 2,
                     shape.m_shape.shapesize(),
                     shape.m_shape.shapesize());
             painter->drawRect(rect);
             if (shape.dispose)
             {
                 QLine line(shape.m_shape.x() - shape.m_shape.shapesize() / 2,
-                        shape.m_shape.y() - shape.m_shape.shapesize() / 2,
+                        shape_y - shape.m_shape.shapesize() / 2,
                         shape.m_shape.x() + shape.m_shape.shapesize() / 2,
-                        shape.m_shape.y() + shape.m_shape.shapesize() / 2);
+                        shape_y + shape.m_shape.shapesize() / 2);
                 painter->drawLine(line);
                 QLine line2(shape.m_shape.x() + shape.m_shape.shapesize() / 2,
-                        shape.m_shape.y() - shape.m_shape.shapesize() / 2,
+                        shape_y - shape.m_shape.shapesize() / 2,
                         shape.m_shape.x() - shape.m_shape.shapesize() / 2,
-                        shape.m_shape.y() + shape.m_shape.shapesize() / 2);
+                        shape_y + shape.m_shape.shapesize() / 2);
                 painter->drawLine(line2);
             }
             break;
@@ -212,7 +216,7 @@ void DrawArea::paintShape(
         {
             uint32_t x, y, s;
             x = shape.m_shape.x();
-            y = shape.m_shape.y();
+            y = shape_y;
             s = shape.m_shape.shapesize();
             //double h = 0.5*sqrt(3*pow((double)s,2));
             QPoint points[3] = {
@@ -226,7 +230,7 @@ void DrawArea::paintShape(
         case CIRCLE:
         {
             QRect rect(shape.m_shape.x() - shape.m_shape.shapesize() / 2,
-                    shape.m_shape.y() - shape.m_shape.shapesize() / 2,
+                    shape_y - shape.m_shape.shapesize() / 2,
                     shape.m_shape.shapesize(),
                     shape.m_shape.shapesize());
             painter->drawEllipse(rect);
