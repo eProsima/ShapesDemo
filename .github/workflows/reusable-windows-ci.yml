@@ -124,7 +124,7 @@ jobs:
         with:
           version: '6.4.2'
           dir: '/opt/qt_installation/'
-          arch: 'win64_msvc2022_64'
+          arch: 'win64_msvc2019_64'
           setup-python: 'false'
 
       - name: Get Fast DDS branch
