@@ -104,7 +104,7 @@ jobs:
         uses: eProsima/eProsima-CI/external/install_qt@v0
         with:
           version: '6.4.2'
-          arch: 'linux_gcc_64'
+          arch: 'gcc_64'
           dir: '/opt/qt_installation/'
           setup-python: 'false'
 

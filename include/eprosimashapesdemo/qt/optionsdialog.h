@@ -49,6 +49,9 @@ private slots:
     void on_horizontalSlider_speed_valueChanged(
             int arg1);
 
+    void on_checkBox_invertYAxis_stateChanged(
+            int arg1);
+
     void on_pushButton_stop_clicked();
 
 private:

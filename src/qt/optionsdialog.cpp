@@ -37,6 +37,7 @@ OptionsDialog::OptionsDialog(
     // Running Congiguration
     this->ui->spin_updateInterval->setValue(m_options.m_updateIntervalMs);
     this->ui->horizontalSlider_speed->setValue(m_options.m_movementSpeed);
+    this->ui->checkBox_invertYAxis->setChecked(m_options.m_invertYAxis);
 
     setAttribute ( Qt::WA_DeleteOnClose, true );
 }
@@ -57,6 +58,13 @@ void OptionsDialog::on_horizontalSlider_speed_valueChanged(
         int arg1)
 {
     m_options.m_movementSpeed = arg1;
+    mp_sd->setOptions(m_options);
+}
+
+void OptionsDialog::on_checkBox_invertYAxis_stateChanged(
+        int arg1)
+{
+    m_options.m_invertYAxis = (arg1 == Qt::Checked);
     mp_sd->setOptions(m_options);
 }
 

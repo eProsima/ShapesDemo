@@ -86,6 +86,20 @@
      </property>
     </widget>
    </item>
+   <item row="11" column="1">
+    <widget class="QLabel" name="label_invertYAxis">
+     <property name="text">
+      <string>Invert Y axis:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="3">
+    <widget class="QCheckBox" name="checkBox_invertYAxis">
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>
