@@ -73,7 +73,7 @@ jobs:
           path: src/ShapesDemo
           ref: ${{ inputs.shapes-demo-branch }}
 
-      - name: Install Fix Python version
+      - name: Install Fixed Python version
         if: ${{ inputs.run-build == true }}
         uses: eProsima/eProsima-CI/external/setup-python@v0
         with:
