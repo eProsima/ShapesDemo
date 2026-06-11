@@ -158,6 +158,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 set( MOC_HEADERS
+    include/eprosimashapesdemo/qt/AxisArrowOverlay.h
     include/eprosimashapesdemo/qt/DrawArea.h
     include/eprosimashapesdemo/qt/UpdateThread.h
     include/eprosimashapesdemo/qt/mainwindow.h
@@ -186,6 +187,7 @@ message(STATUS "Configuring ShapesDemo...")
 set( SHAPESDEMO_SOURCES
     images/eprosima_icon.rc
     src/main.cpp
+    src/qt/AxisArrowOverlay.cpp
     src/qt/ContentFilterSelector.cpp
     src/qt/DrawArea.cpp
     src/qt/mainwindow.cpp
