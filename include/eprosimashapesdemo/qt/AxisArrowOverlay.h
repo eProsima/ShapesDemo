@@ -29,12 +29,14 @@ class ShapesDemo;
  * together with "X" / "Y" labels in the outer-margin corners.
  *
  * Not inverted (origin top-left):
- *   ">" tip at the top-right corner    (X axis →),  "X" label in the right margin
- *   "v" tip at the bottom-left corner  (Y axis ↓),  "Y" label in the left margin
+ *   filled-triangle tip at the top-right corner    (X axis →),  "X" label in the right margin
+ *   filled-triangle tip at the bottom-left corner  (Y axis ↓),  "Y" label in the left margin
+ *   origin dot at the top-left corner
  *
  * Inverted (origin bottom-left):
- *   ">" tip at the bottom-right corner (X axis →),  "X" label in the right margin
- *   "^" tip at the top-left corner     (Y axis ↑),  "Y" label in the left margin
+ *   filled-triangle tip at the bottom-right corner (X axis →),  "X" label in the right margin
+ *   filled-triangle tip at the top-left corner     (Y axis ↑),  "Y" label in the left margin
+ *   origin dot at the bottom-left corner
  *
  * Polls ShapesDemoOptions::m_invertYAxis every 100 ms to react to option changes.
  */

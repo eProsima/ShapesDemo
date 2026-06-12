@@ -23,10 +23,14 @@
 #include <QFontMetrics>
 #include <QPainter>
 #include <QPen>
+#include <QPolygon>
 #include <QResizeEvent>
 
-// Half-width of the arrowhead chevron (pixels from tip to each arm end)
-static const int ARROW = 6;
+// Filled-triangle arrowhead dimensions
+static const int TRI_LEN  = 5;   // tip to base (along the axis)
+static const int TRI_HALF = 4;   // base half-width (perpendicular to axis)
+// Origin dot radius
+static const int DOT_R    = 2;
 
 AxisArrowOverlay::AxisArrowOverlay(
         QWidget* parent,
@@ -78,8 +82,7 @@ void AxisArrowOverlay::paintEvent(
     const QRect fd2 = mp_fd2->geometry();
 
     QPainter p(this);
-    p.setRenderHint(QPainter::Antialiasing, false);
-    p.setPen(QPen(Qt::black, 1));
+    p.setRenderHint(QPainter::Antialiasing, true);
 
     QFont f = font();
     f.setPointSize(7);
@@ -90,43 +93,59 @@ void AxisArrowOverlay::paintEvent(
     const int xw = fm.horizontalAdvance("X") + 2;
     const int yw = fm.horizontalAdvance("Y") + 2;
 
-    // Label positions in the outer margin, anchored to fd2's corners.
-    // RIGHT margin: X labels — to the right of fd2.right()
-    // LEFT  margin: Y labels — to the left  of fd2.left()
+    // Label corner positions in the outer margin, anchored to fd2's corners.
     const int rightX  = fd2.right() + 4;
     const int topY    = qMax(0, fd2.top() - lh);
     const int bottomY = fd2.bottom() - 1;
     const int leftX   = qMax(0, fd2.left() - yw - 3);
 
-    // X arrowhead ">": tip at the right end of the axis border.
-    // Not inverted: top border (origin top-left).  Inverted: bottom border.
-    // Label "X" in the right-margin corner adjacent to the arrowhead.
+    // Draw filled shapes (no outline)
+    p.setPen(Qt::NoPen);
+    p.setBrush(Qt::black);
+
+    // Origin dot at the corner where both axes meet.
+    // Not inverted: top-left corner.  Inverted: bottom-left corner.
+    const QPoint origin(fd2.left() + 1, invertY ? fd2.bottom() : fd2.top() + 1);
+    p.drawEllipse(origin, DOT_R, DOT_R);
+
+    // X arrowhead: right-pointing filled triangle, tip 1px past fd2's right border.
+    // Not inverted: aligned with the top border.  Inverted: with the bottom border.
     {
+        const int xTip  = fd2.right() + 1;
         const int yAxis = invertY ? fd2.bottom() : fd2.top();
-        const QPoint tip(fd2.right(), yAxis);
-        p.drawLine(tip, QPoint(tip.x() - ARROW, tip.y() - ARROW));
-        p.drawLine(tip, QPoint(tip.x() - ARROW, tip.y() + ARROW));
-        p.drawText(QRect(rightX, invertY ? bottomY : topY, xw, lh),
-                   Qt::AlignLeft | Qt::AlignTop, "X");
+        QPolygon tri;
+        tri << QPoint(xTip,           yAxis)
+            << QPoint(xTip - TRI_LEN, yAxis - TRI_HALF)
+            << QPoint(xTip - TRI_LEN, yAxis + TRI_HALF);
+        p.drawPolygon(tri);
     }
 
-    // Y arrowhead "v"/"^": tip at the end of the left border.
-    // Not inverted: bottom end, pointing down.  Inverted: top end, pointing up.
-    // Label "Y" in the left-margin corner adjacent to the arrowhead.
-    if (!invertY)
+    // Y arrowhead: down/up-pointing filled triangle, tip 1px inside fd2's left border.
+    // Not inverted: aligned with the bottom border.  Inverted: with the top border.
     {
-        const QPoint tip(fd2.left(), fd2.bottom());
-        p.drawLine(tip, QPoint(tip.x() - ARROW, tip.y() - ARROW));
-        p.drawLine(tip, QPoint(tip.x() + ARROW, tip.y() - ARROW));
-        p.drawText(QRect(leftX, bottomY, yw, lh),
-                   Qt::AlignLeft | Qt::AlignTop, "Y");
+        const int xTip = fd2.left() + 1;
+        if (!invertY)
+        {
+            QPolygon tri;
+            tri << QPoint(xTip,            fd2.bottom())
+                << QPoint(xTip - TRI_HALF, fd2.bottom() - TRI_LEN)
+                << QPoint(xTip + TRI_HALF, fd2.bottom() - TRI_LEN);
+            p.drawPolygon(tri);
+        }
+        else
+        {
+            QPolygon tri;
+            tri << QPoint(xTip,            fd2.top())
+                << QPoint(xTip - TRI_HALF, fd2.top() + TRI_LEN)
+                << QPoint(xTip + TRI_HALF, fd2.top() + TRI_LEN);
+            p.drawPolygon(tri);
+        }
     }
-    else
-    {
-        const QPoint tip(fd2.left(), fd2.top());
-        p.drawLine(tip, QPoint(tip.x() - ARROW, tip.y() + ARROW));
-        p.drawLine(tip, QPoint(tip.x() + ARROW, tip.y() + ARROW));
-        p.drawText(QRect(leftX, topY, yw, lh),
-                   Qt::AlignLeft | Qt::AlignTop, "Y");
-    }
+
+    // Axis labels
+    p.setPen(Qt::black);
+    p.drawText(QRect(rightX, invertY ? bottomY : topY, xw, lh),
+               Qt::AlignLeft | Qt::AlignTop, "X");
+    p.drawText(QRect(leftX, invertY ? topY : bottomY, yw, lh),
+               Qt::AlignLeft | Qt::AlignTop, "Y");
 }
