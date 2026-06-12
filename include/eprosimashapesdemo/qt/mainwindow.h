@@ -20,6 +20,7 @@
 
 #include <QMainWindow>
 #include "eprosimashapesdemo/shapesdemo/ShapesDemo.h"
+#include "eprosimashapesdemo/qt/AxisArrowOverlay.h"
 
 
 namespace Ui {
@@ -152,6 +153,7 @@ private:
     QStandardItemModel* m_pubsub;
     std::vector<SD_Endpoint> m_pubsub_pointers;
     int m_tableRow;
+    AxisArrowOverlay* m_axisOverlay;
     void removeRow(
             int row);
 };

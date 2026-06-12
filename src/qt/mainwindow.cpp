@@ -51,6 +51,10 @@ MainWindow::MainWindow(
     ui->setupUi(this);
     ui->areaDraw->setShapesDemo(this->getShapesDemo());
 
+    m_axisOverlay = new AxisArrowOverlay(ui->frameDraw, ui->frameDraw2, this->getShapesDemo());
+    m_axisOverlay->raise();
+    m_axisOverlay->show();
+
     mp_writeThread = new UpdateThread(this, 1);
     mp_writeThread->setMainW(this);
 
