@@ -51,7 +51,6 @@ defaults:
 jobs:
   shapes_demo_build:
     runs-on: ${{ inputs.os-version }}
-    if: ${{ inputs.run-build == true }}
     strategy:
       fail-fast: false
       matrix:
@@ -59,7 +58,7 @@ jobs:
           - 'RelWithDebInfo'
     steps:
       - name: Add ci-pending label if PR
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ inputs.run-build == true && github.event_name == 'pull_request' }}
         uses: eProsima/eProsima-CI/external/add_labels@v0
         with:
           labels: ci-pending
@@ -67,22 +66,26 @@ jobs:
           repo: eProsima/ShapesDemo
 
       - name: Sync eProsima/ShapesDemo repository
+        if: ${{ inputs.run-build == true }}
         uses: eProsima/eProsima-CI/external/checkout@v0
         with:
           path: src/ShapesDemo
           ref: ${{ inputs.shapes-demo-branch }}
 
       - name: Install Fix Python version
+        if: ${{ inputs.run-build == true }}
         uses: eProsima/eProsima-CI/external/setup-python@v0
         with:
           python-version: '3.11'
 
       - name: Get minimum supported version of CMake
+        if: ${{ inputs.run-build == true }}
         uses: eProsima/eProsima-CI/external/get-cmake@v0
         with:
           cmakeVersion: '3.22.6'
 
       - name: Install apt dependencies
+        if: ${{ inputs.run-build == true }}
         uses: eProsima/eProsima-CI/ubuntu/install_apt_packages@v0
         with:
           packages: libasio-dev libtinyxml2-dev libssl-dev
@@ -90,9 +93,11 @@ jobs:
           upgrade: false
 
       - name: Install colcon
+        if: ${{ inputs.run-build == true }}
         uses: eProsima/eProsima-CI/ubuntu/install_colcon@v0
 
       - name: Install Python dependencies
+        if: ${{ inputs.run-build == true }}
         uses: eProsima/eProsima-CI/multiplatform/install_python_packages@v0
         with:
           packages: vcstool xmlschema
@@ -101,6 +106,7 @@ jobs:
       # Do not setup python as it will internally modify the pythonLocation env variable
       # and we want to use a fix version
       - name: Install Qt
+        if: ${{ inputs.run-build == true }}
         uses: eProsima/eProsima-CI/external/install_qt@v0
         with:
           version: '5.15.2'
@@ -109,19 +115,21 @@ jobs:
           setup-python: 'false'
 
       - name: Setup CCache
+        if: ${{ inputs.run-build == true && inputs.use-ccache == true }}
         uses: eProsima/eProsima-CI/external/setup-ccache-action@v0
-        if: ${{ inputs.use-ccache == true }}
         with:
           api_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Fast DDS branch
         id: get_fastdds_branch
+        if: ${{ inputs.run-build == true }}
         uses: eProsima/eProsima-CI/ubuntu/get_related_branch_from_repo@v0
         with:
           remote_repository: eProsima/Fast-DDS
           fallback_branch: ${{ inputs.fastdds-branch }}
 
       - name: Download Fast DDS repo
+        if: ${{ inputs.run-build == true }}
         uses: eProsima/eProsima-CI/external/checkout@v0
         with:
           repository: eProsima/Fast-DDS
@@ -129,6 +137,7 @@ jobs:
           ref: ${{ steps.get_fastdds_branch.outputs.deduced_branch }}
 
       - name: Fetch Fast DDS dependencies
+        if: ${{ inputs.run-build == true }}
         uses: eProsima/eProsima-CI/multiplatform/vcs_import@v0
         with:
           vcs_repos_file: ${{ github.workspace }}/src/fastrtps/fastrtps.repos
@@ -137,6 +146,7 @@ jobs:
 
       - name: Colcon build
         continue-on-error: false
+        if: ${{ inputs.run-build == true }}
         uses: eProsima/eProsima-CI/multiplatform/colcon_build@v0
         with:
           colcon_meta_file: ${{ github.workspace }}/src/ShapesDemo/.github/workflows/config/build.meta
