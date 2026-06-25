@@ -120,9 +120,6 @@ private slots:
 
     void on_actionDelete_Enpoint_triggered();
 
-    void on_tableEndpoint_clicked(
-            const QModelIndex& index);
-
     void on_MainWindow_destroyed();
 
     void closeEvent(
@@ -147,7 +144,13 @@ private:
     UpdateThread* mp_writeThread;
     QStandardItemModel* m_pubsub;
     std::vector<SD_Endpoint> m_pubsub_pointers;
+<<<<<<< HEAD
     int m_tableRow;
+=======
+    AxisArrowOverlay* m_axisOverlay;
+    std::vector<int> selectedEndpointRows() const;
+    void removeSelectedRows();
+>>>>>>> 2113d28 (Add multi-select endpoint deletion and fixed 'Delete Endpoint' typo (#257))
     void removeRow(
             int row);
 };

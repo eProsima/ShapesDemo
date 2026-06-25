@@ -35,6 +35,7 @@
 #include <QDir>
 #include <QProcess>
 
+#include <algorithm>
 #include <iostream>
 
 
@@ -44,7 +45,6 @@ MainWindow::MainWindow(
     , ui(new Ui::MainWindow)
     , m_shapesDemo(this)
     , mp_writeThread(NULL)
-    , m_tableRow(-1)
 {
     setWindowIcon(QIcon(":images/eprosima_icon.png"));
 
@@ -180,6 +180,7 @@ void MainWindow::on_actionStop_triggered()
 {
     this->m_shapesDemo.stop();
     m_pubsub->removeRows(0, m_pubsub->rowCount());
+    m_pubsub_pointers.clear();
     update();
     addMessageToOutput(QString("ShapesDemo stopped"), true);
 }
@@ -378,13 +379,18 @@ void MainWindow::addSubscriberToTable(
 void MainWindow::on_tableEndpoint_customContextMenuRequested(
         const QPoint& pos)
 {
-    // cout <<"CONTEXT MENU REQUESTED"<<endl;
     QModelIndex index = this->ui->tableEndpoint->indexAt(pos);
-    this->ui->tableEndpoint->selectRow(index.row());
-    // cout << index.column()<< " "<< index.row()<<endl;
-    this->m_tableRow = index.row();
     if (index.row() >= 0)
     {
+        QItemSelectionModel* selection_model = this->ui->tableEndpoint->selectionModel();
+        if (selection_model != nullptr &&
+                !selection_model->isRowSelected(index.row(), QModelIndex()))
+        {
+            selection_model->select(
+                index,
+                QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+        }
+
         QMenu* menu = new QMenu(this);
         menu->addAction(this->ui->actionDelete_Enpoint);
         menu->popup(this->ui->tableEndpoint->viewport()->mapToGlobal(pos));
@@ -393,49 +399,87 @@ void MainWindow::on_tableEndpoint_customContextMenuRequested(
 
 void MainWindow::on_actionDelete_Enpoint_triggered()
 {
-    //cout << "DELETE ENDPOINT" <<endl;
-    removeRow(m_tableRow);
+    removeSelectedRows();
+}
+
+std::vector<int> MainWindow::selectedEndpointRows() const
+{
+    std::vector<int> rows;
+    QItemSelectionModel* selection_model = this->ui->tableEndpoint->selectionModel();
+
+    if (selection_model == nullptr)
+    {
+        return rows;
+    }
+
+    QModelIndexList selected_rows = selection_model->selectedRows();
+    rows.reserve(selected_rows.size());
+
+    for (const QModelIndex& index : selected_rows)
+    {
+        rows.push_back(index.row());
+    }
+
+    std::sort(rows.begin(), rows.end(), [](int lhs, int rhs)
+            {
+                return lhs > rhs;
+            });
+    rows.erase(std::unique(rows.begin(), rows.end()), rows.end());
+
+    return rows;
+}
+
+void MainWindow::removeSelectedRows()
+{
+    for (int row : selectedEndpointRows())
+    {
+        removeRow(row);
+    }
 }
 
 void MainWindow::removeRow(
         int row)
 {
     //  cout << "REMOVING ROW **************************"<<endl;
-    m_pubsub->removeRow(row);
-    for (std::vector<SD_Endpoint>::iterator it = this->m_pubsub_pointers.begin();
-            it != this->m_pubsub_pointers.end(); ++it)
+    if (row < 0 || row >= m_pubsub->rowCount())
     {
-        if (row == it->pos)
-        {
-            if (it->type == PUB)
-            {
-                // cout << "REMOVING PUBLISHER "<<endl;
-                this->m_shapesDemo.removePublisher(it->pub);
-                addMessageToOutput(QString("Removed Publisher"), false);
-            }
-            else
-            {
-                //   cout << "REMOVING SUBSCRIBER "<<endl;
-                this->m_shapesDemo.removeSubscriber(it->sub);
-                addMessageToOutput(QString("Removed Subscriber"), false);
-            }
-
-            for (std::vector<SD_Endpoint>::iterator it2 = it; it2 != this->m_pubsub_pointers.end(); ++it2)
-            {
-                it2->pos--;
-                //  cout << "POSITION -1"<<endl;
-            }
-            m_pubsub_pointers.erase(it);
-            break;
-        }
+        return;
     }
-    //cout << "FINISH REMOVE ROW"<<endl;
-}
 
-void MainWindow::on_tableEndpoint_clicked(
-        const QModelIndex& index)
-{
-    this->ui->tableEndpoint->selectRow(index.row());
+    std::vector<SD_Endpoint>::iterator endpoint_it = std::find_if(
+        m_pubsub_pointers.begin(),
+        m_pubsub_pointers.end(),
+        [row](const SD_Endpoint& endpoint)
+        {
+            return endpoint.pos == row;
+        });
+
+    if (endpoint_it == m_pubsub_pointers.end())
+    {
+        return;
+    }
+
+    m_pubsub->removeRow(row);
+
+    if (endpoint_it->type == PUB)
+    {
+        this->m_shapesDemo.removePublisher(endpoint_it->pub);
+        addMessageToOutput(QString("Removed Publisher"), false);
+    }
+    else
+    {
+        this->m_shapesDemo.removeSubscriber(endpoint_it->sub);
+        addMessageToOutput(QString("Removed Subscriber"), false);
+    }
+
+    for (std::vector<SD_Endpoint>::iterator it = endpoint_it + 1;
+            it != this->m_pubsub_pointers.end(); it++)
+    {
+        it->pos--;
+    }
+
+    m_pubsub_pointers.erase(endpoint_it);
+    //cout << "FINISH REMOVE ROW"<<endl;
 }
 
 void MainWindow::keyPressEvent(
@@ -443,17 +487,11 @@ void MainWindow::keyPressEvent(
 {
     if (event->key() == Qt::Key_Delete)
     {
-        QItemSelectionModel* select = this->ui->tableEndpoint->selectionModel();
-        if (select->hasSelection())
-        {
-            QModelIndexList list = select->selectedRows();
-            for (QModelIndexList::iterator it = list.begin(); it != list.end(); ++it)
-            {
-                removeRow(it->row());
-            }
-
-        }
+        removeSelectedRows();
+        return;
     }
+
+    QMainWindow::keyPressEvent(event);
 }
 
 void MainWindow::on_actionAbout_triggered()
