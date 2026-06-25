@@ -253,7 +253,7 @@
            <set>QAbstractItemView::NoEditTriggers</set>
           </property>
           <property name="selectionMode">
-           <enum>QAbstractItemView::SingleSelection</enum>
+           <enum>QAbstractItemView::ExtendedSelection</enum>
           </property>
           <property name="selectionBehavior">
            <enum>QAbstractItemView::SelectRows</enum>
@@ -355,7 +355,7 @@
   </action>
   <action name="actionDelete_Enpoint">
    <property name="text">
-    <string>Delete Enpoint</string>
+    <string>Delete Endpoint</string>
    </property>
   </action>
   <action name="actionAbout">
