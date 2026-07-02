@@ -1,6 +1,6 @@
 @appendable
 struct ShapeType {
-    @Key string color;
+    @key string color;
     long x;
     long y;
     long shapesize;
