@@ -100,7 +100,24 @@ public:
     void addContentFilter(
             ShapeSubscriber* ssub);
 
+    /**
+     * @brief setDrawAreaResizeTarget Sets the ShapesDemo that should be notified
+     * of the draw area width whenever it changes, so the movement bounds track
+     * the window size.
+     * @param SD Pointer to the ShapesDemo object.
+     */
+    void setDrawAreaResizeTarget(
+            ShapesDemo* SD);
+
 protected:
+
+    /**
+     * @brief resizeEvent Reports the new width to the ShapesDemo so shapes can
+     * use the extra horizontal space (and be dragged back in when shrinking).
+     * @param event Pointer to the resize event.
+     */
+    void resizeEvent(
+            QResizeEvent* event) override;
 
     /**
      * @brief paintEvent Paintevent method.
@@ -135,6 +152,9 @@ private:
             bool isHistory = false);
 
     ShapesDemo* mp_SD;
+    // ShapesDemo notified of width changes (may differ from mp_SD lifetime-wise,
+    // kept separate so a resize before setShapesDemo() is still safe).
+    ShapesDemo* mp_resizeSD = nullptr;
     bool m_isInitialized;
     //  std::vector<Shape*> m_shapes;
     float firstA, lastA;

@@ -50,6 +50,9 @@ MainWindow::MainWindow(
 
     ui->setupUi(this);
     ui->areaDraw->setShapesDemo(this->getShapesDemo());
+    // Let the draw area report its size back so the movement bounds (maxX) can
+    // grow/shrink together with the window width.
+    ui->areaDraw->setDrawAreaResizeTarget(this->getShapesDemo());
 
     m_axisOverlay = new AxisArrowOverlay(ui->frameDraw, ui->frameDraw2, this->getShapesDemo());
     m_axisOverlay->raise();

@@ -210,6 +210,15 @@ public:
     Topic* getTopic(
             std::string topic_name);
 
+    /**
+     * @brief setDrawAreaWidth Update the horizontal movement bound to match the
+     * current draw area width. When the area shrinks, already-published shapes
+     * are dragged back inside so they do not end up outside the visible window.
+     * @param width New draw area width in pixels.
+     */
+    void setDrawAreaWidth(
+            uint32_t width);
+
 private:
 
     std::vector<ShapePublisher*> m_publishers;

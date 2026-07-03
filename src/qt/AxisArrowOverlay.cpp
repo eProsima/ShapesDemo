@@ -22,6 +22,7 @@
 #include <QFont>
 #include <QFontMetrics>
 #include <QPainter>
+#include <QPalette>
 #include <QPen>
 #include <QPolygon>
 #include <QResizeEvent>
@@ -99,9 +100,14 @@ void AxisArrowOverlay::paintEvent(
     const int bottomY = fd2.bottom() - 1;
     const int leftX   = qMax(0, fd2.left() - yw - 3);
 
+    // Follow the theme foreground: black in a light theme, light grey in a dark
+    // theme. darker(140) tones the dark-theme near-white down to a grey; on the
+    // light-theme black it has no effect (black cannot be darkened further).
+    const QColor axisColor = palette().color(QPalette::WindowText).darker(140);
+
     // Draw filled shapes (no outline)
     p.setPen(Qt::NoPen);
-    p.setBrush(Qt::black);
+    p.setBrush(axisColor);
 
     // Origin dot at the corner where both axes meet.
     // Not inverted: top-left corner.  Inverted: bottom-left corner.
@@ -143,7 +149,7 @@ void AxisArrowOverlay::paintEvent(
     }
 
     // Axis labels
-    p.setPen(Qt::black);
+    p.setPen(axisColor);
     p.drawText(QRect(rightX, invertY ? bottomY : topY, xw, lh),
                Qt::AlignLeft | Qt::AlignTop, "X");
     p.drawText(QRect(leftX, invertY ? topY : bottomY, yw, lh),
