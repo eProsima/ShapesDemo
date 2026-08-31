@@ -28,6 +28,8 @@ char dummy;
 
 #include "Shape.h"
 
+#if FASTCDR_VERSION_MAJOR > 1
+
 #include <fastcdr/Cdr.h>
 
 
@@ -231,3 +233,4 @@ int32_t& ShapeType::shapesize()
 // Include auxiliary functions like for serializing/deserializing.
 #include "ShapeCdrAux.ipp"
 
+#endif // FASTCDR_VERSION_MAJOR > 1

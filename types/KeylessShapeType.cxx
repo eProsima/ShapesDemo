@@ -28,6 +28,8 @@ char dummy;
 
 #include "KeylessShapeType.h"
 
+#if FASTCDR_VERSION_MAJOR > 1
+
 #include <fastcdr/Cdr.h>
 
 
@@ -241,3 +243,4 @@ int32_t& KeylessShapeType::shapesize()
 // Include auxiliary functions like for serializing/deserializing.
 #include "KeylessShapeTypeCdrAux.ipp"
 
+#endif // FASTCDR_VERSION_MAJOR > 1
