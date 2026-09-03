@@ -103,6 +103,14 @@ public:
 protected:
 
     /**
+     * @brief resizeEvent Reports the new width to the ShapesDemo so shapes can
+     * use the extra horizontal space (and be dragged back in when shrinking).
+     * @param event Pointer to the resize event.
+     */
+    void resizeEvent(
+            QResizeEvent* event) override;
+
+    /**
      * @brief paintEvent Paintevent method.
      * @param event Pointer to the event.
      */

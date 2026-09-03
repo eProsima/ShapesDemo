@@ -54,8 +54,8 @@ ShapesDemo::ShapesDemo(
     , m_isInitialized(false)
     , minX(0)
     , minY(0)
-    , maxX(0)
     , maxY(0)
+    , maxX(0)
     , m_mainWindow(mw)
     , m_mutex()
     , m_type(new ShapeTypePubSubType())
@@ -386,6 +386,35 @@ void ShapesDemo::moveShape(
     }
     sh->m_shape.x(nx);
     sh->m_shape.y(ny);
+}
+
+void ShapesDemo::setDrawAreaWidth(
+        uint32_t width)
+{
+    // Never shrink below the historical/default width, so the coordinate space
+    // stays consistent with other Shapes Demo implementations.
+    uint32_t new_max_x = width < MAX_DRAW_AREA_X ? MAX_DRAW_AREA_X : width;
+
+    QMutexLocker lock(&m_mutex);
+    bool shrinking = new_max_x < maxX.exchange(new_max_x);
+
+    // When the area shrinks, drag any published shape that would now fall
+    // outside the window back inside its right edge.
+    if (shrinking)
+    {
+        for (std::vector<ShapePublisher*>::iterator it = m_publishers.begin();
+                it != m_publishers.end(); ++it)
+        {
+            QMutexLocker lock2(&(*it)->m_mutex);
+            Shape& sh = (*it)->m_shape;
+            int half = (int)sh.m_shape.shapesize() / 2;
+            int max_center = (int)maxX - half;
+            if ((int)sh.m_shape.x() > max_center)
+            {
+                sh.m_shape.x(max_center > half ? max_center : half);
+            }
+        }
+    }
 }
 
 void ShapesDemo::getNewDirection(

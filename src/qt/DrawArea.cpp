@@ -28,6 +28,7 @@
 #include <eprosimashapesdemo/shapesdemo/ShapeSubscriber.h>
 
 #include <QPainter>
+#include <QResizeEvent>
 #include <QStyleOption>
 #include <QVBoxLayout>
 #include <QSizeGrip>
@@ -248,5 +249,17 @@ void DrawArea::setShapesDemo(
     {
         mp_SD = SD;
         m_isInitialized = true;
+        // Report the initial width so the bounds are consistent from the start.
+        mp_SD->setDrawAreaWidth(width());
+    }
+}
+
+void DrawArea::resizeEvent(
+        QResizeEvent* e)
+{
+    QWidget::resizeEvent(e);
+    if (m_isInitialized)
+    {
+        mp_SD->setDrawAreaWidth(width());
     }
 }

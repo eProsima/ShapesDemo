@@ -49,6 +49,8 @@ MainWindow::MainWindow(
     setWindowIcon(QIcon(":images/eprosima_icon.png"));
 
     ui->setupUi(this);
+    // The draw area reports its size back so the movement bounds (maxX) can
+    // grow/shrink together with the window width.
     ui->areaDraw->setShapesDemo(this->getShapesDemo());
 
     m_axisOverlay = new AxisArrowOverlay(ui->frameDraw, ui->frameDraw2, this->getShapesDemo());
