@@ -24,6 +24,7 @@
 #define SHAPESDEMO_H_
 
 #include <array>
+#include <atomic>
 #include <map>
 #include <string>
 
@@ -228,7 +229,10 @@ private:
     //std::vector<ShapeType*> m_shapes;
     bool m_isInitialized;
 
-    uint32_t minX, minY, maxX, maxY;
+    uint32_t minX, minY, maxY;
+    // Tracks the draw area width, written from the GUI thread on resize and read
+    // from the write thread while moving shapes.
+    std::atomic<uint32_t> maxX;
 
 
     void moveShape(
